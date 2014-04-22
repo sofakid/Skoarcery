@@ -1,0 +1,40 @@
+
+skoar: phrases fin
+
+phrases: phrasey phrases | phrasey | bar
+
+phrasey: key_set | note | beat | neg_beat | tickle | goto_dst | goto
+
+bar: Toke_Bar goto_auto_dst phrases
+
+opt_labels : labels | <e>
+labels: Toke_Label Toke_ListSep labels | Toke_Label
+
+goto: Toke_Goto labels
+
+goto_auto_dst: Toke_Goto opt_labels
+
+goto_dst: labels Toke_GotoDst
+
+goto_auto_dst: opt_labels Toke_GotoDst
+
+assignable: Toke_Args | Toke_Int | Toke_Float | Toke_Symbol | note
+
+key_set: Toke_Symbol Toke_Assign assignable
+
+beat: Toke_QBeat | Toke_EBeat
+
+neg_beat: Toke_NegQBeat | Toke_NegEBeat
+
+note: opt_note opt_octave opt_sharps_or_flats | Toke_Symbol
+
+opt_note:   Toke_NoteLetter | <e>
+opt_octave: Toke_NoteOctave | <e>
+
+opt_sharps_or_flats: Toke_Sharps | Toke_Flats | <e>
+
+tickle: Toke_On Toke_Symbol
+      | Toke_Off Toke_Symbol
+      | Toke_Tog Toke_Symbol
+
+fin: Toke_Bar TokeBar | <e>

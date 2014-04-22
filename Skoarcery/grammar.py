@@ -1,4 +1,4 @@
-from langoids import Terminal
+from Skoarcery.langoids import Terminal
 
 string_of_tokens = """
 <e>

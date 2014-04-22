@@ -1,10 +1,8 @@
 import unittest
-import tokens
-import nonterminals
-import langoids
+from Skoarcery import langoids, tokens
 
 
-class Misc(unittest.TestCase):
+class FOLLOW(unittest.TestCase):
 
     def setUp(self):
         pass

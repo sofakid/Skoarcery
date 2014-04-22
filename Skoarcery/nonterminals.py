@@ -1,5 +1,3 @@
-from langoids import Nonterminal
-import tokens
 
 src = """
 
@@ -79,53 +77,71 @@ cthulhu : LWing CondSep boolean CondSep RWing
 
 """
 
-nonterminals = dict()
+
+#
+#
+#
+#
+#
+#
+#
+#
+#
+
+nonterminals = None
 
 
-#noinspection PyPep8Naming
-def hajimemashite(name):
+def init():
+    global nonterminals
+    nonterminals = dict()
 
-    try:
-        N = nonterminals[name]
-    except KeyError:
-        N = Nonterminal(name)
-        nonterminals[name] = N
+    from Skoarcery import tokens
+    from Skoarcery.langoids import Nonterminal
 
-    return N
+    #noinspection PyPep8Naming
+    def hajimemashite(name):
 
-for bnf_line in src.split("\n"):
-    if len(bnf_line) > 0:
-        #print(bnf_line)
-        a = bnf_line.split(":")
+        try:
+            N = nonterminals[name]
+        except KeyError:
+            N = Nonterminal(name)
+            nonterminals[name] = N
 
-        name = a[0].strip()
-        N = name + ": "
+        return N
 
-        for production in a[1].split("|"):
+    for bnf_line in src.split("\n"):
+        if len(bnf_line) > 0:
+            #print(bnf_line)
+            a = bnf_line.split(":")
 
-            p = []
-            for langoid in production.split():
+            name = a[0].strip()
+            N = name + ": "
 
-                if len(langoid) == 0:
-                    continue
+            for production in a[1].split("|"):
 
-                toke = tokens.tokens.get(langoid)
+                p = []
+                for langoid in production.split():
 
-                if toke:
-                    p.append(toke)
-                else:
+                    if len(langoid) == 0:
+                        continue
 
-                    if langoid[0].isupper():
-                        raise Exception("Unknown token " + langoid)
+                    toke = tokens.tokens.get(langoid)
 
-                    N = hajimemashite(langoid)
+                    if toke:
+                        p.append(toke)
+                    else:
 
-                    p.append(N)
+                        if langoid[0].isupper():
+                            raise Exception("Unknown token " + langoid)
 
-            N = hajimemashite(name)
+                        N = hajimemashite(langoid)
 
-            N.add_production(p)
+                        p.append(N)
 
-        #print(repr(N))
+                N = hajimemashite(name)
+
+                N.add_production(p)
+
+            #print(repr(N))
 
 

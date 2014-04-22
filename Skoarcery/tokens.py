@@ -1,4 +1,3 @@
-from langoids import Terminal
 
 string_of_tokens = """
 CurNoat
@@ -66,15 +65,27 @@ Bars
 Colon
 """
 
-list_of_names = []
-list_of_tokens = []
+#
+#
+#
 
-tokens = dict()
+list_of_names = None
+tokens = None
+Empty = None
+EOF = None
 
-for token in string_of_tokens.split():
-    list_of_names.append(token)
 
-    tokens[token] = Terminal(token)
+def init():
+    from Skoarcery.langoids import Terminal
+    global string_of_tokens, list_of_names, tokens, EOF, Empty
 
-Empty = tokens["<e>"]
-EOF = tokens["EOF"]
+    list_of_names = []
+    tokens = dict()
+
+    for token in string_of_tokens.split():
+        list_of_names.append(token)
+
+        tokens[token] = Terminal(token)
+
+    Empty = tokens["<e>"]
+    EOF = tokens["EOF"]

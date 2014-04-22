@@ -1,9 +1,12 @@
 #noinspection PyPep8Naming
+from Skoarcery import nonterminals as N
+
+
 class Production:
 
     def __init__(self, langoid, production):
 
-        from tokens import Empty
+        from Skoarcery.tokens import Empty
 
         self.name = langoid
 
@@ -150,7 +153,7 @@ class MagicSet(dict):
         self[key.name] = X
 
     def add_all_except_e_from(self, key, S):
-        from tokens import Empty
+        from Skoarcery.tokens import Empty
 
         try:
             X = self[key.name]
@@ -168,9 +171,7 @@ FOLLOW = MagicSet("FOLLOW")
 #noinspection PyPep8Naming
 def compute_firsts():
 
-    from tokens import tokens as T
-    from tokens import Empty
-    from nonterminals import nonterminals as N
+    from Skoarcery.tokens import Empty
 
     global FIRST
 
@@ -218,7 +219,7 @@ def compute_firsts():
 
 #noinspection PyPep8Naming
 def compute_first_of_sequence(list_of_langoids):
-    from tokens import Empty
+    from Skoarcery.tokens import Empty
 
     global FIRST
 
@@ -242,8 +243,7 @@ def compute_first_of_sequence(list_of_langoids):
 
 #noinspection PyPep8Naming
 def compute_follows():
-    from nonterminals import nonterminals as N
-    from tokens import EOF, Empty
+    from Skoarcery.tokens import EOF, Empty
 
     global FOLLOW
 
