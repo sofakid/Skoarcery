@@ -30,38 +30,45 @@ class MakeParseTable(unittest.TestCase):
             for P in A.production_rules:
 
                 alpha = P.production
+                if P.derives_empty:
+                    continue
+
                 # (2)
                 #
                 for a in FIRST(alpha):
-                    if isinstance(a, Terminal):
-
-                        X = M[A, a]
-
-                        if X:
-                            print("2) Grammar is not LL(1). Fuck.")
-
-                            print("X = {}\nP = {}\nA = {}\na = {}".format(str(X), str(P), str(A), str(a)))
-                            raise AssertionError("2)  Grammar is not LL(1). Fuck.")
-
-                        print("2) M[{:>16}, {:<16}] = {}".format(A.name, a.name, str(P)))
-                        M[A, a] = P
-
                     # (3)
                     if a == Empty:
 
                         for b in FOLLOW(A):
-                            if isinstance(b, Terminal):
+                            if isinstance(b, Terminal) and b != Empty:
 
                                 X = M[A, b]
 
-                                if X:
+                                if X and not X.derives_empty:
+
                                     print("3) Grammar is not LL(1). Fuck.")
 
-                                    print("X = {}\nP = {}\nA = {}\na = {}".format(str(X), str(P), str(A), str(a)))
-                                    raise AssertionError("3) Grammar is not LL(1). Fuck.")
+                                    print("X = {}\nP = {}\nA = {}\nb = {}".format(str(X), str(P), str(A), str(b)))
+                                    #raise AssertionError("3) Grammar is not LL(1). Fuck.")
 
-                                print("3) M[{:>16}, {:<16}] = {}".format(A.name, a.name, str(P)))
+                                print("3) M[{:>16}, {:<16}] = {}".format(A.name, b.name, str(P)))
                                 M[A, b] = P
+
+                    # (2')
+                    elif isinstance(a, Terminal):
+
+                        X = M[A, a]
+
+                        if X and not X.derives_empty:
+                            print("2) Grammar is not LL(1). Fuck.")
+
+                            print("X = {}\nP = {}\nA = {}\na = {}".format(str(X), str(P), str(A), str(a)))
+                            #raise AssertionError("2)  Grammar is not LL(1). Fuck.")
+
+                        print("2) M[{:>16}, {:<16}] = {}".format(A.name, a.name, str(P)))
+                        M[A, a] = P
+
+
 
 
 
