@@ -63,6 +63,7 @@ String
 EOF
 Bars
 Colon
+Label
 """
 
 #

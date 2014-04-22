@@ -13,6 +13,10 @@ opt_cometo: cometo | <e>
 goto   : Colon optional_labels
 cometo : optional_labels Colon
 
+optional_labels : Label moar_labels | <e>
+
+moar_labels: ListSep Label moar_labels | <e>
+
 meter_sig : complex_meter Slash TwoPower
 
 complex_meter : ZedPlus moar_complex
@@ -54,7 +58,6 @@ acc : AccSharp | AccNatural | AccFlat
 
 accidentally : acc noaty
 
-
 sharps_or_flats : NoatSharps | NoatFlats | <e>
 
 vector : Int | <e>
@@ -89,10 +92,11 @@ cthulhu : LWing CondSep boolean CondSep RWing
 #
 
 nonterminals = None
+SKOAR = None
 
 
 def init():
-    global nonterminals
+    global nonterminals, SKOAR
     nonterminals = dict()
 
     from Skoarcery import tokens
@@ -115,7 +119,6 @@ def init():
             a = bnf_line.split(":")
 
             name = a[0].strip()
-            N = name + ": "
 
             for production in a[1].split("|"):
 
@@ -144,4 +147,5 @@ def init():
 
             #print(repr(N))
 
+    SKOAR = nonterminals["skoar"]
 

@@ -1,14 +1,12 @@
 #noinspection PyPep8Naming
-from Skoarcery import nonterminals as N
-
 
 class Production:
 
-    def __init__(self, langoid, production):
+    def __init__(self, name, production):
 
         from Skoarcery.tokens import Empty
 
-        self.name = langoid
+        self.name = name
 
         # a list of langoids
         self.production = production
@@ -16,13 +14,7 @@ class Production:
         self.derives_empty = production[0] == Empty
 
     def __str__(self):
-
-        s = self.name + " -> "
-
-        for tnt in self.production:
-            s += tnt.name + " "
-
-        return s.strip()
+        return "P_" + self.name
 
 
 class Langoid:
@@ -75,7 +67,7 @@ class Nonterminal(Langoid):
 
     def add_production(self, p):
 
-        o = Production(self, p)
+        o = Production(self.name, p)
 
         if o.derives_empty:
             self.derives_empty = True
@@ -83,49 +75,59 @@ class Nonterminal(Langoid):
         self.production_rules.append(o)
 
     def __repr__(self):
-        s = self.name + "=: "
-
-        for p in self.production_rules:
-            s += "| "
-
-            for langoid in p.production:
-                s += str(langoid) + " "
-
-        s += "\n"
-        return s
+        return "N_" + self.name
 
 
 #noinspection PyPep8Naming
-class MagicSet(dict):
+class MagicSet:
 
     def __init__(self, name):
-        super().__init__()
-
         self.name = name
+        self.D = dict()
 
     def __str__(self):
         s = ""
 
-        for k, v in self.items():
+        for k, v in self.D.items():
             s += self.name + "(" + str(k) + "): " + str(v) + "\n"
 
         return s
 
-    #def __getitem__(self, key):
-    #    try:
-    #        return self.D[key.name]
-    #    except KeyError:
-    #        return set()
-    #
-    #def __setitem__(self, key, val):
-    #    S = self[key]
-    #    S.update(val)
-    #    self.D[key.name] = S
+    def __call__(self, *args, **kwargs):
+
+        key = ""
+        production = args[0]
+
+        if not production:
+            print("THE FUH? " + repr(args))
+            raise AssertionError
+
+        if isinstance(production, str):
+            key = production
+
+        if isinstance(production, Langoid):
+            key = production.name + ":"
+
+        if isinstance(production, Production):
+            production = production.production
+
+        if isinstance(production, list):
+            for langoid in production:
+                key += langoid.name + ":"
+
+        #print("Key: " + key + " < " + str(production) + " < " + repr(args[0]))
+        try:
+            S = self.D[key]
+        except KeyError:
+            S = set()
+            self.D[key] = S
+
+        return S
 
     def __len__(self):
         i = 0
 
-        for S in self.values():
+        for S in self.D.values():
             i += len(S)
 
         return i
@@ -135,49 +137,57 @@ class MagicSet(dict):
         #print("add-Elemetn: " + repr(key) + str(key.__class__))
 
         try:
-            S = self[key.name]
+            S = self.D[key.name]
         except KeyError:
             S = set()
 
         S.add(element)
-        self[key.name] = S
+        self.D[key.name] = S
 
     def add_all_from(self, key, S):
 
         try:
-            X = self[key.name]
+            X = self.D[key.name]
         except KeyError:
             X = set()
 
         X.update(S)
-        self[key.name] = X
+        self.D[key.name] = X
 
     def add_all_except_e_from(self, key, S):
         from Skoarcery.tokens import Empty
 
         try:
-            X = self[key.name]
+            X = self.D[key.name]
         except KeyError:
             X = set()
 
         X.update(S.intersection({Empty}))
-        self[key.name] = X
+        self.D[key.name] = X
+
+FIRST = None
+FOLLOW = None
 
 
-FIRST = MagicSet("FIRST")
-FOLLOW = MagicSet("FOLLOW")
+def init():
+    global FIRST, FOLLOW
+
+    FIRST = MagicSet("FIRST")
+    FOLLOW = MagicSet("FOLLOW")
+
 
 
 #noinspection PyPep8Naming
 def compute_firsts():
 
-    from Skoarcery.tokens import Empty
+    from Skoarcery.tokens import Empty, tokens as T
+    from Skoarcery.nonterminals import nonterminals as N
 
     global FIRST
 
     # do terminals first
     for X in T.values():
-        FIRST[X] = {X}
+        FIRST(X).add(X)
 
     last = 0
     first_len = len(FIRST)
@@ -187,34 +197,60 @@ def compute_firsts():
 
         for X in N.values():
             if X.derives_empty:
-                FIRST.add_element(X, Empty)
+                FIRST(X).add(Empty)
 
             for R in X.production_rules:
 
+                i = -1
+                n = len(R.production)
+
                 # figure out FIRST(X) first
                 for Yi in R.production:
+                    i += 1
 
-                    try:
-                        S = FIRST.get(Yi)
-                        #print("S:{" + repr(S) + "}")
-                        if S:
-                            FIRST.add_all_except_e_from(X, S)
+                    Yi_to_end = R.production[i:]
 
-                    except KeyError:
-                        pass
+                    if len(Yi_to_end) > 0:
+                        S = FIRST(Yi_to_end)
+
+                        S.update(
+                            everything_but_e(FIRST(Yi))
+                        )
+
+                        FIRST(X).update(S)
+                        FIRST(Yi_to_end).update(S)
 
                     if not Yi.derives_empty:
                         break
 
                 # if we got to the end of the loop without breaking, add Empty
                 else:
-                    FIRST.add_element(X, Empty)
+                    FIRST(X).add(Empty)
+
+                # finish off the suffixes
+                for j in range(i, n):
+                    Yj_to_end = R.production[j:]
+                    Yj = R.production[j]
+
+                    if len(Yj_to_end) > 0:
+                        S = FIRST(Yj_to_end)
+
+                        S.update(
+                            everything_but_e(FIRST(Yj))
+                        )
+
+                        FIRST(Yj_to_end).update(S)
 
         first_len = len(FIRST)
 
-    print(str(FIRST))
 
-    return FIRST
+def everything_but_e(S):
+    from Skoarcery.tokens import Empty
+
+    X = S.copy()
+    X.discard(Empty)
+    return X
+
 
 
 #noinspection PyPep8Naming
@@ -227,9 +263,9 @@ def compute_first_of_sequence(list_of_langoids):
 
     for Yi in list_of_langoids:
 
-        S = FIRST[Yi]
+        S = FIRST(Yi)
 
-        OUT.update(S.intersection({Empty}))
+        OUT.update(everything_but_e(S))
 
         if Empty not in S:
             break
@@ -244,18 +280,19 @@ def compute_first_of_sequence(list_of_langoids):
 #noinspection PyPep8Naming
 def compute_follows():
     from Skoarcery.tokens import EOF, Empty
+    from Skoarcery.nonterminals import nonterminals as N, SKOAR
 
-    global FOLLOW
+    global FIRST, FOLLOW
 
     # start symbol gets end symbol
-    FOLLOW["skoar"] = {EOF}
+    FOLLOW(SKOAR).add(EOF)
 
     # repeat until nothing can be added to any follow set
     last = 0
-    first_len = len(FOLLOW)
-    while first_len > last:
+    follow_len = len(FOLLOW)
+    while follow_len > last:
 
-        last = first_len
+        last = follow_len
 
         for X in N.values():
 
@@ -269,33 +306,44 @@ def compute_follows():
                 # examine each suffix (except last)
                 n = len(A)
 
-                if n >= 2:
-                    for i in range(0, n-1):
+                for i in range(0, n - 2):
 
-                        B = A[i]
-                        beta = A[i+1:-1]
+                    B = A[i]
+                    beta = A[i+1:]
 
-                        S = compute_first_of_sequence(beta)
-                        FOLLOW.add_all_except_e_from(B, S)
+                    print("n: " + str(n) + " i: " + str(i) + " A: " + repr(A) + " beta: " + repr(beta))
 
+                    S = FIRST(beta)
+                    FOLLOW(B).update(everything_but_e(S))
+
+            for R in X.production_rules:
                 # If there is a production [ A -> alpha B ], or [ A -> alpha B beta ] with <e> in FIRST(beta):
                 #     everything in FOLLOW(A) is in FOLLOW(B)
+
+                A = R.production
+                n = len(A)
 
                 for i in reversed(range(0, n)):
 
                     B = A[i]
 
                     # we are at the end of the list
-                    if i == n-1:
-                        FOLLOW.add_all_from(X, FOLLOW[B])
+                    if i == n - 1:
+                        FOLLOW(X).update(FOLLOW(B))
                         continue
 
-                    beta = A[i+1:-1]
+                    beta = A[i+1:]
 
-                    S = compute_first_of_sequence(beta)
+                    S = FIRST(beta)
+
+                    print(": FIRST(" + repr(beta) + ") = " + repr(S))
 
                     if Empty in S:
-                        FOLLOW.add_all_from(X, FOLLOW[B])
+                        FOLLOW(X).update(FOLLOW(B))
+
+
+        follow_len = len(FOLLOW)
+
 
 
 

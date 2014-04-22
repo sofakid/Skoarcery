@@ -1,20 +1,26 @@
 import unittest
-from Skoarcery import langoids, tokens
+from Skoarcery import langoids, tokens, nonterminals
 
 
 class FIRST(unittest.TestCase):
 
     def setUp(self):
         tokens.init()
+        nonterminals.init()
+        langoids.init()
 
     def tearDown(self):
         pass
 
-    def tes_tokens_first(self):
+    def test_tokens_first(self):
+
+        print("\n\n ==========--------( Terminal FIRST sets )-------------------------===========\n")
+
+        langoids.compute_firsts()
 
         for token in tokens.tokens.values():
 
-            first = token.first()
+            first = langoids.FIRST(token)
 
             self.assertIn(token, first, "token first wrong")
             self.assertEqual(1, len(first), "FIRST(token) should be {token}")
@@ -23,6 +29,34 @@ class FIRST(unittest.TestCase):
 
         langoids.compute_firsts()
 
+        print("\n\n ==========--------( Nonterminal FIRST sets )--------------------------------------------------------========\n\n")
+
+        X = list()
+        for K in iter(langoids.FIRST.D.keys()):
+            if K[0].islower():
+                X.append(K)
+
+        X.sort()
+
+        for K in X:
+            print("{:>50} {}".format(str(K), str(langoids.FIRST(K))))
+
     def test_follow(self):
+
+        print("\n\n ==========--------( FOLLOW sets )--------------------------------------------------------========\n\n")
+
         langoids.compute_firsts()
         langoids.compute_follows()
+
+        X = list()
+        for K in iter(langoids.FOLLOW.D.keys()):
+            X.append(K)
+
+        X.sort()
+
+        for K in X:
+            FK = langoids.FOLLOW(K)
+
+            s = "-" if len(FK) == 0 else str(FK)
+
+            print("{:>50} {}".format(str(K), s))
