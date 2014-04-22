@@ -59,9 +59,7 @@ accidentally : acc noaty
 
 sharps_or_flats : NoatSharps | NoatFlats | <e>
 
-vector : Int | <e>
-
-noat : vector NoatName sharps_or_flats
+noat : VectorNoat sharps_or_flats
 
 boolean : skoaroid BooleanOp skoaroid
 

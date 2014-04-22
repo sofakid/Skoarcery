@@ -2,19 +2,24 @@
 
 class Production:
 
-    def __init__(self, name, production):
+    def __init__(self, name, list_of_langoids):
 
         from Skoarcery.tokens import Empty
 
         self.name = name
 
         # a list of langoids
-        self.production = production
+        self.production = list_of_langoids
 
-        self.derives_empty = production[0] == Empty
+        self.derives_empty = list_of_langoids[0] == Empty
 
     def __str__(self):
-        return "P_" + self.name
+        s = "P_" + self.name + " -> "
+
+        for alpha in self.production:
+            s += alpha.name + " "
+
+        return s
 
 
 class Langoid:
@@ -322,7 +327,7 @@ def compute_follows():
 
                     beta = A[i+1:]
 
-                    print("n: " + str(n) + " i: " + str(i) + " A: " + repr(A) + " beta: " + repr(beta))
+                    #print("n: " + str(n) + " i: " + str(i) + " A: " + repr(A) + " beta: " + repr(beta))
 
                     S = FIRST(beta)
                     FOLLOW(B).update(everything_but_e(S))
@@ -342,7 +347,7 @@ def compute_follows():
 
                     S = FIRST(beta)
 
-                    print(": FIRST(" + repr(beta) + ") = " + repr(S))
+                    #print(": FIRST(" + repr(beta) + ") = " + repr(S))
 
                     if Empty in S:
                         FOLLOW(B).update(FOLLOW(X))

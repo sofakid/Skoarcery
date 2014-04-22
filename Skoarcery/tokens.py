@@ -36,7 +36,7 @@ MsgOp
 AccSharp
 AccNatural
 AccFlat
-NoatName
+VectorNoat
 NoatSharps
 NoatFlats
 BooleanOp
