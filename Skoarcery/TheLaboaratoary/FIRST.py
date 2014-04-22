@@ -32,7 +32,8 @@ class FIRST(unittest.TestCase):
         print("\n\n ==========--------( Nonterminal FIRST sets )--------------------------------------------------------========\n\n")
 
         X = list()
-        for K in iter(langoids.FIRST.D.keys()):
+        #for K in iter(langoids.FIRST.D.keys()):
+        for K in iter(nonterminals.nonterminals.keys()):
             if K[0].islower():
                 X.append(K)
 

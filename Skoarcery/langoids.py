@@ -84,6 +84,7 @@ class MagicSet:
     def __init__(self, name):
         self.name = name
         self.D = dict()
+        self.done_precomputations = False
 
     def __str__(self):
         s = ""
@@ -106,20 +107,29 @@ class MagicSet:
             key = production
 
         if isinstance(production, Langoid):
-            key = production.name + ":"
+            key = production.name
 
         if isinstance(production, Production):
             production = production.production
 
         if isinstance(production, list):
             for langoid in production:
-                key += langoid.name + ":"
+                key += langoid.name
 
         #print("Key: " + key + " < " + str(production) + " < " + repr(args[0]))
         try:
             S = self.D[key]
+
         except KeyError:
-            S = set()
+
+            if self.done_precomputations and self.name == "FIRST":
+                if not isinstance(production, list):
+                    raise AssertionError
+
+                S = FIRST_SEQ(production)
+            else:
+                S = set()
+
             self.D[key] = S
 
         return S
@@ -243,18 +253,16 @@ def compute_firsts():
 
         first_len = len(FIRST)
 
+    FIRST.done_precomputations = True
 
 def everything_but_e(S):
     from Skoarcery.tokens import Empty
 
-    X = S.copy()
-    X.discard(Empty)
-    return X
-
+    return {el for el in S if el != Empty}
 
 
 #noinspection PyPep8Naming
-def compute_first_of_sequence(list_of_langoids):
+def FIRST_SEQ(list_of_langoids):
     from Skoarcery.tokens import Empty
 
     global FIRST
@@ -306,9 +314,12 @@ def compute_follows():
                 # examine each suffix (except last)
                 n = len(A)
 
-                for i in range(0, n - 2):
+                for i in range(0, n - 1):
 
                     B = A[i]
+                    if not isinstance(B, Nonterminal):
+                        continue
+
                     beta = A[i+1:]
 
                     print("n: " + str(n) + " i: " + str(i) + " A: " + repr(A) + " beta: " + repr(beta))
@@ -316,20 +327,15 @@ def compute_follows():
                     S = FIRST(beta)
                     FOLLOW(B).update(everything_but_e(S))
 
-            for R in X.production_rules:
-                # If there is a production [ A -> alpha B ], or [ A -> alpha B beta ] with <e> in FIRST(beta):
-                #     everything in FOLLOW(A) is in FOLLOW(B)
-
-                A = R.production
-                n = len(A)
-
                 for i in reversed(range(0, n)):
 
                     B = A[i]
+                    if not isinstance(B, Nonterminal):
+                        continue
 
                     # we are at the end of the list
                     if i == n - 1:
-                        FOLLOW(X).update(FOLLOW(B))
+                        FOLLOW(B).update(FOLLOW(X))
                         continue
 
                     beta = A[i+1:]
@@ -339,8 +345,9 @@ def compute_follows():
                     print(": FIRST(" + repr(beta) + ") = " + repr(S))
 
                     if Empty in S:
-                        FOLLOW(X).update(FOLLOW(B))
-
+                        FOLLOW(B).update(FOLLOW(X))
+                    else:
+                        break
 
         follow_len = len(FOLLOW)
 
