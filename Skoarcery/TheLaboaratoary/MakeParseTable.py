@@ -19,6 +19,7 @@ class MakeParseTable(unittest.TestCase):
     def test_make_table(self):
         from collections import defaultdict
         from Skoarcery.langoids import FIRST, FOLLOW
+        from Skoarcery.tokens import Empty, EOF
 
         # M[ Nonterm, Term ] = Production
         M = defaultdict(dict)
@@ -37,15 +38,30 @@ class MakeParseTable(unittest.TestCase):
                         X = M[A, a]
 
                         if X:
-                            print("Grammar is not LL(1). Fuck.")
+                            print("2) Grammar is not LL(1). Fuck.")
 
                             print("X = {}\nP = {}\nA = {}\na = {}".format(str(X), str(P), str(A), str(a)))
-                            raise AssertionError("Grammar is not LL(1). Fuck.")
+                            raise AssertionError("2)  Grammar is not LL(1). Fuck.")
 
-                        print("M[{:>16}, {:<16}] = {}".format(A.name, a.name, str(P)))
+                        print("2) M[{:>16}, {:<16}] = {}".format(A.name, a.name, str(P)))
                         M[A, a] = P
 
-                # (3)
+                    # (3)
+                    if a == Empty:
+
+                        for b in FOLLOW(A):
+                            if isinstance(b, Terminal):
+
+                                X = M[A, b]
+
+                                if X:
+                                    print("3) Grammar is not LL(1). Fuck.")
+
+                                    print("X = {}\nP = {}\nA = {}\na = {}".format(str(X), str(P), str(A), str(a)))
+                                    raise AssertionError("3) Grammar is not LL(1). Fuck.")
+
+                                print("3) M[{:>16}, {:<16}] = {}".format(A.name, a.name, str(P)))
+                                M[A, b] = P
 
 
 
