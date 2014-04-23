@@ -1,9 +1,14 @@
 
 src = """
 
+
 skoar : phrases
 
-phrases :  meter phrases | stmt phrases | measure_marker phrases | <e>
+phrases : measure_marker phrasey | phrasey <e>
+
+phrasey : configure beat phrases
+
+configure : meter | skoaroid
 
 measure_marker : opt_goto Bars opt_cometo
 
@@ -17,19 +22,27 @@ optional_labels : Label moar_labels | <e>
 
 moar_labels: ListSep Label moar_labels | <e>
 
-meter_sig : complex_meter Slash TwoPower
 
-complex_meter : ZedPlus moar_complex
 
-moar_complex : Plus complex_meter | <e>
+
+beat : Crotchets | Quavers | Quarters | Eighths | Slash
+
+
 
 meter : MeterS meter_stmts MeterE
 
 meter_stmts : meter_stmt meter_stmts | <e>
 
-meter_stmt : meter_sig | beat AssOp ZedPlus | dynamic AssOp ZedPlus | meteroid
+meter_stmt : ZedPlus meter_stmt_numbery | meteroid | MeterSig
 
-meteroid : optional_carrots Symbol msg_chain_node | <e>
+meter_stmt_numbery : AssOp meter_ass_r
+
+meter_ass_r : beat | dynamic | Symbol
+
+meteroid : optional_carrots Symbol msg_chain_node
+
+
+
 
 dynamic : DynPiano | DynForte | DynSFZ | DynFP
 
@@ -43,13 +56,24 @@ moar_listy_entries : ListSep listy_entries | <e>
 
 optional_carrots: Carrots | <e>
 
+
+
+
 noaty : Choard | Symbol | CurNoat | noat | listy | conditional
 
-skoaroid : Int | Float | String | Env | Tuplet | Caesura | noaty | accidentally | assignment | beat | cthulhu | dynamic
+nouny : Int | Float | String | Tuplet | Caesura | noaty | accidentally | cthulhu | dynamic
 
-beat : Crotchets | Quavers | Quarters | Eighths
 
-assignment : settable AssOp skoaroid | Symbol AssOp meter
+
+skoaroid : nouny skoaroid_prime
+
+skoaroid_prime : assignment skoaroid_prime
+
+
+assignment : AssOp settable
+
+
+
 
 settable : Env | listy | Caesura | CurNoat | Symbol
 
@@ -78,15 +102,6 @@ cthulhu : LWing CondSep boolean CondSep RWing
 """
 
 
-#
-#
-#
-#
-#
-#
-#
-#
-#
 
 nonterminals = None
 SKOAR = None

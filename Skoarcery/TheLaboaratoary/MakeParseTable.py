@@ -23,6 +23,7 @@ class MakeParseTable(unittest.TestCase):
         # M[ Nonterm, Term ] = Production
         M = defaultdict(dict)
 
+        isLLOne = True
         # (1) For each production A -> alpha
         #
         for A in nonterminals.nonterminals.values():
@@ -49,6 +50,7 @@ class MakeParseTable(unittest.TestCase):
 
                                     print("X = {}\nP = {}\nA = {}\nb = {}".format(str(X), str(P), str(A), str(b)))
                                     #raise AssertionError("3) Grammar is not LL(1). Fuck.")
+                                    isLLOne = False
 
                                 print("3) M[{:>16}, {:<16}] = {}".format(A.name, b.name, str(P)))
                                 M[A, b] = P
@@ -62,13 +64,12 @@ class MakeParseTable(unittest.TestCase):
                             print("2) Grammar is not LL(1). Fuck.")
 
                             print("X = {}\nP = {}\nA = {}\na = {}".format(str(X), str(P), str(A), str(a)))
-                            #raise AssertionError("2)  Grammar is not LL(1). Fuck.")
+                            isLLOne = False
 
                         print("2) M[{:>16}, {:<16}] = {}".format(A.name, a.name, str(P)))
                         M[A, a] = P
 
 
 
-
-
+        self.assertTrue(isLLOne, "Duplicate entries: Grammar is not LL(1).")
 

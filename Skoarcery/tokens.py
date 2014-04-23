@@ -57,14 +57,13 @@ DubRep
 Goto
 Symbol
 Slash
-TwoPower
 String
 <e>
 EOF
 Bars
 Colon
 Label
-
+MeterSig
 """
 
 #
