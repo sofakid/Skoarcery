@@ -64,6 +64,7 @@ EOF
 Bars
 Colon
 Label
+
 """
 
 #
@@ -90,3 +91,5 @@ def init():
 
     Empty = tokens["<e>"]
     EOF = tokens["EOF"]
+
+    print("tokens initialized.")

@@ -1,5 +1,5 @@
 import unittest
-from Skoarcery import langoids, tokens, nonterminals
+from Skoarcery import langoids, tokens, nonterminals, dragonsets
 from Skoarcery.langoids import Terminal
 
 
@@ -9,8 +9,7 @@ class MakeParseTable(unittest.TestCase):
         tokens.init()
         nonterminals.init()
         langoids.init()
-        langoids.compute_firsts()
-        langoids.compute_follows()
+        dragonsets.init()
         pass
 
     def tearDown(self):
@@ -18,7 +17,7 @@ class MakeParseTable(unittest.TestCase):
 
     def test_make_table(self):
         from collections import defaultdict
-        from Skoarcery.langoids import FIRST, FOLLOW
+        from Skoarcery.dragonsets import FIRST, FOLLOW
         from Skoarcery.tokens import Empty, EOF
 
         # M[ Nonterm, Term ] = Production

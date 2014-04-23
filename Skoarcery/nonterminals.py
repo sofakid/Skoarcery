@@ -146,3 +146,4 @@ def init():
 
     SKOAR = nonterminals["skoar"]
 
+    print("nonterminals initialized.")
