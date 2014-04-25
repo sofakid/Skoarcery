@@ -15,3 +15,17 @@ BNF
 ---
 
 still working on that.
+
+
+want:
+
+soak operator
+
+
+
+Decks
+-----
+
+- accept cards from => \x
+- deal cards ^\x
+- stacks, queues, santasack (draws a card without removing it)

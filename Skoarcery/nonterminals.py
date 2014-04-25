@@ -1,14 +1,11 @@
 
 src = """
 
-
 skoar : phrases
 
-phrases : measure_marker phrasey | phrasey <e>
+phrases : measure_marker phrases | phrasey
 
-phrasey : configure beat phrases
-
-configure : meter | skoaroid
+phrasey : meter | skoaroid | dal_goto | beat | <e>
 
 measure_marker : opt_goto Bars opt_cometo
 
@@ -75,7 +72,7 @@ assignment : AssOp settable
 
 
 
-settable : Env | listy | Caesura | CurNoat | Symbol
+settable : listy | Caesura | CurNoat | Symbol
 
 acc : AccSharp | AccNatural | AccFlat
 
@@ -97,14 +94,27 @@ msg : MsgNameWithArgs listy_suffix | MsgName | listy
 
 conditional : CondS optional_stmt CondSep boolean CondSep optional_stmt CondE
 
-cthulhu : LWing CondSep boolean CondSep RWing
+cond_go : CondS optional_
+
+cthulhu : LWing CondSep cthulhu_prime
+
+cthulhu_prime : boolean CondSep RWing | Nosey CondSep RWing
+
+dal_goto: DaCapo al_whatnow | DalSegno al_whatnow
+
+al_whatnow: AlCoda | AlSegno | AlFine
+
+coda: Coda optional_al_coda
+
+optional_al_coda: AlCoda | <e>
+
 
 """
 
 
 
-nonterminals = None
 SKOAR = None
+nonterminals = None
 
 
 def init():
@@ -114,50 +124,51 @@ def init():
     from Skoarcery import tokens
     from Skoarcery.langoids import Nonterminal
 
-    #noinspection PyPep8Naming
-    def hajimemashite(name):
+    def o_hai_have_we_met(name):
 
         try:
-            N = nonterminals[name]
+            xoid = nonterminals[name]
         except KeyError:
-            N = Nonterminal(name)
-            nonterminals[name] = N
+            xoid = Nonterminal(name)
+            nonterminals[name] = xoid
 
-        return N
+        return xoid
 
     for bnf_line in src.split("\n"):
-        if len(bnf_line) > 0:
-            #print(bnf_line)
-            a = bnf_line.split(":")
+        if len(bnf_line) == 0 or bnf_line.lstrip().startswith("#"):
+            continue
 
-            name = a[0].strip()
+        #print(bnf_line)
+        a = bnf_line.split(":")
 
-            for production in a[1].split("|"):
+        name = a[0].strip()
 
-                p = []
-                for langoid in production.split():
+        for production in a[1].split("|"):
 
-                    if len(langoid) == 0:
-                        continue
+            p = []
+            for langoid in production.split():
 
-                    toke = tokens.tokens.get(langoid)
+                if len(langoid) == 0:
+                    continue
 
-                    if toke:
-                        p.append(toke)
-                    else:
+                toke = tokens.tokens.get(langoid)
 
-                        if langoid[0].isupper():
-                            raise Exception("Unknown token " + langoid)
+                if toke:
+                    p.append(toke)
+                else:
 
-                        N = hajimemashite(langoid)
+                    if langoid[0].isupper():
+                        raise Exception("Unknown token " + langoid)
 
-                        p.append(N)
+                    X = o_hai_have_we_met(langoid)
 
-                N = hajimemashite(name)
+                    p.append(X)
 
-                N.add_production(p)
+            X = o_hai_have_we_met(name)
 
-            #print(repr(N))
+            X.add_production(p)
+
+            #print(repr(X))
 
     SKOAR = nonterminals["skoar"]
 

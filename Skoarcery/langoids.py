@@ -5,14 +5,10 @@ def init():
 class Production:
 
     def __init__(self, name, list_of_langoids):
-
         from Skoarcery.tokens import Empty
 
         self.name = name
-
-        # a list of langoids
         self.production = list_of_langoids
-
         self.derives_empty = list_of_langoids[0] == Empty
 
     def __str__(self):
@@ -34,9 +30,6 @@ class Langoid:
         return hash(self.name)
 
     def __eq__(self, other):
-
-        #print("SNA: " + repr(self) + ":" + repr(other))
-
         return self.name == other.name
 
     def __str__(self):
@@ -51,8 +44,10 @@ class Langoid:
 
 class Terminal(Langoid):
 
-    def __init__(self, name):
+    def __init__(self, name, regex):
         super().__init__(name)
+
+        self.regex = regex
 
         if name == "<e>":
             self.derives_empty = True

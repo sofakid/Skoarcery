@@ -15,6 +15,7 @@ class MakeParseTable(unittest.TestCase):
     def tearDown(self):
         pass
 
+    # Dragon Spell: 4.4 Construction of a predictive parsing table
     def test_make_table(self):
         from collections import defaultdict
         from Skoarcery.dragonsets import FIRST, FOLLOW
@@ -68,8 +69,6 @@ class MakeParseTable(unittest.TestCase):
 
                         print("2) M[{:>16}, {:<16}] = {}".format(A.name, a.name, str(P)))
                         M[A, a] = P
-
-
 
         self.assertTrue(isLLOne, "Duplicate entries: Grammar is not LL(1).")
 
