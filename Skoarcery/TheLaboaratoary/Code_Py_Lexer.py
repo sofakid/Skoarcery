@@ -1,25 +1,28 @@
 import unittest
-from Skoarcery import tokens
+from Skoarcery import tokens, emissions
 
 
-class MakePyLexer(unittest.TestCase):
+class Code_Py_Lexer(unittest.TestCase):
 
     def setUp(self):
         tokens.init()
 
-    def header(self):
-        print(
+    def imports(self):
+        emissions.PY.code(
 """
 import re
 import abc
+
 
 """
         )
 
     def base_token(self):
-        print(
-"""
-class SkoarToke:
+
+        emissions.PY.wee_header("Abstract Token")
+
+        emissions.PY.code(
+"""class SkoarToke:
 
     __metaclass__ = abc.ABCMeta
 
@@ -47,45 +50,54 @@ class SkoarToke:
             return toke_class.new(o[0][1])
 
         return None
+
+
 """
         )
 
     def whitespace_token(self):
-        print(
-"""
 
-class Toke_WS(SkoarToke):
-    regex = r"{}"
+        emissions.PY.wee_header("Whitespace is special")
+
+        emissions.PY.code(
+"""class Toke_WS(SkoarToke):
+    regex = r"{regex}"
 
     @staticmethod
     def burn(buf, offs):
-        o = buf.findRegexp("^\s*", offs)
+        o = buf.findRegexp("{regex}", offs)
 
         if len(o.size) > 0:
             return len(o[0][1])
 
         return 0
-""".format(tokens.WS.regex)
+
+
+""".format(regex=tokens.WS.regex)
         )
 
     def typical_token(self, token):
-        print(
-"""
-class Toke_{0}(SkoarToke):
+        emissions.PY.code(
+"""class Toke_{0}(SkoarToke):
     regex = r"{1}"
 
     @staticmethod
     def match(buf, offs):
         return SkoarToke.match_toke(buf, offs, Toke_{0})
+
+
 """.format(token.name, token.regex)
         )
 
     def test_PyLexer(self):
 
-        self.header()
+        emissions.PY.file_header("lex", "Code_Py_Lexer")
+
+        self.imports()
         self.base_token()
         self.whitespace_token()
 
+        emissions.PY.wee_header("Everyday Tokes")
         for token in tokens.tokens.values():
             if token not in tokens.odd_balls:
                 self.typical_token(token)

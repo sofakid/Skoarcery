@@ -126,7 +126,7 @@ def init():
 
             tokens[token] = Terminal(token, regex)
 
-    print("# tokens initialized.")
+    #print("# tokens initialized.")
 
     Empty = Terminal("<e>", None)
     EOF = Terminal("EOF", None)

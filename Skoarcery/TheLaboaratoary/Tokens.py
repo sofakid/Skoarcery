@@ -44,7 +44,8 @@ class Tokens(unittest.TestCase):
             for n in N.values():
                 uses.extend([p for p in n.production_rules if t in p.production])
 
-            unused.append(t.name)
+            if len(uses) is 0:
+                unused.append(t.name)
 
         if unused:
             print("-------( Untoked ) ------------\n")
