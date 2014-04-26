@@ -8,15 +8,13 @@ MeterE:         !>
 MeterSig:       (\\d+(\\+\\d)+/\\d)
 TrebleClef:     G:|treble:
 BassClef:       F:|bass:
-Alto:           C:|alto:
+AltoClef:       C:|alto:
 
 
 
 CurNoat:        \\$
 Portamento:     ~~~
 Slur:           ++
-Plus:           \\+
-Minus:          -
 ZedPlus:        [1-9][0-9]+
 Int:            (+|-)?(0|[1-9)[0-9]+)
 Float:          (+|-)?(0|[1-9)[0-9]+)\\.[0-9]+
@@ -64,7 +62,8 @@ Coda:           \\(\\+\\)
 Rep:            \\./\\.
 DubRep:         /\\.\\|\\./
 Goto:           :
-CondGo:         ::
+CondGoS:        \(
+CondGoE:        \)
 AlCoda:         al(la)? coda
 AlSegno:        al segno
 AlFine:         al fine

@@ -3,11 +3,16 @@ src = """
 
 skoar : phrases
 
-phrases : measure_marker phrases | phrasey
+phrases : markers phrases | phrasey
 
-phrasey : meter | skoaroid | dal_goto | beat | <e>
+phrasey : meter | skoaroid | dal_goto | cond_go | beat | <e>
 
-measure_marker : opt_goto Bars opt_cometo
+
+markers : coda | Segno | Label Goto | Fine | measure_marker
+
+measure_marker : opt_goto Bars opt_cometo opt_volta
+
+opt_volta : Volta | <e>
 
 opt_goto  : goto   | <e>
 opt_cometo: cometo | <e>
@@ -36,8 +41,9 @@ meter_stmt_numbery : AssOp meter_ass_r
 
 meter_ass_r : beat | dynamic | Symbol
 
-meteroid : optional_carrots Symbol msg_chain_node
+meteroid : optional_carrots Symbol msg_chain_node | clef
 
+clef : TrebleClef | BassClef | AltoClef
 
 
 
@@ -51,16 +57,18 @@ listy_entries : skoaroid moar_listy_entries
 
 moar_listy_entries : ListSep listy_entries | <e>
 
-optional_carrots: Carrots | <e>
+optional_carrots : Carrots | <e>
 
+
+musical_keyword : dynamic | ottavas | PedalDown | PedalUp | Rep | DubRep | Portamento
 
 
 
 noaty : Choard | Symbol | CurNoat | noat | listy | conditional
 
-nouny : Int | Float | String | Tuplet | Caesura | noaty | accidentally | cthulhu | dynamic
+nouny : Int | Float | String | Tuplet | Caesura | noaty | accidentally | cthulhu | Slur | musical_keyword
 
-
+ottavas : OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 
 skoaroid : nouny skoaroid_prime
 
@@ -68,8 +76,6 @@ skoaroid_prime : assignment skoaroid_prime
 
 
 assignment : AssOp settable
-
-
 
 
 settable : listy | Caesura | CurNoat | Symbol
@@ -94,7 +100,7 @@ msg : MsgNameWithArgs listy_suffix | MsgName | listy
 
 conditional : CondS optional_stmt CondSep boolean CondSep optional_stmt CondE
 
-cond_go : CondS optional_
+cond_go : CondGoS optional_labels Colon boolean Colon optional_labels CondGoE
 
 cthulhu : LWing CondSep cthulhu_prime
 
