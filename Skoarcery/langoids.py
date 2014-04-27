@@ -12,10 +12,10 @@ class Production:
         self.derives_empty = list_of_langoids[0] == Empty
 
     def __str__(self):
-        s = "P_" + self.name + " -> "
+        s = self.name + " ->"
 
         for alpha in self.production:
-            s += alpha.name + " "
+            s += " " + alpha.name
 
         return s
 

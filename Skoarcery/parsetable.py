@@ -25,24 +25,27 @@ def init():
     # (1) For each production A -> alpha
     #
     for A in nonterminals.nonterminals.values():
+
         for P in A.production_rules:
 
             alpha = P.production
-            if P.derives_empty:
-                continue
+
 
             # (2)
             #
+
             for a in FIRST(alpha):
+
                 # (3)
                 if a == Empty:
+
 
                     for b in FOLLOW(A):
                         if isinstance(b, Terminal) and b != Empty:
 
                             X = M[A, b]
 
-                            if X and not X.derives_empty:
+                            if X:
                                 raise Not_LL_1
 
                             M[A, b] = P
@@ -52,7 +55,7 @@ def init():
 
                     X = M[A, a]
 
-                    if X and not X.derives_empty:
+                    if X:
                         raise Not_LL_1
 
                     M[A, a] = P

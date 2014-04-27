@@ -1,45 +1,37 @@
 
 src = """
 
-skoar : phrases
-
+skoar   : phrases
 phrases : markers phrases | phrasey
-
 phrasey : meter | skoaroid | dal_goto | cond_go | beat | <e>
 
 
-markers : coda | Segno | Label Goto | Fine | measure_marker
+markers : coda | Segno | Goto | Fine | measure_marker
 
 measure_marker : opt_goto Bars opt_cometo opt_volta
 
 opt_volta : Volta | <e>
 
 opt_goto  : goto   | <e>
-opt_cometo: cometo | <e>
+
+opt_cometo: Label moar_labels Colon | Colon | <e>
 
 goto   : Colon optional_labels
-cometo : optional_labels Colon
+
 
 optional_labels : Label moar_labels | <e>
 
 moar_labels: ListSep Label moar_labels | <e>
 
 
-
-
 beat : Crotchets | Quavers | Quarters | Eighths | Slash
 
 
-
-meter : MeterS meter_stmts MeterE
-
-meter_stmts : meter_stmt meter_stmts | <e>
-
-meter_stmt : ZedPlus meter_stmt_numbery | meteroid | MeterSig
-
+meter              : MeterS meter_stmts MeterE
+meter_stmts        : meter_stmt meter_stmts | <e>
+meter_stmt         : ZedPlus meter_stmt_numbery | meteroid | MeterSig
 meter_stmt_numbery : AssOp meter_ass_r
-
-meter_ass_r : beat | dynamic | Symbol
+meter_ass_r        : beat | dynamic | Symbol
 
 meteroid : optional_carrots Symbol msg_chain_node | clef
 
@@ -49,12 +41,9 @@ clef : TrebleClef | BassClef | AltoClef
 
 dynamic : DynPiano | DynForte | DynSFZ | DynFP
 
-listy : ListS listy_suffix
-
-listy_suffix: listy_entries ListE
-
-listy_entries : skoaroid moar_listy_entries
-
+listy              : ListS listy_suffix
+listy_suffix       : listy_entries ListE
+listy_entries      : skoaroid moar_listy_entries
 moar_listy_entries : ListSep listy_entries | <e>
 
 optional_carrots : Carrots | <e>

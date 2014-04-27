@@ -24,36 +24,46 @@ class MakeParseTable(unittest.TestCase):
         # M[ Nonterm, Term ] = Production
         M = defaultdict(dict)
 
-        isLLOne = True
+        duplicates = 0
         # (1) For each production A -> alpha
         #
+        print("for each production P = A -> alpha:")
         for A in nonterminals.nonterminals.values():
             for P in A.production_rules:
 
                 alpha = P.production
-                if P.derives_empty:
-                    continue
+                print("\n    P = " + str(P))
 
+                #
                 # (2)
                 #
+                print("    for a in FIRST(alpha):")
                 for a in FIRST(alpha):
                     # (3)
                     if a == Empty:
 
+                        print("        <e>, so for b in FOLLOW(A):")
                         for b in FOLLOW(A):
                             if isinstance(b, Terminal) and b != Empty:
 
                                 X = M[A, b]
 
-                                if X and not X.derives_empty:
+                                if X:
 
-                                    print("3) Grammar is not LL(1). Fuck.")
+                                    print("")
+                                    print("            ####  Grammar is not LL(1). Fuck. ####-----------------------")
+                                    print("")
+                                    print("            M[{}, {}]:".format(A.name, b.name))
+                                    print("                " + str(X))
+                                    print("                " + str(P))
+                                    print("")
 
-                                    print("X = {}\nP = {}\nA = {}\nb = {}".format(str(X), str(P), str(A), str(b)))
+
+                                    #print("X = {}\nP = {}\nA = {}\nb = {}".format(str(X), str(P), str(A), str(b)))
                                     #raise AssertionError("3) Grammar is not LL(1). Fuck.")
-                                    isLLOne = False
+                                    duplicates += 1
 
-                                print("3) M[{:>16}, {:<16}] = {}".format(A.name, b.name, str(P)))
+                                print("            M[A,b] = M[{}, {}] = P".format(A.name, b.name))
                                 M[A, b] = P
 
                     # (2')
@@ -61,14 +71,20 @@ class MakeParseTable(unittest.TestCase):
 
                         X = M[A, a]
 
-                        if X and not X.derives_empty:
-                            print("2) Grammar is not LL(1). Fuck.")
+                        if X:
+                            print("")
+                            print("        ####  Grammar is not LL(1). Fuck. ####-----------------------")
+                            print("")
+                            print("        M[{}, {}]:".format(A.name, b.name))
+                            print("            " + str(X))
+                            print("            " + str(P))
+                            print("")
 
-                            print("X = {}\nP = {}\nA = {}\na = {}".format(str(X), str(P), str(A), str(a)))
-                            isLLOne = False
+                            #print("X = {}\nP = {}\nA = {}\na = {}".format(str(X), str(P), str(A), str(a)))
+                            duplicates += 1
 
-                        print("2) M[{:>16}, {:<16}] = {}".format(A.name, a.name, str(P)))
+                        print("        M[A,a] = M[{}, {}] = P".format(A.name, a.name))
                         M[A, a] = P
 
-        self.assertTrue(isLLOne, "Duplicate entries: Grammar is not LL(1).")
+        self.assertTrue(duplicates is 0, str(duplicates) + " duplicate entries: Grammar is not LL(1).")
 
