@@ -3,26 +3,14 @@ src = """
 
 skoar   : phrases
 phrases : markers phrases | phrasey
-phrasey : meter | skoaroid | dal_goto | cond_go | beat | <e>
+phrasey : meter | skoaroid | dal_goto | beat | <e>
 
 
-markers : coda | Segno | Goto | Fine | measure_marker
+markers : coda | Segno | Fine | measure_marker
 
-measure_marker : opt_goto Bars opt_cometo opt_volta
+measure_marker : Bars opt_volta
 
 opt_volta : Volta | <e>
-
-opt_goto  : goto   | <e>
-
-opt_cometo: Label moar_labels Colon | Colon | <e>
-
-goto   : Colon optional_labels
-
-
-optional_labels : Label moar_labels | <e>
-
-moar_labels: ListSep Label moar_labels | <e>
-
 
 beat : Crotchets | Quavers | Quarters | Eighths | Slash
 
@@ -48,9 +36,7 @@ moar_listy_entries : ListSep listy_entries | <e>
 
 optional_carrots : Carrots | <e>
 
-
 musical_keyword : dynamic | ottavas | PedalDown | PedalUp | Rep | DubRep | Portamento
-
 
 
 noaty : Choard | Symbol | CurNoat | noat | listy | conditional
@@ -88,8 +74,6 @@ msg_chain_node : MsgOp msg msg_chain_node | <e>
 msg : MsgNameWithArgs listy_suffix | MsgName | listy
 
 conditional : CondS optional_stmt CondSep boolean CondSep optional_stmt CondE
-
-cond_go : CondGoS optional_labels Colon boolean Colon optional_labels CondGoE
 
 cthulhu : LWing CondSep cthulhu_prime
 

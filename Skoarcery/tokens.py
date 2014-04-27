@@ -61,9 +61,6 @@ Segno:          %S%|al segno
 Coda:           \\(\\+\\)
 Rep:            \\./\\.
 DubRep:         /\\.\\|\\./
-Goto:           :
-CondGoS:        \(
-CondGoE:        \)
 AlCoda:         al(la)? coda
 AlSegno:        al segno
 AlFine:         al fine
@@ -81,9 +78,7 @@ Volta:          \\[\\d+\\.]
 Symbol:         \\[a-zA-Z][a-zA-Z0-9]+
 Slash:          /
 String:         \'[^']*[^\\]\'
-Bars:           [\|]+
-Colon:          :
-Label:          [a-zA-Z][a-zA-Z0-9_]
+Bars:           :?[\|]+:?
 
 PedalDown:      Ped\.
 PedalUp:        *

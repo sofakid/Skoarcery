@@ -58,7 +58,6 @@ class MakeParseTable(unittest.TestCase):
                                     print("                " + str(P))
                                     print("")
 
-
                                     #print("X = {}\nP = {}\nA = {}\nb = {}".format(str(X), str(P), str(A), str(b)))
                                     #raise AssertionError("3) Grammar is not LL(1). Fuck.")
                                     duplicates += 1
