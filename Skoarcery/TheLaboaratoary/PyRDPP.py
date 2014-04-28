@@ -28,7 +28,7 @@ class PyRDPP(unittest.TestCase):
 
             R = A.production_rules
 
-            PY.cmt(str(A))
+            #PY.cmt(str(A))
             PY.code_line("def " + A.name + "(self):")
             PY.tab += 1
 
