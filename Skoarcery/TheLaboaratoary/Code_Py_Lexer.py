@@ -44,10 +44,11 @@ import abc
     @staticmethod
     def match_toke(buf, offs, toke_class):
 
-        o = buf.findRegexp(toke_class.regex, offs)
+        match = toke_class.regex.match(buf, offs)
 
-        if len(o) > 0:
-            return toke_class.new(o[0][1])
+        if match:
+            print("\\n\\n" + toke_class.__name__ + ": MATCH: {" + match.group(0) + "}")
+            return toke_class(match.group(0))
 
         return None
 
@@ -61,7 +62,7 @@ import abc
 
         emissions.PY.code_raw(
 """class {0}(SkoarToke):
-    regex = r"$"
+    regex = re.compile(r"$")
 
     @staticmethod
     def burn(buf, offs):
@@ -69,6 +70,15 @@ import abc
             raise Exception("Tried to burn EOF when there's more input.")
 
         return 0
+
+    @staticmethod
+    def match(buf, offs):
+
+        if len(buf) <= offs:
+            assert len(buf) == offs
+            return {0}("")
+
+        return None
 
 
 """.format(tokens.EOF.toker_name)
@@ -80,14 +90,15 @@ import abc
 
         emissions.PY.code_raw(
 """class {0}(SkoarToke):
-    regex = r"{1}"
+    regex = re.compile(r"{1}")
 
     @staticmethod
     def burn(buf, offs):
-        o = buf.findRegexp("{1}", offs)
 
-        if len(o.size) > 0:
-            return len(o[0][1])
+        match = {0}.regex.match(buf, offs)
+
+        if match:
+            return len(match.group(0))
 
         return 0
 
@@ -98,7 +109,7 @@ import abc
     def typical_token(self, token):
         emissions.PY.code_raw(
 """class {0}(SkoarToke):
-    regex = r"{1}"
+    regex = re.compile(r"{1}")
 
     @staticmethod
     def match(buf, offs):
@@ -109,6 +120,10 @@ import abc
         )
 
     def test_PyLexer(self):
+
+        fd = open("../pymp/lex.py", mode="w")
+
+        emissions.PY.fd = fd
 
         emissions.PY.file_header("lex", "Code_Py_Lexer")
 
@@ -122,3 +137,4 @@ import abc
             if token not in tokens.odd_balls:
                 self.typical_token(token)
 
+        fd.close()

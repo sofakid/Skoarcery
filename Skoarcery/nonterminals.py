@@ -39,7 +39,7 @@ nouny            : cthulhu | noaty | nouny_literal | accidentally | musical_keyw
 nouny_literal    : Int | Float | String | Tuplet | Caesura | Slur
 
 skoaroid         : nouny skoaroid_prime
-skoaroid_prime   : assignment skoaroid_prime
+skoaroid_prime   : assignment skoaroid_prime | <e>
 
 assignment       : AssOp settable
 settable         : Caesura | CurNoat | Symbol | listy

@@ -17,6 +17,10 @@ class PyRDPP(unittest.TestCase):
         from Skoarcery.dragonsets import FIRST, FOLLOW
         from Skoarcery.tokens import Empty
 
+
+        fd = open("../pymp/rdpp.py", "w")
+        PY.fd = fd
+
         self.code_start()
 
         PY.tab += 1
@@ -79,7 +83,7 @@ class PyRDPP(unittest.TestCase):
 
             if A.derives_empty:
                 PY.cmt("<e>")
-                PY.code_line("return\n")
+                PY.code_line("return")
 
             else:
                 PY.cmt("Error State")
@@ -89,6 +93,8 @@ class PyRDPP(unittest.TestCase):
             PY.newline()
 
         PY.tab -= 1
+
+        fd.close()
 
     def code_start(self):
         from Skoarcery.tokens import Empty

@@ -1,7 +1,7 @@
 src = """
 <e>:    unused
 EOF:    unused
-WS:             ^\\s*
+WS:             \\s*
 
 MeterS:         <!
 MeterE:         !>
@@ -14,10 +14,10 @@ AltoClef:       C:|alto:
 
 CurNoat:        \\$
 Portamento:     ~~~
-Slur:           ++
+Slur:           \\+\\+
 ZedPlus:        [1-9][0-9]+
-Int:            (+|-)?(0|[1-9)[0-9]+)
-Float:          (+|-)?(0|[1-9)[0-9]+)\\.[0-9]+
+Int:            (\\+|-)?(0|[1-9][0-9]+)
+Float:          (\\+|-)?(0|[1-9][0-9]+)\\.[0-9]+
 
 ListS:          <
 ListE:          >
@@ -43,7 +43,7 @@ AccFlat:        flat
 
 NoatSharps:     #
 NoatFlats:      b
-VectorNoat:     [a-g]#*|b*
+VectorNoat:     [a-g](#*|b*)
 BooleanOp:      == | != | <= | >= | in | nin | and | or | xor
 Choard:         [A-G]([Mm0-9]|sus|dim)*
 CondS:          {
@@ -77,11 +77,11 @@ Volta:          \\[\\d+\\.\\]
 
 Symbol:         \\[a-zA-Z][a-zA-Z0-9]+
 Slash:          /
-String:         \'[^']*[^\\]\'
-Bars:           :?[\|]+:?
+String:         \'[^']*\'
+Bars:           :?[\\|]+:?
 
-PedalDown:      Ped\.
-PedalUp:        *
+PedalDown:      Ped\\.
+PedalUp:        \\*
 
 """
 
@@ -124,7 +124,7 @@ def init():
 
     Empty = Terminal("<e>", None)
     EOF = Terminal("EOF", None)
-    WS = Terminal("WS", r"^\s*")
+    WS = tokens["WS"]
 
     odd_balls = {Empty, EOF, WS}
 
