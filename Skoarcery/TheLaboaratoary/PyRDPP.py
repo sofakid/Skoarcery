@@ -35,6 +35,7 @@ class PyRDPP(unittest.TestCase):
             #PY.cmt(str(A))
             PY.code_line("def " + A.name + "(self):")
             PY.tab += 1
+            #PY.code_line("print('" + A.name + "')")
 
             for P in R:
 

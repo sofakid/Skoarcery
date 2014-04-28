@@ -56,7 +56,7 @@ import abc
 """
         )
 
-    def eof_token(self):
+    def EOF_token(self):
 
         emissions.PY.wee_header("EOF is special")
 
@@ -64,8 +64,8 @@ import abc
 """class {0}(SkoarToke):
     regex = re.compile(r"$")
 
-    @staticmethod
     def burn(buf, offs):
+        print("Burning EOF")
         if len(buf) > offs:
             raise Exception("Tried to burn EOF when there's more input.")
 
@@ -74,7 +74,9 @@ import abc
     @staticmethod
     def match(buf, offs):
 
+        print("yaya")
         if len(buf) <= offs:
+            print("woot")
             assert len(buf) == offs
             return {0}("")
 
@@ -130,7 +132,7 @@ import abc
         self.imports()
         self.base_token()
         self.whitespace_token()
-        self.eof_token()
+        self.EOF_token()
 
         emissions.PY.wee_header("Everyday Tokes")
         for token in tokens.tokens.values():

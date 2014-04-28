@@ -33,8 +33,8 @@ DynPiano:       mp|p+
 DynForte:       mf|f+
 DynSFZ:         sfz
 DynFP:          fp
-Quarters:       \\]+\\.+
-Eighths:        \\]+\\.+
+Quarters:       [)]+\\.?
+Eighths:        \\]+\\.?
 AssOp:          =>
 MsgOp:          \\.
 AccSharp:       #|sharp

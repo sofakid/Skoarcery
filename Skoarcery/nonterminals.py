@@ -2,8 +2,9 @@
 src = """
 
 skoar   : phrases
-phrases : markers phrases | phrasey
-phrasey : meter | skoaroid | dal_goto | beat | <e>
+phrases : phrasey phrases | <e>
+
+phrasey : markers | meter | skoaroid | dal_goto | beat
 
 markers        : Segno | Fine | coda | measure_marker
 measure_marker : Bars opt_volta

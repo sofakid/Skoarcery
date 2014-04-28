@@ -18,7 +18,7 @@ class Toker:
             else:
                 self.ready = toke_class.match(self.buf, self.offs)
                 if self.ready:
-                    print("FOUND: " + self.ready.__class__.__name__)
+                    #print("FOUND: " + self.ready.__class__.__name__)
                     return self.ready
 
         return None
@@ -28,13 +28,17 @@ class Toker:
         toke = self.ready
 
         if toke and isinstance(toke, toke_class):
+            #print("Burning " + self.ready.buf + " offs:" + str(self.offs))
             self.ready = None
             self.offs += toke.burn()
             self.offs += Toke_WS.burn(self.buf, self.offs)
+            #print("Burnt offs:" + str(self.offs))
+            return
+
+        raise Exception("Tried to burn wrong toke")
 
 
 def parse(src):
     toker = Toker(src)
     parser = rdpp.SkoarParser(toker)
     parser.skoar()
-    toker.burn(Toke_EOF)
