@@ -11,7 +11,7 @@ class Code_Sc_Lexer(unittest.TestCase):
 
         emissions.SC.wee_header("Abstract Token")
 
-        emissions.SC.code(
+        emissions.SC.code_raw(
 """SkoarToke {
 
     var <buf;
@@ -57,7 +57,7 @@ class Code_Sc_Lexer(unittest.TestCase):
 
         reg = '"' + tokens.WS.regex + '"'
 
-        emissions.SC.code(
+        emissions.SC.code_raw(
 """Toke_WS : SkoarToke {
 classvar <regex = """ + reg + """;
 
@@ -82,7 +82,7 @@ classvar <regex = """ + reg + """;
         name = token.name
         regex = '"' + token.regex + '"'
 
-        emissions.SC.code(
+        emissions.SC.code_raw(
 "Toke_" + name + """ : SkoarToke {
     classvar <regex = """ + regex + """;
     *match {

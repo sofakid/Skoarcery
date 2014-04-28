@@ -5,87 +5,60 @@ skoar   : phrases
 phrases : markers phrases | phrasey
 phrasey : meter | skoaroid | dal_goto | beat | <e>
 
-
-markers : coda | Segno | Fine | measure_marker
-
+markers        : Segno | Fine | coda | measure_marker
 measure_marker : Bars opt_volta
-
-opt_volta : Volta | <e>
+opt_volta      : Volta | <e>
 
 beat : Crotchets | Quavers | Quarters | Eighths | Slash
-
 
 meter              : MeterS meter_stmts MeterE
 meter_stmts        : meter_stmt meter_stmts | <e>
 meter_stmt         : ZedPlus meter_stmt_numbery | meteroid | MeterSig
 meter_stmt_numbery : AssOp meter_ass_r
-meter_ass_r        : beat | dynamic | Symbol
+meter_ass_r        : Symbol | beat | dynamic
+meteroid           : optional_carrots Symbol msg_chain_node | clef
+clef               : TrebleClef | BassClef | AltoClef
 
-meteroid : optional_carrots Symbol msg_chain_node | clef
+listy               : ListS listy_suffix
+listy_suffix        : listy_entries ListE
+listy_entries       : skoaroid moar_listy_entries
+moar_listy_entries  : ListSep listy_entries | <e>
 
-clef : TrebleClef | BassClef | AltoClef
+musical_keyword      : dynamic | ottavas | musical_keyword_misc
+musical_keyword_misc : PedalDown | PedalUp | Rep | DubRep | Portamento
+ottavas              : OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
+dynamic              : DynPiano | DynForte | DynSFZ | DynFP
 
+acc              : AccSharp | AccNatural | AccFlat
+accidentally     : acc noaty
+sharps_or_flats  : NoatSharps | NoatFlats | <e>
+noat             : VectorNoat sharps_or_flats
 
+noaty            : Choard | Symbol | CurNoat | noat | listy | conditional
+nouny            : cthulhu | noaty | nouny_literal | accidentally | musical_keyword
+nouny_literal    : Int | Float | String | Tuplet | Caesura | Slur
 
-dynamic : DynPiano | DynForte | DynSFZ | DynFP
+skoaroid         : nouny skoaroid_prime
+skoaroid_prime   : assignment skoaroid_prime
 
-listy              : ListS listy_suffix
-listy_suffix       : listy_entries ListE
-listy_entries      : skoaroid moar_listy_entries
-moar_listy_entries : ListSep listy_entries | <e>
+assignment       : AssOp settable
+settable         : Caesura | CurNoat | Symbol | listy
 
 optional_carrots : Carrots | <e>
+stmt             : optional_carrots skoaroid msg_chain_node
+optional_stmt    : stmt | <e>
+msg_chain_node   : MsgOp msg msg_chain_node | <e>
+msg              : MsgNameWithArgs listy_suffix | MsgName | listy
 
-musical_keyword : dynamic | ottavas | PedalDown | PedalUp | Rep | DubRep | Portamento
+boolean          : skoaroid BooleanOp skoaroid
+conditional      : CondS optional_stmt CondSep boolean CondSep optional_stmt CondE
+cthulhu          : LWing CondSep cthulhu_prime
+cthulhu_prime    : boolean CondSep RWing | Nosey CondSep RWing
 
-
-noaty : Choard | Symbol | CurNoat | noat | listy | conditional
-
-nouny : Int | Float | String | Tuplet | Caesura | noaty | accidentally | cthulhu | Slur | musical_keyword
-
-ottavas : OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
-
-skoaroid : nouny skoaroid_prime
-
-skoaroid_prime : assignment skoaroid_prime
-
-
-assignment : AssOp settable
-
-
-settable : listy | Caesura | CurNoat | Symbol
-
-acc : AccSharp | AccNatural | AccFlat
-
-accidentally : acc noaty
-
-sharps_or_flats : NoatSharps | NoatFlats | <e>
-
-noat : VectorNoat sharps_or_flats
-
-boolean : skoaroid BooleanOp skoaroid
-
-stmt: optional_carrots skoaroid msg_chain_node
-
-optional_stmt : stmt | <e>
-
-msg_chain_node : MsgOp msg msg_chain_node | <e>
-
-msg : MsgNameWithArgs listy_suffix | MsgName | listy
-
-conditional : CondS optional_stmt CondSep boolean CondSep optional_stmt CondE
-
-cthulhu : LWing CondSep cthulhu_prime
-
-cthulhu_prime : boolean CondSep RWing | Nosey CondSep RWing
-
-dal_goto: DaCapo al_whatnow | DalSegno al_whatnow
-
-al_whatnow: AlCoda | AlSegno | AlFine
-
-coda: Coda optional_al_coda
-
-optional_al_coda: AlCoda | <e>
+dal_goto         : DaCapo al_whatnow | DalSegno al_whatnow
+al_whatnow       : AlCoda | AlSegno | AlFine
+coda             : Coda optional_al_coda
+optional_al_coda : AlCoda | <e>
 
 
 """

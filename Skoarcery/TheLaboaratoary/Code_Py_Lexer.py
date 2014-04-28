@@ -8,7 +8,7 @@ class Code_Py_Lexer(unittest.TestCase):
         tokens.init()
 
     def imports(self):
-        emissions.PY.code(
+        emissions.PY.code_raw(
 """
 import re
 import abc
@@ -21,7 +21,7 @@ import abc
 
         emissions.PY.wee_header("Abstract Token")
 
-        emissions.PY.code(
+        emissions.PY.code_raw(
 """class SkoarToke:
 
     __metaclass__ = abc.ABCMeta
@@ -55,17 +55,36 @@ import abc
 """
         )
 
+    def eof_token(self):
+
+        emissions.PY.wee_header("EOF is special")
+
+        emissions.PY.code_raw(
+"""class {0}(SkoarToke):
+    regex = r"$"
+
+    @staticmethod
+    def burn(buf, offs):
+        if len(buf) > offs:
+            raise Exception("Tried to burn EOF when there's more input.")
+
+        return 0
+
+
+""".format(tokens.EOF.toker_name)
+        )
+
     def whitespace_token(self):
 
         emissions.PY.wee_header("Whitespace is special")
 
-        emissions.PY.code(
-"""class Toke_WS(SkoarToke):
-    regex = r"{regex}"
+        emissions.PY.code_raw(
+"""class {0}(SkoarToke):
+    regex = r"{1}"
 
     @staticmethod
     def burn(buf, offs):
-        o = buf.findRegexp("{regex}", offs)
+        o = buf.findRegexp("{1}", offs)
 
         if len(o.size) > 0:
             return len(o[0][1])
@@ -73,20 +92,20 @@ import abc
         return 0
 
 
-""".format(regex=tokens.WS.regex)
+""".format(tokens.WS.toker_name, tokens.WS.regex)
         )
 
     def typical_token(self, token):
-        emissions.PY.code(
-"""class Toke_{0}(SkoarToke):
+        emissions.PY.code_raw(
+"""class {0}(SkoarToke):
     regex = r"{1}"
 
     @staticmethod
     def match(buf, offs):
-        return SkoarToke.match_toke(buf, offs, Toke_{0})
+        return SkoarToke.match_toke(buf, offs, {0})
 
 
-""".format(token.name, token.regex)
+""".format(token.toker_name, token.regex)
         )
 
     def test_PyLexer(self):
@@ -96,6 +115,7 @@ import abc
         self.imports()
         self.base_token()
         self.whitespace_token()
+        self.eof_token()
 
         emissions.PY.wee_header("Everyday Tokes")
         for token in tokens.tokens.values():

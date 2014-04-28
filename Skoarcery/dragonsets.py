@@ -251,7 +251,7 @@ def compute_follows():
                     if not isinstance(B, Nonterminal):
                         continue
 
-                    beta = A[i+1:]
+                    beta = A[i + 1:]
 
                     #print("n: " + str(n) + " i: " + str(i) + " A: " + repr(A) + " beta: " + repr(beta))
 
@@ -269,7 +269,7 @@ def compute_follows():
                         FOLLOW(B).update(FOLLOW(X))
                         continue
 
-                    beta = A[i+1:]
+                    beta = A[i + 1:]
 
                     S = FIRST(beta)
 

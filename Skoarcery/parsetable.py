@@ -30,34 +30,26 @@ def init():
 
             alpha = P.production
 
-
             # (2)
-            #
-
             for a in FIRST(alpha):
-
-                # (3)
-                if a == Empty:
-
-
-                    for b in FOLLOW(A):
-                        if isinstance(b, Terminal) and b != Empty:
-
-                            X = M[A, b]
-
-                            if X:
-                                raise Not_LL_1
-
-                            M[A, b] = P
-
-                # (2')
-                elif isinstance(a, Terminal):
-
+                if a != Empty:
                     X = M[A, a]
 
                     if X:
                         raise Not_LL_1
 
                     M[A, a] = P
+
+                # (3)
+                else:
+                    for b in FOLLOW(A):
+
+                        X = M[A, b]
+
+                        if X:
+                            raise Not_LL_1
+
+                        M[A, b] = P
+
 
 

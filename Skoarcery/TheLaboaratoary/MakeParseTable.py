@@ -29,6 +29,7 @@ class MakeParseTable(unittest.TestCase):
         #
         print("for each production P = A -> alpha:")
         for A in nonterminals.nonterminals.values():
+            M[A] = []
             for P in A.production_rules:
 
                 alpha = P.production
@@ -39,35 +40,8 @@ class MakeParseTable(unittest.TestCase):
                 #
                 print("    for a in FIRST(alpha):")
                 for a in FIRST(alpha):
-                    # (3)
-                    if a == Empty:
 
-                        print("        <e>, so for b in FOLLOW(A):")
-                        for b in FOLLOW(A):
-                            if isinstance(b, Terminal) and b != Empty:
-
-                                X = M[A, b]
-
-                                if X:
-
-                                    print("")
-                                    print("            ####  Grammar is not LL(1). Fuck. ####-----------------------")
-                                    print("")
-                                    print("            M[{}, {}]:".format(A.name, b.name))
-                                    print("                " + str(X))
-                                    print("                " + str(P))
-                                    print("")
-
-                                    #print("X = {}\nP = {}\nA = {}\nb = {}".format(str(X), str(P), str(A), str(b)))
-                                    #raise AssertionError("3) Grammar is not LL(1). Fuck.")
-                                    duplicates += 1
-
-                                print("            M[A,b] = M[{}, {}] = P".format(A.name, b.name))
-                                M[A, b] = P
-
-                    # (2')
-                    elif isinstance(a, Terminal):
-
+                    if a != Empty:
                         X = M[A, a]
 
                         if X:
@@ -85,5 +59,28 @@ class MakeParseTable(unittest.TestCase):
                         print("        M[A,a] = M[{}, {}] = P".format(A.name, a.name))
                         M[A, a] = P
 
-        self.assertTrue(duplicates is 0, str(duplicates) + " duplicate entries: Grammar is not LL(1).")
+                    # (3)
+                    else:
 
+                        print("        <e>, so for b in FOLLOW(A):")
+                        for b in FOLLOW(A):
+                            X = M[A, b]
+
+                            if X:
+
+                                print("")
+                                print("            ####  Grammar is not LL(1). Fuck. ####-----------------------")
+                                print("")
+                                print("            M[{}, {}]:".format(A.name, b.name))
+                                print("                " + str(X))
+                                print("                " + str(P))
+                                print("")
+
+                                #print("X = {}\nP = {}\nA = {}\nb = {}".format(str(X), str(P), str(A), str(b)))
+                                #raise AssertionError("3) Grammar is not LL(1). Fuck.")
+                                duplicates += 1
+
+                            print("            M[A,b] = M[{}, {}] = P".format(A.name, b.name))
+                            M[A, b] = P
+
+        self.assertTrue(duplicates is 0, str(duplicates) + " duplicate entries: Grammar is not LL(1).")

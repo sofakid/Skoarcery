@@ -7,14 +7,15 @@ class Voice:
         self.language = ""
         self.cmt_char = ""
         self.ext = ""
+        self.tab = 0
 
     def cmt(self, words):
-        pref = self.cmt_char + " "
+        pref = self.tabby + self.cmt_char + " "
         x = "\n" + pref
         words = pref + words.replace("\n", x)
         print(words)
 
-    def code(self, code):
+    def code_raw(self, code):
         print(code, end="")
 
     def file_header(self, filename, spell):
@@ -23,6 +24,17 @@ class Voice:
 
     def wee_header(self, text):
         self.cmt(box(text))
+
+    def newline(self, n=1):
+        for i in range(0, n):
+            print("")
+
+    def code_line(self, line, end="\n"):
+        print(self.tabby + line, end=end)
+
+    @property
+    def tabby(self):
+        return ("{:>" + str(self.tab * 4) + "}").format(" ")
 
 
 def box(text, char="-"):

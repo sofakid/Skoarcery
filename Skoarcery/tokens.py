@@ -73,7 +73,7 @@ QuindicesimaA:   15ma|alla quindicesima
 QuindicesimaB:   15mb|alla quindicesimb
 
 Loco:           loco
-Volta:          \\[\\d+\\.]
+Volta:          \\[\\d+\\.\\]
 
 Symbol:         \\[a-zA-Z][a-zA-Z0-9]+
 Slash:          /

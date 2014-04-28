@@ -9,7 +9,7 @@ class Production:
 
         self.name = name
         self.production = list_of_langoids
-        self.derives_empty = list_of_langoids[0] == Empty
+        self.derives_empty = self.first == Empty
 
     def __str__(self):
         s = self.name + " ->"
@@ -18,6 +18,10 @@ class Production:
             s += " " + alpha.name
 
         return s
+
+    @property
+    def first(self):
+        return self.production[0]
 
 
 class Langoid:
@@ -54,6 +58,10 @@ class Terminal(Langoid):
 
     def __str__(self):
         return "T_" + self.name
+
+    @property
+    def toker_name(self):
+        return "Toke_" + self.name
 
 
 class Nonterminal(Langoid):
