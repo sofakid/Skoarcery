@@ -28,7 +28,6 @@ class DragonTests(unittest.TestCase):
     def tearDown(self):
         pass
 
-    # optional_carrots_is_fucked.FIRST([optional_carrots,Symbol,msg_chain_node]) is just carrots
     def test_carrots(self):
         FIRST = dragonsets.FIRST
         FOLLOW = dragonsets.FOLLOW
@@ -39,8 +38,8 @@ class DragonTests(unittest.TestCase):
         optional_carrots = nonterminals.nonterminals["optional_carrots"]
         msg_chain_node = nonterminals.nonterminals["msg_chain_node"]
 
+        self.assertSetEqual({Carrots, tokens.Empty}, FIRST(optional_carrots))
 
-        print((str(FIRST(optional_carrots))))
+        self.assertSetEqual({Carrots, Symbol}, FIRST([optional_carrots, Symbol, msg_chain_node]))
 
-        print((str(FIRST([optional_carrots, Symbol, msg_chain_node]))))
 
