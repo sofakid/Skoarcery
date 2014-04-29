@@ -7,19 +7,26 @@ class Toker:
     def __init__(self, src):
         self.buf = src
         self.offs = 0
+
+        # lookahead token.
         self.ready = None
+
+    def see(self, toke_class):
+        if self.ready:
+            if isinstance(self.ready, toke_class):
+                return self.ready
+        else:
+            self.ready = toke_class.match(self.buf, self.offs)
+            return self.ready
+
+        return None
 
     def sees(self, tokes):
 
         for toke_class in tokes:
-            if self.ready:
-                if isinstance(self.ready, toke_class):
-                    return self.ready
-            else:
-                self.ready = toke_class.match(self.buf, self.offs)
-                if self.ready:
-                    #print("FOUND: " + self.ready.__class__.__name__)
-                    return self.ready
+            X = self.see(toke_class)
+            if X:
+                return X
 
         return None
 
@@ -27,6 +34,9 @@ class Toker:
 
         toke = self.ready
 
+        if not toke:
+            toke = self.see(toke_class)
+        
         if toke and isinstance(toke, toke_class):
             #print("Burning " + self.ready.buf + " offs:" + str(self.offs))
             self.ready = None
@@ -35,7 +45,7 @@ class Toker:
             #print("Burnt offs:" + str(self.offs))
             return
 
-        raise Exception("Tried to burn wrong toke")
+        raise Exception("Tried to burn " + toke_class.__name__ + "but what we have is " + toke.__class__.__name__)
 
 
 def parse(src):
