@@ -3,7 +3,7 @@ from Skoarcery import langoids, tokens, nonterminals, dragonsets
 from Skoarcery.langoids import Terminal
 
 
-class MakeParseTable(unittest.TestCase):
+class Verify_LL_1(unittest.TestCase):
 
     def setUp(self):
         tokens.init()
