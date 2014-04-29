@@ -1,10 +1,9 @@
 
 src = """
-
 skoar   : phrases
 phrases : phrasey phrases | <e>
 
-phrasey : markers | meter | skoaroid | dal_goto | beat
+phrasey : Comment | markers | meter | skoaroid | dal_goto | beat
 
 markers        : Segno | Fine | coda | measure_marker
 measure_marker : Bars opt_volta
@@ -14,7 +13,7 @@ beat : Crotchets | Quavers | Quarters | Eighths | Slash
 
 meter              : MeterS meter_stmts MeterE
 meter_stmts        : meter_stmt meter_stmts | <e>
-meter_stmt         : ZedPlus meter_stmt_numbery | meteroid | MeterSig
+meter_stmt         : ZedPlus meter_stmt_numbery | meteroid | MeterSig | comment
 meter_stmt_numbery : AssOp meter_ass_r
 meter_ass_r        : Symbol | beat | dynamic
 
@@ -58,7 +57,7 @@ cthulhu          : LWing CondSep cthulhu_prime
 cthulhu_prime    : boolean CondSep RWing | Nosey CondSep RWing
 
 dal_goto         : DaCapo al_whatnow | DalSegno al_whatnow
-al_whatnow       : AlCoda | AlSegno | AlFine
+al_whatnow       : AlCoda | AlSegno | AlFine | <e>
 coda             : Coda optional_al_coda
 optional_al_coda : AlCoda | <e>
 

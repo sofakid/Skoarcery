@@ -11,11 +11,21 @@ class Toker:
         # lookahead token.
         self.ready = None
 
+    def dump(self):
+        print("\nToker State")
+        print("offs : " + str(self.offs))
+
+        print("ready: " + str(self.ready))
+        s = self.buf[0:self.offs] + "_$_" + self.buf[self.offs:-1]
+
+        print(" buf : " + s)
+
     def see(self, toke_class):
         if self.ready:
             if isinstance(self.ready, toke_class):
                 return self.ready
         else:
+            self.offs += Toke_WS.burn(self.buf, self.offs)
             self.ready = toke_class.match(self.buf, self.offs)
             return self.ready
 
@@ -36,7 +46,7 @@ class Toker:
 
         if not toke:
             toke = self.see(toke_class)
-        
+
         if toke and isinstance(toke, toke_class):
             #print("Burning " + self.ready.buf + " offs:" + str(self.offs))
             self.ready = None

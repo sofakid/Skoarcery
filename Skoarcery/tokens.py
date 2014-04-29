@@ -3,6 +3,8 @@ src = """
 EOF:    unused
 WS:             \\s*
 
+Comment:        <[?]([.\\n]*(?![?]))[?]>
+
 MeterS:         <!
 MeterE:         !>
 MeterSig:       (\\d+(\\+\\d)*/\\d)
@@ -15,16 +17,16 @@ AltoClef:       C:|alto:
 CurNoat:        \\$
 Portamento:     ~~~
 Slur:           \\+\\+
-ZedPlus:        [1-9][0-9]+
-Int:            (\\+|-)?(0|[1-9][0-9]+)
+ZedPlus:        [1-9][0-9]+(?![mv][ab])
+Int:            (\\+|-)?(0|[1-9][0-9]+)(?![mv][ab])
 Float:          (\\+|-)?(0|[1-9][0-9]+)\\.[0-9]+
 
-ListS:          <
+ListS:          <(?![!=?])
 ListE:          >
 ListSep:        ,
-Carrots:        \\^+(^\\^\\^\\()
-LWing:          \\^\\^\\(
-RWing:          \\)\\^\\^
+Carrots:        \\^+(?!\\^\\^\\()?
+LWing:          \\^\\^[(]
+RWing:          [)]\\^\\^
 Tuplet:         /\\d+
 Crotchets:      }+
 Quavers:        o+/
@@ -45,7 +47,7 @@ NoatSharps:     #
 NoatFlats:      b
 VectorNoat:     [a-g](#*|b*)
 BooleanOp:      == | != | <= | >= | in | nin | and | or | xor
-Choard:         [A-G]([Mm0-9]|sus|dim)*
+Choard:         (D(?!\\.[CS]\\.)|[ABCEFG])([Mm0-9]|sus|dim)*
 CondS:          {
 CondSep:        ;
 CondE:          }
@@ -66,8 +68,8 @@ AlSegno:        al segno
 AlFine:         al fine
 
 
-OttavaA:        8v?a|ottava (alta|sopra)|all' ottava
-OttavaB:        8v?b|ottava (bassa|sotto)
+OttavaA:        8va|ottava (alta|sopra)|all' ottava
+OttavaB:        8vb|ottava (bassa|sotto)
 
 QuindicesimaA:   15ma|alla quindicesima
 QuindicesimaB:   15mb|alla quindicesimb
@@ -84,7 +86,6 @@ PedalDown:      Ped\\.
 PedalUp:        \\*
 
 """
-
 
 #
 #

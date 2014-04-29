@@ -38,8 +38,14 @@ class DragonTests(unittest.TestCase):
         optional_carrots = nonterminals.nonterminals["optional_carrots"]
         msg_chain_node = nonterminals.nonterminals["msg_chain_node"]
 
-        self.assertSetEqual({Carrots, tokens.Empty}, FIRST(optional_carrots))
 
-        self.assertSetEqual({Carrots, Symbol}, FIRST([optional_carrots, Symbol, msg_chain_node]))
+        X = FIRST(optional_carrots)
+
+        self.assertSetEqual({Carrots, tokens.Empty}, X)
+
+        X = FIRST([optional_carrots, Symbol, msg_chain_node])
+
+        print("FIRST([optional_carrots, Symbol, msg_chain_node]): " + repr(X))
+        self.assertSetEqual({Carrots, Symbol}, X)
 
 

@@ -51,20 +51,15 @@ class DragonSet:
             X = X.production
 
         if isinstance(X, list):
-            for langoid in X:
-                key += langoid.name
+            if self.name == "FIRST":
+                return FIRST_SEQ(X)
+            raise NotImplementedError
 
         #print("Key: " + key + " < " + str(X) + " < " + repr(args[0]))
         try:
             S = self.D[key]
-
         except KeyError:
-
-            if isinstance(X, list) and self.name == "FIRST":
-                S = FIRST_SEQ(X)
-            else:
-                S = set()
-
+            S = set()
             self.D[key] = S
 
         return S

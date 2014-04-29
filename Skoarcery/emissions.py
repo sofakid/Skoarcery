@@ -9,6 +9,7 @@ class Voice:
         self.cmt_char = ""
         self.ext = ""
         self.tab = 0
+        self.ptab = 0
         self.fd = sys.stdout
 
     def cmt(self, words):
@@ -33,6 +34,9 @@ class Voice:
 
     def code_line(self, line, end="\n"):
         self._emit(self.tabby + line, end=end)
+
+    def print(self, line, end="\n"):
+        self.code_line("self.print('" + line + "', end=" + repr(end) + ")")
 
     @property
     def tabby(self):

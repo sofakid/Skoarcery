@@ -19,5 +19,17 @@ class Test_Apparatus(unittest.TestCase):
 
         apparatus.parse("| c ) d ) ]] ]] ]] g ]")
 
-        apparatus.parse("| c ) d ) ]] | ]] ]] g ] | <! 4/4 \sna !> <c,e,g> )) )) ) :|")
+        apparatus.parse("| mp c ) d ) %S% ]] | [1.] fff ]] fp ]] g p D.S. ] | [2.] <! 4/4 \sna !> <c,e,g> )) )) ) :|")
 
+    def test_bigger(self):
+
+        apparatus.parse("""
+
+
+        <! 4/4 120 => ) !>
+
+        | <a,c,e> ). ). ]]] ]]] ]]] |: f# ) ) ooo/ ]]] ooo/ ]] ]] :|
+
+        <? yay ?>
+
+        """)

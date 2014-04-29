@@ -21,14 +21,19 @@ class PyRDPP(unittest.TestCase):
         fd = open("../pymp/rdpp.py", "w")
         PY.fd = fd
 
+        # Header
+        # Imports
+        # class SkoarParseException
+        # class SkoarParser:
+        #     __init__
+        #     fail
         self.code_start()
 
         PY.tab += 1
-        order = sorted(nonterminals.nonterminals.values(),
-                       key=lambda x: len(x.production_rules) * 10 +
-                                     len(x.production_rules[0].production))
+        N = nonterminals.nonterminals.values()
 
-        for A in order:
+        # write each nonterminal as a function
+        for A in N:
 
             R = A.production_rules
 
@@ -46,12 +51,10 @@ class PyRDPP(unittest.TestCase):
                 alpha = P.production
 
                 desires = FIRST(alpha)
-                print("FOO   : " + repr(desires))
+
                 if Empty in desires:
-                    print("SNASNA: " + repr(desires))
                     desires.discard(Empty)
-                    desires.update(FOLLOW(P))
-                    print("WEEEEE: " + repr(desires))
+                    desires.update(FOLLOW(A))
 
                 PY.cmt(str(P))
 
@@ -73,11 +76,14 @@ class PyRDPP(unittest.TestCase):
                     PY.code_raw("]\n")
 
                 PY.code_line("if self.toker.sees(desires):")
-
                 PY.tab += 1
+
+                PY.print(str(P))
+
                 for x in alpha:
                     if isinstance(x, Terminal):
                         PY.code_line("self.toker.burn(" + x.toker_name + ")")
+                        PY.print("burning: " + x.name)
                     else:
                         PY.code_line("self." + x.name + "()")
                 else:
@@ -86,6 +92,7 @@ class PyRDPP(unittest.TestCase):
 
             if A.derives_empty:
                 PY.cmt("<e>")
+                PY.print("burning empty")
                 PY.code_line("return")
 
             else:
@@ -131,8 +138,21 @@ class SkoarParser:
 
     def __init__(self, toker):
         self.toker = toker
+        self.tab = 0
 
     def fail(self):
+        self.toker.dump()
         raise SkoarParseException
+
+    @property
+    def tabby(self):
+        if self.tab == 0:
+            return ""
+
+        return ("{:>" + str(self.tab * 4) + "}").format(" ")
+
+    def print(self, line, end):
+        print(self.tabby + line, end=end)
+
 
 """)
