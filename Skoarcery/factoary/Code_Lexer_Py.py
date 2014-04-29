@@ -2,7 +2,7 @@ import unittest
 from Skoarcery import tokens, emissions
 
 
-class Code_Py_Lexer(unittest.TestCase):
+class Code_Lexer_Py(unittest.TestCase):
 
     def setUp(self):
         tokens.init()

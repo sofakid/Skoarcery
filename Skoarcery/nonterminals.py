@@ -13,7 +13,7 @@ beat : Crotchets | Quavers | Quarters | Eighths | Slash
 
 meter              : MeterS meter_stmts MeterE
 meter_stmts        : meter_stmt meter_stmts | <e>
-meter_stmt         : Int meter_stmt_numbery | meteroid | comment
+meter_stmt         : Int meter_stmt_numbery | meteroid
 meter_stmt_numbery : AssOp meter_ass_r | meter_sig_prime
 meter_ass_r        : Symbol | beat | dynamic
 meter_sig_prime    : Slash Int

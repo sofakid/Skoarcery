@@ -4,7 +4,7 @@ from Skoarcery.langoids import Terminal, Nonterminal
 from Skoarcery.emissions import PY
 
 
-class PyRDPP(unittest.TestCase):
+class Code_Parser_Py(unittest.TestCase):
 
     def setUp(self):
         tokens.init()

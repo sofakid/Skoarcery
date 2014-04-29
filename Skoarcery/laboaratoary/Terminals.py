@@ -2,7 +2,7 @@ import unittest
 from Skoarcery import dragonsets, tokens, nonterminals
 
 
-class Tokens(unittest.TestCase):
+class TestTokens(unittest.TestCase):
 
     def setUp(self):
         tokens.init()
