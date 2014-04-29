@@ -48,7 +48,7 @@ class MakeParseTable(unittest.TestCase):
                             print("")
                             print("        ####  Grammar is not LL(1). Fuck. ####-----------------------")
                             print("")
-                            print("        M[{}, {}]:".format(A.name, b.name))
+                            print("        M[{}, {}]:".format(A.name, a.name))
                             print("            " + str(X))
                             print("            " + str(P))
                             print("")

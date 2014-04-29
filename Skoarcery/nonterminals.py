@@ -17,6 +17,7 @@ meter_stmts        : meter_stmt meter_stmts | <e>
 meter_stmt         : ZedPlus meter_stmt_numbery | meteroid | MeterSig
 meter_stmt_numbery : AssOp meter_ass_r
 meter_ass_r        : Symbol | beat | dynamic
+
 meteroid           : optional_carrots Symbol msg_chain_node | clef
 clef               : TrebleClef | BassClef | AltoClef
 

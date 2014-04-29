@@ -16,8 +16,12 @@ def init(compute=True):
     print("Dragon sets initialized.")
 
     if compute:
-        compute_firsts()
-        compute_follows()
+        compute_sets()
+
+
+def compute_sets():
+    compute_firsts()
+    compute_follows()
 
     print("Dragon sets computed")
 
@@ -27,41 +31,37 @@ class DragonSet:
     def __init__(self, name):
         self.name = name
         self.D = dict()
-        self.done_precomputations = False
 
     def __call__(self, *args):
 
         key = ""
-        production = args[0]
+        X = args[0]
 
-        if not production:
+        if not X:
             print("THE FUH? " + repr(args))
             raise AssertionError
 
-        if isinstance(production, str):
-            key = production
+        if isinstance(X, str):
+            key = X
 
-        if isinstance(production, Langoid):
-            key = production.name
+        if isinstance(X, Langoid):
+            key = X.name
 
-        if isinstance(production, Production):
-            production = production.production
+        if isinstance(X, Production):
+            X = X.production
 
-        if isinstance(production, list):
-            for langoid in production:
+        if isinstance(X, list):
+            for langoid in X:
                 key += langoid.name
 
-        #print("Key: " + key + " < " + str(production) + " < " + repr(args[0]))
+        #print("Key: " + key + " < " + str(X) + " < " + repr(args[0]))
         try:
             S = self.D[key]
 
         except KeyError:
 
-            if self.done_precomputations and self.name == "FIRST":
-                if not isinstance(production, list):
-                    raise AssertionError
-
-                S = FIRST_SEQ(production)
+            if isinstance(X, list) and self.name == "FIRST":
+                S = FIRST_SEQ(X)
             else:
                 S = set()
 
@@ -88,27 +88,6 @@ class DragonSet:
 
         S.add(element)
         self.D[key.name] = S
-
-    def add_all_from(self, key, S):
-
-        try:
-            X = self.D[key.name]
-        except KeyError:
-            X = set()
-
-        X.update(S)
-        self.D[key.name] = X
-
-    def add_all_except_e_from(self, key, S):
-        from Skoarcery.tokens import Empty
-
-        try:
-            X = self.D[key.name]
-        except KeyError:
-            X = set()
-
-        X.update(S.intersection({Empty}))
-        self.D[key.name] = X
 
     def __str__(self):
         s = ""
@@ -168,23 +147,8 @@ def compute_firsts():
                 else:
                     FIRST(X).add(Empty)
 
-                # finish off the suffixes
-                for j in range(i, n):
-                    Yj_to_end = R.production[j:]
-                    Yj = R.production[j]
-
-                    if len(Yj_to_end) > 0:
-                        S = FIRST(Yj_to_end)
-
-                        S.update(
-                            everything_but_e(FIRST(Yj))
-                        )
-
-                        FIRST(Yj_to_end).update(S)
-
         first_len = len(FIRST)
 
-    FIRST.done_precomputations = True
 
 def everything_but_e(S):
     from Skoarcery.tokens import Empty

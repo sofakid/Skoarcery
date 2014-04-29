@@ -46,10 +46,12 @@ class PyRDPP(unittest.TestCase):
                 alpha = P.production
 
                 desires = FIRST(alpha)
-
+                print("FOO   : " + repr(desires))
                 if Empty in desires:
+                    print("SNASNA: " + repr(desires))
                     desires.discard(Empty)
                     desires.update(FOLLOW(P))
+                    print("WEEEEE: " + repr(desires))
 
                 PY.cmt(str(P))
 

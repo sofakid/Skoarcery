@@ -5,7 +5,7 @@ WS:             \\s*
 
 MeterS:         <!
 MeterE:         !>
-MeterSig:       (\\d+(\\+\\d)+/\\d)
+MeterSig:       (\\d+(\\+\\d)*/\\d)
 TrebleClef:     G:|treble:
 BassClef:       F:|bass:
 AltoClef:       C:|alto:
@@ -75,7 +75,7 @@ QuindicesimaB:   15mb|alla quindicesimb
 Loco:           loco
 Volta:          \\[\\d+\\.\\]
 
-Symbol:         \\[a-zA-Z][a-zA-Z0-9]+
+Symbol:         \\\\[a-zA-Z][a-zA-Z0-9]+
 Slash:          /
 String:         \'[^']*\'
 Bars:           :?[\\|]+:?
