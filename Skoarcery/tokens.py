@@ -7,7 +7,6 @@ Comment:        <[?]([.\\n]*(?![?]))[?]>
 
 MeterS:         <!
 MeterE:         !>
-MeterSig:       (\\d+(\\+\\d)*/\\d)
 TrebleClef:     G:|treble:
 BassClef:       F:|bass:
 AltoClef:       C:|alto:
@@ -17,9 +16,8 @@ AltoClef:       C:|alto:
 CurNoat:        \\$
 Portamento:     ~~~
 Slur:           \\+\\+
-ZedPlus:        [1-9][0-9]+(?![mv][ab])
-Int:            (\\+|-)?(0|[1-9][0-9]+)(?![mv][ab])
-Float:          (\\+|-)?(0|[1-9][0-9]+)\\.[0-9]+
+Int:            (\\+|-)?(0|[1-9][0-9]*)(?![mv][ab])
+Float:          (\\+|-)?(0|[1-9][0-9]*)\\.[0-9]+
 
 ListS:          <(?![!=?])
 ListE:          >

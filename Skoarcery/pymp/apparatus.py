@@ -57,8 +57,16 @@ class Toker:
 
         raise Exception("Tried to burn " + toke_class.__name__ + "but what we have is " + toke.__class__.__name__)
 
+    def eof(self):
+        try:
+            Toke_EOF.burn(self.buf, self.offs)
+        except:
+            self.dump()
+            raise
+
 
 def parse(src):
     toker = Toker(src)
     parser = rdpp.SkoarParser(toker)
     parser.skoar()
+    toker.eof()

@@ -13,9 +13,10 @@ beat : Crotchets | Quavers | Quarters | Eighths | Slash
 
 meter              : MeterS meter_stmts MeterE
 meter_stmts        : meter_stmt meter_stmts | <e>
-meter_stmt         : ZedPlus meter_stmt_numbery | meteroid | MeterSig | comment
-meter_stmt_numbery : AssOp meter_ass_r
+meter_stmt         : Int meter_stmt_numbery | meteroid | comment
+meter_stmt_numbery : AssOp meter_ass_r | meter_sig_prime
 meter_ass_r        : Symbol | beat | dynamic
+meter_sig_prime    : Slash Int
 
 meteroid           : optional_carrots Symbol msg_chain_node | clef
 clef               : TrebleClef | BassClef | AltoClef
@@ -37,7 +38,7 @@ noat             : VectorNoat sharps_or_flats
 
 noaty            : Choard | Symbol | CurNoat | noat | listy | conditional
 nouny            : cthulhu | noaty | nouny_literal | accidentally | musical_keyword
-nouny_literal    : Int | Float | String | Tuplet | Caesura | Slur
+nouny_literal    : Tuplet | Caesura | Slur | Int | Float | String
 
 skoaroid         : nouny skoaroid_prime
 skoaroid_prime   : assignment skoaroid_prime | <e>
