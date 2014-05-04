@@ -1,7 +1,7 @@
 src = """
-<e>:    unused
-EOF:    unused
-WS:             \\s*
+<e>:         unused
+EOF:         unused
+Whitespace:  \\s*
 
 Comment:        <[?]([.\\n]*(?![?]))[?]>
 
@@ -37,6 +37,8 @@ Quarters:       [)]+\\.?
 Eighths:        \\]+\\.?
 AssOp:          =>
 MsgOp:          \\.
+Soak:           \\?
+
 AccSharp:       #|sharp
 AccNatural:     nat
 AccFlat:        flat
@@ -93,14 +95,14 @@ list_of_names = None
 tokens = None
 Empty = None
 EOF = None
-WS = None
+Whitespace = None
 
 odd_balls = None
 
 
 def init():
     from Skoarcery.langoids import Terminal
-    global src, list_of_names, tokens, EOF, Empty, WS, odd_balls
+    global src, list_of_names, tokens, EOF, Empty, Whitespace, odd_balls
 
     list_of_names = []
     tokens = dict()
@@ -123,8 +125,8 @@ def init():
 
     Empty = Terminal("<e>", None)
     EOF = Terminal("EOF", None)
-    WS = tokens["WS"]
+    Whitespace = tokens["Whitespace"]
 
-    odd_balls = {Empty, EOF, WS}
+    odd_balls = {Empty, EOF, Whitespace}
 
 

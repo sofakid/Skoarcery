@@ -17,7 +17,6 @@ class Code_Parser_Py(unittest.TestCase):
         from Skoarcery.dragonsets import FIRST, FOLLOW
         from Skoarcery.tokens import Empty
 
-
         fd = open("../pymp/rdpp.py", "w")
         PY.fd = fd
 
@@ -38,8 +37,10 @@ class Code_Parser_Py(unittest.TestCase):
             R = A.production_rules
 
             #PY.cmt(str(A))
-            PY.code_line("def " + A.name + "(self):")
+            PY.code_line("def " + A.name + "(I, parent):")
             PY.tab += 1
+            PY.code_line("I.tab += 1")
+            PY.code_line("noad = TreeNoad('" + A.name + "', None, parent) ")
             #PY.code_line("print('" + A.name + "')")
 
             for P in R:
@@ -75,31 +76,30 @@ class Code_Parser_Py(unittest.TestCase):
                 else:
                     PY.code_raw("]\n")
 
-                PY.code_line("if self.toker.sees(desires):")
-                PY.tab += 1
+                PY.code_if("I.toker.sees(desires)")
 
                 PY.print(str(P))
 
                 for x in alpha:
                     if isinstance(x, Terminal):
-                        PY.code_line("self.toker.burn(" + x.toker_name + ")")
+                        PY.code_line("noad.addToke('" + x.toker_name + "', I.toker.burn(" + x.toker_name + "))")
+
                         PY.print("burning: " + x.name)
                     else:
-                        PY.code_line("self." + x.name + "()")
+                        PY.code_line("noad.addNoad(I." + x.name + "(noad))")
                 else:
-                    PY.code_line("return\n")
-                PY.tab -= 1
+                    PY.code_return("noad")
 
             if A.derives_empty:
                 PY.cmt("<e>")
                 PY.print("burning empty")
-                PY.code_line("return")
+                PY.code_return()
 
             else:
                 PY.cmt("Error State")
-                PY.code_line("self.fail()")
+                PY.code_line("I.fail()")
+                PY.tab -= 1
 
-            PY.tab -= 1
             PY.newline()
 
         PY.tab -= 1
@@ -110,8 +110,8 @@ class Code_Parser_Py(unittest.TestCase):
         from Skoarcery.tokens import Empty
 
         PY.file_header("rdpp.py", "PyRDPP - Create Recursive Descent Predictive Parser")
-
-        s = "from Skoarcery.pymp.lex import "
+        s = "from Skoarcery.pymp.apparatus import TreeNoad\n"\
+            "from Skoarcery.pymp.lex import "
         T = tokens.tokens.values()
         n = len(T)
         i = 0
@@ -136,23 +136,23 @@ class SkoarParseException(Exception):
 
 class SkoarParser:
 
-    def __init__(self, toker):
-        self.toker = toker
-        self.tab = 0
+    def __init__(I, toker):
+        I.toker = toker
+        I.tab = 0
 
-    def fail(self):
-        self.toker.dump()
+    def fail(I):
+        I.toker.dump()
         raise SkoarParseException
 
     @property
-    def tabby(self):
-        if self.tab == 0:
+    def tabby(I):
+        if I.tab == 0:
             return ""
 
-        return ("{:>" + str(self.tab * 4) + "}").format(" ")
+        return ("{:>" + str(I.tab * 2) + "}").format(" ")
 
-    def print(self, line, end):
-        print(self.tabby + line, end=end)
+    def print(I, line, end):
+        print(I.tabby + line, end=end)
 
 
 """)

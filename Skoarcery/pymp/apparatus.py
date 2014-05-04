@@ -1,72 +1,92 @@
-from Skoarcery.pymp.lex import Toke_WS, Toke_EOF
-from ..pymp import lex, rdpp
-
+from Skoarcery.pymp.lex import Toke_Whitespace, Toke_EOF
 
 class Toker:
 
-    def __init__(self, src):
-        self.buf = src
-        self.offs = 0
+    def __init__(I, code):
+        I.skoarse = code
+        I.am_here = 0
+        I.saw = None
 
-        # lookahead token.
-        self.ready = None
-
-    def dump(self):
-        print("\nToker State")
-        print("offs : " + str(self.offs))
-
-        print("ready: " + str(self.ready))
-        s = self.buf[0:self.offs] + "_$_" + self.buf[self.offs:-1]
-
-        print(" buf : " + s)
-
-    def see(self, toke_class):
-        if self.ready:
-            if isinstance(self.ready, toke_class):
-                return self.ready
+    def see(I, want):
+        if I.saw:
+            if isinstance(I.saw, want):
+                return I.saw
         else:
-            self.offs += Toke_WS.burn(self.buf, self.offs)
-            self.ready = toke_class.match(self.buf, self.offs)
-            return self.ready
+            I.am_here += Toke_Whitespace.burn(I.skoarse, I.am_here)
+            I.saw = want.match(I.skoarse, I.am_here)
+            return I.saw
 
         return None
 
-    def sees(self, tokes):
+    def sees(I, wants):
 
-        for toke_class in tokes:
-            X = self.see(toke_class)
+        for want in wants:
+            X = I.see(want)
             if X:
                 return X
 
         return None
 
-    def burn(self, toke_class):
+    def burn(I, want):
 
-        toke = self.ready
+        toke = I.saw
 
-        if not toke:
-            toke = self.see(toke_class)
+        if toke is None:
+            toke = I.see(want)
 
-        if toke and isinstance(toke, toke_class):
-            #print("Burning " + self.ready.buf + " offs:" + str(self.offs))
-            self.ready = None
-            self.offs += toke.burn()
-            self.offs += Toke_WS.burn(self.buf, self.offs)
-            #print("Burnt offs:" + str(self.offs))
-            return
+        if isinstance(toke, want):
+            I.saw = None
+            I.am_here += toke.burn()
+            I.am_here += Toke_Whitespace.burn(I.skoarse, I.am_here)
+            return toke
 
-        raise Exception("Tried to burn " + toke_class.__name__ + "but what we have is " + toke.__class__.__name__)
+        raise Exception("I tried to burn " + want.__name__ + ", but what I saw is " + toke.__class__.__name__)
 
-    def eof(self):
+    def eof(I):
         try:
-            Toke_EOF.burn(self.buf, self.offs)
+            Toke_EOF.burn(I.skoarse, I.am_here)
         except:
-            self.dump()
+            I.dump()
             raise
 
+    def dump(I):
+        print("\nToker Dump")
+        print("here   : " + str(I.am_here))
+        print("saw    : " + str(I.saw))
+        print("skoarse: " + I.skoarse[0:I.am_here] + "_$_" + I.skoarse[I.am_here:-1])
+
+
+class TreeNoad:
+
+    def __init__(self, name, data, parent):
+        self.parent = parent
+        self.name = name
+        self.data = data
+        self.children = []
+
+    def addToke(self, name, toke):
+        self.children.append(TreeNoad(name, toke, self))
+
+    def addNoad(self, noad):
+        self.children.append(noad)
+
+    def drawTree(self, tab=1):
+        s = ("{:>" + str(tab) + "}{}\n").format(" ", self.name)
+        for x in self.children:
+            if x:
+                s += x.drawTree(tab + 1)
+
+        return s
 
 def parse(src):
+
+    from ..pymp import rdpp
+
     toker = Toker(src)
     parser = rdpp.SkoarParser(toker)
-    parser.skoar()
+    root = parser.skoar(None)
     toker.eof()
+
+    print("Parse Tree")
+    print(root.drawTree())
+

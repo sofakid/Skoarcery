@@ -17,7 +17,7 @@ class Test_Apparatus(unittest.TestCase):
 
     def test_apparatus(self):
 
-        apparatus.parse("| c ) d ) ]] ]] ]] g ]")
+        apparatus.parse("| c ) d ) ]] ]] ]] g ] |")
 
         apparatus.parse("| mp c ) d ) %S% ]] | [1.] fff ]] fp ]] g p D.S. ] | [2.] <! 4/4 \sna !> <c,e,g> )) )) ) :|")
 

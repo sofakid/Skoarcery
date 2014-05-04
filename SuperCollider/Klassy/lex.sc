@@ -44,7 +44,7 @@ SkoarToke {
 // ---------------------
 // Whitespace is special
 // ---------------------
-Toke_WS : SkoarToke {
+Toke_Whitespace : SkoarToke {
 classvar <regex = "^\s*";
 
     *burn {

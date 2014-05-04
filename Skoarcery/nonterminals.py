@@ -2,14 +2,11 @@
 src = """
 skoar   : phrases
 phrases : phrasey phrases | <e>
-
 phrasey : Comment | markers | meter | skoaroid | dal_goto | beat
 
-markers        : Segno | Fine | coda | measure_marker
-measure_marker : Bars opt_volta
-opt_volta      : Volta | <e>
+markers            : Segno | Fine | coda | Volta | Bars
 
-beat : Crotchets | Quavers | Quarters | Eighths | Slash
+beat               : Crotchets | Quavers | Quarters | Eighths | Slash
 
 meter              : MeterS meter_stmts MeterE
 meter_stmts        : meter_stmt meter_stmts | <e>
@@ -21,10 +18,10 @@ meter_sig_prime    : Slash Int
 meteroid           : optional_carrots Symbol msg_chain_node | clef
 clef               : TrebleClef | BassClef | AltoClef
 
-listy               : ListS listy_suffix
-listy_suffix        : listy_entries ListE
-listy_entries       : skoaroid moar_listy_entries
-moar_listy_entries  : ListSep listy_entries | <e>
+listy              : ListS listy_suffix
+listy_suffix       : listy_entries ListE
+listy_entries      : skoaroid moar_listy_entries
+moar_listy_entries : ListSep listy_entries | <e>
 
 musical_keyword      : dynamic | ottavas | musical_keyword_misc
 musical_keyword_misc : PedalDown | PedalUp | Rep | DubRep | Portamento
@@ -49,8 +46,9 @@ settable         : Caesura | CurNoat | Symbol | listy
 optional_carrots : Carrots | <e>
 stmt             : optional_carrots skoaroid msg_chain_node
 optional_stmt    : stmt | <e>
-msg_chain_node   : MsgOp msg msg_chain_node | <e>
+msg_chain_node   : optional_soak MsgOp msg msg_chain_node | <e>
 msg              : MsgNameWithArgs listy_suffix | MsgName | listy
+optional_soak    : Soak | <e>
 
 boolean          : skoaroid BooleanOp skoaroid
 conditional      : CondS optional_stmt CondSep boolean CondSep optional_stmt CondE

@@ -28,12 +28,12 @@ import abc
 
     regex = None
 
-    def __init__(self, s):
-        self.buf = s
+    def __init__(I, s):
+        I.buf = s
 
     # how many characters to burn from the buffer
-    def burn(self, *args):
-        return len(self.buf)
+    def burn(I, *args):
+        return len(I.buf)
 
     # override and return nil for no match, new toke otherwise
     @staticmethod
@@ -105,7 +105,7 @@ import abc
         return 0
 
 
-""".format(tokens.WS.toker_name, tokens.WS.regex)
+""".format(tokens.Whitespace.toker_name, tokens.Whitespace.regex)
         )
 
     def typical_token(self, token):

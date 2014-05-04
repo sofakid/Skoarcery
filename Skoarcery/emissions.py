@@ -35,8 +35,18 @@ class Voice:
     def code_line(self, line, end="\n"):
         self._emit(self.tabby + line, end=end)
 
+    def code_if(self, condition):
+        self.code_line("if " + condition + ":")
+        self.tab += 1
+        self.code_line("I.tab += 1")
+
+    def code_return(self, value=""):
+        self.code_line("I.tab -= 1")
+        self.code_line("return " + value + "\n")
+        self.tab -= 1
+
     def print(self, line, end="\n"):
-        self.code_line("self.print('" + line + "', end=" + repr(end) + ")")
+        self.code_line("I.print('" + line + "', end=" + repr(end) + ")")
 
     @property
     def tabby(self):

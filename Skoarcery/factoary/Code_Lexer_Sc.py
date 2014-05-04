@@ -55,10 +55,10 @@ class Code_Sc_Lexer(unittest.TestCase):
 
         emissions.SC.wee_header("Whitespace is special")
 
-        reg = '"' + tokens.WS.regex + '"'
+        reg = '"' + tokens.Whitespace.regex + '"'
 
         emissions.SC.code_raw(
-"""Toke_WS : SkoarToke {
+"""Toke_Whitespace : SkoarToke {
 classvar <regex = """ + reg + """;
 
     *burn {
