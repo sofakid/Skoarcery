@@ -1,12 +1,12 @@
 import unittest
-from Skoarcery import langoids, tokens, nonterminals, dragonsets
+from Skoarcery import langoids, terminals, nonterminals, dragonsets
 from Skoarcery.langoids import Terminal
 
 
 class Verify_LL_1(unittest.TestCase):
 
     def setUp(self):
-        tokens.init()
+        terminals.init()
         nonterminals.init()
         langoids.init()
         dragonsets.init()
@@ -19,7 +19,7 @@ class Verify_LL_1(unittest.TestCase):
     def test_make_table(self):
         from collections import defaultdict
         from Skoarcery.dragonsets import FIRST, FOLLOW
-        from Skoarcery.tokens import Empty, EOF
+        from Skoarcery.terminals import Empty, EOF
 
         # M[ Nonterm, Term ] = Production
         M = defaultdict(dict)

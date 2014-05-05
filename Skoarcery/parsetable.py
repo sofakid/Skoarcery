@@ -1,5 +1,5 @@
 import unittest
-from Skoarcery import langoids, tokens, nonterminals, dragonsets
+from Skoarcery import langoids, terminals, nonterminals, dragonsets
 from Skoarcery.langoids import Terminal
 
 
@@ -15,7 +15,7 @@ M = None
 def init():
     from collections import defaultdict
     from Skoarcery.dragonsets import FIRST, FOLLOW
-    from Skoarcery.tokens import Empty, EOF
+    from Skoarcery.terminals import Empty, EOF
 
     global M
 

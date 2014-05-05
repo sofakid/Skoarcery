@@ -1,11 +1,11 @@
 import unittest
-from Skoarcery import dragonsets, tokens, nonterminals
+from Skoarcery import dragonsets, terminals, nonterminals
 
 
 class TestTokens(unittest.TestCase):
 
     def setUp(self):
-        tokens.init()
+        terminals.init()
         nonterminals.init()
 
     def tearDown(self):
@@ -13,11 +13,11 @@ class TestTokens(unittest.TestCase):
 
     def tes_input(self):
         print("\n\n ==========--------( Tokens: Input )--------------------------------------------------------========\n\n")
-        print(tokens.src)
+        print(terminals.src)
 
     def test_sorted(self):
         print("\n\n ==========--------( Tokens: Created )--------------------------------------------------------========\n\n")
-        L = tokens.list_of_names
+        L = terminals.list_of_names
 
         L.sort()
 
@@ -29,12 +29,12 @@ class TestTokens(unittest.TestCase):
         print("\n")
 
     def test_untoked(self):
-        T = tokens.tokens
+        T = terminals.tokens
         N = nonterminals.nonterminals
 
         unused = []
 
-        skip = [tokens.Empty, tokens.EOF, tokens.Whitespace]
+        skip = [terminals.Empty, terminals.EOF, terminals.Whitespace]
 
         for t in T.values():
 

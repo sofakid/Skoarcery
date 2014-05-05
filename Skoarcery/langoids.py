@@ -5,7 +5,7 @@ def init():
 class Production:
 
     def __init__(self, name, list_of_langoids):
-        from Skoarcery.tokens import Empty
+        from Skoarcery.terminals import Empty
 
         self.name = name
         self.production = list_of_langoids
@@ -74,6 +74,7 @@ class Nonterminal(Langoid):
         self.first = set()
         self.follow = set()
         self.derives_empty = False
+        self.intermediate = False
 
     def add_production(self, p):
 

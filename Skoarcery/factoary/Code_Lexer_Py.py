@@ -1,11 +1,11 @@
 import unittest
-from Skoarcery import tokens, emissions
+from Skoarcery import terminals, emissions
 
 
 class Code_Lexer_Py(unittest.TestCase):
 
     def setUp(self):
-        tokens.init()
+        terminals.init()
 
     def imports(self):
         emissions.PY.code_raw(
@@ -74,7 +74,6 @@ import abc
     @staticmethod
     def match(buf, offs):
 
-        print("yaya")
         if len(buf) <= offs:
             print("woot")
             assert len(buf) == offs
@@ -83,7 +82,7 @@ import abc
         return None
 
 
-""".format(tokens.EOF.toker_name)
+""".format(terminals.EOF.toker_name)
         )
 
     def whitespace_token(self):
@@ -105,7 +104,7 @@ import abc
         return 0
 
 
-""".format(tokens.Whitespace.toker_name, tokens.Whitespace.regex)
+""".format(terminals.Whitespace.toker_name, terminals.Whitespace.regex)
         )
 
     def typical_token(self, token):
@@ -135,8 +134,8 @@ import abc
         self.EOF_token()
 
         emissions.PY.wee_header("Everyday Tokes")
-        for token in tokens.tokens.values():
-            if token not in tokens.odd_balls:
+        for token in terminals.tokens.values():
+            if token not in terminals.odd_balls:
                 self.typical_token(token)
 
         fd.close()

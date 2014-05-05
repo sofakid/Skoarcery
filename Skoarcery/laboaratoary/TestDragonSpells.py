@@ -1,11 +1,11 @@
 import unittest
-from Skoarcery import dragonsets, tokens, nonterminals
+from Skoarcery import dragonsets, terminals, nonterminals
 
 
 class DragonTests(unittest.TestCase):
 
     def setUp(self):
-        tokens.init()
+        terminals.init()
         nonterminals.init()
         dragonsets.init(compute=False)
         dragonsets.compute_firsts()
@@ -17,7 +17,7 @@ class DragonTests(unittest.TestCase):
 
         print("\n\n ==========--------( Terminal FIRST sets )-------------------------===========\n")
 
-        for token in tokens.tokens.values():
+        for token in terminals.tokens.values():
 
             first = dragonsets.FIRST(token)
 
@@ -58,8 +58,8 @@ class DragonTests(unittest.TestCase):
         FIRST = dragonsets.FIRST
         FOLLOW = dragonsets.FOLLOW
 
-        Symbol = tokens.tokens["Symbol"]
-        Carrots = tokens.tokens["Carrots"]
+        Symbol = terminals.tokens["Symbol"]
+        Carrots = terminals.tokens["Carrots"]
 
         optional_carrots = nonterminals.nonterminals["optional_carrots"]
         msg_chain_node = nonterminals.nonterminals["msg_chain_node"]
@@ -67,7 +67,7 @@ class DragonTests(unittest.TestCase):
 
         X = FIRST(optional_carrots)
 
-        self.assertSetEqual({Carrots, tokens.Empty}, X)
+        self.assertSetEqual({Carrots, terminals.Empty}, X)
 
         X = FIRST([optional_carrots, Symbol, msg_chain_node])
 

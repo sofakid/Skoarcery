@@ -1,5 +1,5 @@
 import unittest
-from Skoarcery import langoids, tokens, nonterminals, dragonsets, parsetable
+from Skoarcery import langoids, terminals, nonterminals, dragonsets, parsetable
 from Skoarcery.langoids import Terminal, Nonterminal
 from Skoarcery.emissions import PY
 from Skoarcery.pymp import apparatus
@@ -8,7 +8,7 @@ from Skoarcery.pymp import apparatus
 class Test_Apparatus(unittest.TestCase):
 
     def setUp(self):
-        tokens.init()
+        terminals.init()
         nonterminals.init()
         langoids.init()
         dragonsets.init()

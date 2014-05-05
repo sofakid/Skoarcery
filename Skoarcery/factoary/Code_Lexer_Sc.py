@@ -1,11 +1,11 @@
 import unittest
-from Skoarcery import tokens, emissions
+from Skoarcery import terminals, emissions
 
 
 class Code_Sc_Lexer(unittest.TestCase):
 
     def setUp(self):
-        tokens.init()
+        terminals.init()
 
     def base_token(self):
 
@@ -55,7 +55,7 @@ class Code_Sc_Lexer(unittest.TestCase):
 
         emissions.SC.wee_header("Whitespace is special")
 
-        reg = '"' + tokens.Whitespace.regex + '"'
+        reg = '"' + terminals.Whitespace.regex + '"'
 
         emissions.SC.code_raw(
 """Toke_Whitespace : SkoarToke {
@@ -101,7 +101,7 @@ classvar <regex = """ + reg + """;
         self.whitespace_token()
 
         emissions.SC.wee_header("Everyday Tokes")
-        for token in tokens.tokens.values():
-            if token not in tokens.odd_balls:
+        for token in terminals.tokens.values():
+            if token not in terminals.odd_balls:
                 self.typical_token(token)
 

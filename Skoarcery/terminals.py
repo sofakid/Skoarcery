@@ -1,4 +1,13 @@
 src = """
+#
+# Skoar Tokes
+#
+# format (at very start of line): TokeName: regex
+#
+# If token carries information: TokeName*: regex
+#   -  be sure an inspector for TokeName exists
+#
+
 <e>:         unused
 EOF:         unused
 Whitespace:  \\s*
@@ -30,7 +39,7 @@ Carrots:        \\^+(?!\\^\\^\\()?
 LWing:          \\^\\^[(]
 RWing:          [)]\\^\\^
 
-Tuplet:         /\\d+(:\\d+)? | (du|tri|quadru)plets? | (quin|sex|sep|oc)tuplets?
+Tuplet:         /\\d+(:\\d+)?|(du|tri|quadru)plets?|(quin|sex|sep|oc)tuplets?
 Crotchets:      }+
 Quavers:        o+/
 Caesura:        //
@@ -61,8 +70,8 @@ AccFlat:        flat
 
 NoatSharps:     #
 NoatFlats:      b
-VectorNoat:     [a-g](#*|b*)
-BooleanOp:      == | != | <= | >= | in | nin | and | or | xor
+VectorNoat:     ([a-eg]|f(?![a-zA-Z_]))(#*|b*)
+BooleanOp:      ==|!=|<=|>=|in|nin|and|or|xor
 Choard:         (D(?!\\.[CS]\\.)|[ABCEFG])([Mm0-9]|sus|dim)*
 CondS:          {
 CondSep:        ;
@@ -111,6 +120,7 @@ PedalUp:        \\*
 #
 
 list_of_names = None
+inspectables = None
 tokens = None
 Empty = None
 EOF = None
@@ -121,9 +131,10 @@ odd_balls = None
 
 def init():
     from Skoarcery.langoids import Terminal
-    global src, list_of_names, tokens, EOF, Empty, Whitespace, odd_balls
+    global src, list_of_names, tokens, EOF, Empty, Whitespace, odd_balls, inspectables
 
     list_of_names = []
+    inspectables = []
     tokens = dict()
 
     for token_line in src.split("\n"):
@@ -135,6 +146,10 @@ def init():
 
             token = token.strip()
             regex = regex.strip()
+
+            if token.endswith("*"):
+                token = token.rstrip("*")
+                inspectables.append(token)
 
             list_of_names.append(token)
 

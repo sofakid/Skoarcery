@@ -66,17 +66,17 @@ class SkoarNoad:
         self.data = data
         self.children = []
 
-    def addToke(self, name, toke):
+    def add_toke(self, name, toke):
         self.children.append(SkoarNoad(name, toke, self))
 
-    def addNoad(self, noad):
+    def add_noad(self, noad):
         self.children.append(noad)
 
-    def drawTree(self, tab=1):
+    def draw_tree(self, tab=1):
         s = ("{:>" + str(tab) + "}{}\n").format(" ", self.name)
         for x in self.children:
             if x:
-                s += x.drawTree(tab + 1)
+                s += x.draw_tree(tab + 1)
 
         return s
 
@@ -117,16 +117,12 @@ class Skoar:
         pass
 
 
-
-
 def parse(src):
 
     skoar = Skoar(src)
-
     skoar.parse()
 
-    print("Parse Tree")
-    print(skoar.tree.drawTree())
+    return skoar
 
 
 class SymboalTable(UserDict):

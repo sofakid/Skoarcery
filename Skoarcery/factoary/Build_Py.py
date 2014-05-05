@@ -2,12 +2,12 @@ from imp import reload
 import unittest
 from Skoarcery.factoary.Code_Lexer_Py import Code_Lexer_Py
 from Skoarcery.factoary.Code_Parser_Py import Code_Parser_Py
-from Skoarcery.laboaratoary.DragonTests import DragonTests
-from Skoarcery.laboaratoary.MakeParseTable import Verify_LL_1
-from Skoarcery.laboaratoary.Nonterminals import TestNonterminals
-from Skoarcery.laboaratoary.Terminals import TestTokens
+from Skoarcery.laboaratoary.TestDragonSpells import DragonTests
+from Skoarcery.laboaratoary.ExamineParseTree import ExamineParseTree
+from Skoarcery.laboaratoary.TestParseTable import Verify_LL_1
+from Skoarcery.laboaratoary.TestNonterminals import TestNonterminals
+from Skoarcery.laboaratoary.TestTerminals import TestTokens
 from Skoarcery.laboaratoary.TestApparatus import Test_Apparatus
-
 
 
 class Build_All_Py(unittest.TestCase):
@@ -52,7 +52,8 @@ class Build_All_Py(unittest.TestCase):
         #
         # Apparatus
         sweet = TS()
-        sweet.addTest(sweeten(Test_Apparatus))
+        for test in [Test_Apparatus, ExamineParseTree]:
+            sweet.addTest(sweeten(test))
         Runner().run(sweet)
 
 if __name__ == '__main__':

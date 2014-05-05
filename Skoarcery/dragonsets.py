@@ -95,7 +95,7 @@ class DragonSet:
 
 def compute_firsts():
 
-    from Skoarcery.tokens import Empty, tokens as T
+    from Skoarcery.terminals import Empty, tokens as T
     from Skoarcery.nonterminals import nonterminals as N
 
     global FIRST
@@ -146,14 +146,14 @@ def compute_firsts():
 
 
 def everything_but_e(S):
-    from Skoarcery.tokens import Empty
+    from Skoarcery.terminals import Empty
 
     return {el for el in S if el != Empty}
 
 
 #noinspection PyPep8Naming
 def FIRST_SEQ(list_of_langoids):
-    from Skoarcery.tokens import Empty
+    from Skoarcery.terminals import Empty
 
     global FIRST
 
@@ -177,7 +177,7 @@ def FIRST_SEQ(list_of_langoids):
 
 #noinspection PyPep8Naming
 def compute_follows():
-    from Skoarcery.tokens import EOF, Empty
+    from Skoarcery.terminals import EOF, Empty
     from Skoarcery.nonterminals import nonterminals as N, SKOAR
 
     global FIRST, FOLLOW

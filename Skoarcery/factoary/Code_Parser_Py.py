@@ -1,5 +1,5 @@
 import unittest
-from Skoarcery import langoids, tokens, nonterminals, dragonsets, parsetable
+from Skoarcery import langoids, terminals, nonterminals, dragonsets, parsetable
 from Skoarcery.langoids import Terminal, Nonterminal
 from Skoarcery.emissions import PY
 
@@ -7,7 +7,7 @@ from Skoarcery.emissions import PY
 class Code_Parser_Py(unittest.TestCase):
 
     def setUp(self):
-        tokens.init()
+        terminals.init()
         nonterminals.init()
         langoids.init()
         dragonsets.init()
@@ -15,7 +15,7 @@ class Code_Parser_Py(unittest.TestCase):
 
     def test_pyrdpp(self):
         from Skoarcery.dragonsets import FIRST, FOLLOW
-        from Skoarcery.tokens import Empty
+        from Skoarcery.terminals import Empty
 
         fd = open("../pymp/rdpp.py", "w")
         PY.fd = fd
@@ -40,7 +40,12 @@ class Code_Parser_Py(unittest.TestCase):
             PY.code_line("def " + A.name + "(I, parent):")
             PY.tab += 1
             PY.code_line("I.tab += 1")
-            PY.code_line("noad = SkoarNoad('" + A.name + "', None, parent) ")
+
+            if A.intermediate:
+                PY.code_line("noad = parent")
+            else:
+                PY.code_line("noad = SkoarNoad('" + A.name + "', None, parent) ")
+
             #PY.code_line("print('" + A.name + "')")
 
             for P in R:
@@ -82,11 +87,14 @@ class Code_Parser_Py(unittest.TestCase):
 
                 for x in alpha:
                     if isinstance(x, Terminal):
-                        PY.code_line("noad.addToke('" + x.toker_name + "', I.toker.burn(" + x.toker_name + "))")
+                        PY.code_line("noad.add_toke('" + x.toker_name + "', I.toker.burn(" + x.toker_name + "))")
 
                         #PY.print("burning: " + x.name)
                     else:
-                        PY.code_line("noad.addNoad(I." + x.name + "(noad))")
+                        if x.intermediate:
+                            PY.code_line("I." + x.name + "(noad)")
+                        else:
+                            PY.code_line("noad.add_noad(I." + x.name + "(noad))")
                 else:
                     PY.code_return("noad")
 
@@ -107,12 +115,12 @@ class Code_Parser_Py(unittest.TestCase):
         fd.close()
 
     def code_start(self):
-        from Skoarcery.tokens import Empty
+        from Skoarcery.terminals import Empty
 
         PY.file_header("rdpp.py", "PyRDPP - Create Recursive Descent Predictive Parser")
         s = "from Skoarcery.pymp.apparatus import SkoarNoad\n"\
             "from Skoarcery.pymp.lex import "
-        T = tokens.tokens.values()
+        T = terminals.tokens.values()
         n = len(T)
         i = 0
         for t in T:

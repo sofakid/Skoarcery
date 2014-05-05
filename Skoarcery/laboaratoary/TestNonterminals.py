@@ -1,11 +1,11 @@
 import unittest
-from Skoarcery import dragonsets, tokens, nonterminals
+from Skoarcery import dragonsets, terminals, nonterminals
 
 
 class TestNonterminals(unittest.TestCase):
 
     def setUp(self):
-        tokens.init()
+        terminals.init()
         nonterminals.init()
 
     def tearDown(self):
@@ -13,7 +13,7 @@ class TestNonterminals(unittest.TestCase):
 
 
     def test_unused(self):
-        T = tokens.tokens
+        T = terminals.tokens
         N = nonterminals.nonterminals
 
         unused = []
@@ -44,7 +44,7 @@ class TestNonterminals(unittest.TestCase):
 
 
     def test_undefined(self):
-        T = tokens.tokens
+        T = terminals.tokens
         N = nonterminals.nonterminals
 
         undefined = set()
