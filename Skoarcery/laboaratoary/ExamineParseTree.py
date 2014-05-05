@@ -70,6 +70,8 @@ class ExamineParseTree(unittest.TestCase):
 
         print(skoar.tree.draw_tree())
 
+        skoar.tinsel_and_balls()
+
 
 
 

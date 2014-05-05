@@ -129,7 +129,7 @@ class Code_Parser_Py(unittest.TestCase):
                 continue
             s += t.toker_name
             i += 1
-            if i != n:
+            if i < n:
                 if i % 5 == 0:
                     s += ", \\\n    "
                 else:

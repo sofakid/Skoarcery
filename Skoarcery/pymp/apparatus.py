@@ -1,5 +1,6 @@
 from collections import OrderedDict, UserDict
-from Skoarcery.pymp.lex import Toke_Whitespace, Toke_EOF
+from Skoarcery.pymp import toke_inspector
+from Skoarcery.pymp.lex import Toke_Whitespace, Toke_EOF, SkoarToke
 
 
 class Toker:
@@ -66,6 +67,12 @@ class SkoarNoad:
         self.data = data
         self.children = []
 
+        if isinstance(data, SkoarToke):
+            self.inspectable = data.__class__.inspectable
+        else:
+            self.inspectable = False
+
+
     def add_toke(self, name, toke):
         self.children.append(SkoarNoad(name, toke, self))
 
@@ -80,7 +87,7 @@ class SkoarNoad:
 
         return s
 
-    def visit(self, f=lambda x: x):
+    def visit(self, f):
 
         for x in self.children:
             if x:
@@ -114,7 +121,21 @@ class Skoar:
         self.toker.eof()
 
     def tinsel_and_balls(self):
-        pass
+
+        def inspect(x):
+            try:
+                toke_inspector.__dict__[x.name](x.data)
+
+                print("decorated " + x.name + ":")
+                for k, v in x.data.__dict__.items():
+                    print("    " + k + ": " + str(v))
+                print("")
+
+            except KeyError:
+                # ignore
+                pass
+
+        self.tree.visit(inspect)
 
 
 def parse(src):

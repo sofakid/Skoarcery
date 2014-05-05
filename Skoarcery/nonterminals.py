@@ -39,10 +39,8 @@ dynamic              : DynPiano | DynForte | DynSFZ | DynFP
 
 acc              : AccSharp | AccNatural | AccFlat
 accidentally     : acc noaty
-sharps_or_flats  : NoatSharps | NoatFlats | <e>
-noat             : VectorNoat sharps_or_flats
 
-noaty            : Choard | Symbol | CurNoat | noat | listy | conditional
+noaty            : Choard | Symbol | CurNoat | VectorNoat | listy | conditional
 nouny            : cthulhu | noaty | nouny_literal | accidentally | musical_keyword
 nouny_literal*   : Tuplet | Caesura | Slur | Int | Float | String
 

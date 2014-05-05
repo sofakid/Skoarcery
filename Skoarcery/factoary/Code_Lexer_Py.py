@@ -27,13 +27,14 @@ import abc
     __metaclass__ = abc.ABCMeta
 
     regex = None
+    inspectable = False
 
     def __init__(I, s):
-        I.buf = s
+        I.lexeme = s
 
     # how many characters to burn from the buffer
     def burn(I, *args):
-        return len(I.buf)
+        return len(I.lexeme)
 
     # override and return nil for no match, new toke otherwise
     @staticmethod
@@ -111,13 +112,14 @@ import abc
         emissions.PY.code_raw(
 """class {0}(SkoarToke):
     regex = re.compile(r"{1}")
+    inspectable = {2}
 
     @staticmethod
     def match(buf, offs):
         return SkoarToke.match_toke(buf, offs, {0})
 
 
-""".format(token.toker_name, token.regex)
+""".format(token.toker_name, token.regex, token.name in terminals.inspectables)
         )
 
     def test_PyLexer(self):

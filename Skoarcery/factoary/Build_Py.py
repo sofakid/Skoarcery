@@ -1,5 +1,6 @@
 from imp import reload
 import unittest
+from Skoarcery.factoary.Code_Lexer_Inspector_Py import Code_Lexer_Inspector_Py
 from Skoarcery.factoary.Code_Lexer_Py import Code_Lexer_Py
 from Skoarcery.factoary.Code_Parser_Py import Code_Parser_Py
 from Skoarcery.laboaratoary.TestDragonSpells import DragonTests
@@ -39,6 +40,16 @@ class Build_All_Py(unittest.TestCase):
 
         from Skoarcery.pymp import lex
         reload(lex)
+
+        # #
+        # # Toke Inspector
+        #
+        # sweet = TS()
+        # sweet.addTest(sweeten(Code_Lexer_Inspector_Py))
+        # Runner().run(sweet)
+        #
+        # from Skoarcery.pymp import toke_inspector
+        # reload(toke_inspector)
 
         #
         # Parser
