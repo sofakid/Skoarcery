@@ -1,4 +1,6 @@
+from collections import OrderedDict, UserDict
 from Skoarcery.pymp.lex import Toke_Whitespace, Toke_EOF
+
 
 class Toker:
 
@@ -56,7 +58,7 @@ class Toker:
         print("skoarse: " + I.skoarse[0:I.am_here] + "_$_" + I.skoarse[I.am_here:-1])
 
 
-class TreeNoad:
+class SkoarNoad:
 
     def __init__(self, name, data, parent):
         self.parent = parent
@@ -65,7 +67,7 @@ class TreeNoad:
         self.children = []
 
     def addToke(self, name, toke):
-        self.children.append(TreeNoad(name, toke, self))
+        self.children.append(SkoarNoad(name, toke, self))
 
     def addNoad(self, noad):
         self.children.append(noad)
@@ -78,15 +80,59 @@ class TreeNoad:
 
         return s
 
+    def visit(self, f=lambda x: x):
+
+        for x in self.children:
+            if x:
+                x.visit(f)
+
+        f(self)
+
+    def nextBeat(self):
+
+        duration = 0
+
+
+class SkoarMarkers(OrderedDict):
+    pass
+
+
+class Skoar:
+
+    def __init__(self, skoarse):
+        from ..pymp import rdpp
+        self.skoarse = skoarse
+        self.tree = None
+        self.toker = Toker(self.skoarse)
+        self.parser = rdpp.SkoarParser(self)
+        self.markers = SkoarMarkers()
+
+        self.control_stack = []
+
+    def parse(self):
+        self.tree = self.parser.skoar(None)
+        self.toker.eof()
+
+    def tinsel_and_balls(self):
+        pass
+
+
+
+
 def parse(src):
 
-    from ..pymp import rdpp
+    skoar = Skoar(src)
 
-    toker = Toker(src)
-    parser = rdpp.SkoarParser(toker)
-    root = parser.skoar(None)
-    toker.eof()
+    skoar.parse()
 
     print("Parse Tree")
-    print(root.drawTree())
+    print(skoar.tree.drawTree())
+
+
+class SymboalTable(UserDict):
+    pass
+
+
+class Skoarmantics:
+    pass
 

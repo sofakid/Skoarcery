@@ -47,7 +47,7 @@ import abc
         match = toke_class.regex.match(buf, offs)
 
         if match:
-            print("\\n\\n" + toke_class.__name__ + ": MATCH: {" + match.group(0) + "}")
+            #print("\\n" + toke_class.__name__ + ": MATCH: {" + match.group(0) + "}")
             return toke_class(match.group(0))
 
         return None

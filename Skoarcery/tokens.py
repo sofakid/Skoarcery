@@ -3,7 +3,7 @@ src = """
 EOF:         unused
 Whitespace:  \\s*
 
-Comment:        <[?]([.\\n]*(?![?]))[?]>
+Comment:        <\\?(.|[\\n\\r])*?\\?>
 
 MeterS:         <!
 MeterE:         !>
@@ -16,23 +16,39 @@ AltoClef:       C:|alto:
 CurNoat:        \\$
 Portamento:     ~~~
 Slur:           \\+\\+
+
+# careful not to match ottavas with end in mv or ab
 Int:            (\\+|-)?(0|[1-9][0-9]*)(?![mv][ab])
 Float:          (\\+|-)?(0|[1-9][0-9]*)\\.[0-9]+
 
 ListS:          <(?![!=?])
 ListE:          >
 ListSep:        ,
+
+# one or many ^ but don't eat ^^( which is cthulhu's left wing
 Carrots:        \\^+(?!\\^\\^\\()?
 LWing:          \\^\\^[(]
 RWing:          [)]\\^\\^
-Tuplet:         /\\d+
+
+Tuplet:         /\\d+(:\\d+)? | (du|tri|quadru)plets? | (quin|sex|sep|oc)tuplets?
 Crotchets:      }+
 Quavers:        o+/
 Caesura:        //
-DynPiano:       mp|p+
-DynForte:       mf|f+
+
+# we can't allow f for forte as f is a noat, so we allow
+#
+#  forte fforte ffforte ff fff, but not f
+#
+#  for consisentecy, piano, ppiano, pppiano work too.
+#
+#  default velocity:
+#    ppp (16), pp (32), p (48), mp (64), mf (80), f (96), ff (112), fff (127)
+
+DynPiano:       mp|p+iano|p+
+DynForte:       mf|f+orte|ff+
 DynSFZ:         sfz
 DynFP:          fp
+
 Quarters:       [)]+\\.?
 Eighths:        \\]+\\.?
 AssOp:          =>
@@ -79,7 +95,10 @@ Volta:          \\[\\d+\\.\\]
 
 Symbol:         \\\\[a-zA-Z][a-zA-Z0-9]+
 Slash:          /
+
+# TODO: deal with \"
 String:         \'[^']*\'
+
 Bars:           :?[\\|]+:?
 
 PedalDown:      Ped\\.
@@ -110,7 +129,7 @@ def init():
     for token_line in src.split("\n"):
 
         token_line = token_line.strip()
-        if len(token_line) > 0:
+        if len(token_line) > 0 and not token_line.startswith("#"):
 
             (token, v, regex) = token_line.partition(":")
 

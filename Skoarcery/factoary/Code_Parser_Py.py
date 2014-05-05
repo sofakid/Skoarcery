@@ -40,7 +40,7 @@ class Code_Parser_Py(unittest.TestCase):
             PY.code_line("def " + A.name + "(I, parent):")
             PY.tab += 1
             PY.code_line("I.tab += 1")
-            PY.code_line("noad = TreeNoad('" + A.name + "', None, parent) ")
+            PY.code_line("noad = SkoarNoad('" + A.name + "', None, parent) ")
             #PY.code_line("print('" + A.name + "')")
 
             for P in R:
@@ -78,13 +78,13 @@ class Code_Parser_Py(unittest.TestCase):
 
                 PY.code_if("I.toker.sees(desires)")
 
-                PY.print(str(P))
+                #PY.print(str(P))
 
                 for x in alpha:
                     if isinstance(x, Terminal):
                         PY.code_line("noad.addToke('" + x.toker_name + "', I.toker.burn(" + x.toker_name + "))")
 
-                        PY.print("burning: " + x.name)
+                        #PY.print("burning: " + x.name)
                     else:
                         PY.code_line("noad.addNoad(I." + x.name + "(noad))")
                 else:
@@ -92,7 +92,7 @@ class Code_Parser_Py(unittest.TestCase):
 
             if A.derives_empty:
                 PY.cmt("<e>")
-                PY.print("burning empty")
+                #PY.print("burning empty")
                 PY.code_return()
 
             else:
@@ -110,7 +110,7 @@ class Code_Parser_Py(unittest.TestCase):
         from Skoarcery.tokens import Empty
 
         PY.file_header("rdpp.py", "PyRDPP - Create Recursive Descent Predictive Parser")
-        s = "from Skoarcery.pymp.apparatus import TreeNoad\n"\
+        s = "from Skoarcery.pymp.apparatus import SkoarNoad\n"\
             "from Skoarcery.pymp.lex import "
         T = tokens.tokens.values()
         n = len(T)
@@ -136,8 +136,9 @@ class SkoarParseException(Exception):
 
 class SkoarParser:
 
-    def __init__(I, toker):
-        I.toker = toker
+    def __init__(I, runtime):
+        I.runtime = runtime
+        I.toker = runtime.toker
         I.tab = 0
 
     def fail(I):

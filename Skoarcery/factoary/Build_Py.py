@@ -6,7 +6,7 @@ from Skoarcery.laboaratoary.DragonTests import DragonTests
 from Skoarcery.laboaratoary.MakeParseTable import Verify_LL_1
 from Skoarcery.laboaratoary.Nonterminals import TestNonterminals
 from Skoarcery.laboaratoary.Terminals import TestTokens
-from Skoarcery.laboaratoary.Z_Apparatus import Test_Apparatus
+from Skoarcery.laboaratoary.TestApparatus import Test_Apparatus
 
 
 
