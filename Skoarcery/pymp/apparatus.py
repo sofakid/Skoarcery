@@ -1,6 +1,7 @@
 from collections import OrderedDict, UserDict
-from Skoarcery.pymp import toke_inspector
+from Skoarcery.pymp import toke_inspector, skoarmantics
 from Skoarcery.pymp.lex import Toke_Whitespace, Toke_EOF, SkoarToke
+
 
 
 class Toker:
@@ -61,23 +62,30 @@ class Toker:
 
 class SkoarNoad:
 
-    def __init__(self, name, data, parent):
+    def __init__(self, name, toke, parent, i=0):
         self.parent = parent
+        self.i = i  # position in parent
+        self.n = 0  # number of children
         self.name = name
-        self.data = data
+        self.toke = toke
         self.children = []
 
-        if isinstance(data, SkoarToke):
-            self.inspectable = data.__class__.inspectable
+        if isinstance(toke, SkoarToke):
+            self.inspectable = toke.__class__.inspectable
         else:
             self.inspectable = False
 
-
     def add_toke(self, name, toke):
-        self.children.append(SkoarNoad(name, toke, self))
+        self.children.append(SkoarNoad(name, toke, self, self.n))
+        self.n += 1
 
     def add_noad(self, noad):
+
         self.children.append(noad)
+        noad.i = self.n
+        self.n += 1
+
+
 
     def draw_tree(self, tab=1):
         s = ("{:>" + str(tab) + "}{}\n").format(" ", self.name)
@@ -100,10 +108,6 @@ class SkoarNoad:
         duration = 0
 
 
-class SkoarMarkers(OrderedDict):
-    pass
-
-
 class Skoar:
 
     def __init__(self, skoarse):
@@ -112,9 +116,12 @@ class Skoar:
         self.tree = None
         self.toker = Toker(self.skoarse)
         self.parser = rdpp.SkoarParser(self)
-        self.markers = SkoarMarkers()
+        self.markers = []
 
         self.control_stack = []
+
+        self.cur_noat = None
+        self.noat_direction = 1
 
     def parse(self):
         self.tree = self.parser.skoar(None)
@@ -123,19 +130,69 @@ class Skoar:
     def tinsel_and_balls(self):
 
         def inspect(x):
-            try:
-                toke_inspector.__dict__[x.name](x.data)
 
-                print("decorated " + x.name + ":")
-                for k, v in x.data.__dict__.items():
-                    print("    " + k + ": " + str(v))
-                print("")
+            # tokens*
+            if x.toke:
+                try:
+                    # run the function x.name, pass the token
+                    toke_inspector.__dict__[x.name](x.toke)
 
-            except KeyError:
-                # ignore
-                pass
+                    print("decorated toke " + x.name + ":")
+                    for k, v in x.toke.__dict__.items():
+                        print("    " + k + ": " + str(v))
+                    print("")
+                except KeyError:
+                    pass
+
+            # nonterminals*
+            else:
+                try:
+                    # run the function, pass the noad (not the nonterminal)
+                    y = skoarmantics.__dict__[x.name]
+                    y(self, x)
+
+                    print("decorated noad " + x.name + ":")
+                    for k, v in x.__dict__.items():
+                        if k not in ["children", "parent", "toke", "inspectable"]:
+                            print("    " + k + ": " + repr(v))
+                    print("")
+                except KeyError:
+                    pass
 
         self.tree.visit(inspect)
+
+    def noat_go(self, noat):
+
+        # find direction and if we're moving
+        move = True
+        if noat.up:
+            self.noat_direction = 1
+
+        elif noat.down:
+            self.noat_direction = -1
+
+        elif noat == self.cur_noat:
+            move = False
+
+        # move if we do
+        if move and self.noat_direction > 0:
+            print("up to ", end="")
+
+        elif move and self.noat_direction < 0:
+            print("down to ", end="")
+
+        print(noat.letter, end="")
+
+        for i in range(0, noat.sharps):
+            print("#", end="")
+
+        for i in range(0, noat.flats):
+            print("b", end="")
+
+    # save these in a list for jumping around in
+    def add_marker(self, marker_noad):
+        self.markers.append(marker_noad)
+
 
 
 def parse(src):
@@ -148,8 +205,3 @@ def parse(src):
 
 class SymboalTable(UserDict):
     pass
-
-
-class Skoarmantics:
-    pass
-

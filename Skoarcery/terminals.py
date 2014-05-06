@@ -71,9 +71,9 @@ AccFlat:          flat
 VectorNoat*:      ~?([a-eg]|f(?![a-zA-Z_]))(#*|b*)~?
 BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor
 Choard*:          (D(?!\\.[CS]\\.)|[ABCEFG])([Mm0-9]|sus|dim)*
-CondS:            {
+CondS:            {\\?
 CondSep:          ;
-CondE:            }
+CondE:            \\?}
 MsgName*:         [a-zA-Z_][a-zA-Z0-9_]*
 MsgNameWithArgs*: [a-zA-Z_][a-zA-Z0-9_]*<
 
@@ -82,7 +82,7 @@ Nosey:            ,
 DaCapo:           D\\.C\\.|Da Capo
 DalSegno:         D\\.S\\.|Dal Segno
 Fine:             fine
-Segno:            %S%|al segno
+Segno*:           %S%(?:_[a-zA-Z_][a-zA-Z0-9_]*)*
 Coda:             \\(\\+\\)
 Rep:              \\./\\.
 DubRep:           /\\.\\|\\./

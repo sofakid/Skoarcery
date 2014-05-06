@@ -33,7 +33,7 @@ class ExamineParseTree(unittest.TestCase):
         | <a,c,e> ). ). ]]] ]]] ]]] |: f# ) ) ooo/ ]]] ooo/ ]] ]] :|
         | <a,c,e> ). ). ]]] ]]] ]]] |: f# ) ) ooo/ ]]] ooo/ ]] ]] :|
 
-        | a ) b ) c ) | d ) e ) f ) g ) |
+        | a ) b ) c ) | d ) e ) f ) g ) %S%_food |
 
         """
 
@@ -46,6 +46,9 @@ class ExamineParseTree(unittest.TestCase):
         print("\nParse Tree")
         print("----------")
 
+
+        print(skoar.tree.draw_tree())
+        skoar.tinsel_and_balls()
 
         print(skoar.tree.draw_tree())
 
@@ -72,6 +75,7 @@ class ExamineParseTree(unittest.TestCase):
 
         skoar.tinsel_and_balls()
 
+        print(skoar.tree.draw_tree())
 
 
 

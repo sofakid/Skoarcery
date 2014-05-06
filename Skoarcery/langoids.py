@@ -75,6 +75,7 @@ class Nonterminal(Langoid):
         self.follow = set()
         self.derives_empty = False
         self.intermediate = False
+        self.has_semantics = False
 
     def add_production(self, p):
 

@@ -29,10 +29,12 @@ def Toke_Tuplet(toke):
 
 
 def Toke_Crotchets(toke):
+    toke.is_rest = True
     toke.value = len(toke.lexeme)
 
 
 def Toke_Quavers(toke):
+    toke.is_rest = True
     toke.value = len(toke.lexeme) - 1
 
 
@@ -45,10 +47,12 @@ def Toke_DynForte(toke):
 
 
 def Toke_Quarters(toke):
+    toke.is_rest = False
     toke.value = len(toke.lexeme)
 
 
 def Toke_Eighths(toke):
+    toke.is_rest = False
     toke.value = len(toke.lexeme)
 
 
@@ -74,6 +78,8 @@ def Toke_VectorNoat(toke):
         toke.flats = len(flats)
 
     if r.group(5):
+        if toke.up:
+            raise AssertionError("Can't noat up and down: " + s)
         toke.down = True
 
 
@@ -99,6 +105,14 @@ def Toke_Volta(toke):
 
 def Toke_Symbol(toke):
     toke.value = toke.lexeme[1:]
+
+
+def Toke_Segno(toke):
+    a = toke.lexeme.split("_")
+    if len(a) > 1:
+        toke.label = a[1]
+    else:
+        toke.label = ""
 
 
 def Toke_String(toke):

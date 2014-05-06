@@ -101,7 +101,7 @@ class Code_Parser_Py(unittest.TestCase):
             if A.derives_empty:
                 PY.cmt("<e>")
                 #PY.print("burning empty")
-                PY.code_return()
+                PY.code_return("noad")
 
             else:
                 PY.cmt("Error State")
