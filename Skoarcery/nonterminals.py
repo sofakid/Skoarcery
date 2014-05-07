@@ -14,9 +14,9 @@ src = """
 
 skoar   : phrases
 +phrases: phrasey phrases | <e>
-+phrasey: Comment | markers | meter | skoaroid | dal_goto | beat
++phrasey: Comment | marker | meter | skoaroid | dal_goto | beat
 
-markers*           : Segno | Fine | coda | Volta | Bars
+marker*            : Segno | Fine | coda | Volta | Bars
 
 coda*              : Coda optional_al_coda
 optional_al_coda   : AlCoda | <e>

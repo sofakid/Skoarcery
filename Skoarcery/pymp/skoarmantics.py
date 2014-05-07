@@ -2,9 +2,9 @@
 # Skoarmantics
 # ============
 
-
+#
 # We went depth first so our children should be defined
-from Skoarcery.pymp.lex import Toke_VectorNoat
+#
 
 
 def msg_chain_node(skoar, noad):
@@ -12,19 +12,27 @@ def msg_chain_node(skoar, noad):
 
 
 def beat(skoar, noad):
-    x = noad.children[0].toke
-    noad.children = []
-    noad.beat = x
+    noad.absorb_toke()
+    noad.beat = noad.toke
+    noad.is_beat = True
 
 
 def meter_beat(skoar, noad):
-    x = noad.children[0].toke
-    noad.children = []
-    noad.beat = x
+    noad.absorb_toke()
+    noad.beat = noad.toke
 
 
 def listy(skoar, noad):
-    pass
+    from Skoarcery.pymp.lex import Toke_ListSep
+
+    X = []
+
+    for x in noad.children[1:-1]:
+        if x.toke and isinstance(x.toke, Toke_ListSep):
+            continue
+        X.append(x)
+
+    noad.replace_children(X)
 
 
 def clef(skoar, noad):
@@ -98,12 +106,12 @@ def meter_sig_prime(skoar, noad):
 def meter(skoar, noad):
 
     # trim start and end tokens
-    noad.children = noad.children[1:-2]
+    noad.replace_children(noad.children[1:-1])
 
 
-def markers(skoar, noad):
+def marker(skoar, noad):
+    noad.absorb_toke()
     skoar.add_marker(noad)
-
 
 
 def noaty(skoar, noad):
@@ -111,10 +119,10 @@ def noaty(skoar, noad):
 
 
 def noat_literal(skoar, noad):
-    noat = noad.children[0].toke
+    from Skoarcery.pymp.lex import Toke_VectorNoat
 
+    noat = noad.absorb_toke()
     noad.noat = noat
-    noad.children = []
 
     if isinstance(noat, Toke_VectorNoat):
         noad.performer = (lambda: skoar.noat_go(noat))

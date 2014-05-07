@@ -63,30 +63,60 @@ class Toker:
 class SkoarNoad:
 
     def __init__(self, name, toke, parent, i=0):
+        self.performer = lambda: 0
+        self.j = 0
         self.parent = parent
         self.i = i  # position in parent
         self.n = 0  # number of children
         self.name = name
         self.toke = toke
         self.children = []
+        self.is_beat = False
 
         if isinstance(toke, SkoarToke):
             self.inspectable = toke.__class__.inspectable
         else:
             self.inspectable = False
 
-    def add_toke(self, name, toke):
-        self.children.append(SkoarNoad(name, toke, self, self.n))
-        self.n += 1
+    # ------------------
+    # shrinking the tree
+    # ------------------
+    def replace_children(self, X):
+        self.children = X
+        self.recount_children()
 
+    def recount_children(self):
+        i = 0
+        n = 0
+
+        for x in self.children:
+            if isinstance(x, SkoarNoad):
+                x.i = i
+            i += 1
+            n += 1
+
+        self.n = n
+
+    # ----------------
+    # growing the tree
+    # ----------------
     def add_noad(self, noad):
-
         self.children.append(noad)
         noad.i = self.n
         self.n += 1
 
+    def add_toke(self, name, toke):
+        self.children.append(SkoarNoad(name, toke, self, self.n))
+        self.n += 1
 
+    def absorb_toke(self):
+        if self.n == 1:
+            self.toke = self.children.pop()
+            self.n = 0
 
+    # ----------------
+    # showing the tree
+    # ----------------
     def draw_tree(self, tab=1):
         s = ("{:>" + str(tab) + "}{}\n").format(" ", self.name)
         for x in self.children:
@@ -95,17 +125,54 @@ class SkoarNoad:
 
         return s
 
-    def visit(self, f):
+    # -----------------
+    # Climbing the Tree
+    # -----------------
+    def depth_visit(self, f):
 
         for x in self.children:
             if x:
-                x.visit(f)
+                x.depth_visit(f)
 
         f(self)
 
-    def nextBeat(self):
+    def next_item(self):
+        if self.j == self.n:
+            if self.parent is None:
+                raise StopIteration
 
-        duration = 0
+            return self.parent.next_item()
+
+        n = self.children[self.j]
+        self.j += 1
+        return n
+
+    # -------------------
+    # performing the tree
+    # -------------------
+    def on_enter(self):
+        self.j = 0
+
+    def action(self):
+        self.performer()
+
+
+class SkoarIterator:
+
+    def __init__(self, skoar):
+        self.noad = skoar.tree
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        x = self.noad.next_item()
+
+        if isinstance(x, SkoarNoad):
+            self.noad = x
+            x.on_enter()
+
+        return x
 
 
 class Skoar:
@@ -159,35 +226,50 @@ class Skoar:
                 except KeyError:
                     pass
 
-        self.tree.visit(inspect)
+        self.tree.depth_visit(inspect)
 
+    def get_pattern_gen(self):
+        for x in SkoarIterator(self):
+            if isinstance(x, SkoarNoad):
+
+                # run performance handler
+                x.performer()
+
+                if x.is_beat:
+                    yield [self.cur_noat, x.beat]
+
+    # ----
+    # misc
+    # ----
     def noat_go(self, noat):
 
-        # find direction and if we're moving
-        move = True
-        if noat.up:
-            self.noat_direction = 1
+        self.cur_noat = noat
 
-        elif noat.down:
-            self.noat_direction = -1
-
-        elif noat == self.cur_noat:
-            move = False
-
-        # move if we do
-        if move and self.noat_direction > 0:
-            print("up to ", end="")
-
-        elif move and self.noat_direction < 0:
-            print("down to ", end="")
-
-        print(noat.letter, end="")
-
-        for i in range(0, noat.sharps):
-            print("#", end="")
-
-        for i in range(0, noat.flats):
-            print("b", end="")
+        # # find direction and if we're moving
+        # move = True
+        # if noat.up:
+        #     self.noat_direction = 1
+        #
+        # elif noat.down:
+        #     self.noat_direction = -1
+        #
+        # elif noat == self.cur_noat:
+        #     move = False
+        #
+        # # move if we do
+        # if move and self.noat_direction > 0:
+        #     print("up to ", end="")
+        #
+        # elif move and self.noat_direction < 0:
+        #     print("down to ", end="")
+        #
+        # print(noat.letter, end="")
+        #
+        # for i in range(0, noat.sharps):
+        #     print("#", end="")
+        #
+        # for i in range(0, noat.flats):
+        #     print("b", end="")
 
     # save these in a list for jumping around in
     def add_marker(self, marker_noad):

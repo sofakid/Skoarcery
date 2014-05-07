@@ -7,6 +7,7 @@ from Skoarcery.laboaratoary.TestDragonSpells import DragonTests
 from Skoarcery.laboaratoary.ExamineParseTree import ExamineParseTree
 from Skoarcery.laboaratoary.TestParseTable import Verify_LL_1
 from Skoarcery.laboaratoary.TestNonterminals import TestNonterminals
+from Skoarcery.laboaratoary.TestPerformer import Test_Performer
 from Skoarcery.laboaratoary.TestTerminals import TestTokens
 from Skoarcery.laboaratoary.TestApparatus import Test_Apparatus
 
@@ -63,7 +64,7 @@ class Build_All_Py(unittest.TestCase):
         #
         # Apparatus
         sweet = TS()
-        for test in [Test_Apparatus, ExamineParseTree]:
+        for test in [Test_Apparatus, ExamineParseTree, Test_Performer]:
             sweet.addTest(sweeten(test))
         Runner().run(sweet)
 
