@@ -4,6 +4,7 @@
 #
 # Here we pick the values out of the tokens
 # and set its attributes appropriately
+from math import ldexp
 
 import re
 
@@ -30,12 +31,13 @@ def Toke_Tuplet(toke):
 
 def Toke_Crotchets(toke):
     toke.is_rest = True
-    toke.value = len(toke.lexeme)
+    toke.value = 2 ** len(toke.lexeme)
 
 
 def Toke_Quavers(toke):
     toke.is_rest = True
-    toke.value = len(toke.lexeme) - 1
+    # len("oo/")
+    toke.value = ldexp(1, -(len(toke.lexeme) - 1))
 
 
 def Toke_DynPiano(toke):
@@ -48,12 +50,12 @@ def Toke_DynForte(toke):
 
 def Toke_Quarters(toke):
     toke.is_rest = False
-    toke.value = len(toke.lexeme)
+    toke.value = 2 ** len(toke.lexeme)
 
 
 def Toke_Eighths(toke):
     toke.is_rest = False
-    toke.value = len(toke.lexeme)
+    toke.value = ldexp(1, -len(toke.lexeme))
 
 
 vector_noat_regex = re.compile(r"(~?)([a-g])(?:(#*)|(b*))(~?)")
