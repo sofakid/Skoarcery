@@ -17,9 +17,20 @@ class Test_Performer(unittest.TestCase):
 
     def test_notes(self):
 
-        skoar = apparatus.parse("| a ) b ) c ) | d ) e ) f ) g ) |")
+        skoar = apparatus.parse(
+            "| a ) b )) c ))) | d ] e ]] f ]]] g ] ] |")
 
         skoar.decorate()
 
-        for x in skoar.get_pattern_gen():
-            print("x: " + repr(x))
+        for x, y in skoar.get_pattern_gen():
+            print("x: " + str(x) + ", " + str(y))
+
+    def test_more(self):
+
+        skoar = apparatus.parse(
+            """| mp c ) d ) %S% ]] | [1.] fff ]] fp ]] g p D.S. ]
+               | [2.] <! 4/4 \sna !> <c,e,g> )) )) ) :|""")
+        skoar.decorate()
+
+        for x, y in skoar.get_pattern_gen():
+            print("x: " + str(x) + ", " + str(y))

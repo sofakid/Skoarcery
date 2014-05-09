@@ -50,7 +50,7 @@ def Toke_DynForte(toke):
 
 def Toke_Quarters(toke):
     toke.is_rest = False
-    toke.value = 2 ** len(toke.lexeme)
+    toke.value = 2 ** (len(toke.lexeme) - 1)
 
 
 def Toke_Eighths(toke):
@@ -124,6 +124,7 @@ def Toke_String(toke):
 def Toke_Bars(toke):
     toke.pre_repeat = toke.lexeme.startswith(":")
     toke.post_repeat = toke.lexeme.endswith(":")
+    toke.unspent = True
 
 
 

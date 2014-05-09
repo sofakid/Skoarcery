@@ -110,8 +110,15 @@ def meter(skoar, noad):
 
 
 def marker(skoar, noad):
+    from Skoarcery.pymp.lex import Toke_Bars
+
     noad.absorb_toke()
     skoar.add_marker(noad)
+
+    toke = noad.toke
+    if isinstance(toke, Toke_Bars):
+        if toke.pre_repeat:
+            noad.performer = (lambda x: x.jmp_colon(noad))
 
 
 def noaty(skoar, noad):
@@ -125,7 +132,7 @@ def noat_literal(skoar, noad):
     noad.noat = noat
 
     if isinstance(noat, Toke_VectorNoat):
-        noad.performer = (lambda: skoar.noat_go(noat))
+        noad.performer = (lambda x: x.noat_go(noat))
 
 
 def noat_reference(skoar, noad):
