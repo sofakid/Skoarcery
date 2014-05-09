@@ -14,13 +14,11 @@ class Test_Apparatus(unittest.TestCase):
         dragonsets.init()
         parsetable.init()
 
-
     def test_apparatus(self):
 
-        apparatus.parse("| c ) d ) ]] ]] ]] g ] |")
+        apparatus.parse("| c ) d ) ]] ]] ]] g ] |").decorate(loud=True)
 
-        apparatus.parse("| mp c ) d ) %S% ]] | [1.] fff ]] fp ]] g p D.S. ] | [2.] <! 4/4 \sna !> <c,e,g> )) )) ) :|")
-
+        apparatus.parse("| mp c ) d ) %S% ]] | [1.] fff ]] fp ]] g p D.S. ] | [2.] <! 4/4 \sna !> <c,e,g> )) )) ) :|").decorate(loud=True)
 
     def test_multiline(self):
 
@@ -32,35 +30,34 @@ class Test_Apparatus(unittest.TestCase):
 
         ) <? yay ?> )
 
-        """)
+        """).decorate(loud=True)
 
     def test_notes(self):
 
-        apparatus.parse("| a ) b ) c ) | d ) e ) f ) g ) |")
+        apparatus.parse("| a ) b ) c ) | d ) e ) f ) g ) |").decorate(loud=True)
 
-        apparatus.parse("| a ) a ) b ) | ++ ) e ) f ) ) g |")
+        apparatus.parse("| a ) a ) b ) | ++ ) e ) f ) ) g |").decorate(loud=True)
 
-        apparatus.parse("| a c e ) bb ) c# ) | d## ) e ) ~f ) g~ ) |")
-
+        apparatus.parse("| a c e ) bb ) c# ) | d## ) e ) ~f ) g~ ) |").decorate(loud=True)
 
     def test_misc(self):
 
-        apparatus.parse("|ppp a ) b ) mp c ) | d mf ) // ) f $ ) g $  )  |")
+        apparatus.parse("|ppp a ) b ) mp c ) | d mf ) // ) f $ ) g $  )  |").decorate(loud=True)
 
-        apparatus.parse(" <3,4,5> 2 -3 +5 3.2 0.4")
+        apparatus.parse(" <3,4,5> 2 -3 +5 3.2 0.4").decorate(loud=True)
 
     def test_f(self):
-        apparatus.parse("f ff fff ffff f# fp #f |")
+        apparatus.parse("f ff fff ffff f# fp #f |").decorate(loud=True)
 
     def test_meter(self):
 
-        apparatus.parse("<!!>")
-        apparatus.parse("<! 130 => )) !>")
-        apparatus.parse("<! 90 => forte 100 => fforte 127 => fff 4=>ppp!>")
-        apparatus.parse("<! !>")
-        apparatus.parse("<!!>")
+        apparatus.parse("<!!>").decorate(loud=True)
+        apparatus.parse("<! 130 => )) !>").decorate(loud=True)
+        apparatus.parse("<! 90 => forte 100 => fforte 127 => fff 4=>ppp!>").decorate(loud=True)
+        apparatus.parse("<! !>").decorate(loud=True)
+        apparatus.parse("<!!>").decorate(loud=True)
 
     def test_time_signatures(self):
-        apparatus.parse("<! 4/4 9/8 2/2 !>")
-# someday        apparatus.parse("<! 3+4+5/4 !>")
+        apparatus.parse("<! 4/4 9/8 2/2 !>").decorate(loud=True)
+# someday        apparatus.parse("<! 3+4+5/4 !>").decorate(loud=True)
 

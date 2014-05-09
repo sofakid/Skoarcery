@@ -194,7 +194,9 @@ class Skoar:
         self.tree = self.parser.skoar(None)
         self.toker.eof()
 
-    def tinsel_and_balls(self):
+    def decorate(self, loud=False):
+
+        debug = (lambda x: print(x)) if loud else (lambda x: x)
 
         def inspect(x):
 
@@ -204,10 +206,10 @@ class Skoar:
                     # run the function x.name, pass the token
                     toke_inspector.__dict__[x.name](x.toke)
 
-                    print("decorated toke " + x.name + ":")
+                    debug("decorated toke " + x.name + ":")
                     for k, v in x.toke.__dict__.items():
-                        print("    " + k + ": " + str(v))
-                    print("")
+                        debug("    " + k + ": " + str(v))
+                    debug("")
                 except KeyError:
                     pass
 
@@ -218,11 +220,11 @@ class Skoar:
                     y = skoarmantics.__dict__[x.name]
                     y(self, x)
 
-                    print("decorated noad " + x.name + ":")
+                    debug("decorated noad " + x.name + ":")
                     for k, v in x.__dict__.items():
                         if k not in ["children", "parent", "toke", "inspectable"]:
-                            print("    " + k + ": " + repr(v))
-                    print("")
+                            debug("    " + k + ": " + repr(v))
+                    debug("")
                 except KeyError:
                     pass
 
@@ -274,7 +276,6 @@ class Skoar:
     # save these in a list for jumping around in
     def add_marker(self, marker_noad):
         self.markers.append(marker_noad)
-
 
 
 def parse(src):
