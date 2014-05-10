@@ -20,7 +20,6 @@ import abc
     def base_token(self):
 
         emissions.PY.wee_header("Abstract Token")
-
         emissions.PY.code_raw(
 """class SkoarToke:
 
@@ -60,7 +59,6 @@ import abc
     def EOF_token(self):
 
         emissions.PY.wee_header("EOF is special")
-
         emissions.PY.code_raw(
 """class {0}(SkoarToke):
     regex = re.compile(r"$")
@@ -89,7 +87,6 @@ import abc
     def whitespace_token(self):
 
         emissions.PY.wee_header("Whitespace is special")
-
         emissions.PY.code_raw(
 """class {0}(SkoarToke):
     regex = re.compile(r"{1}")
