@@ -139,7 +139,7 @@ SkoarError : Exception {
     classvar <inspectable = {2};
 
     *match {bs}
-        | buf, offs | ^SkoarToke.match_token(buf, offs, {0}); {be}
+        | buf, offs | ^SkoarToke.match_toke(buf, offs, {0}); {be}
 {be}
 
 """.format(token.toker_name, token.regex, inspectable, bs=bs, be=be)
