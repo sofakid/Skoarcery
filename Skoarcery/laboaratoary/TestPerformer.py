@@ -14,7 +14,6 @@ class Test_Performer(unittest.TestCase):
         dragonsets.init()
         parsetable.init()
 
-
     def test_notes(self):
 
         skoar = apparatus.parse(
@@ -28,7 +27,7 @@ class Test_Performer(unittest.TestCase):
     def test_more(self):
 
         skoar = apparatus.parse(
-            """| mp c ) d ) %S% ]] | [1.] fff ]] fp ]] g p D.S. ]
+            """|: mp c ) d ) %S% ]] :|: [1.] fff ]] fp ]] g p D.S. ]
                | [2.] <! 4/4 \sna !> <c,e,g> )) )) ) :|""")
         skoar.decorate()
 

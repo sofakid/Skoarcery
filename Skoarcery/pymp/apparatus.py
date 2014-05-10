@@ -1,6 +1,6 @@
 from collections import OrderedDict, UserDict
 from Skoarcery.pymp import toke_inspector, skoarmantics
-from Skoarcery.pymp.lex import Toke_Whitespace, Toke_EOF, SkoarToke, Toke_Bars
+from Skoarcery.pymp.lex import Toke_Whitespace, Toke_EOF, SkoarToke
 
 
 class Toker:
@@ -71,6 +71,7 @@ class SkoarNoad:
         self.toke = toke
         self.children = []
         self.is_beat = False
+        self.next_jmp = None
 
         if isinstance(toke, SkoarToke):
             self.inspectable = toke.__class__.inspectable
@@ -144,6 +145,10 @@ class SkoarNoad:
         f(self)
 
     def next_item(self):
+
+        if self.next_jmp:
+            return self.next_jmp
+
         if self.j == self.n:
             if self.parent is None:
                 raise StopIteration
@@ -153,6 +158,10 @@ class SkoarNoad:
         n = self.children[self.j]
         self.j += 1
         return n
+
+    def go_here_next(self, noad):
+        self.next_jmp = noad
+        noad.parent.j = noad.i
 
     # -------------------
     # performing the tree
@@ -285,18 +294,19 @@ class Skoar:
         self.markers.append(marker_noad)
 
     def jmp_colon(self, noad):
+        from Skoarcery.pymp.lex import Toke_Bars
         toke = noad.toke
 
         if toke.unspent:
             # spend it
             toke.unspent = False
-
+            print("here")
             # find where we are in self.markers
             j = 0
             n = len(self.markers)
             for i in range(0, n):
-                x = self.markers[i]
-                if noad == x:
+                t = self.markers[i]
+                if noad == t:
                     j = i
                     break
             else:
@@ -304,11 +314,16 @@ class Skoar:
 
             # go backwards in list and find either a
             # post_repeat or the start
-            for i in range(j, 0, -1):
-                x = self.markers[i].toke
+            for i in range(j - 1, 0, -1):
+                x = self.markers[i]
+                t = x.toke
 
-                if isinstance(x, Toke_Bars) and x.post_repeat:
-                    pass
+                if isinstance(t, Toke_Bars) and t.post_repeat:
+                    noad.go_here_next(x)
+                    break
+            else:
+                noad.go_here_next(self.markers[0])
+
 
 def parse(src):
 

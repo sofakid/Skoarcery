@@ -18,7 +18,9 @@ class Test_Apparatus(unittest.TestCase):
 
         apparatus.parse("| c ) d ) ]] ]] ]] g ] |").decorate(loud=True)
 
-        apparatus.parse("| mp c ) d ) %S% ]] | [1.] fff ]] fp ]] g p D.S. ] | [2.] <! 4/4 \sna !> <c,e,g> )) )) ) :|").decorate(loud=True)
+        skoar = apparatus.parse("| mp c ) d ) %S% ]] | [1.] fff ]] fp ]] g p D.S. ] | [2.] <! 4/4 \sna !> <c,e,g> )) )) ) :|")
+        skoar.decorate(loud=True)
+        print(skoar.tree.draw_tree())
 
     def test_multiline(self):
 
