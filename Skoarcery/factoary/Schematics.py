@@ -58,3 +58,10 @@ def typical_token(tongue, token):
     _.end_block()
 
 
+def tokeInspector(tongue, token):
+    _ = _____ = _________ = _____________ = tongue
+
+    _.function(token.toker_name, "toke")
+
+
+    _.end_block()

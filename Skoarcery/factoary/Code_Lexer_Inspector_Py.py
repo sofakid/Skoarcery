@@ -1,5 +1,6 @@
 import unittest
 from Skoarcery import terminals, emissions
+from Skoarcery.factoary import schematics
 
 
 class Code_Lexer_Inspector_Py(unittest.TestCase):
@@ -30,15 +31,15 @@ import abc
 
         fd = open("../pymp/toke_inspector_template.py", mode="w")
 
-        emissions.PY.fd = fd
-
-        emissions.PY.file_header("toke_inspector", "Code_Lexer_Inspector_Py")
+        PY = emissions.PY
+        PY.fd = fd
+        PY.file_header("toke_inspector", "Code_Lexer_Inspector_Py")
 
         self.imports()
 
         emissions.PY.cmt_hdr("Value Tokes")
         for name in terminals.inspectables:
             token = terminals.tokens[name]
-            self.typical_token(token)
+            schematics.tokeInspector(PY, token)
 
         fd.close()
