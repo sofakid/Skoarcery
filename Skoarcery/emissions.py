@@ -166,6 +166,10 @@ class Tongue:
     def v_def_regex(self, regex):
         raise NotImplementedError
 
+    @abc.abstractmethod
+    def v_match(self, match):
+        raise NotImplementedError
+
     def raw(self, code):
         self._emit(code, end="")
 
@@ -319,6 +323,9 @@ class PyTongue(Tongue):
     def v_def_regex(self, regex):
         return 're.compile(r"' + regex + '")'
 
+    def v_match(self, match):
+        return match
+
 
 class ScTongue(Tongue):
 
@@ -442,6 +449,9 @@ class ScTongue(Tongue):
 
     def v_def_regex(self, regex):
         return '"' + regex + '"'
+
+    def v_match(self, match):
+        return self.v_length(match) + " > 0"
 
     def expand_args(self, *args, **kwargs):
         a = ""

@@ -30,7 +30,7 @@ def skoarToke(tongue):
     _____.static_method("match_toke", "buf", "offs", "toke_class")
     _________.find_regex("match", "toke_class.regex", "buf", "offs")
 
-    _________.if_(_.v_length("match") + " > 0")
+    _________.if_(_.v_match("match"))
     _____________.return_(_.v_new("toke_class", _.v_regex_group_zero("match")))
     _________.end_if()
 
