@@ -1,7 +1,6 @@
 import unittest
-from Skoarcery import langoids, terminals, nonterminals, dragonsets, parsetable
+from Skoarcery import langoids, terminals, nonterminals, dragonsets, parsetable, emissions
 from Skoarcery.langoids import Terminal, Nonterminal
-from Skoarcery.emissions import SC
 
 
 class Code_Parser_Sc(unittest.TestCase):
@@ -12,12 +11,14 @@ class Code_Parser_Sc(unittest.TestCase):
         langoids.init()
         dragonsets.init()
         parsetable.init()
+        emissions.init()
 
     def test_sc_rdpp(self):
         from Skoarcery.dragonsets import FIRST, FOLLOW
         from Skoarcery.terminals import Empty
 
         fd = open("../../SuperCollider/Klassy/rdpp.sc", "w")
+        SC = emissions.SC
         SC.fd = fd
 
         # Header
@@ -37,19 +38,18 @@ class Code_Parser_Sc(unittest.TestCase):
             R = A.production_rules
 
             #SC.cmt(str(A))
-            SC.stmt(A.name + " {")
-            SC.tab += 1
-            SC.stmt("| parent |\n")
+            SC.method(A.name, "parent")
 
             if A.intermediate:
-                SC.stmt("var noad = parent;")
+                SC.var("noad", "parent")
             else:
-                SC.stmt("var noad = SkoarNoad('" + A.name + "', None, parent);")
+                noad = SC.v_new("SkoarNoad", SC.v_str(A.name), SC.null, "parent")
+                SC.var("noad", noad)
 
-            SC.stmt("var desires = nil;\n")
+            SC.var("desires", SC.null)
+            SC.newline()
 
-            #SC.code_line("print('" + A.name + "')")
-
+            # each production
             for P in R:
 
                 if P.derives_empty:
@@ -89,18 +89,18 @@ class Code_Parser_Sc(unittest.TestCase):
 
                 for x in alpha:
                     if isinstance(x, Terminal):
-                        SC.stmt('noad.add_toke("' + x.toker_name + '", toker.burn(' + x.toker_name + '));')
+                        SC.stmt('noad.add_toke("' + x.toker_name + '", toker.burn(' + x.toker_name + '.class));')
 
                         #SC.print("burning: " + x.name)
                     else:
                         if x.intermediate:
-                            SC.stmt("this." + x.name + "(noad);")
+                            SC.stmt(SC.this + "." + x.name + "(noad)")
                         else:
-                            SC.stmt("noad.add_noad(this." + x.name + "(noad));")
+                            SC.stmt("noad.add_noad(this." + x.name + "(noad))")
                 else:
                     SC.return_("noad")
 
-                SC.stmt("};\n")
+                SC.end_if()
 
             if A.derives_empty:
                 SC.cmt("<e>")
@@ -109,19 +109,16 @@ class Code_Parser_Sc(unittest.TestCase):
 
             else:
                 SC.cmt("Error State")
-                SC.stmt("this.fail;")
-                SC.tab -= 1
+                SC.stmt("this.fail")
 
-            SC.stmt("}")
-            SC.newline()
+            SC.end_block()
 
-        SC.tab -= 1
-        SC.stmt("}")
+        SC.end_block()
 
         fd.close()
 
     def code_start(self):
-
+        SC = emissions.SC
         SC.file_header("rdpp.sc", "Code_Parser_Sc - Create Recursive Descent Predictive Parser")
         SC.raw("""
 SkoarParseException : Exception {

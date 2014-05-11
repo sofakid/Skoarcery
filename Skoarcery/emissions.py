@@ -95,7 +95,11 @@ class Tongue:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def var(self, prefix, name):
+    def attrvar(self, prefix, name, value=None):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def var(self, name, value=None):
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -155,7 +159,7 @@ class Tongue:
         raise NotImplementedError
 
     @abc.abstractmethod
-    def v_new(self, cls, arg):
+    def v_new(self, cls, *args):
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -169,6 +173,9 @@ class Tongue:
     @abc.abstractmethod
     def v_match(self, match):
         raise NotImplementedError
+
+    def v_str(self, s):
+        return '"' + s + '"'
 
     def raw(self, code):
         self._emit(code, end="")
@@ -285,10 +292,19 @@ class PyTongue(Tongue):
         self.tab += 1
 
     def classvar(self, prefix, name, value=None):
-        self.stmt(name + " = " + value)
+        s = name
+        if value:
+            s += " = " + value
+        self.stmt(s)
 
-    def var(self, prefix, name):
+    def attrvar(self, prefix, name, value=None):
         pass
+
+    def var(self, name, value=None):
+        s = name
+        if value:
+            s += " = " + value
+        self.stmt(s)
 
     def method(self, name, *args, **kwargs):
         self.function(name, "self", *args, **kwargs)
@@ -311,8 +327,9 @@ class PyTongue(Tongue):
     def v_regex_group_zero(self, match):
         return match + ".group(0)"
 
-    def v_new(self, cls, arg):
-        return cls + "(" + arg + ")"
+    def v_new(self, cls, *args):
+        a = self.expand_args(*args)
+        return cls + "(" + a + ")"
 
     def v_length(self, x):
         return "len(" + x + ")"
@@ -426,8 +443,14 @@ class ScTongue(Tongue):
 
         self.stmt("classvar " + s)
 
-    def var(self, prefix, name):
+    def attrvar(self, prefix, name, value=None):
         self.stmt("var " + prefix + name)
+
+    def var(self, name, value=None):
+        s = name
+        if value is not None:
+            s += " = " + value
+        self.stmt("var " + s)
 
     def throw(self, name, msg):
         self.stmt(name + "(" + msg + ").throw")
@@ -438,8 +461,9 @@ class ScTongue(Tongue):
     def v_regex_group_zero(self, match):
         return match + "[0][1]"
 
-    def v_new(self, cls, arg):
-        return cls + ".new(" + arg + ")"
+    def v_new(self, cls, *args):
+        a = self.expand_args(*args)
+        return cls + ".new(" + a + ")"
 
     def v_length(self, x):
         return x + ".size"
