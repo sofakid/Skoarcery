@@ -89,7 +89,7 @@ class Code_Parser_Sc(unittest.TestCase):
 
                 for x in alpha:
                     if isinstance(x, Terminal):
-                        SC.stmt('noad.add_toke("' + x.toker_name + '", toker.burn(' + x.toker_name + '.class));')
+                        SC.stmt('noad.add_toke(' + SC.v_str(x.toker_name) + ', toker.burn(' + x.toker_name + '.class))')
 
                         #SC.print("burning: " + x.name)
                     else:

@@ -7,7 +7,7 @@ def skoarToke(tongue):
     _.cmt_hdr("Abstract Token")
 
     _.abstract_class("SkoarToke")
-    _____.var("<", "lexeme")
+    _____.attrvar("<", "lexeme")
     _____.classvar("<", "regex", _.null)
     _____.classvar("<", "inspectable", _.false)
     _____.newline()
