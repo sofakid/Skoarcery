@@ -37,16 +37,16 @@ class Code_Parser_Sc(unittest.TestCase):
             R = A.production_rules
 
             #SC.cmt(str(A))
-            SC.code_line(A.name + " {")
+            SC.stmt(A.name + " {")
             SC.tab += 1
-            SC.code_line("| parent |\n")
+            SC.stmt("| parent |\n")
 
             if A.intermediate:
-                SC.code_line("var noad = parent;")
+                SC.stmt("var noad = parent;")
             else:
-                SC.code_line("var noad = SkoarNoad('" + A.name + "', None, parent);")
+                SC.stmt("var noad = SkoarNoad('" + A.name + "', None, parent);")
 
-            SC.code_line("var desires = nil;\n")
+            SC.stmt("var desires = nil;\n")
 
             #SC.code_line("print('" + A.name + "')")
 
@@ -64,65 +64,65 @@ class Code_Parser_Sc(unittest.TestCase):
                     desires.discard(Empty)
                     desires.update(FOLLOW(A))
 
-                SC._cmt(str(P))
+                SC.cmt(str(P))
 
                 i = 0
 
                 n = len(desires)
-                SC.code_line("desires = [", end="")
+                SC.stmt("desires = [", end="")
                 for toke in desires:
                     SC.raw(toke.toker_name + ".class")
                     i += 1
                     if i != n:
                         if i % 5 == 0:
                             SC.raw(",\n")
-                            SC.code_line("           ", end="")
+                            SC.stmt("           ", end="")
                         else:
                             SC.raw(", ")
 
                 else:
                     SC.raw("];\n")
 
-                SC._if("toker.sees(desires)")
+                SC.if_("toker.sees(desires)")
 
                 #SC.print(str(P))
 
                 for x in alpha:
                     if isinstance(x, Terminal):
-                        SC.code_line('noad.add_toke("' + x.toker_name + '", toker.burn(' + x.toker_name + '));')
+                        SC.stmt('noad.add_toke("' + x.toker_name + '", toker.burn(' + x.toker_name + '));')
 
                         #SC.print("burning: " + x.name)
                     else:
                         if x.intermediate:
-                            SC.code_line("this." + x.name + "(noad);")
+                            SC.stmt("this." + x.name + "(noad);")
                         else:
-                            SC.code_line("noad.add_noad(this." + x.name + "(noad));")
+                            SC.stmt("noad.add_noad(this." + x.name + "(noad));")
                 else:
-                    SC._return("noad")
+                    SC.return_("noad")
 
-                SC.code_line("};\n")
+                SC.stmt("};\n")
 
             if A.derives_empty:
-                SC._cmt("<e>")
+                SC.cmt("<e>")
                 #SC.print("burning empty")
-                SC._return("noad")
+                SC.return_("noad")
 
             else:
-                SC._cmt("Error State")
-                SC.code_line("this.fail;")
+                SC.cmt("Error State")
+                SC.stmt("this.fail;")
                 SC.tab -= 1
 
-            SC.code_line("}")
-            SC._newline()
+            SC.stmt("}")
+            SC.newline()
 
         SC.tab -= 1
-        SC.code_line("}")
+        SC.stmt("}")
 
         fd.close()
 
     def code_start(self):
 
-        SC._file_header("rdpp.sc", "Code_Parser_Sc - Create Recursive Descent Predictive Parser")
+        SC.file_header("rdpp.sc", "Code_Parser_Sc - Create Recursive Descent Predictive Parser")
         SC.raw("""
 SkoarParseException : Exception {
 

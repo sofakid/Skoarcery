@@ -33,11 +33,11 @@ class Code_Skoarmantics_Py(unittest.TestCase):
 
         emissions.PY.fd = fd
 
-        emissions.PY._file_header("Skoarmantics", "Code_Skoarmantics_Py")
+        emissions.PY.file_header("Skoarmantics", "Code_Skoarmantics_Py")
 
         self.imports()
 
-        emissions.PY._wee_header("")
+        emissions.PY.cmt_hdr("")
         for X in nonterminals.nonterminals.values():
             if X.has_semantics:
                 self.skoarmantic(X)
