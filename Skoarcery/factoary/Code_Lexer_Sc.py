@@ -58,7 +58,7 @@ SkoarError : Exception {
         var o = buf.findRegexp(toke_class.regex, offs);
 
         if (o.size > 0) {
-            ^SkoarTokeclass.new(o[0][1]);
+            ^SkoarToke.class.new(o[0][1]);
         };
 
         ^nil
