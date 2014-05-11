@@ -6,7 +6,7 @@ bs = "{"
 be = "}"
 
 
-class Code_Sc_Lexer(unittest.TestCase):
+class Code_Lexer_Sc(unittest.TestCase):
 
     def setUp(self):
         terminals.init()

@@ -3,6 +3,7 @@ from Skoarcery import langoids, terminals, nonterminals, dragonsets, parsetable
 from Skoarcery.langoids import Terminal, Nonterminal
 from Skoarcery.emissions import SC
 
+
 class Code_Parser_Sc(unittest.TestCase):
 
     def setUp(self):
@@ -12,7 +13,7 @@ class Code_Parser_Sc(unittest.TestCase):
         dragonsets.init()
         parsetable.init()
 
-    def test_pyrdpp(self):
+    def test_sc_rdpp(self):
         from Skoarcery.dragonsets import FIRST, FOLLOW
         from Skoarcery.terminals import Empty
 
@@ -35,10 +36,10 @@ class Code_Parser_Sc(unittest.TestCase):
 
             R = A.production_rules
 
-            #PY.cmt(str(A))
+            #SC.cmt(str(A))
             SC.code_line(A.name + " {")
             SC.tab += 1
-            SC.code_line("|parent|\n")
+            SC.code_line("| parent |\n")
 
             if A.intermediate:
                 SC.code_line("var noad = parent;")
@@ -47,7 +48,7 @@ class Code_Parser_Sc(unittest.TestCase):
 
             SC.code_line("var desires = nil;\n")
 
-            #PY.code_line("print('" + A.name + "')")
+            #SC.code_line("print('" + A.name + "')")
 
             for P in R:
 
@@ -84,13 +85,13 @@ class Code_Parser_Sc(unittest.TestCase):
 
                 SC.code_if("toker.sees(desires)")
 
-                #PY.print(str(P))
+                #SC.print(str(P))
 
                 for x in alpha:
                     if isinstance(x, Terminal):
                         SC.code_line('noad.add_toke("' + x.toker_name + '", toker.burn(' + x.toker_name + '));')
 
-                        #PY.print("burning: " + x.name)
+                        #SC.print("burning: " + x.name)
                     else:
                         if x.intermediate:
                             SC.code_line("this." + x.name + "(noad);")
@@ -103,7 +104,7 @@ class Code_Parser_Sc(unittest.TestCase):
 
             if A.derives_empty:
                 SC.cmt("<e>")
-                #PY.print("burning empty")
+                #SC.print("burning empty")
                 SC.code_return("noad")
 
             else:
@@ -130,6 +131,11 @@ SkoarParseException : Exception {
 SkoarParser {
 
     var <runtime, <toker, <tab;
+
+    *new {
+        | runtime |
+        ^super.new.init( runtime )
+    }
 
     init {
         | runtime |
