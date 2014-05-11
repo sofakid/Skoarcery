@@ -10,70 +10,64 @@ class Code_Lexer_Sc(unittest.TestCase):
 
     def setUp(self):
         terminals.init()
+        emissions.init()
 
     def exceptions(self):
-        emissions.SC.code_raw(
-"""
-SkoarError : Exception {
-    *new {
-        | msg |
-        ^super.new(msg)
-    }
-    errorString {
-        ^"SKOAR'" ++ super.errorString;
-    }
-}
-"""
-        )
+
+        SC = emissions.SC
+        SC._wee_header("SkoarException")
+        SC._class("SkoarError", "Exception")
+
+        SC._static_method("new", "msg")
+        SC._return("super.new(msg)")
+        SC._end_block()
+
+        SC._static_method("errorString")
+        SC._return('"SKOAR" ++ super.errorString')
+        SC._end_block()
+
+        SC._end_block()
 
     def base_token(self):
 
-        emissions.SC.wee_header("Abstract Token")
-        emissions.SC.code_raw(
-"""SkoarToke {
+        SC = emissions.SC
+        SC._wee_header("Abstract Token")
 
-    var <lexeme;
-    classvar <regex = nil;
-    classvar <inspectable = false;
+        SC._abstract_class("SkoarToke")
+        SC._var("<", "lexeme")
+        SC._classvar("<", "regex", SC.null)
+        SC._classvar("<", "inspectable", SC.false)
+        SC._newline()
+        SC._constructor("s")
+        SC.code_line("lexeme = s")
+        SC._end_block()
 
-    *new {
-        | s |
-        ^super.new.init( s )
-    }
+        SC._cmt("how many characters to burn from the buffer")
+        SC._method("burn")
+        SC._return(SC.length("lexeme"))
+        SC._end_block()
 
-    init {
-        | s |
-        lexeme = s;
-    }
+        SC._cmt("override and return " + SC.null + " for no match, new toke otherwise")
+        SC._abstract_static_method("match")
+        SC._end_block()
 
-    // how many characters to burn from the buffer
-    burn {^lexeme.size}
+        SC._cmt("match requested toke")
+        SC._static_method("match_toke", "buf", "offs", "toke_class")
+        SC.code_line("var o = buf.findRegexp(toke_class.regex, offs)")
 
-    // override and return nil for no match, new toke otherwise
-    *match {}
+        SC._if(SC.length("o") + " > 0")
+        SC._return("SkoarToke.class.new(o[0][1])")
+        SC._end_if()
 
-    *match_toke {
-        | buf, offs, toke_class |
+        SC._return(SC.null)
+        SC._end_block()
 
-        var o = buf.findRegexp(toke_class.regex, offs);
-
-        if (o.size > 0) {
-            ^SkoarToke.class.new(o[0][1]);
-        };
-
-        ^nil
-    }
-
-}
-
-
-"""
-        )
+        SC._end_block()
 
     def EOF_token(self):
 
-        emissions.SC.wee_header("EOF is special")
-        emissions.SC.code_raw(
+        emissions.SC._wee_header("EOF is special")
+        emissions.SC.raw(
 """{0} : SkoarToke {bs}
     classvar <regex = "$";
 
@@ -107,8 +101,8 @@ SkoarError : Exception {
 
     def whitespace_token(self):
 
-        emissions.SC.wee_header("Whitespace is special")
-        emissions.SC.code_raw(
+        emissions.SC._wee_header("Whitespace is special")
+        emissions.SC.raw(
 """{0} : SkoarToke {bs}
     classvar <regex = "{1}";
 
@@ -131,36 +125,36 @@ SkoarError : Exception {
 
     def typical_token(self, token):
 
-        inspectable = "true" if token.name in terminals.inspectables else "false"
+        SC = emissions.SC
+        inspectable = SC.true if token.name in terminals.inspectables else SC.false
 
-        emissions.SC.code_raw(
-"""{0} : SkoarToke {bs}
-    classvar <regex = "{1}";
-    classvar <inspectable = {2};
+        SC._class(token.toker_name, "SkoarToke")
 
-    *match {bs}
-        | buf, offs | ^SkoarToke.match_toke(buf, offs, {0}); {be}
-{be}
+        SC._classvar("<", "regex", '"' + token.regex + '"')
+        SC._classvar("<", "inspectable", inspectable)
+        SC._newline()
 
-""".format(token.toker_name, token.regex, inspectable, bs=bs, be=be)
-        )
+        SC._static_method("match", "buf", "offs")
+        SC._return("SkoarToke.match_toke(buf, offs, " + token.toker_name + ")")
+        SC._end_block()
+
+        SC._end_block()
 
     def test_ScLexer(self):
 
         fd = open("../../SuperCollider/Klassy/lex.sc", mode="w")
 
         emissions.SC.fd = fd
-        emissions.SC.file_header("lex", "Code_Sc_Lexer")
+        emissions.SC._file_header("lex", "Code_Sc_Lexer")
 
         self.exceptions()
         self.base_token()
         self.whitespace_token()
         self.EOF_token()
 
-        emissions.SC.wee_header("Everyday Tokes")
+        emissions.SC._wee_header("Everyday Tokes")
         for token in terminals.tokens.values():
             if token not in terminals.odd_balls:
                 self.typical_token(token)
-
 
         fd.close()

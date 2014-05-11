@@ -34,7 +34,7 @@ class Test_Sclang(unittest.TestCase):
 
             #
             # nay
-            if line.find("ERROR") != -1:
+            if line.startswith("-----------------------------------"):
                 error_seen = True
                 break
 

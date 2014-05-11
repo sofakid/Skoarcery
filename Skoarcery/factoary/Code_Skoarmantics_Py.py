@@ -10,7 +10,7 @@ class Code_Skoarmantics_Py(unittest.TestCase):
 
 
     def imports(self):
-        emissions.PY.code_raw(
+        emissions.PY.raw(
 """
 
 
@@ -19,7 +19,7 @@ class Code_Skoarmantics_Py(unittest.TestCase):
         )
 
     def skoarmantic(self, X):
-        emissions.PY.code_raw(
+        emissions.PY.raw(
 """def {0}(skoar, noad):
     pass
 
@@ -33,11 +33,11 @@ class Code_Skoarmantics_Py(unittest.TestCase):
 
         emissions.PY.fd = fd
 
-        emissions.PY.file_header("Skoarmantics", "Code_Skoarmantics_Py")
+        emissions.PY._file_header("Skoarmantics", "Code_Skoarmantics_Py")
 
         self.imports()
 
-        emissions.PY.wee_header("")
+        emissions.PY._wee_header("")
         for X in nonterminals.nonterminals.values():
             if X.has_semantics:
                 self.skoarmantic(X)

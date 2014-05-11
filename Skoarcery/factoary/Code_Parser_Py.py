@@ -62,26 +62,26 @@ class Code_Parser_Py(unittest.TestCase):
                     desires.discard(Empty)
                     desires.update(FOLLOW(A))
 
-                PY.cmt(str(P))
+                PY._cmt(str(P))
 
                 i = 0
 
                 n = len(desires)
                 PY.code_line("desires = [", end="")
                 for toke in desires:
-                    PY.code_raw(toke.toker_name)
+                    PY.raw(toke.toker_name)
                     i += 1
                     if i != n:
                         if i % 5 == 0:
-                            PY.code_raw(",\n")
+                            PY.raw(",\n")
                             PY.code_line("           ", end="")
                         else:
-                            PY.code_raw(", ")
+                            PY.raw(", ")
 
                 else:
-                    PY.code_raw("]\n")
+                    PY.raw("]\n")
 
-                PY.code_if("I.toker.sees(desires)")
+                PY._if("I.toker.sees(desires)")
 
                 #PY.print(str(P))
 
@@ -96,19 +96,19 @@ class Code_Parser_Py(unittest.TestCase):
                         else:
                             PY.code_line("noad.add_noad(I." + x.name + "(noad))")
                 else:
-                    PY.code_return("noad")
+                    PY._return("noad")
 
             if A.derives_empty:
-                PY.cmt("<e>")
+                PY._cmt("<e>")
                 #PY.print("burning empty")
-                PY.code_return("noad")
+                PY._return("noad")
 
             else:
-                PY.cmt("Error State")
+                PY._cmt("Error State")
                 PY.code_line("I.fail()")
                 PY.tab -= 1
 
-            PY.newline()
+            PY._newline()
 
         PY.tab -= 1
 
@@ -117,7 +117,7 @@ class Code_Parser_Py(unittest.TestCase):
     def code_start(self):
         from Skoarcery.terminals import Empty
 
-        PY.file_header("rdpp.py", "PyRDPP - Create Recursive Descent Predictive Parser")
+        PY._file_header("rdpp.py", "PyRDPP - Create Recursive Descent Predictive Parser")
         s = "from Skoarcery.pymp.apparatus import SkoarNoad\n"\
             "from Skoarcery.pymp.lex import "
         T = terminals.tokens.values()
@@ -135,7 +135,7 @@ class Code_Parser_Py(unittest.TestCase):
                 else:
                     s += ", "
 
-        PY.code_raw(s + """
+        PY.raw(s + """
 
 
 class SkoarParseException(Exception):

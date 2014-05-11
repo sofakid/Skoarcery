@@ -8,7 +8,7 @@ class Code_Lexer_Py(unittest.TestCase):
         terminals.init()
 
     def imports(self):
-        emissions.PY.code_raw(
+        emissions.PY.raw(
 """
 import re
 import abc
@@ -19,28 +19,9 @@ import abc
 
     def base_token(self):
 
-        emissions.PY.wee_header("Abstract Token")
-        emissions.PY.code_raw(
-"""class SkoarToke:
-
-    __metaclass__ = abc.ABCMeta
-
-    regex = None
-    inspectable = False
-
-    def __init__(I, s):
-        I.lexeme = s
-
-    # how many characters to burn from the buffer
-    def burn(I, *args):
-        return len(I.lexeme)
-
-    # override and return nil for no match, new toke otherwise
-    @staticmethod
-    @abc.abstractstaticmethod
-    def match(buf, offs):
-        raise NotImplementedError
-
+        emissions.PY._wee_header("Abstract Token")
+        emissions.PY.raw(
+"""
     @staticmethod
     def match_toke(buf, offs, toke_class):
 
@@ -56,10 +37,45 @@ import abc
 """
         )
 
+        PY = emissions.PY
+        PY._wee_header("Abstract Token")
+
+        PY._abstract_class("SkoarToke")
+        PY._var("<", "lexeme")
+        PY._classvar("<", "regex", PY.null)
+        PY._classvar("<", "inspectable", PY.false)
+
+        PY._constructor("s")
+        PY.code_line("lexeme = s")
+        PY._end_block()
+
+        PY._cmt("how many characters to burn from the buffer")
+        PY._method("burn")
+        PY._return(PY.length("lexeme"))
+        PY._end_block()
+
+        PY._cmt("override and return " + PY.null + " for no match, new toke otherwise")
+        PY._abstract_static_method("match")
+        PY._exception("NotImplementedError")
+        PY._end_block()
+
+        PY._cmt("match requested toke")
+        PY._static_method("match_toke", "buf", "offs", "toke_class")
+        PY.code_line("match = toke_class.regex.match(buf, offs)")
+
+        PY._if(PY.length("o") + " > 0")
+        PY._return("toke_class(match.group(0))")
+        PY._end_if()
+
+        PY._return(PY.null)
+        PY._end_block()
+
+        PY._end_block()
+
     def EOF_token(self):
 
-        emissions.PY.wee_header("EOF is special")
-        emissions.PY.code_raw(
+        emissions.PY._wee_header("EOF is special")
+        emissions.PY.raw(
 """class {0}(SkoarToke):
     regex = re.compile(r"$")
 
@@ -86,8 +102,8 @@ import abc
 
     def whitespace_token(self):
 
-        emissions.PY.wee_header("Whitespace is special")
-        emissions.PY.code_raw(
+        emissions.PY._wee_header("Whitespace is special")
+        emissions.PY.raw(
 """class {0}(SkoarToke):
     regex = re.compile(r"{1}")
 
@@ -106,7 +122,7 @@ import abc
         )
 
     def typical_token(self, token):
-        emissions.PY.code_raw(
+        emissions.PY.raw(
 """class {0}(SkoarToke):
     regex = re.compile(r"{1}")
     inspectable = {2}
@@ -125,14 +141,14 @@ import abc
 
         emissions.PY.fd = fd
 
-        emissions.PY.file_header("lex", "Code_Py_Lexer")
+        emissions.PY._file_header("lex", "Code_Py_Lexer")
 
         self.imports()
         self.base_token()
         self.whitespace_token()
         self.EOF_token()
 
-        emissions.PY.wee_header("Everyday Tokes")
+        emissions.PY._wee_header("Everyday Tokes")
         for token in terminals.tokens.values():
             if token not in terminals.odd_balls:
                 self.typical_token(token)

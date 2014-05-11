@@ -64,26 +64,26 @@ class Code_Parser_Sc(unittest.TestCase):
                     desires.discard(Empty)
                     desires.update(FOLLOW(A))
 
-                SC.cmt(str(P))
+                SC._cmt(str(P))
 
                 i = 0
 
                 n = len(desires)
                 SC.code_line("desires = [", end="")
                 for toke in desires:
-                    SC.code_raw(toke.toker_name + ".class")
+                    SC.raw(toke.toker_name + ".class")
                     i += 1
                     if i != n:
                         if i % 5 == 0:
-                            SC.code_raw(",\n")
+                            SC.raw(",\n")
                             SC.code_line("           ", end="")
                         else:
-                            SC.code_raw(", ")
+                            SC.raw(", ")
 
                 else:
-                    SC.code_raw("];\n")
+                    SC.raw("];\n")
 
-                SC.code_if("toker.sees(desires)")
+                SC._if("toker.sees(desires)")
 
                 #SC.print(str(P))
 
@@ -98,22 +98,22 @@ class Code_Parser_Sc(unittest.TestCase):
                         else:
                             SC.code_line("noad.add_noad(this." + x.name + "(noad));")
                 else:
-                    SC.code_return("noad")
+                    SC._return("noad")
 
                 SC.code_line("};\n")
 
             if A.derives_empty:
-                SC.cmt("<e>")
+                SC._cmt("<e>")
                 #SC.print("burning empty")
-                SC.code_return("noad")
+                SC._return("noad")
 
             else:
-                SC.cmt("Error State")
+                SC._cmt("Error State")
                 SC.code_line("this.fail;")
                 SC.tab -= 1
 
             SC.code_line("}")
-            SC.newline()
+            SC._newline()
 
         SC.tab -= 1
         SC.code_line("}")
@@ -122,8 +122,8 @@ class Code_Parser_Sc(unittest.TestCase):
 
     def code_start(self):
 
-        SC.file_header("rdpp.sc", "Code_Parser_Sc - Create Recursive Descent Predictive Parser")
-        SC.code_raw("""
+        SC._file_header("rdpp.sc", "Code_Parser_Sc - Create Recursive Descent Predictive Parser")
+        SC.raw("""
 SkoarParseException : Exception {
 
 }
