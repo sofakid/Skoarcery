@@ -16,11 +16,14 @@ class Code_Lexer_Py(unittest.TestCase):
 import re
 import abc
 
+
 class SubclassResponsibilityError(NotImplementedError):
     pass
 
-class SkoarError(Error):
+
+class SkoarError(AssertionError):
     pass
+
 
 """
         )
