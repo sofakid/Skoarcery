@@ -12,11 +12,11 @@ class TestTokens(unittest.TestCase):
         pass
 
     def tes_input(self):
-        print("\n\n ==========--------( Tokens: Input )--------------------------------------------------------========\n\n")
+        print("\n\n ==========--------( Tokens: Input )--------------------------------------------------========\n\n")
         print(terminals.src)
 
     def test_sorted(self):
-        print("\n\n ==========--------( Tokens: Created )--------------------------------------------------------========\n\n")
+        print("\n\n ==========--------( Tokens: Created )--------------------------------------------------========\n\n")
         L = terminals.list_of_names
 
         L.sort()

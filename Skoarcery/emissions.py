@@ -3,6 +3,10 @@ import sys
 import abc
 
 
+class NIE(NotImplementedError):
+    pass
+
+
 class Tabby:
 
     def __init__(self):
@@ -42,31 +46,31 @@ class Tongue:
     # ----------
     @abc.abstractproperty
     def cmt_char(self):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractproperty
     def language(self):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractproperty
     def ext(self):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractproperty
     def this(self):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractproperty
     def null(self):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractproperty
     def true(self):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractproperty
     def false(self):
-        raise NotImplementedError
+        raise NIE
 
     @property
     def tabby(self):
@@ -80,99 +84,106 @@ class Tongue:
     # -------
     @abc.abstractmethod
     def stmt(self, line, end="\n"):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def abstract_class(self, name, extends=None):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def class_(self, name, extends=None):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def classvar(self, prefix, name, value=None):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def attrvar(self, prefix, name, value=None):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def var(self, name, value=None):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def expand_args(self, *args, **kwargs):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def constructor(self, *args, **kwargs):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def function(self, name, *args, **kwargs):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def method(self, name, *args, **kwargs):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def static_method(self, name, *args, **kwargs):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def abstract_static_method(self, name, *args, **kwargs):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def if_(self, condition):
-        raise NotImplementedError
+        raise NIE
+
+    @abc.abstractmethod
+    def else_(self):
+        raise NIE
 
     @abc.abstractmethod
     def end_if(self):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
-    def end_block(self):
-        raise NotImplementedError
+    def end(self):
+        raise NIE
 
     @abc.abstractmethod
     def return_(self, value=""):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def throw(self, name, msg):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def find_regex(self, match, regex, buf, offs):
-        raise NotImplementedError
+        raise NIE
 
+    # ------------------------------------
+    # these v_guys return rather than code
+    # ------------------------------------
     @abc.abstractmethod
     def v_regex_group_zero(self, match):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def v_length(self, x):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def v_new(self, cls, *args):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def v_attr(self, attr):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def v_def_regex(self, regex):
-        raise NotImplementedError
+        raise NIE
 
     @abc.abstractmethod
     def v_match(self, match):
-        raise NotImplementedError
+        raise NIE
 
     def v_str(self, s):
         return '"' + s + '"'
@@ -195,7 +206,7 @@ class Tongue:
     def cmt_hdr(self, text):
         self.cmt(box(text))
 
-    def newline(self, n=1):
+    def nl(self, n=1):
         for i in range(0, n):
             self._emit("", end="\n")
 
@@ -246,15 +257,20 @@ class PyTongue(Tongue):
         self.stmt("if " + condition + ":")
         self.tab += 1
 
+    def else_(self):
+        self.tab -= 1
+        self.stmt("else:", end="\n")
+        self.tab += 1
+
     def return_(self, value=""):
         self.stmt("return " + value)
 
     def end_if(self):
-        self.end_block()
+        self.end()
 
-    def end_block(self):
+    def end(self):
         self.tab -= 1
-        self.newline()
+        self.nl()
 
     def expand_args(self, *args, **kwargs):
         a = ""
@@ -298,6 +314,7 @@ class PyTongue(Tongue):
         self.stmt(s)
 
     def attrvar(self, prefix, name, value=None):
+        # skip in python
         pass
 
     def var(self, name, value=None):
@@ -324,6 +341,9 @@ class PyTongue(Tongue):
     def find_regex(self, match, regex, buf, offs):
         self.stmt(match + " = " + regex + ".match(" + buf + ", " + offs + ")")
 
+    # ------------------------------------
+    # these v_guys return rather than code
+    # ------------------------------------
     def v_regex_group_zero(self, match):
         return match + ".group(0)"
 
@@ -346,7 +366,9 @@ class PyTongue(Tongue):
     def v_match(self, match):
         return match
 
-
+# --------------------
+# SuperCollider Tongue
+# --------------------
 class ScTongue(Tongue):
 
     def __init__(self):
@@ -387,15 +409,20 @@ class ScTongue(Tongue):
         self.stmt("if (" + condition + ") {", end="\n")
         self.tab += 1
 
+    def else_(self):
+        self.tab -= 1
+        self.stmt("} {", end="\n")
+        self.tab += 1
+
     def end_if(self):
         self.tab -= 1
         self.stmt("}")
-        self.newline()
+        self.nl()
 
-    def end_block(self):
+    def end(self):
         self.tab -= 1
         self.stmt("}", end="\n")
-        self.newline()
+        self.nl()
 
     def return_(self, value=""):
         self.stmt("^" + value)
@@ -407,7 +434,7 @@ class ScTongue(Tongue):
         a = self.expand_args(*args, **kwargs)
         if a != "":
             self.stmt("| " + a + " |", end="\n")
-            self.newline()
+            self.nl()
 
     def abstract_static_method(self, name, *args, **kwargs):
         self.static_method(name, *args, **kwargs)
@@ -424,7 +451,7 @@ class ScTongue(Tongue):
 
         self.static_method("new", *args, **kwargs)
         self.return_("super.new.init( " + a + " )")
-        self.end_block()
+        self.end()
 
         self.function("init", *args, **kwargs)
 

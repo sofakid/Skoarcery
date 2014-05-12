@@ -1,6 +1,7 @@
 import unittest
+
 from Skoarcery import terminals, emissions
-from Skoarcery.factoary import schematics
+from Skoarcery.schematics import lexer
 
 
 class Code_Lexer_Inspector_Py(unittest.TestCase):
@@ -40,6 +41,6 @@ import abc
         emissions.PY.cmt_hdr("Value Tokes")
         for name in terminals.inspectables:
             token = terminals.tokens[name]
-            schematics.tokeInspector(PY, token)
+            lexer.tokeInspector(PY, token)
 
         fd.close()

@@ -47,7 +47,7 @@ class Code_Parser_Py(unittest.TestCase):
             else:
                 PY.stmt("noad = SkoarNoad('" + A.name + "', None, parent)")
 
-            PY.newline()
+            PY.nl()
 
             #PY.code_line("print('" + A.name + "')")
 
@@ -101,7 +101,7 @@ class Code_Parser_Py(unittest.TestCase):
                 else:
                     PY.return_("noad")
                     PY.tab -= 1
-                    PY.newline()
+                    PY.nl()
 
             if A.derives_empty:
                 PY.cmt("<e>")
@@ -113,7 +113,7 @@ class Code_Parser_Py(unittest.TestCase):
                 PY.stmt("self.fail()")
 
             PY.tab -= 1
-            PY.newline()
+            PY.nl()
 
         PY.tab -= 1
 

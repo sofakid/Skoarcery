@@ -1,6 +1,7 @@
 import unittest
+
 from Skoarcery import terminals, emissions
-from Skoarcery.factoary import schematics
+from Skoarcery.schematics import lexer
 
 
 class Code_Lexer_Py(unittest.TestCase):
@@ -8,7 +9,7 @@ class Code_Lexer_Py(unittest.TestCase):
     def setUp(self):
         terminals.init()
         emissions.init()
-        schematics.init(emissions.PY)
+        lexer.init(emissions.PY)
 
     def imports(self):
         emissions.PY.raw(
@@ -29,16 +30,16 @@ class SkoarError(AssertionError):
         )
 
     def base_token(self):
-        schematics.skoarToke()
+        lexer.skoarToke()
 
     def EOF_token(self):
-        schematics.EOF_token()
+        lexer.EOF_token()
 
     def whitespace_token(self):
-        schematics.whitespace_token()
+        lexer.whitespace_token()
 
     def typical_token(self, token):
-        schematics.typical_token(token)
+        lexer.typical_token(token)
 
     def test_PyLexer(self):
 

@@ -47,7 +47,7 @@ class Code_Parser_Sc(unittest.TestCase):
                 SC.var("noad", noad)
 
             SC.var("desires", SC.null)
-            SC.newline()
+            SC.nl()
 
             # each production
             for P in R:
@@ -111,9 +111,9 @@ class Code_Parser_Sc(unittest.TestCase):
                 SC.cmt("Error State")
                 SC.stmt("this.fail")
 
-            SC.end_block()
+            SC.end()
 
-        SC.end_block()
+        SC.end()
 
         fd.close()
 

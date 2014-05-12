@@ -1,6 +1,8 @@
 import unittest
+
 from Skoarcery import terminals, emissions
-from Skoarcery.factoary import schematics
+from Skoarcery.schematics import lexer
+
 
 bs = "{"
 be = "}"
@@ -11,7 +13,7 @@ class Code_Lexer_Sc(unittest.TestCase):
     def setUp(self):
         terminals.init()
         emissions.init()
-        schematics.init(emissions.SC)
+        lexer.init(emissions.SC)
 
     def exceptions(self):
 
@@ -21,25 +23,25 @@ class Code_Lexer_Sc(unittest.TestCase):
 
         SC.static_method("new", "msg")
         SC.return_("super.new(msg)")
-        SC.end_block()
+        SC.end()
 
         SC.static_method("errorString")
         SC.return_('"SKOAR" ++ super.errorString')
-        SC.end_block()
+        SC.end()
 
-        SC.end_block()
+        SC.end()
 
     def base_token(self):
-        schematics.skoarToke()
+        lexer.skoarToke()
 
     def EOF_token(self):
-        schematics.EOF_token()
+        lexer.EOF_token()
 
     def whitespace_token(self):
-        schematics.whitespace_token()
+        lexer.whitespace_token()
 
     def typical_token(self, token):
-        schematics.typical_token(token)
+        lexer.typical_token(token)
 
     def test_ScLexer(self):
 

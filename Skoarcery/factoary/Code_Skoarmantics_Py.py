@@ -7,6 +7,7 @@ class Code_Skoarmantics_Py(unittest.TestCase):
     def setUp(self):
         terminals.init()
         nonterminals.init()
+        emissions.init()
 
 
     def imports(self):
@@ -18,28 +19,45 @@ class Code_Skoarmantics_Py(unittest.TestCase):
 """
         )
 
-    def skoarmantic(self, X):
-        emissions.PY.raw(
-"""def {0}(skoar, noad):
-    pass
+    def symbols(self):
+        _ = _____ = _________ = _____________ = _________________ = _____________________ = emissions.PY
 
+        _.cmt_hdr("Symbols")
+        _.stmt(_.v_ass("skoar_", _.v_str("skoar")))
+        _.stmt(_.v_ass("noad_", _.v_str("noad")))
+        _.stmt(_.v_ass("noat_", _.v_str("noat")))
+        _.stmt(_.v_ass("toke_", _.v_str("toke")))
+        _.stmt(_.v_ass("node_absorb_toke_", _.v_str("noad.absorb_toke()")))
+        _.stmt(_.v_ass("toke_", _.v_str("toke")))
 
-""".format(X.name)
-        )
+        for X in nonterminals.nonterminals.values():
+            if X.has_semantics:
+                _.stmt(_.v_ass(X.name + "_", _.v_str(X.name)))
+
+        _.nl()
 
     def test_PySkoarmantics(self):
 
-        fd = open("../pymp/skoarmantics_template.py", mode="w")
+        fd = open("../schematics/semantics_template.py", mode="w")
 
-        emissions.PY.fd = fd
-
-        emissions.PY.file_header("Skoarmantics", "Code_Skoarmantics_Py")
+        PY = emissions.PY
+        _ = _____ = _________ = _____________ = _________________ = _____________________ = PY
+        _.fd = fd
+        _.file_header("Semantics", "Code_Skoarmantics_Py")
 
         self.imports()
 
-        emissions.PY.cmt_hdr("")
+        self.symbols()
+        _.cmt_hdr("semantic functions")
+
         for X in nonterminals.nonterminals.values():
             if X.has_semantics:
-                self.skoarmantic(X)
+                name = X.name
+                _.function(name)
+                _____.stmt("_.function(" + name + "_, skoar_, noad_)")
+                _____.stmt("_____.stmt(node_absorb_toke_)")
+                _____.stmt("_.end()")
+                _.end()
 
         fd.close()
+
