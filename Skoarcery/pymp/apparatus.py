@@ -1,4 +1,4 @@
-from collections import OrderedDict, UserDict
+from collections import UserDict
 from Skoarcery.pymp import toke_inspector, skoarmantics
 from Skoarcery.pymp.lex import Toke_Whitespace, Toke_EOF, SkoarToke
 
@@ -59,6 +59,9 @@ class Toker:
         print("skoarse: " + I.skoarse[0:I.am_here] + "_$_" + I.skoarse[I.am_here:-1])
 
 
+# --------------
+# The Parse Tree
+# --------------
 class SkoarNoad:
 
     def __init__(self, name, toke, parent, i=0):
@@ -81,8 +84,8 @@ class SkoarNoad:
     # ------------------
     # shrinking the tree
     # ------------------
-    def replace_children(self, X):
-        self.children = X
+    def replace_children(self, children):
+        self.children = children
         self.recount_children()
 
     def recount_children(self):
