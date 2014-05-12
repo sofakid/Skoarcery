@@ -11,6 +11,7 @@ class Code_Lexer_Sc(unittest.TestCase):
     def setUp(self):
         terminals.init()
         emissions.init()
+        schematics.init(emissions.SC)
 
     def exceptions(self):
 
@@ -29,70 +30,16 @@ class Code_Lexer_Sc(unittest.TestCase):
         SC.end_block()
 
     def base_token(self):
-
-        schematics.skoarToke(emissions.SC)
+        schematics.skoarToke()
 
     def EOF_token(self):
-
-        emissions.SC.cmt_hdr("EOF is special")
-        emissions.SC.raw(
-"""{0} : SkoarToke {bs}
-    classvar <regex = "$";
-
-    burn {bs}
-        | buf, offs |
-
-        if (buf.size > offs) {bs}
-            SkoarError("Tried to burn EOF when there's more input.").throw
-        {be}
-
-        ^0
-    {be}
-
-    *match {bs}
-        | buf, offs |
-
-        if (buf.size < offs) {bs}
-            SkoarError("offset too large matching EOF").throw;
-        {be};
-
-        if (buf.size == offs) {bs}
-            ^{0}("");
-        {be};
-
-        ^nil
-    {be}
-{be}
-
-""".format(terminals.EOF.toker_name, bs=bs, be=be)
-        )
+        schematics.EOF_token()
 
     def whitespace_token(self):
-
-        emissions.SC.cmt_hdr("Whitespace is special")
-        emissions.SC.raw(
-"""{0} : SkoarToke {bs}
-    classvar <regex = "{1}";
-
-    *burn {bs}
-        | buf, offs |
-
-        var o = buf.findRegexp("{1}", offs);
-
-        if (o.size > 0) {bs}
-            ^o[0][1].size;
-        {be};
-
-        ^0
-    {be}
-{be}
-
-
-""".format(terminals.Whitespace.toker_name, terminals.Whitespace.regex, bs=bs, be=be)
-        )
+        schematics.whitespace_token()
 
     def typical_token(self, token):
-        schematics.typical_token(emissions.SC, token)
+        schematics.typical_token(token)
 
     def test_ScLexer(self):
 

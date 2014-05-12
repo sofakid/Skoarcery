@@ -1,37 +1,64 @@
-from Skoarcery import terminals
+from Skoarcery import terminals, emissions
+
+_ = _____ = _________ = _____________ = _________________ = _____________________ = None
+
+# -------
+# Symbols
+# -------
+SkoarToke_ = "SkoarToke"
+lexeme_ = "lexeme"
+regex_ = "regex"
+inspectable_ = "inspectable"
+burn_ = "burn"
+match_ = "match"
+buf_ = "buf"
+offs_ = "offs"
+toke_class_ = "toke_class"
+match_toke_ = "match_toke"
+s_ = "s"
+SkoarError_ = "SkoarError"
+SubclassResponsibilityError_ = "SubclassResponsibilityError"
 
 
-def skoarToke(tongue):
-    _ = _____ = _________ = _____________ = tongue
+#
+# configure schematics to output a language
+# implemented by one of the tongues in emissions
+def init(tongue):
+    global _, _____, _________, _____________, _________________, _____________________
+    assert tongue in emissions.tongues
+    _ = _____ = _________ = _____________ = _________________ = _____________________ = tongue
+
+
+def skoarToke():
 
     _.cmt_hdr("Abstract Token")
 
-    _.abstract_class("SkoarToke")
-    _____.attrvar("<", "lexeme")
-    _____.classvar("<", "regex", _.null)
-    _____.classvar("<", "inspectable", _.false)
+    _.abstract_class(SkoarToke_)
+    _____.attrvar("<", lexeme_)
+    _____.classvar("<", regex_, _.null)
+    _____.classvar("<", inspectable_, _.false)
     _____.newline()
 
-    _____.constructor("s")
-    _________.stmt(_.v_attr("lexeme") + " = s")
+    _____.constructor(s_)
+    _________.stmt(_.v_ass(_.v_attr(lexeme_), s_))
     _____.end_block()
 
     _____.cmt("how many characters to burn from the buffer")
-    _____.method("burn")
-    _________.return_(_.v_length(_.v_attr("lexeme")))
+    _____.method(burn_)
+    _________.return_(_.v_length(_.v_attr(lexeme_)))
     _____.end_block()
 
     _____.cmt("override and return " + _.null + " for no match, new toke otherwise")
-    _____.abstract_static_method("match", "buf", "offs")
-    _________.throw("SubclassResponsibilityError", '"What are you doing human?"')
+    _____.abstract_static_method(match_, buf_, offs_)
+    _________.throw(SubclassResponsibilityError_, _.v_str("What are you doing human?"))
     _____.end_block()
 
     _____.cmt("match requested toke")
-    _____.static_method("match_toke", "buf", "offs", "toke_class")
-    _________.find_regex("match", "toke_class.regex", "buf", "offs")
+    _____.static_method(match_toke_, buf_, offs_, toke_class_)
+    _________.find_regex(match_, toke_class_ + "." + regex_, buf_, offs_)
 
-    _________.if_(_.v_match("match"))
-    _____________.return_(_.v_new("toke_class", _.v_regex_group_zero("match")))
+    _________.if_(_.v_match(match_))
+    _____________.return_(_.v_new(toke_class_, _.v_regex_group_zero(match_)))
     _________.end_if()
 
     _________.return_(_.null)
@@ -40,26 +67,64 @@ def skoarToke(tongue):
     _.end_block()
 
 
-def typical_token(tongue, token):
-    _ = _____ = _________ = _____________ = tongue
+def whitespace_token():
 
-    inspectable = _.true if token.name in terminals.inspectables else _.false
+    Whitespace = terminals.Whitespace
 
-    _.class_(token.toker_name, "SkoarToke")
-
-    _____.classvar("<", "regex", _.v_def_regex(token.regex))
-    _____.classvar("<", "inspectable", inspectable)
-    _____.newline()
-
-    _____.static_method("match", "buf", "offs")
-    _________.return_("SkoarToke.match_toke(buf, offs, " + token.toker_name + ")")
+    _.cmt_hdr("Whitespace is special")
+    _.class_(Whitespace.toker_name, SkoarToke_)
+    _____.static_method(burn_, buf_, offs_)
+    _________.find_regex(match_, _.v_def_regex(Whitespace.regex), buf_, offs_)
+    _________.if_(_.v_match(match_))
+    _____________.return_(_.v_length(_.v_regex_group_zero(match_)))
+    _________.end_if()
+    _________.return_("0")
     _____.end_block()
-
     _.end_block()
 
 
-def tokeInspector(tongue, token):
-    _ = _____ = _________ = _____________ = tongue
+def EOF_token():
+
+    EOF = terminals.EOF
+
+    _.cmt_hdr("EOF is special")
+    _.class_(EOF.toker_name, SkoarToke_)
+    _____.newline()
+    _____.static_method(burn_, buf_, offs_)
+    _________.if_(_.v_length(buf_) + " > " + offs_)
+    _____________.throw(SkoarError_, _.v_str("Tried to burn EOF when there's more input."))
+    _________.end_if()
+    _________.return_("0")
+    _____.end_block()
+    _____.newline()
+    _____.static_method(match_, buf_, offs_)
+    _________.if_(_.v_length(buf_) + " < " + offs_)
+    _____________.throw(SkoarError_, _.v_str("Tried to burn EOF when there's more input."))
+    _________.end_if()
+    _________.if_(_.v_length(buf_) + " == " + offs_)
+    _____________.return_(_.v_new(EOF.toker_name, ""))
+    _________.end_if()
+    _________.newline()
+    _________.return_(_.null)
+    _____.end_block()
+    _.end_block()
+
+
+def typical_token(token):
+
+    inspectable = _.true if token.name in terminals.inspectables else _.false
+
+    _.class_(token.toker_name, SkoarToke_)
+    _____.classvar("<", regex_, _.v_def_regex(token.regex))
+    _____.classvar("<", "inspectable", inspectable)
+    _____.newline()
+    _____.static_method(match_, buf_, offs_)
+    _________.return_(SkoarToke_ + "." + match_toke_ + "(" + buf_ + ", " + offs_ + ", " + token.toker_name + ")")
+    _____.end_block()
+    _.end_block()
+
+
+def tokeInspector(token):
 
     _.function(token.toker_name, "toke")
 

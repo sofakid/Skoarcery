@@ -331,6 +331,9 @@ class PyTongue(Tongue):
         a = self.expand_args(*args)
         return cls + "(" + a + ")"
 
+    def v_ass(self, dst, src):
+        return dst + " = " + src
+
     def v_length(self, x):
         return "len(" + x + ")"
 
@@ -458,6 +461,9 @@ class ScTongue(Tongue):
     def find_regex(self, match, regex, buf, offs):
         self.stmt("var " + match + " = " + buf + ".findRegexp(" + regex + ", " + offs + ")")
 
+    def v_ass(self, dst, src):
+        return dst + " = " + src
+
     def v_regex_group_zero(self, match):
         return match + "[0][1]"
 
@@ -515,9 +521,13 @@ def box(text, char="-"):
 
 SC = None
 PY = None
+tongues = []
 
 
 def init():
-    global SC, PY
+    global SC, PY, tongues
+
     SC = ScTongue()
     PY = PyTongue()
+
+    tongues = [SC, PY]

@@ -8,6 +8,7 @@ class Code_Lexer_Py(unittest.TestCase):
     def setUp(self):
         terminals.init()
         emissions.init()
+        schematics.init(emissions.PY)
 
     def imports(self):
         emissions.PY.raw(
@@ -18,65 +19,23 @@ import abc
 class SubclassResponsibilityError(NotImplementedError):
     pass
 
+class SkoarError(Error):
+    pass
+
 """
         )
 
     def base_token(self):
-
-        schematics.skoarToke(emissions.PY)
+        schematics.skoarToke()
 
     def EOF_token(self):
-
-        emissions.PY.cmt_hdr("EOF is special")
-        emissions.PY.raw(
-"""class {0}(SkoarToke):
-    regex = re.compile(r"$")
-
-    @staticmethod
-    def burn(buf, offs):
-        print("Burning EOF")
-        if len(buf) > offs:
-            raise Exception("Tried to burn EOF when there's more input.")
-
-        return 0
-
-    @staticmethod
-    def match(buf, offs):
-
-        if len(buf) <= offs:
-            print("woot")
-            assert len(buf) == offs
-            return {0}("")
-
-        return None
-
-
-""".format(terminals.EOF.toker_name)
-        )
+        schematics.EOF_token()
 
     def whitespace_token(self):
-
-        emissions.PY.cmt_hdr("Whitespace is special")
-        emissions.PY.raw(
-"""class {0}(SkoarToke):
-    regex = re.compile(r"{1}")
-
-    @staticmethod
-    def burn(buf, offs):
-
-        match = {0}.regex.match(buf, offs)
-
-        if match:
-            return len(match.group(0))
-
-        return 0
-
-
-""".format(terminals.Whitespace.toker_name, terminals.Whitespace.regex)
-        )
+        schematics.whitespace_token()
 
     def typical_token(self, token):
-        schematics.typical_token(emissions.PY, token)
+        schematics.typical_token(token)
 
     def test_PyLexer(self):
 
