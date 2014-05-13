@@ -1,7 +1,7 @@
 
-// ---------
+// =========
 // The Toker
-// ---------
+// =========
 
 Toker {
     var skoarse;
@@ -21,7 +21,7 @@ Toker {
     }
 
     see {
-        | want |
+        |want|
 
         if (i_saw) {
             if (i_saw.isKindOf(want.class)) {
@@ -32,6 +32,7 @@ Toker {
             i_saw = want.match(skoarse, i_am_here);
             ^i_saw;
         }
+
         ^nil;
     }
 
@@ -81,10 +82,9 @@ Toker {
 }
 
 
-// --------------
-// The Parse Tree
-// --------------
-
+// ==========================
+// The Parse Tree - SkoarNoad
+// ==========================
 SkoarNoad {
 
     var <>parent;        // the parent noad
@@ -97,7 +97,7 @@ SkoarNoad {
     var <>name;          // name of the nonterminal
 
     var <>performer;     // function to override when defining semantics.
-    var  >next_jmp;      // if this is set, we will jump to this noad instead of the next noad
+    var   next_jmp;      // if this is set, we will jump to this noad instead of the next noad
 
     var <>is_beat;       // flag indicates if it's a beat
 
@@ -221,7 +221,6 @@ SkoarNoad {
 
         if (j == n) {
             if (parent == nil) {
-                // StopIteration.throw;
                 ^nil;
             };
 
@@ -249,7 +248,163 @@ SkoarNoad {
     }
 
     action {
-        performer;
+        performer.value;
     }
 
 }
+
+
+// =============
+// SkoarIterator
+// =============
+SkoarIterator {
+
+    var noad;
+
+    *new {
+        | skoar |
+        ^super.new.init(skoar);
+    }
+
+    init {
+        | skoar |
+        noad = skoar.tree;
+    }
+
+    next {
+        var x = noad.next_item();
+
+        if (x.isKindOf(SkoarNoad)) {
+            noad = x;
+            x.on_enter;
+        };
+
+        ^x;
+    }
+}
+
+
+// =====
+// Skoar
+// =====
+Skoar {
+
+    var   skoarse;  // the skoarse code
+    var  <tree;     // root node of the tree (our start symbol, skoar)
+    var  <toker;    // friendly neighbourhood toker
+    var   parser;   // recursive descent predictive parser
+    var   markers;  // list of markers (for gotos/repeats)
+
+    var <>cur_noat;
+    var <>noat_direction;
+
+
+    init {
+        | code |
+
+        skoarse = code;
+        tree = nil;
+        toker = Toker(skoarse);
+        parser = SkoarParser(this);
+        markers = List[];
+
+        cur_noat = nil;
+        noat_direction = 1;
+    }
+
+    parse {
+        tree = self.parser.skoar(nil);
+        toker.eof;
+    }
+
+    decorate {
+
+        var inspect = {
+            | x |
+
+            // tokens*
+            if (x.toke) {
+                // run the function x.name, pass the token
+                TokeInspector[x.name].(x.toke);
+
+            // nonterminals*
+            } {
+                // run the function, pass the noad (not the nonterminal)
+                Skoarmantics[x.name].(this, x);
+            };
+        };
+
+        tree.depth_visit(inspect);
+    }
+
+    /*get_pattern_gen {
+        for x in SkoarIterator():
+            if (x.isKindOf(SkoarNoad)) {
+
+                // run performance handler
+                x.performer(this);
+
+                if (x.is_beat) {
+                    yield [cur_noat.lexeme, x.beat.value];
+                };
+            }
+        };*/
+
+    // ----
+    // misc
+    // ----
+    noat_go {
+        | noat |
+        cur_noat = noat;
+    }
+
+    // save these in a list for jumping around in
+    add_marker {
+        | marker_noad |
+        markers.add(marker_noad);
+    }
+
+    jmp_colon {
+        | noad |
+
+        var toke = noad.toke;
+
+        if (toke.unspent) {
+            // spend it
+            toke.unspent = false;
+
+            // find where we are in markers
+            n = markers.size;
+
+            j = block {
+                | break |
+                for (0, n - 1, {
+                    | i |
+                    if (noad == markers[i]) {
+                        break.(i);
+                    };
+
+                });
+                SkoarError("couldn't find where we are in markers").throw;
+            };
+
+            // go backwards in list and find either a
+            // post_repeat or the start
+            block {
+                | break |
+                forBy(j - 1, 0, -1, {
+                    | i |
+                    var x = markers[i];
+                    var t = x.toke;
+
+                    if (t.isKindOf(Toke_Bars) and t.post_repeat) {
+                        noad.go_here_next(x);
+                        break.value;
+                    };
+                });
+                noad.go_here_next(markers[0]);
+            };
+        };
+    }
+}
+
