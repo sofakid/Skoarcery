@@ -22,7 +22,7 @@ import abc
     def typical_token(self, token):
         emissions.PY.raw(
 """def {0}(toke):
-    toke.value = 0
+    toke.val = 0
 
 
 """.format(token.toker_name, token.regex)

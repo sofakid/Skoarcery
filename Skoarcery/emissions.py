@@ -95,15 +95,15 @@ class Tongue:
         raise NIE
 
     @abc.abstractmethod
-    def classvar(self, prefix, name, value=None):
+    def classvar(self, prefix, name, val=None):
         raise NIE
 
     @abc.abstractmethod
-    def attrvar(self, prefix, name, value=None):
+    def attrvar(self, prefix, name, val=None):
         raise NIE
 
     @abc.abstractmethod
-    def var(self, name, value=None):
+    def var(self, name, val=None):
         raise NIE
 
     @abc.abstractmethod
@@ -147,7 +147,7 @@ class Tongue:
         raise NIE
 
     @abc.abstractmethod
-    def return_(self, value=""):
+    def return_(self, val=""):
         raise NIE
 
     @abc.abstractmethod
@@ -262,8 +262,8 @@ class PyTongue(Tongue):
         self.stmt("else:", end="\n")
         self.tab += 1
 
-    def return_(self, value=""):
-        self.stmt("return " + value)
+    def return_(self, val=""):
+        self.stmt("return " + val)
 
     def end_if(self):
         self.end()
@@ -307,20 +307,20 @@ class PyTongue(Tongue):
         self.stmt(s)
         self.tab += 1
 
-    def classvar(self, prefix, name, value=None):
+    def classvar(self, prefix, name, val=None):
         s = name
-        if value:
-            s += " = " + value
+        if val:
+            s += " = " + val
         self.stmt(s)
 
-    def attrvar(self, prefix, name, value=None):
+    def attrvar(self, prefix, name, val=None):
         # skip in python
         pass
 
-    def var(self, name, value=None):
+    def var(self, name, val=None):
         s = name
-        if value:
-            s += " = " + value
+        if val:
+            s += " = " + val
         self.stmt(s)
 
     def method(self, name, *args, **kwargs):
@@ -424,8 +424,8 @@ class ScTongue(Tongue):
         self.stmt("}", end="\n")
         self.nl()
 
-    def return_(self, value=""):
-        self.stmt("^" + value)
+    def return_(self, val=""):
+        self.stmt("^" + val)
 
     def function(self, name, *args, **kwargs):
         self.stmt(name + " {", end="\n")
@@ -466,20 +466,20 @@ class ScTongue(Tongue):
         self.stmt(s, end="\n")
         self.tab += 1
 
-    def classvar(self, prefix, name, value=None):
+    def classvar(self, prefix, name, val=None):
         s = prefix + name
-        if value is not None:
-            s += " = " + value
+        if val is not None:
+            s += " = " + val
 
         self.stmt("classvar " + s)
 
-    def attrvar(self, prefix, name, value=None):
+    def attrvar(self, prefix, name, val=None):
         self.stmt("var " + prefix + name)
 
-    def var(self, name, value=None):
+    def var(self, name, val=None):
         s = name
-        if value is not None:
-            s += " = " + value
+        if val is not None:
+            s += " = " + val
         self.stmt("var " + s)
 
     def throw(self, name, msg):

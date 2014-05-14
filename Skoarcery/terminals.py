@@ -12,7 +12,7 @@ src = """
 EOF:         unused
 Whitespace:  \\s*
 
-Comment*:        <\\?(.|[\\n\\r])*?\\?>
+Comment:        <\\?(.|[\\n\\r])*?\\?>
 
 MeterS:         <!
 MeterE:         !>

@@ -2,60 +2,56 @@
 # toke_inspector
 # ==============
 #
-# Here we pick the values out of the tokens
+# Here we pick the vals out of the tokens
 # and set its attributes appropriately
 from math import ldexp
 
 import re
 
 
-def Toke_Comment(toke):
-    toke.value = toke.lexeme[2:-2]
-
-
 def Toke_Int(toke):
-    toke.value = int(toke.lexeme)
+    toke.val = int(toke.lexeme)
 
 
 def Toke_Float(toke):
-    toke.value = float(toke.lexeme)
+    toke.val = float(toke.lexeme)
 
 
 def Toke_Carrots(toke):
-    toke.value = len(toke.lexeme)
+    toke.val = len(toke.lexeme)
 
 
 def Toke_Tuplet(toke):
-    toke.value = 0
+    toke.val = 0
 
 
 def Toke_Crotchets(toke):
     toke.is_rest = True
-    toke.value = 2 ** len(toke.lexeme)
+    toke.val = 2 ** len(toke.lexeme)
 
 
 def Toke_Quavers(toke):
     toke.is_rest = True
     # len("oo/")
-    toke.value = ldexp(1, -(len(toke.lexeme) - 1))
+    toke.val = ldexp(1, -(len(toke.lexeme) - 1))
 
 
 def Toke_DynPiano(toke):
-    toke.value = 0
+    toke.val = 0
 
 
 def Toke_DynForte(toke):
-    toke.value = 0
+    toke.val = 0
 
 
 def Toke_Quarters(toke):
     toke.is_rest = False
-    toke.value = 2 ** (len(toke.lexeme) - 1)
+    toke.val = 2 ** (len(toke.lexeme) - 1)
 
 
 def Toke_Eighths(toke):
     toke.is_rest = False
-    toke.value = ldexp(1, -len(toke.lexeme))
+    toke.val = ldexp(1, -len(toke.lexeme))
 
 
 vector_noat_regex = re.compile(r"(~?)([a-g])(?:(#*)|(b*))(~?)")
@@ -86,27 +82,27 @@ def Toke_VectorNoat(toke):
 
 
 def Toke_BooleanOp(toke):
-    toke.value = toke.lexeme
+    toke.val = toke.lexeme
 
 
 def Toke_Choard(toke):
-    toke.value = toke.lexeme
+    toke.val = toke.lexeme
 
 
 def Toke_MsgName(toke):
-    toke.value = toke.lexeme
+    toke.val = toke.lexeme
 
 
 def Toke_MsgNameWithArgs(toke):
-    toke.value = toke.lexeme.rstrip("<")
+    toke.val = toke.lexeme.rstrip("<")
 
 
 def Toke_Volta(toke):
-    toke.value = int(toke.lexeme.strip("[.]"))
+    toke.val = int(toke.lexeme.strip("[.]"))
 
 
 def Toke_Symbol(toke):
-    toke.value = toke.lexeme[1:]
+    toke.val = toke.lexeme[1:]
 
 
 def Toke_Segno(toke):
@@ -118,7 +114,7 @@ def Toke_Segno(toke):
 
 
 def Toke_String(toke):
-    toke.value = toke.lexeme[1:-1]
+    toke.val = toke.lexeme[1:-1]
 
 
 def Toke_Bars(toke):

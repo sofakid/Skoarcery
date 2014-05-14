@@ -317,7 +317,7 @@ class Skoar:
                 x.performer(self)
 
                 if x.is_beat:
-                    yield [self.cur_noat.lexeme, x.beat.value]
+                    yield [self.cur_noat.lexeme, x.beat.val]
 
     # ----
     # misc

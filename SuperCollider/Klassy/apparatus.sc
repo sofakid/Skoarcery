@@ -313,7 +313,7 @@ Skoar {
     }
 
     parse {
-        tree = self.parser.skoar(nil);
+        tree = parser.skoar(nil);
         toker.eof;
     }
 
@@ -370,11 +370,12 @@ Skoar {
         var toke = noad.toke;
 
         if (toke.unspent) {
+            // find where we are in markers
+            var n = markers.size;
+            var j;
+
             // spend it
             toke.unspent = false;
-
-            // find where we are in markers
-            n = markers.size;
 
             j = block {
                 | break |
@@ -397,7 +398,7 @@ Skoar {
                     var x = markers[i];
                     var t = x.toke;
 
-                    if (t.isKindOf(Toke_Bars) and t.post_repeat) {
+                    if (t.isKindOf(Toke_Bars) && t.post_repeat) {
                         noad.go_here_next(x);
                         break.value;
                     };
