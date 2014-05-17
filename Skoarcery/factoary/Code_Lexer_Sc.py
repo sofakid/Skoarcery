@@ -45,7 +45,7 @@ class Code_Lexer_Sc(unittest.TestCase):
 
     def test_ScLexer(self):
 
-        fd = open("../../SuperCollider/Klassy/lex.sc", mode="w")
+        fd = open("../../SuperCollider/Klassy/Skoar/lex.sc", mode="w")
 
         emissions.SC.fd = fd
         emissions.SC.file_header("lex", "Code_Sc_Lexer")

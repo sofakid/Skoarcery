@@ -17,7 +17,7 @@ class Code_Parser_Sc(unittest.TestCase):
         from Skoarcery.dragonsets import FIRST, FOLLOW
         from Skoarcery.terminals import Empty
 
-        fd = open("../../SuperCollider/Klassy/rdpp.sc", "w")
+        fd = open("../../SuperCollider/Klassy/Skoar/rdpp.sc", "w")
         SC = emissions.SC
         SC.fd = fd
 
@@ -25,7 +25,7 @@ class Code_Parser_Sc(unittest.TestCase):
         # Imports
         # class SkoarParseException
         # class SkoarParser:
-        #     __init__
+        #     init
         #     fail
         self.code_start()
 
@@ -43,8 +43,7 @@ class Code_Parser_Sc(unittest.TestCase):
             if A.intermediate:
                 SC.var("noad", "parent")
             else:
-                noad = SC.v_new("SkoarNoad", SC.v_str(A.name), SC.null, "parent")
-                SC.var("noad", noad)
+                SC.var("noad", SC.v_new("SkoarNoad", SC.v_str(A.name), SC.null, "parent"))
 
             SC.var("desires", SC.null)
             SC.nl()

@@ -305,7 +305,7 @@ Skoar {
         skoarse = code;
         tree = nil;
         toker = Toker(skoarse);
-        parser = SkoarParser(this);
+        parser = SkoarParser.new(this);
         markers = List[];
 
         cur_noat = nil;
