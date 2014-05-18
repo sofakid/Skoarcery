@@ -158,6 +158,10 @@ class Tongue:
     def find_regex(self, match, regex, buf, offs):
         raise NIE
 
+    @abc.abstractmethod
+    def print(self, s, end="\n"):
+        raise NIE
+
     # ------------------------------------
     # these v_guys return rather than code
     # ------------------------------------
@@ -341,6 +345,9 @@ class PyTongue(Tongue):
     def find_regex(self, match, regex, buf, offs):
         self.stmt(match + " = " + regex + ".match(" + buf + ", " + offs + ")")
 
+    def print(self, s, end="\n"):
+        self.stmt("print(" + s + ", end='" + end + "'")
+
     # ------------------------------------
     # these v_guys return rather than code
     # ------------------------------------
@@ -487,6 +494,9 @@ class ScTongue(Tongue):
 
     def find_regex(self, match, regex, buf, offs):
         self.stmt("var " + match + " = " + buf + ".findRegexp(" + regex + ", " + offs + ")")
+
+    def print(self, s, end="\n"):
+        self.stmt('"' + s + end + '".post')
 
     def v_ass(self, dst, src):
         return dst + " = " + src

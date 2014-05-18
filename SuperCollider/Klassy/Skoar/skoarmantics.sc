@@ -11,11 +11,11 @@ Skoarmantics {
 
         var dict = Dictionary[
 
-            "msg_chain_node" => {
+            "msg_chain_node" -> {
                 | skoar, noad |
             },
         
-            "beat" => {
+            "beat" -> {
                 | skoar, noad |
         
                 noad.absorb_toke;
@@ -23,14 +23,14 @@ Skoarmantics {
                 noad.is_beat = true;
             },
         
-            "meter_beat" => {
+            "meter_beat" -> {
                 | skoar, noad |
         
                 noad.absorb_toke;
                 noad.beat = noad.toke;
             },
         
-            "listy" => {
+            "listy" -> {
                 | skoar, noad |
         /*
                 X = List[];
@@ -44,75 +44,75 @@ Skoarmantics {
                 noad.replace_children(X);*/
             },
         
-            "clef" => {
+            "clef" -> {
                 | skoar, noad |
             },
         
-            "meter_symbolic" => {
+            "meter_symbolic" -> {
                 | skoar, noad |
             },
         
-            "stmt" => {
+            "stmt" -> {
                 | skoar, noad |
             },
         
-            "musical_keyword_misc" => {
+            "musical_keyword_misc" -> {
                 | skoar, noad |
             },
         
-            "coda" => {
+            "coda" -> {
                 | skoar, noad |
             },
         
-            "meter_ass" => {
+            "meter_ass" -> {
                 | skoar, noad |
             },
         
-            "assignment" => {
+            "assignment" -> {
                 | skoar, noad |
             },
         
-            "accidentally" => {
+            "accidentally" -> {
                 | skoar, noad |
             },
         
-            "boolean" => {
+            "boolean" -> {
                 | skoar, noad |
             },
         
-            "ottavas" => {
+            "ottavas" -> {
                 | skoar, noad |
             },
         
-            "skoaroid" => {
+            "skoaroid" -> {
                 | skoar, noad |
             },
         
-            "msg" => {
+            "msg" -> {
                 | skoar, noad |
             },
         
-            "dal_goto" => {
+            "dal_goto" -> {
                 | skoar, noad |
             },
         
-            "cthulhu" => {
+            "cthulhu" -> {
                 | skoar, noad |
             },
         
-            "dynamic" => {
+            "dynamic" -> {
                 | skoar, noad |
             },
         
-            "optional_carrots" => {
+            "optional_carrots" -> {
                 | skoar, noad |
             },
         
-            "meter_sig_prime" => {
+            "meter_sig_prime" -> {
                 | skoar, noad |
             },
         
-            "meter" => {
+            "meter" -> {
                 | skoar, noad |
         
                 // trim start and end tokens
@@ -121,7 +121,7 @@ Skoarmantics {
         
             },
         
-            "marker" => {
+            "marker" -> {
                 | skoar, noad |
         
                 var toke;
@@ -136,11 +136,11 @@ Skoarmantics {
         
             },
         
-            "noaty" => {
+            "noaty" -> {
                 | skoar, noad |
             },
         
-            "noat_literal" => {
+            "noat_literal" -> {
                 | skoar, noad |
         
                 var noat = noad.absorb_toke;
@@ -151,13 +151,13 @@ Skoarmantics {
                 };
             },
         
-            "noat_reference" => {
+            "noat_reference" -> {
                 | skoar, noad |
         
                 // TODO Symbol | CurNoat | listy
             },
         
-            "pedally" => {
+            "pedally" -> {
                 | skoar, noad |
             }
 

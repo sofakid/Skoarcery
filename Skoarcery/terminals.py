@@ -22,7 +22,7 @@ AltoClef:       C:|alto:
 
 
 
-CurNoat:        \\$
+CurNoat:        [$]
 Portamento:     ~~~
 Slur:           [+][+]
 
