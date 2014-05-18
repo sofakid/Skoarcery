@@ -99,9 +99,14 @@ SkoarNoad {
     var <>performer;     // function to override when defining semantics.
     var   next_jmp;      // if this is set, we will jump to this noad instead of the next noad
 
-    var <>is_beat;       // flag indicates if it's a beat
+    var <>noat;
+    var <>is_rest;
+    var <>is_beat;       // flag indicates if it's a beat.
+    var <>beat;          // beat toke (note this could be a beat toke, and is_beat=false,
+                         // like when setting bpm with an assignment)
 
     var  <inspectable;   // this toke carries information that must be inspected and processed.
+
 
     *new {
         | name, toke, parent, i=0 |
@@ -124,6 +129,10 @@ SkoarNoad {
 
         children = List[];
 
+        noat = nil;
+
+        // do i use these?
+        is_rest = false;
         is_beat = false;
 
         next_jmp = nil;
@@ -133,6 +142,7 @@ SkoarNoad {
         } {
             inspectable = false;
         };
+
     }
 
 
@@ -189,7 +199,7 @@ SkoarNoad {
             x = children.pop;
             n = 0;
 
-            if (x.isKindOf(SkoarNoad) && x.toke) {
+            if (x.isKindOf(SkoarNoad) && x.toke != nil) {
                 toke = x.toke;
             } {
                 toke = x;
@@ -207,7 +217,7 @@ SkoarNoad {
 
         children.do {
             | x |
-            if (x) {
+            if (x != nil) {
                 x.depth_visit(f);
             };
         };
@@ -217,7 +227,7 @@ SkoarNoad {
 
     next_item {
 
-        if (next_jmp) {
+        if (next_jmp != nil) {
             ^next_jmp;
         };
 
@@ -332,8 +342,11 @@ Skoar {
         var inspect = {
             | x |
 
+            "inspecting ".post;
+            x.dump;
+
             // tokens*
-            if (x.toke) {
+            if (x.toke != nil) {
                 // run the function x.name, pass the token
                 inspector[x.name].(x.toke);
 

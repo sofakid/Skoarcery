@@ -73,7 +73,7 @@ SkoarTokeInspector {
                 var s = toke.lexeme;
                 var r = s.findRegexp(vector_noat_regex);
 
-                toke.letter = r[0][1];
+                toke.val = r[0][1];
 
             },
             
@@ -94,7 +94,14 @@ SkoarTokeInspector {
             
             "Toke_MsgNameWithArgs" -> {
                 | toke |
-                toke.val = toke.lexeme.rstrip("<");
+                var x = "<";
+                var s = toke.lexeme;
+
+                if (s.last == x) {
+                    s = s.copyRange(0, s.size - 2);
+                };
+
+                toke.val = s;
             },
             
             "Toke_Volta" -> {
@@ -124,8 +131,8 @@ SkoarTokeInspector {
             
             "Toke_Bars" -> {
                 | toke |
-                toke.pre_repeat = toke.lexeme.startswith(":");
-                toke.post_repeat = toke.lexeme.endswith(":");
+                toke.pre_repeat = toke.lexeme.beginsWith(":");
+                toke.post_repeat = toke.lexeme.endsWith(":");
                 toke.unspent = true;
             }
         ];        
