@@ -70,7 +70,7 @@ class Code_Parser_Sc(unittest.TestCase):
                 n = len(desires)
                 SC.stmt("desires = [", end="")
                 for toke in desires:
-                    SC.raw(toke.toker_name + ".class")
+                    SC.raw(toke.toker_name)
                     i += 1
                     if i != n:
                         if i % 5 == 0:
@@ -82,13 +82,13 @@ class Code_Parser_Sc(unittest.TestCase):
                 else:
                     SC.raw("];\n")
 
-                SC.if_("toker.sees(desires)")
+                SC.if_("toker.sees(desires) != " + SC.null)
 
                 #SC.print(str(P))
 
                 for x in alpha:
                     if isinstance(x, Terminal):
-                        SC.stmt('noad.add_toke(' + SC.v_str(x.toker_name) + ', toker.burn(' + x.toker_name + '.class))')
+                        SC.stmt('noad.add_toke(' + SC.v_str(x.toker_name) + ', toker.burn(' + x.toker_name + '))')
 
                         #SC.print("burning: " + x.name)
                     else:

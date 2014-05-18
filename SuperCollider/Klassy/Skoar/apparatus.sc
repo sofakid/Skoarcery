@@ -23,12 +23,12 @@ Toker {
     see {
         |want|
 
-        if (i_saw) {
-            if (i_saw.isKindOf(want.class)) {
+        if (i_saw != nil) {
+            if (i_saw.isKindOf(want)) {
                 ^i_saw
             }
         } {
-            i_am_here += Toke_Whitespace.burn(skoarse, i_am_here);
+            i_am_here = i_am_here + Toke_Whitespace.burn(skoarse, i_am_here);
             i_saw = want.match(skoarse, i_am_here);
             ^i_saw;
         }
@@ -46,7 +46,7 @@ Toker {
                 | want |
 
                 x = this.see(want);
-                if (x) {
+                if (x != nil) {
                     break.(x);
                 };
             };
@@ -67,8 +67,8 @@ Toker {
 
         if (toke.isKindOf(want)) {
             i_saw = nil;
-            i_am_here += toke.burn;
-            i_am_here += Toke_Whitespace.burn(skoarse, i_am_here);
+            i_am_here = i_am_here + toke.burn;
+            i_am_here = i_am_here + Toke_Whitespace.burn(skoarse, i_am_here);
             ^toke;
         };
 
@@ -155,8 +155,8 @@ SkoarNoad {
             if (x.isKindOf(SkoarNoad)) {
                 x.i = k;
             };
-            k += 1;
-            n += 1;
+            k = k + 1;
+            n = n + 1;
         }
     }
 
@@ -169,14 +169,14 @@ SkoarNoad {
 
         children.add(noad);
         noad.i = n;
-        n += 1;
+        n = n + 1;
     }
 
     add_toke {
         | name, toke |
 
         children.add(SkoarNoad(name, toke, this, n));
-        n += 1;
+        n = n + 1;
     }
 
     absorb_toke {
@@ -298,6 +298,10 @@ Skoar {
     var <>cur_noat;
     var <>noat_direction;
 
+    *new {
+        | code |
+        ^super.new.init(code);
+    }
 
     init {
         | code |

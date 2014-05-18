@@ -24,11 +24,11 @@ AltoClef:       C:|alto:
 
 CurNoat:        \\$
 Portamento:     ~~~
-Slur:           \\+\\+
+Slur:           [+][+]
 
 # careful not to match ottavas with end in (ma,mb,va,vb), or steal from floats
-Int*:           (\\+|-)?(0|[1-9][0-9]*)(?![mv][ab]|\\.[0-9])
-Float*:         (\\+|-)?(0|[1-9][0-9]*)\\.[0-9]+
+Int*:           (-)?(0|[1-9][0-9]*)(?![mv][ab]|\\.[0-9])
+Float*:         (-)?(0|[1-9][0-9]*)\\.[0-9]+
 
 ListS:          <(?![!=?])
 ListE:          >
@@ -83,7 +83,7 @@ DaCapo:           D\\.C\\.|Da Capo
 DalSegno:         D\\.S\\.|Dal Segno
 Fine:             fine
 Segno*:           %S%(?:_[a-zA-Z_][a-zA-Z0-9_]*)*
-Coda:             \\(\\+\\)
+Coda:             \\([+]\\)
 Rep:              \\./\\.
 DubRep:           /\\.\\|\\./
 AlCoda:           al(la)? coda
@@ -109,7 +109,7 @@ String*:          \'[^']*\'
 Bars*:            :?[\\|]+:?
 
 PedalDown:        Ped\\.
-PedalUp:          \\*
+PedalUp:          [*]
 
 """
 
