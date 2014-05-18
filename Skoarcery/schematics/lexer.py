@@ -114,7 +114,7 @@ def typical_token(token):
 
     _.class_(token.toker_name, SkoarToke_)
     _____.classvar("<", regex_, _.v_def_regex(token.regex))
-    _____.classvar("<", "inspectable", inspectable)
+    _____.classvar("<", inspectable_, inspectable)
     _____.nl()
     _____.static_method(match_, buf_, offs_)
     _________.return_(SkoarToke_ + "." + match_toke_ + "(" + buf_ + ", " + offs_ + ", " + token.toker_name + ")")

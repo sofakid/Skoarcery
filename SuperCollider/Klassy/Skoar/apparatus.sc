@@ -129,7 +129,7 @@ SkoarNoad {
         next_jmp = nil;
 
         if (toke.isKindOf(SkoarToke)) {
-            inspectable = toke.inspectable;
+            inspectable = toke.class.inspectable;
         } {
             inspectable = false;
         };

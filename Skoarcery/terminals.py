@@ -12,7 +12,7 @@ src = """
 EOF:         unused
 Whitespace:  \\s*
 
-Comment:        <\\?(.|[\\n\\r])*?\\?>
+Comment:        <[?](.|[\\n\\r])*?[?]>
 
 MeterS:         <!
 MeterE:         !>
@@ -40,7 +40,7 @@ LWing:          \\^\\^[(]
 RWing:          [)]\\^\\^
 
 Tuplet*:        /\\d+(:\\d+)?|(du|tri|quadru)plets?|(quin|sex|sep|oc)tuplets?
-Crotchets*:     }+
+Crotchets*:     [}]+
 Quavers*:       o+/
 Caesura:        //
 
@@ -62,7 +62,7 @@ Quarters*:       [)]+\\.?
 Eighths*:        \\]+\\.?
 AssOp:            =>
 MsgOp:            \\.
-Soak:             \\?
+Soak:             [?]
 
 AccSharp:         #|sharp
 AccNatural:       nat
@@ -71,9 +71,9 @@ AccFlat:          flat
 VectorNoat*:      ~?([a-eg]|f(?![a-zA-Z_]))(#*|b*)~?
 BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor
 Choard*:          (D(?!\\.[CS]\\.)|[ABCEFG])([Mm0-9]|sus|dim)*
-CondS:            {\\?
+CondS:            [{][?]
 CondSep:          ;
-CondE:            \\?}
+CondE:            [?][}]
 MsgName*:         [a-zA-Z_][a-zA-Z0-9_]*
 MsgNameWithArgs*: [a-zA-Z_][a-zA-Z0-9_]*<
 
