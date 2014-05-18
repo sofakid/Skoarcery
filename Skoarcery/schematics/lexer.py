@@ -71,13 +71,19 @@ def skoarToke():
 
     _____.cmt("match requested toke")
     _____.static_method(match_toke_, buf_, offs_, toke_class_)
-    _________.find_regex(match_, toke_class_ + "." + regex_, buf_, offs_)
+    _________.var(match_)
 
-    _________.if_(_.v_match(match_))
-    _____________.return_(_.v_new(toke_class_, _.v_regex_group_zero(match_)))
+    _________.if_(_.v_match_regex(toke_class_ + "." + regex_, buf_, offs_) + " == " + _.false)
+    _____________.return_(_.null)
     _________.end_if()
 
-    _________.return_(_.null)
+    _________.find_regex(match_, toke_class_ + "." + regex_, buf_, offs_)
+
+#    _________.if_(_.v_match(match_))
+    _____________.return_(_.v_new(toke_class_, _.v_regex_group_zero(match_)))
+#    _________.end_if()
+
+#    _________.return_(_.null)
     _____.end()
 
     _.end()
@@ -86,15 +92,20 @@ def skoarToke():
 def whitespace_token():
 
     Whitespace = terminals.Whitespace
+    regex = _.v_def_regex(Whitespace.regex)
 
     _.cmt_hdr("Whitespace is special")
     _.class_(Whitespace.toker_name, SkoarToke_)
     _____.static_method(burn_, buf_, offs_)
-    _________.find_regex(match_, _.v_def_regex(Whitespace.regex), buf_, offs_)
-    _________.if_(_.v_match(match_))
-    _____________.return_(_.v_length(_.v_regex_group_zero(match_)))
+    _________.var(match_)
+
+    _________.if_(_.v_match_regex(regex, buf_, offs_) + " == " + _.false)
+    _____________.return_("0")
     _________.end_if()
-    _________.return_("0")
+
+    _________.find_regex(match_, regex, buf_, offs_)
+    _________.return_(_.v_length(_.v_regex_group_zero(match_)))
+
     _____.end()
     _.end()
 

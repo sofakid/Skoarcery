@@ -21,7 +21,7 @@ Toker {
     }
 
     see {
-        |want|
+        | want |
 
         if (i_saw != nil) {
             if (i_saw.isKindOf(want)) {
@@ -369,8 +369,8 @@ Skoar {
         var inspect = {
             | x |
 
-            "inspecting ".post;
-            x.dump;
+            //"inspecting ".post;
+            //x.dump;
 
             // tokens*
             if (x.toke != nil) {

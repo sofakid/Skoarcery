@@ -492,11 +492,14 @@ class ScTongue(Tongue):
     def throw(self, name, msg):
         self.stmt(name + "(" + msg + ").throw")
 
-    def find_regex(self, match, regex, buf, offs):
-        self.stmt("var " + match + " = " + buf + ".findRegexp(" + regex + ", " + offs + ")")
-
     def print(self, s, end="\n"):
         self.stmt('"' + s + end + '".post')
+
+    def find_regex(self, match, regex, buf, offs):
+        self.stmt(match + " = " + buf + ".findRegexp(" + regex + ", " + offs + ")")
+
+    def v_match_regex(self, regex, buf, offs):
+        return regex + ".matchRegexp(" + buf + "," + offs + ")"
 
     def v_ass(self, dst, src):
         return dst + " = " + src
@@ -515,7 +518,7 @@ class ScTongue(Tongue):
         return attr
 
     def v_def_regex(self, regex):
-        return '"' + regex + '"'
+        return '"' + regex.replace("\\", "\\\\") + '"'
 
     def v_match(self, match):
         return self.v_length(match) + " > 0"
