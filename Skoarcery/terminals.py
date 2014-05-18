@@ -107,7 +107,7 @@ Slash:            /
 # TODO: deal with \"
 String*:          \'[^']*\'
 
-Bars*:            :?[\\|]+:?
+Bars*:            :?\\|+:?
 
 PedalDown:        Ped\\.
 PedalUp:          [*]
