@@ -79,6 +79,15 @@ Toker {
     eof {
         Toke_EOF.burn(skoarse, i_am_here);
     }
+
+    dump {
+        ("\nToker Dump" ++
+        "\nhere   : " ++ i_am_here.asString ++
+        "\nsaw    : " ++ i_saw.asString ++
+        "\nskoarse: " ++ skoarse.copyRange(0,i_am_here)
+                      ++ "_$_" ++ skoarse.copyRange(i_am_here, skoarse.size)).postln;
+    }
+
 }
 
 
@@ -207,6 +216,24 @@ SkoarNoad {
         };
 
         ^toke;
+    }
+
+    // ----------------
+    // showing the tree
+    // ----------------
+    draw_tree {
+        | tab = 1 |
+
+        var s = " ".padLeft(tab + 1) ++ name ++ "\n";
+
+        children.do {
+            | x |
+            if (x != nil) {
+                s = s ++ x.draw_tree(tab + 1);
+            };
+        };
+
+        ^s;
     }
 
     // -----------------
