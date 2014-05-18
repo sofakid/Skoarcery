@@ -110,17 +110,17 @@ SkoarNoad {
     }
 
     init {
-        | name, toke, parent, i=0 |
+        | nameArg, tokeArg, parentArg, i=0 |
 
         performer = {| x | ^nil};
-        parent = parent;
+        parent = parentArg;
 
         i = i;
         j = 0;
         n = 0;
 
-        name = name;
-        toke = toke;
+        name = nameArg;
+        toke = tokeArg;
 
         children = List[];
 
@@ -149,6 +149,8 @@ SkoarNoad {
     recount_children {
         var k = 0;
         n = 0;
+
+        "recounting children".postln;
 
         children.do {
             | x |
@@ -210,7 +212,7 @@ SkoarNoad {
             };
         };
 
-        f(this);
+        f.(this);
     }
 
     next_item {
@@ -289,11 +291,13 @@ SkoarIterator {
 // =====
 Skoar {
 
-    var   skoarse;  // the skoarse code
-    var  <tree;     // root node of the tree (our start symbol, skoar)
-    var  <toker;    // friendly neighbourhood toker
-    var   parser;   // recursive descent predictive parser
-    var   markers;  // list of markers (for gotos/repeats)
+    var   skoarse;      // the skoarse code
+    var  <tree;         // root node of the tree (our start symbol, skoar)
+    var  <toker;        // friendly neighbourhood toker
+    var   parser;       // recursive descent predictive parser
+    var   markers;      // list of markers (for gotos/repeats)
+    var   inspector;    // toke inspector for decorating
+    var   skoarmantics; // semantic actions
 
     var <>cur_noat;
     var <>noat_direction;
@@ -311,6 +315,8 @@ Skoar {
         toker = Toker(skoarse);
         parser = SkoarParser.new(this);
         markers = List[];
+        inspector = SkoarTokeInspector.new;
+        skoarmantics = Skoarmantics.new;
 
         cur_noat = nil;
         noat_direction = 1;
@@ -329,14 +335,16 @@ Skoar {
             // tokens*
             if (x.toke) {
                 // run the function x.name, pass the token
-                TokeInspector[x.name].(x.toke);
+                inspector[x.name].(x.toke);
 
             // nonterminals*
             } {
                 // run the function, pass the noad (not the nonterminal)
-                Skoarmantics[x.name].(this, x);
+                skoarmantics[x.name].(this, x);
             };
         };
+
+        "decorating".postln;
 
         tree.depth_visit(inspect);
     }
