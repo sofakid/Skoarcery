@@ -126,7 +126,7 @@ SkoarNoad {
     init {
         | nameArg, tokeArg, parentArg, i=0 |
 
-        performer = {| x | ^nil};
+        performer = {};
         parent = parentArg;
 
         i = i;
@@ -254,22 +254,27 @@ SkoarNoad {
 
     next_item {
 
+        var nxt = nil;
+
         if (next_jmp != nil) {
+            "jumping".postln;
             ^next_jmp;
         };
 
         if (j == n) {
             if (parent == nil) {
+                "nillin".postln;
                 ^nil;
             };
 
+            "parent.next_item".postln;
             ^parent.next_item;
         };
 
-        n = children[j];
-        j += 1;
-
-        ^n;
+        nxt = children[j];
+        j = j + 1;
+        "nxtin".postln;
+        ^nxt;
     }
 
     go_here_next {
@@ -287,7 +292,9 @@ SkoarNoad {
     }
 
     action {
-        performer.value;
+        if (performer != nil) {
+            performer.value;
+        };
     }
 
 }
@@ -299,15 +306,17 @@ SkoarNoad {
 SkoarIterator {
 
     var noad;
+    var skoar;
 
     *new {
-        | skoar |
-        ^super.new.init(skoar);
+        | skr |
+        ^super.new.init(skr);
     }
 
     init {
-        | skoar |
-        noad = skoar.tree;
+        | skr |
+        noad = skr.tree;
+        skoar = skr;
     }
 
     next {
@@ -320,7 +329,50 @@ SkoarIterator {
 
         ^x;
     }
+
+    routine {
+        ^Routine({
+             loop {
+                this.next.yield;
+             };
+        });
+    }
+
+    eventStream {
+        ^Routine({
+            var e = (type: \note, freq: 440);
+            var noad = nil;
+
+            // collect until we get a beat
+            while {
+                noad = this.next;
+                noad.notNil;
+            } {
+
+                noad.action;
+
+                if (noad.is_beat == true) {
+                    e[\dur] = noad.toke.val;
+                    e.yield;
+                    e = (type: \note);
+                };
+
+                if (noad.toke.isKindOf(Toke_Int)) {
+                    e[\degree] = noad.toke.val;
+                };
+
+            };
+
+        });
+    }
+
+    pfunk {
+        var q = this.eventStream;
+        ^Pfunc({q.next;});
+    }
+
 }
+
 
 
 // =====
@@ -420,11 +472,14 @@ Skoar {
         | noad |
 
         var toke = noad.toke;
+"hereZ".postln;
 
         if (toke.unspent) {
             // find where we are in markers
             var n = markers.size;
             var j;
+
+"hereA".postln;
 
             // spend it
             toke.unspent = false;
@@ -433,6 +488,7 @@ Skoar {
                 | break |
                 for (0, n - 1, {
                     | i |
+"hereB".postln;
                     if (noad == markers[i]) {
                         break.(i);
                     };
@@ -460,4 +516,5 @@ Skoar {
         };
     }
 }
+
 

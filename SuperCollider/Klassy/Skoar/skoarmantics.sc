@@ -133,7 +133,8 @@ Skoarmantics {
         
                 toke = noad.toke;
                 if (toke.isKindOf(Toke_Bars) && toke.pre_repeat) {
-                    noad.performer = {_.jmp_colon(noad);};
+                    "feed".postln;
+                    noad.performer = {skoar.jmp_colon(noad);};
                 };
         
             },
@@ -149,7 +150,7 @@ Skoarmantics {
                 noad.noat = noat;
         
                 if (noat.isKindOf(Toke_VectorNoat)) {
-                    noad.performer = {_.noat_go(noat)};
+                    noad.performer = {skoar.noat_go(noat)};
                 };
             },
         

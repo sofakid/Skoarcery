@@ -68,8 +68,8 @@ AccSharp:         #|sharp
 AccNatural:       nat
 AccFlat:          flat
 
-# VectorNoat*:      ~?([a-eg]|f(?![a-zA-Z_]))(#*|b*)~?
-VectorNoat*:      [a-eg]|f(?![a-zA-Z_])
+VectorNoat*:      (~?)([a-eg]|f(?![a-zA-Z_]))(#*|b*)(~?)
+#VectorNoat*:      [a-eg]|f(?![a-zA-Z_])
 BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor
 Choard*:          (D(?!\\.[CS]\\.)|[ABCEFG])([Mm0-9]|sus|dim)*
 CondS:            [{][?]
@@ -144,7 +144,7 @@ def init():
             (token, v, regex) = token_line.partition(":")
 
             token = token.strip()
-            regex = "^" + regex.strip()
+            regex = "^(" + regex.strip() + ")"
 
             if token.endswith("*"):
                 token = token.rstrip("*")
