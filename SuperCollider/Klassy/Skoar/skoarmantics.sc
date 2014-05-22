@@ -164,7 +164,7 @@ Skoarmantics {
                 | skoar, noad |
             }
 
-         ];        
+        ];
         ^dict;
     }
 

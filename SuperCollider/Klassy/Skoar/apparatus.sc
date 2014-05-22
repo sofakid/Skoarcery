@@ -257,23 +257,19 @@ SkoarNoad {
         var nxt = nil;
 
         if (next_jmp != nil) {
-            "jumping".postln;
             ^next_jmp;
         };
 
         if (j == n) {
             if (parent == nil) {
-                "nillin".postln;
                 ^nil;
             };
 
-            "parent.next_item".postln;
             ^parent.next_item;
         };
 
         nxt = children[j];
         j = j + 1;
-        "nxtin".postln;
         ^nxt;
     }
 
@@ -340,7 +336,7 @@ SkoarIterator {
 
     eventStream {
         ^Routine({
-            var e = (type: \note, freq: 440);
+            var e = (type: \note);
             var noad = nil;
 
             // collect until we get a beat
@@ -353,6 +349,9 @@ SkoarIterator {
 
                 if (noad.is_beat == true) {
                     e[\dur] = noad.toke.val;
+                    e[\midinote] = skoar.cur_noat;
+                    //" Firing event:".postln;
+                    //e.array.dump;
                     e.yield;
                     e = (type: \note);
                 };
@@ -389,7 +388,7 @@ Skoar {
     var   skoarmantics; // semantic actions
 
     var <>cur_noat;
-    var <>noat_direction;
+    var   hand;
 
     *new {
         | code |
@@ -408,12 +407,19 @@ Skoar {
         skoarmantics = Skoarmantics.new;
 
         cur_noat = nil;
-        noat_direction = 1;
+        hand = Hand.new;
     }
 
     parse {
         tree = parser.skoar(nil);
-        toker.eof;
+        try {
+            toker.eof;
+        } {
+            | e |
+            e.postln;
+            toker.dump;
+
+        }
     }
 
     decorate {
@@ -459,7 +465,8 @@ Skoar {
     // ----
     noat_go {
         | noat |
-        cur_noat = noat;
+        hand.update(noat);
+        cur_noat = hand.finger;
     }
 
     // save these in a list for jumping around in
@@ -472,14 +479,12 @@ Skoar {
         | noad |
 
         var toke = noad.toke;
-"hereZ".postln;
 
         if (toke.unspent) {
             // find where we are in markers
             var n = markers.size;
             var j;
 
-"hereA".postln;
 
             // spend it
             toke.unspent = false;
@@ -488,7 +493,6 @@ Skoar {
                 | break |
                 for (0, n - 1, {
                     | i |
-"hereB".postln;
                     if (noad == markers[i]) {
                         break.(i);
                     };
@@ -518,3 +522,117 @@ Skoar {
 }
 
 
+
+Hand {
+
+    var   direction;
+    var  <finger;
+    var <>octave;
+
+    *new {
+        | oct=5 |
+        ^super.new.init(oct);
+    }
+
+    init {
+        | oct |
+
+        // default to up
+        direction = 1;
+        octave = oct;
+        finger = 0;
+    }
+
+    update {
+        | vector |
+
+        var n = 0;
+        var m = nil;
+        var s = vector.lexeme;
+        var letter = nil;
+        var o = 0;
+        var semis = 0;
+        var target = 0;
+
+        // prevector
+        m = s.findRegexp("^~+");
+        if (m.size > 0) {
+            direction = 1;
+            o = m[0][1].size - 1;
+            "here".postln;
+            o.postln;
+            octave = octave + o
+        };
+
+
+        // postvector
+        m = s.findRegexp("~+$");
+        if (m.size > 0) {
+            direction = -1;
+            o = m[0][1].size -1;
+            octave = octave - o
+        };
+
+        // letter
+        m = s.findRegexp("^[^a-g]*([a-g])");
+        letter = m[1][1];
+        n = switch (letter)
+            {"c"} {0}
+            {"d"} {2}
+            {"e"} {4}
+            {"f"} {5}
+            {"g"} {7}
+            {"a"} {9}
+            {"b"} {11};
+
+        // sharps
+        m = s.findRegexp("#+");
+        if (m.size > 0) {
+            // just one for now
+            n = n + 1;
+        };
+
+        // flats
+        m = s.findRegexp("[a-g](b+)");
+        if (m.size > 0) {
+            // just one for now
+            n = n - 1;
+        };
+
+        target = octave * 12 + n;
+        target.postln;
+        // have we crosseed an octave boundary?
+        if (direction == -1) {
+            if (finger < target) {
+                octave = octave - 1;
+            };
+        };
+
+        if (direction == 1) {
+            if (finger > target) {
+                octave = octave + 1;
+            };
+        };
+
+        finger = octave * 12 + n;
+        finger.postln;
+
+    }
+
+}
+
+
++String {
+	skoar {
+    	var r = Skoar.new(this);
+        r.parse;
+        r.decorate;
+
+        r.tree.draw_tree.postln;
+        ^r;
+    }
+
+    pskoar {
+        ^SkoarIterator.new(this.skoar).pfunk;
+	}
+}

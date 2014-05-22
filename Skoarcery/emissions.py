@@ -162,6 +162,18 @@ class Tongue:
     def print(self, s, end="\n"):
         raise NIE
 
+    @abc.abstractmethod
+    def try_(self):
+        raise NIE
+
+    @abc.abstractmethod
+    def except_any(self):
+        raise NIE
+
+    @abc.abstractmethod
+    def nop(self):
+        raise NIE
+
     # ------------------------------------
     # these v_guys return rather than code
     # ------------------------------------
@@ -183,6 +195,10 @@ class Tongue:
 
     @abc.abstractmethod
     def v_def_regex(self, regex):
+        raise NIE
+
+    @abc.abstractmethod
+    def v_match_regex(self, regex, buf, offs):
         raise NIE
 
     @abc.abstractmethod
@@ -322,10 +338,9 @@ class PyTongue(Tongue):
         pass
 
     def var(self, name, val=None):
-        s = name
         if val:
-            s += " = " + val
-        self.stmt(s)
+            s = name + " = " + val
+            self.stmt(s)
 
     def method(self, name, *args, **kwargs):
         self.function(name, "self", *args, **kwargs)
@@ -343,14 +358,32 @@ class PyTongue(Tongue):
         self.function(name, *args, **kwargs)
 
     def find_regex(self, match, regex, buf, offs):
-        self.stmt(match + " = " + regex + ".match(" + buf + ", " + offs + ")")
+        self.stmt(match + " = " + self.v_match_regex(regex, buf, offs))
+
+    def if_regex_match_not_found(self, regex, buf, offs):
+        self.if_(self.v_match_regex(regex, buf, offs) + " is None")
 
     def print(self, s, end="\n"):
         self.stmt("print(" + s + ", end='" + end + "'")
 
+    def try_(self):
+        self.stmt("try:")
+        self.tab += 1
+
+    def except_any(self):
+        self.tab -= 1
+        self.stmt("except:")
+        self.tab += 1
+
+    def nop(self):
+        self.stmt("pass")
+
     # ------------------------------------
     # these v_guys return rather than code
     # ------------------------------------
+    def v_match_regex(self, regex, buf, offs):
+        return regex + ".match(" + buf + ", " + offs + ")"
+
     def v_regex_group_zero(self, match):
         return match + ".group(0)"
 
@@ -372,6 +405,7 @@ class PyTongue(Tongue):
 
     def v_match(self, match):
         return match
+
 
 # --------------------
 # SuperCollider Tongue
@@ -495,9 +529,27 @@ class ScTongue(Tongue):
     def print(self, s, end="\n"):
         self.stmt('"' + s + end + '".post')
 
+    def if_regex_match_not_found(self, regex, buf, offs):
+        self.if_(self.v_match_regex(regex, buf, offs) + " == " + self.false)
+
     def find_regex(self, match, regex, buf, offs):
         self.stmt(match + " = " + buf + ".findRegexp(" + regex + ", " + offs + ")")
 
+    def try_(self):
+        self.stmt("try {", end="\n")
+        self.tab += 1
+
+    def except_any(self):
+        self.tab -= 1
+        self.stmt("} {", end="\n")
+        self.tab += 1
+
+    def nop(self):
+        self.stmt("// pass", end="\n")
+
+    # ------------------------------------
+    # these v_guys return rather than code
+    # ------------------------------------
     def v_match_regex(self, regex, buf, offs):
         return regex + ".matchRegexp(" + buf + "," + offs + ")"
 

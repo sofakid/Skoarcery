@@ -68,7 +68,7 @@ AccSharp:         #|sharp
 AccNatural:       nat
 AccFlat:          flat
 
-VectorNoat*:      (~?)([a-eg]|f(?![a-zA-Z_]))(#*|b*)(~?)
+VectorNoat*:      (~?)([a-eg]|f(?![ac-zA-Z_]))(#*|b*)(~?)
 #VectorNoat*:      [a-eg]|f(?![a-zA-Z_])
 BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor
 Choard*:          (D(?!\\.[CS]\\.)|[ABCEFG])([Mm0-9]|sus|dim)*

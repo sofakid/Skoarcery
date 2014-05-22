@@ -38,6 +38,8 @@ def init(tongue):
 
 def skoarToke():
 
+    regex = toke_class_ + "." + regex_
+
     _.cmt_hdr("Abstract Token")
 
     _.abstract_class(SkoarToke_)
@@ -74,19 +76,22 @@ def skoarToke():
     _____.static_method(match_toke_, buf_, offs_, toke_class_)
     _________.var(match_)
 
-    _________.if_(_.v_match_regex(toke_class_ + "." + regex_, buf_, offs_) + " == " + _.false)
-    _____________.return_(_.null)
-    _________.end_if()
+    _________.try_()
+    _____________.find_regex(match_, regex, buf_, offs_)
 
-    _________.find_regex(match_, toke_class_ + "." + regex_, buf_, offs_)
+    is_sc = isinstance(_, emissions.ScTongue)
+    if is_sc:
+        _________.if_(match_ + "[0][0] == " + offs_)
+    _________________.return_(_.v_new(toke_class_, _.v_regex_group_zero(match_)))
+    if is_sc:
+        _________.end_if()
 
-#    _________.if_(_.v_match(match_))
-    _____________.return_(_.v_new(toke_class_, _.v_regex_group_zero(match_)))
-#    _________.end_if()
+    _________.except_any()
+    _____________.nop()
+    _________.end()
 
-#    _________.return_(_.null)
+    _________.return_(_.null)
     _____.end()
-
     _.end()
 
 
@@ -97,16 +102,26 @@ def whitespace_token():
 
     _.cmt_hdr("Whitespace is special")
     _.class_(Whitespace.toker_name, SkoarToke_)
+    _____.classvar("<", regex_, regex)
+    _____.nl()
     _____.static_method(burn_, buf_, offs_)
     _________.var(match_)
 
-    _________.if_(_.v_match_regex(regex, buf_, offs_) + " == " + _.false)
-    _____________.return_("0")
-    _________.end_if()
+    _________.try_()
+    _____________.find_regex(match_, Whitespace.toker_name + "." + regex_, buf_, offs_)
 
-    _________.find_regex(match_, regex, buf_, offs_)
-    _________.return_(_.v_length(_.v_regex_group_zero(match_)))
+    is_sc = isinstance(_, emissions.ScTongue)
+    if is_sc:
+        _________.if_(match_ + "[0][0] == " + offs_)
+    _________________.return_(_.v_length(_.v_regex_group_zero(match_)))
+    if is_sc:
+        _________.end_if()
 
+    _________.except_any()
+    _____________.nop()
+    _________.end()
+
+    _________.return_("0")
     _____.end()
     _.end()
 
