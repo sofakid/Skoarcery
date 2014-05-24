@@ -30,42 +30,17 @@ SkoarTokeInspector {
                 | toke |
                 toke.val = 0;
             },
-            
-            "Toke_Crotchets" -> {
-                | toke |
-                toke.is_rest = true;
-                toke.val = 2 ** toke.lexeme.size;
-            },
-            
-            "Toke_Quavers" -> {
-                | toke |
-                toke.is_rest = true;
-                // len("oo/")
-                toke.val = 2 ** (-1 * (toke.lexeme.size - 1));
-            },
-            
+
             "Toke_DynPiano" -> {
                 | toke |
                 toke.val = 0;
             },
-            
+
             "Toke_DynForte" -> {
                 | toke |
                 toke.val = 0;
             },
-            
-            "Toke_Quarters" -> {
-                | toke |
-                toke.is_rest = false;
-                toke.val = 2 ** (toke.lexeme.size - 1);
-            },
-            
-            "Toke_Eighths" -> {
-                | toke |
-                toke.is_rest = false;
-                toke.val = 2 ** (-1 * toke.lexeme.size);
-            },
-            
+
             "Toke_VectorNoat" -> {
                 | toke |
             
@@ -134,9 +109,84 @@ SkoarTokeInspector {
                 toke.pre_repeat = toke.lexeme.beginsWith(":");
                 toke.post_repeat = toke.lexeme.endsWith(":");
                 toke.unspent = true;
+            },
+
+
+            // rests
+            "Toke_Crotchets" -> {
+                | toke |
+                var s = toke.lexeme;
+                toke.is_rest = true;
+                toke.val = SkoarTokeInspector.beat_long(s, s.size);
+            },
+
+            "Toke_Quavers" -> {
+                | toke |
+                var s = toke.lexeme;
+                toke.is_rest = true;
+                "quavers: ".post;
+                toke.val.postln;
+                // size -1 for the / (we just count the o's)
+                toke.val = SkoarTokeInspector.beat_short(s, s.size - 1);
+            },
+
+            // unrests
+            "Toke_Quarters" -> {
+                | toke |
+                var s = toke.lexeme;
+                toke.is_rest = false;
+                toke.val = SkoarTokeInspector.beat_long(s, s.size);
+            },
+
+            "Toke_Eighths" -> {
+                | toke |
+                var s = toke.lexeme;
+                toke.is_rest = false;
+                toke.val = SkoarTokeInspector.beat_short(s, s.size);
             }
+
+
         ];        
         ^dict;
+    }
+
+    *beat_short {
+        | s, n |
+        var is_dotted = s.endsWith(".");
+        var x = 0.0;
+
+        is_dotted.postln;
+
+        if (is_dotted == true) {
+            n = n - 1;
+        };
+
+        x = 2 ** (-1 * n);
+
+
+        if (is_dotted == true) {
+            x = x * 1.5;
+        };
+        x.postln;
+        ^x;
+    }
+
+    *beat_long {
+        | s, n |
+        var is_dotted = s.endsWith(".");
+        var x = 0.0;
+
+        if (is_dotted == true) {
+            n = n - 1;
+        };
+
+        x = 2 ** (n - 1);
+
+        if (is_dotted == true) {
+            x = x * 1.5;
+        };
+        x.postln;
+        ^x;
     }
 
 }

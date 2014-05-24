@@ -348,8 +348,16 @@ SkoarIterator {
                 noad.action;
 
                 if (noad.is_beat == true) {
+
                     e[\dur] = noad.toke.val;
-                    e[\midinote] = skoar.cur_noat;
+                    e[\tempo] = 50/60;
+
+                    if (noad.is_rest == true) {
+                        e[\note] = \rest;
+                    } {
+                        e[\midinote] = skoar.cur_noat;
+                    };
+
                     //" Firing event:".postln;
                     //e.array.dump;
                     e.yield;
@@ -561,7 +569,10 @@ Hand {
             o = m[0][1].size - 1;
             "here".postln;
             o.postln;
-            octave = octave + o
+            octave = octave + o;
+            if (octave > 12) {
+                direction = -1;
+            };
         };
 
 
@@ -570,7 +581,11 @@ Hand {
         if (m.size > 0) {
             direction = -1;
             o = m[0][1].size -1;
-            octave = octave - o
+            octave = octave - o;
+            if (octave < 0) {
+                octave = 0;
+                direction = 1;
+            };
         };
 
         // letter
@@ -601,8 +616,8 @@ Hand {
 
         target = octave * 12 + n;
         target.postln;
-        // have we crosseed an octave boundary?
-        if (direction == -1) {
+        // have we crossed an octave boundary?
+        /*if (direction == -1) {
             if (finger < target) {
                 octave = octave - 1;
             };
@@ -612,7 +627,7 @@ Hand {
             if (finger > target) {
                 octave = octave + 1;
             };
-        };
+        };*/
 
         finger = octave * 12 + n;
         finger.postln;

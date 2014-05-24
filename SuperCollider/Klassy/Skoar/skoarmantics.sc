@@ -17,10 +17,14 @@ Skoarmantics {
         
             "beat" -> {
                 | skoar, noad |
+                var t;
         
                 noad.absorb_toke;
-                noad.beat = noad.toke;
+                t = noad.toke;
+
+                noad.beat = t;
                 noad.is_beat = true;
+                noad.is_rest = t.is_rest;
             },
         
             "meter_beat" -> {
@@ -32,16 +36,21 @@ Skoarmantics {
         
             "listy" -> {
                 | skoar, noad |
-        /*
-                X = List[];
-        
-                for x in noad.children[1:-1] {
-                    if x.toke and isinstance(x.toke, Toke_ListSep):
-                        continue
-                    X.append(x)
-                }
-        
-                noad.replace_children(X);*/
+
+                var n = noad.children.size;
+                var x = nil;
+                var items = List[];
+
+                for (1, n {
+                    | i |
+                    x = noad.children[i];
+
+                    if (x.toke.isKindOf(Toke_ListSep) == false) {
+                        items.add(x);
+                    };
+                });
+
+                noad.replace_children(items);
             },
         
             "clef" -> {
@@ -158,6 +167,9 @@ Skoarmantics {
                 | skoar, noad |
         
                 // TODO Symbol | CurNoat | listy
+                if (noad.name == "listy") {
+
+                };
             },
         
             "pedally" -> {
