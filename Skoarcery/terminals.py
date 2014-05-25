@@ -109,7 +109,7 @@ String*:          \'[^']*\'
 
 Bars*:            :?\\|+:?
 
-PedalDown:        Ped\\.
+PedalDown:        Ped\\.?
 PedalUp:          [*]
 
 """

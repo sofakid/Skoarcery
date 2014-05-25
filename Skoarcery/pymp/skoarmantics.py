@@ -117,7 +117,7 @@ def marker(skoar, noad):
 
     toke = noad.toke
     if isinstance(toke, Toke_Bars):
-        if toke.pre_repeat:
+        if toke.pre_repeat > 0:
             noad.performer = (lambda x: x.jmp_colon(noad))
 
 

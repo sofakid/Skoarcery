@@ -51,6 +51,7 @@ Skoarmantics {
                 });
 
                 noad.replace_children(items);
+
             },
         
             "clef" -> {
@@ -125,11 +126,11 @@ Skoarmantics {
         
             "meter" -> {
                 | skoar, noad |
-        
+
+                var n = noad.children.size;
+
                 // trim start and end tokens
-                //noad.replace_children(noad.children[1:-1]);
-        
-        
+                noad.replace_children(noad.children.copyRange(1, n - 2));
             },
         
             "marker" -> {
@@ -141,6 +142,7 @@ Skoarmantics {
                 skoar.add_marker(noad);
         
                 toke = noad.toke;
+                "food".postln;
                 if (toke.isKindOf(Toke_Bars) && toke.pre_repeat) {
                     "feed".postln;
                     noad.performer = {skoar.jmp_colon(noad);};
@@ -168,7 +170,7 @@ Skoarmantics {
         
                 // TODO Symbol | CurNoat | listy
                 if (noad.name == "listy") {
-
+                    skoar.cur_note = List[];
                 };
             },
         
