@@ -78,7 +78,6 @@ Skoarmantics {
                 | skoar, noad |
             },
 
-
             "assignment" -> {
                 | skoar, noad |
             },
@@ -119,7 +118,6 @@ Skoarmantics {
                 | skoar, noad |
             },
 
-
             "meter_sig_prime" -> {
                 | skoar, noad |
             },
@@ -142,9 +140,7 @@ Skoarmantics {
                 skoar.add_marker(noad);
         
                 toke = noad.toke;
-                "food".postln;
                 if (toke.isKindOf(Toke_Bars) && toke.pre_repeat) {
-                    "feed".postln;
                     noad.performer = {skoar.jmp_colon(noad);};
                 };
         
@@ -162,6 +158,10 @@ Skoarmantics {
         
                 if (noat.isKindOf(Toke_VectorNoat)) {
                     noad.performer = {skoar.noat_go(noat)};
+                };
+
+                if (noat.isKindOf(Toke_Choard)) {
+                    noad.performer = {skoar.choard_go(noat)};
                 };
             },
         

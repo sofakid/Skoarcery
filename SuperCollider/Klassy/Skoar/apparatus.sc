@@ -1,96 +1,4 @@
 
-// =========
-// The Toker
-// =========
-
-Toker {
-    var skoarse;
-    var i_am_here;
-    var i_saw;
-
-    *new {
-        | code |
-        ^super.new.init( code );
-    }
-
-    init {
-        | code |
-        skoarse = code;
-        i_am_here = 0;
-        i_saw = nil;
-    }
-
-    see {
-        | want |
-
-        if (i_saw != nil) {
-            if (i_saw.isKindOf(want)) {
-                ^i_saw
-            }
-        } {
-            i_am_here = i_am_here + Toke_Whitespace.burn(skoarse, i_am_here);
-            i_saw = want.match(skoarse, i_am_here);
-            ^i_saw;
-        }
-
-        ^nil;
-    }
-
-    sees {
-        | wants |
-
-        var x = block {
-            | break |
-
-            wants.do {
-                | want |
-
-                x = this.see(want);
-                if (x != nil) {
-                    break.(x);
-                };
-            };
-
-            break.(nil);
-        };
-        ^x;
-    }
-
-    burn {
-        | want |
-
-        var toke = i_saw;
-
-        if (toke == nil) {
-            toke = this.see(want);
-        };
-
-        if (toke.isKindOf(want)) {
-            i_saw = nil;
-            i_am_here = i_am_here + toke.burn;
-            i_am_here = i_am_here + Toke_Whitespace.burn(skoarse, i_am_here);
-            ^toke;
-        };
-
-        SkoarError("Burned wrong toke").throw;
-        //raise Exception("I tried to burn " + want.__name__ + ", but what I saw is " + toke.__class__.__name__)
-    }
-
-    eof {
-        Toke_EOF.burn(skoarse, i_am_here);
-    }
-
-    dump {
-        ("\nToker Dump" ++
-        "\nhere   : " ++ i_am_here.asString ++
-        "\nsaw    : " ++ i_saw.asString ++
-        "\nskoarse: " ++ skoarse.copyRange(0,i_am_here)
-                      ++ "_$_" ++ skoarse.copyRange(i_am_here, skoarse.size)).postln;
-    }
-
-}
-
-
 // ==========================
 // The Parse Tree - SkoarNoad
 // ==========================
@@ -115,7 +23,6 @@ SkoarNoad {
                          // like when setting bpm with an assignment)
 
     var  <inspectable;   // this toke carries information that must be inspected and processed.
-
 
     *new {
         | name, toke, parent, i=0 |
@@ -381,6 +288,25 @@ SkoarIterator {
 }
 
 
+SkoarBoard {
+
+   var board;
+
+   *new {
+        | x |
+        ^super.new.init(x);
+    }
+
+    init {
+        | x |
+
+        board = IdentityDictionary();
+
+    }
+
+
+}
+
 
 // =====
 // Skoar
@@ -477,6 +403,16 @@ Skoar {
         cur_noat = hand.finger;
     }
 
+    choard_go {
+        | noat |
+        "foodoododoodododododododoo".postln;
+        hand.choard(noat);
+        "nickdickers".postln;
+        cur_noat = hand.finger;
+        "nuckfutters".postln;
+        cur_noat.postln;
+    }
+
     // save these in a list for jumping around in
     add_marker {
         | marker_noad |
@@ -551,6 +487,80 @@ Hand {
         finger = 0;
     }
 
+    letter {
+        | s |
+
+        var m;
+        var n;
+        var letter;
+
+        "mmm".postln;
+        // letter
+        m = s.findRegexp("^[^a-g]*([a-g])");
+        m.postln;
+        letter = m[1][1];
+
+        "kfdksl".postln;
+        n = switch (letter)
+            {"c"} {0}
+            {"d"} {2}
+            {"e"} {4}
+            {"f"} {5}
+            {"g"} {7}
+            {"a"} {9}
+            {"b"} {11};
+
+        "juicy".postln;
+        // sharps
+        m = s.findRegexp("#+");
+        if (m.size > 0) {
+            // just one for now
+            n = n + 1;
+        };
+
+        // flats
+        m = s.findRegexp("[a-g](b+)");
+        if (m.size > 0) {
+            // just one for now
+            n = n - 1;
+        };
+
+        ^n;
+    }
+
+    choard {
+        | toke |
+        // TODO this sucks
+        var s, c, m, n;
+        var third = 3;
+        var fifth = 5;
+
+        var a = [ 0, nil,
+        ];
+
+        // [ABCEFG])([Mm0-9]|sus|dim)*
+
+        s = toke.lexeme;
+
+        s.postln;
+        c = (s[0] ++ "").toLower;
+        c.postln;
+
+        if (s.endsWith("m")) {
+            third = third - 1;
+        };
+
+        n = this.letter(c);
+
+        n = octave * 12 + n;
+
+        finger = [n, n + third, n + fifth];
+
+        "Choard: ".post;
+        finger.postln;
+
+    }
+
     update {
         | vector |
 
@@ -588,31 +598,7 @@ Hand {
             };
         };
 
-        // letter
-        m = s.findRegexp("^[^a-g]*([a-g])");
-        letter = m[1][1];
-        n = switch (letter)
-            {"c"} {0}
-            {"d"} {2}
-            {"e"} {4}
-            {"f"} {5}
-            {"g"} {7}
-            {"a"} {9}
-            {"b"} {11};
-
-        // sharps
-        m = s.findRegexp("#+");
-        if (m.size > 0) {
-            // just one for now
-            n = n + 1;
-        };
-
-        // flats
-        m = s.findRegexp("[a-g](b+)");
-        if (m.size > 0) {
-            // just one for now
-            n = n - 1;
-        };
+        n = this.letter(s);
 
         target = octave * 12 + n;
         target.postln;

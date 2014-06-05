@@ -9,6 +9,7 @@ SynthDef(\rachel, {
     // sin city
     audio = SinOsc.ar(freq, 0, amp);
 
+
     // linen envelope
     audio = audio * Linen.kr(
         gate: gate,
