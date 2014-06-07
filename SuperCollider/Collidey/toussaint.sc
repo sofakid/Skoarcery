@@ -1,11 +1,11 @@
 (
 """
 'shiko'
-|: a ]]] ooo/ ooo/ ooo/ | g ]]] ooo/ ]]] ooo/ | f ooo/ ooo/ ]]] ooo/ | f ]]] ooo/ ooo/ ooo/ :| :|
+|: A ]]] ooo/ ooo/ ooo/ | G ]]] ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ]]] ooo/ ooo/ ooo/ :| :|
 
-|: a ]] oo/ oo/ oo/ | g ]] oo/ ]] oo/ | f oo/ oo/ ]] oo/ | f ]] oo/ oo/ oo/ :| :|
+|: A ]] oo/ oo/ oo/ | G ]] oo/ ]] oo/ | F oo/ oo/ ]] oo/ | F ]] oo/ oo/ oo/ :| :|
 
-|: a ) } } } | g ) } ) } | f } } ) } | f ) } } } :| :|
+|: A ) } } } | G ) } ) } | F } } ) } | F ) } } } :| :|
 
 """.pskoar.play;
 )
@@ -13,36 +13,35 @@
 (
 """
 'son'
-| a ]]] ooo/ ooo/ ]]] | g ooo/ ooo/ ]]] ooo/ | f ooo/ ooo/ ]]] ooo/ | f ]]] ooo/ ooo/ ooo/ |
+| A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ]]] ooo/ ooo/ ooo/ |
 """.pskoar.play;
 )
 
 (
 """
 'rumba'
-|: a ]]] ooo/ ooo/ ]]] | g ooo/ ooo/ ooo/ ]]] | f ooo/ ooo/ ]]] ooo/ | f ]]] ooo/ ooo/ ooo/ :|:|
+|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ooo/ ]]] | F ooo/ ooo/ ]]] ooo/ | F ]]] ooo/ ooo/ ooo/ :|:|
 """.pskoar.play;
 )
 
 (
 """
 'soukous'
-|: a ]]] ooo/ ooo/ ]]] |
-g ooo/ ooo/ ]]] ooo/ | f ooo/ ooo/ ]]] ]]] | f ooo/ ooo/ ooo/ ooo/ :|
+|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ]]] | F ooo/ ooo/ ooo/ ooo/ :|
 """.pskoar.play;
 )
 
 (
 """
 'gahu'
-|: a ]]] ooo/ ooo/ ]]] | g ooo/ ooo/ ]]] ooo/ | f ooo/ ooo/ ]]] ooo/ | f ooo/ ooo/ ]]] ooo/ :|
+|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ :|
 """.pskoar.play;
 )
 
 (
 """
 'bossa-nova'
-|: a ]]] ooo/ ooo/ ]]] | g ooo/ ooo/ ]]] ooo/ | f ooo/ ooo/ ]]] ooo/ | f ooo/ ]]] ooo/ ooo/ :| :| :|
+|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ooo/ ]]] ooo/ ooo/ :| :| :|
 """.pskoar.play;
 )
 

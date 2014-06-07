@@ -70,10 +70,6 @@ Skoarmantics {
                 | skoar, noad |
             },
         
-            "coda" -> {
-                | skoar, noad |
-            },
-        
             "meter_ass" -> {
                 | skoar, noad |
             },
@@ -145,7 +141,11 @@ Skoarmantics {
                 };
         
             },
-        
+
+            "coda" -> {
+                | skoar, noad |
+            },
+
             "noaty" -> {
                 | skoar, noad |
             },
@@ -170,12 +170,30 @@ Skoarmantics {
         
                 // TODO Symbol | CurNoat | listy
                 if (noad.name == "listy") {
-                    skoar.cur_note = List[];
+                    noad.performer = {skoar.choard_listy(noad)};
                 };
+
+                if (noad.name == "CurNoat") {
+                    noad.performer = {skoar.reload_curnoat(noad)};
+                };
+
+                if (noad.name == "Symbol") {
+                    noad.performer = {skoar.noat_symbol(noad)};
+                };
+
             },
         
             "pedally" -> {
                 | skoar, noad |
+
+                if (noad.toke.isKindOf(Toke_PedalUp)) {
+                    noad.performer = {skoar.pedal_up;};
+                };
+
+                if (noad.toke.isKindOf(Toke_PedalDown)) {
+                    noad.performer = {skoar.pedal_down;};
+                };
+
             }
 
         ];

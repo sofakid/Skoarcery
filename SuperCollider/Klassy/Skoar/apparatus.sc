@@ -243,7 +243,7 @@ SkoarIterator {
 
     eventStream {
         ^Routine({
-            var e = (type: \note);
+            var e = skoar.event;
             var noad = nil;
 
             // collect until we get a beat
@@ -268,7 +268,7 @@ SkoarIterator {
                     //" Firing event:".postln;
                     //e.array.dump;
                     e.yield;
-                    e = (type: \note);
+                    e = skoar.event;
                 };
 
                 if (noad.toke.isKindOf(Toke_Int)) {
@@ -381,6 +381,15 @@ Skoar {
         tree.depth_visit(inspect);
     }
 
+
+    event {
+        var e = (type: \note);
+
+
+
+        ^e
+
+    }
     /*get_pattern_gen {
         for x in SkoarIterator():
             if (x.isKindOf(SkoarNoad)) {
@@ -405,12 +414,28 @@ Skoar {
 
     choard_go {
         | noat |
-        "foodoododoodododododododoo".postln;
         hand.choard(noat);
-        "nickdickers".postln;
         cur_noat = hand.finger;
-        "nuckfutters".postln;
         cur_noat.postln;
+    }
+
+    choard_listy {
+        | noat |
+    }
+
+    reload_curnoat {
+        | noat |
+
+    }
+
+    noat_symbol {
+        | noat |
+    }
+
+    pedal_up {
+    }
+
+    pedal_down {
     }
 
     // save these in a list for jumping around in
@@ -535,8 +560,7 @@ Hand {
         var third = 3;
         var fifth = 5;
 
-        var a = [ 0, nil,
-        ];
+        var a = [ 0, nil ];
 
         // [ABCEFG])([Mm0-9]|sus|dim)*
 
