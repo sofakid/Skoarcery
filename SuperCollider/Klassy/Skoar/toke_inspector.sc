@@ -125,9 +125,10 @@ SkoarTokeInspector {
                 var s = toke.lexeme;
                 toke.is_rest = true;
                 "quavers: ".post;
-                toke.val.postln;
+                s.postln;
                 // size -1 for the / (we just count the o's)
                 toke.val = SkoarTokeInspector.beat_short(s, s.size - 1);
+                toke.val.postln;
             },
 
             // unrests

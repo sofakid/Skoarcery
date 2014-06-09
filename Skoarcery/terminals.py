@@ -40,8 +40,8 @@ LWing:          \\^\\^[(]
 RWing:          [)]\\^\\^
 
 Tuplet*:        /\\d+(:\\d+)?|(du|tri|quadru)plets?|(quin|sex|sep|oc)tuplets?
-Crotchets*:     [}]+
-Quavers*:       o+/
+Crotchets*:     [}]+\\.?
+Quavers*:       o+/\\.?
 Caesura:        //
 
 # we can't allow f for forte as f is a noat, so we allow
