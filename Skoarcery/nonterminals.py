@@ -63,7 +63,7 @@ skoaroid*        : nouny skoaroid_prime
 +skoaroid_prime  : assignment skoaroid_prime | <e>
 
 assignment*      : AssOp settable
-settable         : Caesura | CurNoat | Symbol | listy
++settable         : Caesura | CurNoat | Symbol | listy
 
 optional_carrots*: Carrots | <e>
 stmt*            : optional_carrots skoaroid msg_chain_node

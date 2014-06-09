@@ -69,29 +69,64 @@ Skoarmantics {
             "musical_keyword_misc" -> {
                 | skoar, noad |
             },
-        
+
             "meter_ass" -> {
                 | skoar, noad |
             },
 
             "assignment" -> {
                 | skoar, noad |
+
+                // the settable
+                var y = nil;
+
+                y = noad.children[1];
+
+                // we prepare the destination here, we'll setup the write in skoaroid
+                if (y.toke.isKindOf(Toke_Symbol)) {
+                    noad.setter = {
+                        | x |
+                        skoar.assign_symbol(x, y.toke);
+                    };
+                };
+
+                noad.setter.postln;
             },
-        
+
             "accidentally" -> {
                 | skoar, noad |
             },
-        
+
             "boolean" -> {
                 | skoar, noad |
             },
-        
+
             "ottavas" -> {
                 | skoar, noad |
             },
-        
+
             "skoaroid" -> {
                 | skoar, noad |
+
+                var f = nil;
+                var x = nil;
+                var y = nil;
+
+                if (noad.children.size > 1) {
+                    x = noad.children[0];
+                    y = noad.children[1];
+
+                    if (y.name == "assignment") {
+
+                        f = y.setter;
+
+                        noad.performer = {
+                            f.(x);
+                        };
+
+                    };
+                };
+
             },
         
             "msg" -> {

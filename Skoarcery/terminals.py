@@ -20,8 +20,6 @@ TrebleClef:     G:|treble:
 BassClef:       F:|bass:
 AltoClef:       C:|alto:
 
-
-
 CurNoat:        [$]
 Portamento:     port\\.
 Slur:           [+][+]
@@ -91,7 +89,6 @@ AlCoda:           al(la)? coda
 AlSegno:          al segno
 AlFine:           al fine
 
-
 OttavaA:          8va|ottava (alta|sopra)|all' ottava
 OttavaB:          8vb|ottava (bassa|sotto)
 
@@ -101,7 +98,7 @@ QuindicesimaB:    15mb|alla quindicesimb
 Loco:             loco
 Volta*:           \\[\\d+\\.\\]
 
-Symbol*:          \\\\[a-zA-Z][a-zA-Z0-9]+
+Symbol*:          [\\\\@][a-zA-Z][a-zA-Z0-9]+
 Slash:            /
 
 # TODO: deal with \"

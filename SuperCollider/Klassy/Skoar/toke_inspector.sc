@@ -86,7 +86,7 @@ SkoarTokeInspector {
             
             "Toke_Symbol" -> {
                 | toke |
-                toke.val = toke.lexeme;
+                toke.val = toke.lexeme[1..].asSymbol;
             },
             
             "Toke_Segno" -> {
@@ -110,7 +110,6 @@ SkoarTokeInspector {
                 toke.post_repeat = toke.lexeme.endsWith(":");
                 toke.unspent = true;
             },
-
 
             // rests
             "Toke_Crotchets" -> {
@@ -146,7 +145,6 @@ SkoarTokeInspector {
                 toke.val = SkoarTokeInspector.beat_short(s, s.size);
             }
 
-
         ];        
         ^dict;
     }
@@ -163,7 +161,6 @@ SkoarTokeInspector {
         };
 
         x = 2 ** (-1 * n);
-
 
         if (is_dotted == true) {
             x = x * 1.5;

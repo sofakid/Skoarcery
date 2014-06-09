@@ -9,7 +9,9 @@ SkoarNoad {
     var <>i;             // position in parent
     var <>n;             // number of children
     var <>toke;          // a toke, if this noad absorbed a toke
-    var   children;      // a list of child noads
+    var <>children;      // a list of child noads
+
+    var <>setter;        // a function to perform assignment
 
     var <>name;          // name of the nonterminal
 
@@ -159,6 +161,7 @@ SkoarNoad {
         f.(this);
     }
 
+    // this will follow repeats and other jmps
     next_item {
 
         var nxt = nil;
@@ -180,6 +183,35 @@ SkoarNoad {
         ^nxt;
     }
 
+    // this finds the preceding noad
+    prev_noad {
+        var prv = nil;
+
+        // are we leftmost sibling?
+        if (i == 0) {
+            if (parent == nil) {
+                ^nil;
+            };
+
+            ^parent.prev_noad;
+        };
+
+        // return sibling to left
+        prv = parent.children[i-1];
+        ^prv;
+    }
+
+    // find next (first) toke, depthfirst
+    next_toke {
+        var x = children[0];
+        if (x.toke != nil) {
+            ^x.toke;
+        };
+
+        ^x.next_toke;
+    }
+
+    // this sets the destination of a jump
     go_here_next {
         | noad |
 
@@ -256,6 +288,8 @@ SkoarIterator {
 
                 if (noad.is_beat == true) {
 
+                    e = skoar.event;
+                    
                     e[\dur] = noad.toke.val;
                     e[\tempo] = 50/60;
 
@@ -288,26 +322,6 @@ SkoarIterator {
 }
 
 
-SkoarBoard {
-
-   var board;
-
-   *new {
-        | x |
-        ^super.new.init(x);
-    }
-
-    init {
-        | x |
-
-        board = IdentityDictionary();
-
-    }
-
-
-}
-
-
 // =====
 // Skoar
 // =====
@@ -320,6 +334,7 @@ Skoar {
     var   markers;      // list of markers (for gotos/repeats)
     var   inspector;    // toke inspector for decorating
     var   skoarmantics; // semantic actions
+    var   skoarboard;   // copied into event
 
     var <>cur_noat;
     var   hand;
@@ -339,6 +354,7 @@ Skoar {
         markers = List[];
         inspector = SkoarTokeInspector.new;
         skoarmantics = Skoarmantics.new;
+        skoarboard = IdentityDictionary.new;
 
         cur_noat = nil;
         hand = Hand.new;
@@ -385,7 +401,13 @@ Skoar {
     event {
         var e = (type: \note);
 
+        skoarboard.keysValuesDo {
+            | k, v |
 
+            e[k] = v;
+        };
+
+        e.postln;
 
         ^e
 
@@ -406,6 +428,31 @@ Skoar {
     // ----
     // misc
     // ----
+
+    // x => y
+    assign_symbol {
+        | x, y |
+
+        var k = y.val;
+        var v = this.evaluate(x);
+
+        "skoarboard[".post;
+        k.post;
+        "] = ".post;
+        v.postln;
+
+        skoarboard[k] = v;
+    }
+
+    evaluate {
+        | x |
+
+        // just find the toke for now
+        var t = x.next_toke;
+
+        ^t.val;
+    }
+
     noat_go {
         | noat |
         hand.update(noat);
@@ -425,7 +472,6 @@ Skoar {
 
     reload_curnoat {
         | noat |
-
     }
 
     noat_symbol {
