@@ -11,9 +11,8 @@ map Klass folder to the Supercollider extensions
     ln -s ~/PycharmProjects/Skoar/SuperCollider/Klassy ~/Library/Application\ Support/SuperCollider/Extensions/Klassy
 
 
-Talk to me like a compiler geek
--------------------------------
-
+Koadmap
+-------
 
 ## [terminals.py]
 - Tokens are defined with regexes that have to work with both SuperCollider and Python.
@@ -45,8 +44,8 @@ its parent's children list.
 [nonterminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/nonterminals.py
 
 [toke_inspector.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toke_inspector.sc
-[toke_inspector.py]: https://github.com/sofakid/Skoarcery/blob/master/Pymp/toke_inspector.py
+[toke_inspector.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/toke_inspector.py
 
 [skoarmantics.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarmantics.sc
-[skoarmantics.py]: https://github.com/sofakid/Skoarcery/blob/master/Pymp/skoarmantics.py
+[skoarmantics.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/skoarmantics.py
 
