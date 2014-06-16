@@ -2,14 +2,13 @@ Skoar and Skoarcery
 ===================
 
 
-Skoar is a musical notation language, intended to add an expressive dimension to SuperCollider (and python),
-modelled after western music notation.
+Skoar is a musical notation language, intended to add another expressive dimension to SuperCollider,
+modelled after western music notation. Also Python. And no real reason why not JavaScript.
 
 Skoarcery is the compiler compiler that compiles skoar lexers and parsers for SuperCollider and Python.
 
 Skoar
 -----
-
 
 Oversimplified, a skoar starts as a SuperCollider string, and is compiled into a parse tree. This tree
 can then be traversed, behaving as a SuperCollider pattern.
@@ -37,7 +36,6 @@ can then be traversed, behaving as a SuperCollider pattern.
 
 Install Notes
 -------------
-
 
 map Klass folder to the SuperCollider extensions folder.
 
@@ -118,7 +116,7 @@ It is entirely too early to be performance tuning Skoar, but some notes:
 
 - We don't currently have precompiled regexes in SuperCollider.
 
-- There is no statement terminator, we don't have semicolons, and the parse tree grows to the left quickly.
+- There is no statement terminator, we don't have semicolons, and the parse tree grows to the right quickly.
  I kept the main operations near the top of the grammar, and intermediate steps aren't added to the produced SkoarNoad
  tree, but the recursion building it is deep. It's those phrasey phrases.
 
