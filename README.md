@@ -2,13 +2,14 @@ Skoar and Skoarcery
 ===================
 
 
-Skoar is a musical notation language, intended to add an expressive dimension to SuperCollider.
+Skoar is a musical notation language, intended to add an expressive dimension to SuperCollider (and python),
+modelled after western music notation.
 
 Skoarcery is the compiler compiler that compiles skoar lexers and parsers for SuperCollider and Python.
 
+Skoar
+-----
 
-What's a Skoar?
----------------
 
 Oversimplified, a skoar starts as a SuperCollider string, and is compiled into a parse tree. This tree
 can then be traversed, behaving as a SuperCollider pattern.
@@ -98,6 +99,18 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 - [Code_Parser_Py.py], [Code_Parser_Sc.py] - Build rdpp.py, rdpp.sc
 
 
+### Generated Code
+
+- [lex.sc] - Lexical analyser, defines classes for each token, extending SkoarToke.
+    - in Skoar, we call them Tokes, in Skoarcery, they are Terminals, or tokens.
+
+- [rdpp.sc] - Recursive decsent predictive parser. Builds the parse tree.
+
+### Nongenerated Runtime Code
+
+- [apparatus.sc] - Stuff to do with the parse tree, and iterators of it. Lots in here.
+- [toker.sc] - The guy the parser deals with when it wants tokes.
+
 Performance
 -----------
 
@@ -135,4 +148,8 @@ It is entirely too early to be performance tuning Skoar, but some notes:
 [Code_Parser_Py.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Parser_Py.py
 [Code_Parser_Sc.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Parser_Sc.py
 
+[lex.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/lex.sc
+[rdpp.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/rdpp.sc
+[apparatus.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/apparatus.sc
+[toker.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toker.sc
 
