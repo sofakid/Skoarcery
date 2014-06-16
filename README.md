@@ -11,7 +11,7 @@ What's a Skoar?
 ---------------
 
 Oversimplified, a skoar starts as a SuperCollider string, and is compiled into a parse tree. This tree
-can then be traversed, behaving as a SuperCollider pattern. 
+can then be traversed, behaving as a SuperCollider pattern.
 
     (
 
@@ -50,13 +50,10 @@ If you don't want to build, i'm checking in built versions to the built branch. 
     git checkout built
 
 
+Skoarcery Koadmap
+-----------------
 
-
-
-Koadmap
--------
-
-## [terminals.py]
+### [terminals.py]
 - Tokens by convention are UpperCamelCase.
 
 - Tokens are defined with regexes that have to work with both SuperCollider and Python.
@@ -66,7 +63,7 @@ All we do is recognise, no capture groups.
         - Python:        [toke_inspector.py]
 
 
-## [nonterminals.py]
+### [nonterminals.py]
 - Defines an LL(1) grammar suitable for building recursive decent parsers for skoar.
 
 - Nonterminals by convention are like_this
@@ -80,14 +77,25 @@ its parent's children list.
     - Python:        [skoarmantics.py]
 
 
-[terminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/terminals.py
-[nonterminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/nonterminals.py
+### Misc Skoarcery
 
-[toke_inspector.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toke_inspector.sc
-[toke_inspector.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/toke_inspector.py
+- [langoids.py] - Terminal, Nonterminal, Production objects,
+- [dragonsets.py] - FIRST and FOLLOW sets, from the Dragon Book.
+- [emissions.py] - Implements Python and SuperCollider output tounges, see Underskoar.
 
-[skoarmantics.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarmantics.sc
-[skoarmantics.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/skoarmantics.py
+
+### [laboaratoary]
+- These are our unit tests.
+- Test the grammar for LL(1), test that it compiles in sclang, test skoars, etc..
+
+### [factoary]
+- These are written as unit tests, they build our lexers and parsers.
+
+- The important one at the moment is [Build_Sc.py], it will run tests,
+build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
+
+- [Code_Lexer_Py.py], [Code_Lexer_Sc.py] - Build lex.py, lex.sc
+- [Code_Parser_Py.py], [Code_Parser_Sc.py] - Build rdpp.py, rdpp.sc
 
 
 Performance
@@ -102,4 +110,29 @@ It is entirely too early to be performance tuning Skoar, but some notes:
  tree, but the recursion building it is deep. It's those phrasey phrases.
 
     - In the meantime, if it becomes and issue, work with smaller skoars, and combine them.
+
+
+
+[terminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/terminals.py
+[nonterminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/nonterminals.py
+
+[toke_inspector.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toke_inspector.sc
+[toke_inspector.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/toke_inspector.py
+
+[skoarmantics.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarmantics.sc
+[skoarmantics.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/skoarmantics.py
+
+[langoids.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/langoids.py
+[dragonsets.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/dragonsets.py
+[emissions.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/emissions.py
+
+[laboaratoary]: https://github.com/sofakid/Skoarcery/tree/master/Skoarcery/laboaratoary/
+[factoary]: https://github.com/sofakid/Skoarcery/tree/master/Skoarcery/factoary/
+
+[Build_Sc.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Build_Sc.py
+[Code_Lexer_Py.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Lexer_Py.py
+[Code_Lexer_Sc.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Lexer_Sc.py
+[Code_Parser_Py.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Parser_Py.py
+[Code_Parser_Sc.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Parser_Sc.py
+
 
