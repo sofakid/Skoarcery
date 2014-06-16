@@ -109,7 +109,7 @@ It is entirely too early to be performance tuning Skoar, but some notes:
  I kept the main operations near the top of the grammar, and intermediate steps aren't added to the produced SkoarNoad
  tree, but the recursion building it is deep. It's those phrasey phrases.
 
-    - In the meantime, if it becomes and issue, work with smaller skoars, and combine them.
+    - In the meantime, if it becomes an issue, work with smaller skoars, and combine them.
 
 
 
