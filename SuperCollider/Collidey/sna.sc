@@ -58,6 +58,7 @@ SynthDef(\default, { arg out=0, freq=440, amp=0.1, pan=0, gate=1;
 }).store;)
 
 (
+
 // 28 days later
 var creepy = """
 | ~~d ] a~~ ] ~~a ] a~~] :| :| :| :| :| :| :| :| :| :| :| :|
@@ -69,7 +70,7 @@ var bass = """ d~~
 
 var guitar = "|: c# ) ) d ) ) e ) ) f ) ) :| :| :|".pskoar;
 
-Ppar([creepy, bass, guitar]).render("/Users/lucas/Desktop/28dlskoared.aif");
+Ppar([creepy, bass, guitar]).play;
 )
 
 

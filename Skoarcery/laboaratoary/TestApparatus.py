@@ -37,9 +37,7 @@ class Test_Apparatus(unittest.TestCase):
     def test_notes(self):
 
         apparatus.parse("| a ) b ) c ) | d ) e ) f ) g ) |").decorate(loud=True)
-
         apparatus.parse("| a ) a ) b ) | ++ ) e ) f ) ) g |").decorate(loud=True)
-
         apparatus.parse("| a c e ) bb ) c# ) | d## ) e ) ~f ) g~ ) |").decorate(loud=True)
 
     def test_misc(self):
@@ -55,7 +53,7 @@ class Test_Apparatus(unittest.TestCase):
 
         apparatus.parse("<!!>").decorate(loud=True)
         apparatus.parse("<! 130 => )) !>").decorate(loud=True)
-        apparatus.parse("<! 90 => forte 100 => fforte 127 => fff 4=>ppp!>").decorate(loud=True)
+        apparatus.parse("<! 90 => forte 100 => fforte 127 => fff 4=>ppp !>").decorate(loud=True)
         apparatus.parse("<! !>").decorate(loud=True)
         apparatus.parse("<!!>").decorate(loud=True)
 

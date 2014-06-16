@@ -35,6 +35,68 @@ SynthDef(\acid, { arg out, freq = 1000, gate = 1, pan = 1, cut = 4000, rez = 0.8
 )
 
 (
+SynthDef(\clap, { arg out, freq = 1000, gate = 1, pan = 1, cut = 4000, rez = 0.8, amp = 1;
+    var bps = 1;
+
+    Out.ar(out,
+        Splay.ar({ |n|
+    var phase = LFNoise1.kr(bps, 0.05);
+    var pulse = LFPulse.ar(bps, phase, 0.5);
+    var impulse = Impulse.ar(bps, phase + 0.5);
+    (BPF.ar(
+      WhiteNoise.ar(Integrator.ar((pulse * 0.0001), 0.9999) * pulse),
+      800 + (n * 50),
+      0.4
+    ) * 5)
+    +
+    (BPF.ar(
+      WhiteNoise.ar(Decay.ar(impulse, bps.reciprocal / 2)),
+      800 + (n * 50),
+      0.4
+    ) * 7);
+  }.dup(5)).tanh;
+)
+}).add;
+)
+
+(
+SynthDef(\clap, { arg out, freq = 1000, gate = 1, pan = 1, cut = 4000, rez = 0.8, amp = 1;
+    var bps = 2;
+    var kik_low = nil;
+    //var kik_impulse = nil;
+    var kik = nil;
+    var kik_phase = LFNoise1.kr(bps / 2, 0.03);
+    var kik_impulse = Impulse.ar(bps, kik_phase, LFNoise1.kr(bps).range(5, 15));
+
+    Out.ar(out,Splay.ar({ |n|
+        var impulse = kik_impulse;
+        Ringz.ar(
+            LPF.ar(impulse, 200),
+            10 + Rand(0, 50).round(5),
+            bps.reciprocal
+        )
+        +
+        Ringz.ar(
+            PinkNoise.ar(Decay.ar(impulse, bps.reciprocal)),
+            LFNoise1.kr(bps).exprange(500, 1000),
+            0.01,
+            0.05
+        )
+        +
+        Ringz.ar(
+            PinkNoise.ar(Decay.ar(impulse, bps.reciprocal)),
+            LFNoise1.kr(bps).exprange(1000, 2000),
+            0.01,
+            0.1
+        );
+        }//.dup(10)).tanh;
+        );
+    );
+
+}).add;
+)
+
+(
 Pbind(\instrument, \default, \dur, Pseq([1, 0.25, 0.25, 0.25, 0.25], inf), \root, -12,
     \degree, Pseq([0, 3, 5, 7, 9, 11, 5, 1], inf), \pan, Pfunc({1.0.rand2}),
     \cut, Pxrand([1000, 500, 2000, 300], inf), \rez, Pfunc({0.7.rand +0.3}), \amp, 0.2).play;
@@ -163,7 +225,7 @@ SynthDef(\smooth, { |freq = 440, sustain = 1, amp = 0.5|
     var sig;
     sig = SinOsc.ar(freq, 0, amp) * EnvGen.kr(Env.linen(0.05, sustain, 0.1), doneAction: 2);
     Out.ar(0, sig ! 2)
-}).add;
+}).store;
 
 r = Task({
     var delta;
@@ -172,7 +234,7 @@ r = Task({
         delta.notNil
     } {
         delta = delta * 0.3;
-        Synth(\rachel, [freq: midi.next.midicps, sustain: delta * 0.9]);
+        Synth(\smooth, [freq: midi.next.midicps, sustain: delta * 0.9]);
         delta.yield;
     }
 }).play(quant: TempoClock.default.beats + 1.0);

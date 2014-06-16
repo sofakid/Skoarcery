@@ -38,5 +38,15 @@ D.C. al fine
 String
 
 (
-"| A |".pskoar.play;
+
+var guitar = """
+@smooth => @instrument
+|: a ]]] f~ ]]] d ]]] :| :| :| :| :| :| :||: a# ]]] f~ ]]] d ]]] :| :| :| :| :| :|  a# ]]] d ]]] f ]]] :| """.pskoar;
+
+var smooth = """
+@smooth => @instrument
+|: Am ) ) | D ) :|""".pskoar;
+
+Ppar([guitar,smooth], inf).play;
 )
+
