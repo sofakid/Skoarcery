@@ -15,7 +15,7 @@ Talk to me like a compiler geek
 -------------------------------
 
 
-## [terminals]
+## [terminals.py]
 - Tokens are defined with regexes that have to work with both SuperCollider and Python.
 
 - Tokens by convention are UpperCamelCase.
@@ -27,7 +27,7 @@ Talk to me like a compiler geek
 
 
 
-## [nonterminals]
+## [nonterminals.py]
 - Defines an LL(1) grammar suitable for building recursive decent parsers for skoar.
 
 - Nonterminals by convention are like_this
@@ -36,10 +36,17 @@ Talk to me like a compiler geek
 constructed parse tree, it will not create a new skoarnode, instead appending its noads to
 its parent's children list.
 
-- \* after a nonterminal means there is corresponding semantic code for this, defined in skoarmantics (.py or .sc)
+- \* after a nonterminal means there is corresponding semantic code for this, defined in:
+    - SuperCollider: [skoarmantics.sc]
+    - Python:        [skoarmantics.py]
 
-[terminals]: https://github.com/sofakid/skoar/blob/master/Skoarcery/terminals.py
-[nonterminals]: https://github.com/sofakid/skoar/blob/master/Skoarcery/nonterminals.py
-[toke_inspector.sc]: https://github.com/sofakid/skoar/blob/master/SuperCollider/Klassy/Skoar/skoarmantics.sc
-[toke_inspector.py]: https://github.com/sofakid/skoar/blob/master/Pymp/skoarmantics.py
+
+[terminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/terminals.py
+[nonterminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/nonterminals.py
+
+[toke_inspector.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toke_inspector.sc
+[toke_inspector.py]: https://github.com/sofakid/Skoarcery/blob/master/Pymp/toke_inspector.py
+
+[skoarmantics.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarmantics.sc
+[skoarmantics.py]: https://github.com/sofakid/Skoarcery/blob/master/Pymp/skoarmantics.py
 
