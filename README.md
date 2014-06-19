@@ -3,9 +3,12 @@ Skoar and Skoarcery
 
 
 Skoar is a musical notation language, intended to add another expressive dimension to SuperCollider,
-modelled after western music notation. Also Python. And no real reason why not JavaScript.
+modelled after western music notation. Like, chords written the way you'd write them, and.. everything else the way I'd write them.
 
-Skoarcery is the compiler compiler that compiles skoar lexers and parsers for SuperCollider and Python.
+Skoar's also for Python, but the focus is currently on SuperCollider.
+
+Skoarcery, is the compiler compiler that compiles skoar lexers and parsers for SuperCollider and Python.
+
 
 Skoar
 -----
@@ -34,8 +37,8 @@ can then be traversed, behaving as a SuperCollider pattern.
 
 
 
-Install Notes
--------------
+Install
+-------
 
 map Klass folder to the SuperCollider extensions folder.
 
@@ -80,7 +83,7 @@ its parent's children list.
 
 - [langoids.py] - Terminal, Nonterminal, Production objects,
 - [dragonsets.py] - FIRST and FOLLOW sets, from the Dragon Book.
-- [emissions.py] - Implements Python and SuperCollider output tounges, see Underskoar.
+- [emissions.py] - Implements Python and SuperCollider coding.
 
 
 ### [laboaratoary]
@@ -108,6 +111,15 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 
 - [apparatus.sc] - Stuff to do with the parse tree, and iterators of it. Lots in here.
 - [toker.sc] - The guy the parser deals with when it wants tokes.
+
+
+Dev Environment
+---------------
+
+I use PyCharm. The "builds" are done throught the unittest interface.
+
+PyCharm also works with the SC textmate bundle.
+
 
 Performance
 -----------

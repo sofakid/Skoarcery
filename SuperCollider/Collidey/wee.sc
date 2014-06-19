@@ -18,8 +18,6 @@ f ]]]. a ]]]]. :| } | g ]] b ]] g ]] d ]]  | a ]] ]] o/ e ). ]]. }} :||
 | d ) c ] ] |:  b ]]] d ]]] f ]]]. a ]]]]. :| } | g ]] b ]] g ]] d ]]  | a ]] ]] o/ e ). ]]. :|
 
 
-(+)
-
 | forte d# ]] ]] c ]] ]]. ]]] | ]] ]] ooo/ b# ) ooo/ ]. d ) |
 
 fine
@@ -47,6 +45,6 @@ var smooth = """
 @smooth => @instrument
 |: Am ) ) | D ) :|""".pskoar;
 
-Ppar([guitar,smooth], inf).play;
+Ppar([guitar,smooth]).play;
 )
 

@@ -84,7 +84,7 @@ class Code_Parser_Sc(unittest.TestCase):
 
                 SC.if_("toker.sees(desires) != " + SC.null)
 
-                SC.print(str(P))
+                #SC.print(str(P))
 
                 for x in alpha:
                     if isinstance(x, Terminal):

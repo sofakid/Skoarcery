@@ -1,11 +1,8 @@
 (
 """
 'shiko'
-|: A ]]] ooo/ ooo/ ooo/ | G ]]] ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ]]] ooo/ ooo/ ooo/ :| :|
-
-|: A ]] oo/ oo/ oo/ | G ]] oo/ ]] oo/ | F oo/ oo/ ]] oo/ | F ]] oo/ oo/ oo/ :| :|
-
-|: A ) } } } | G ) } ) } | F } } ) } | F ) } } } :| :|
+|: Am ]]] ooo/ ooo/ ooo/ | G ]]] ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ]]] ooo/ ooo/ ooo/ |
+|: Am ]]] oo/.           | G ]]] ooo/ ]]] ooo/ | F oo/ ]]] ooo/       | F ]]] oo/.          :|
 
 """.pskoar.play;
 )
@@ -13,40 +10,42 @@
 (
 """
 'son'
-| A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ]]] ooo/ ooo/ ooo/ |
+| C ]]] ooo/ ooo/ ]]] | Am ooo/ ooo/ ]]] ooo/ | Em ooo/ ooo/ ]]] ooo/ | F ]]] ooo/ ooo/ ooo/ |
+| C ]]] oo/ ]]]       | Am oo/ ]]] ooo/       | Em oo/ ]]] ooo/       | F ]]] oo/.          :|
 """.pskoar.play;
 )
 
 (
 """
 'rumba'
-|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ooo/ ]]] | F ooo/ ooo/ ]]] ooo/ | F ]]] ooo/ ooo/ ooo/ :|:|
+|: Am ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ooo/ ]]] | F ooo/ ooo/ ]]] ooo/ | F ]]] ooo/ ooo/ ooo/ |
+|  Am ]]] oo/ ]]]       | G oo/. ]]]           | F oo/ ]]] ooo/       | F ]]] oo/.          :|
 """.pskoar.play;
 )
 
 (
 """
 'soukous'
-|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ]]] | F ooo/ ooo/ ooo/ ooo/ :|
+|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ]]] | ooo/ ooo/ ooo/ ooo/ :|
+|  A ]]] oo/ ]]]       | G oo/ ]]] ooo/       | F oo/ ]]] ]]]       | o/                  :|
 """.pskoar.play;
 )
 
 (
 """
 'gahu'
-|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ :|
+|: C ]]] ooo/ ooo/ ]]] | Dm ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | Em ooo/ ooo/ ]]] ooo/ |
+|  C ]]] oo/ ]]]       | Dm oo/ ]]] ooo/       | F oo/ ]]] ooo/       | Em oo/ ]]] ooo/      :|
+
 """.pskoar.play;
 )
 
 (
 """
 'bossa-nova'
-|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ooo/ ]]] ooo/ ooo/ :| :| :|
+| Am ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | F ooo/ ]]] ooo/ ooo/ :|
+| Am ]]] oo/ ]]]       | G oo/ ]]] ooo/       | F oo/ ]]] ooo/       | F ooo/ ]]] oo/       :|
+
 """.pskoar.play;
 )
 
-
-
-(
-
-)

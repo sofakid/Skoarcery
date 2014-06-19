@@ -73,5 +73,9 @@ var guitar = "|: c# ) ) d ) ) e ) ) f ) ) :| :| :|".pskoar;
 Ppar([creepy, bass, guitar]).play;
 )
 
+(
+
+"b~~ ] ~~c ] d ]] oo/ ] c~ ]".pskoar.play
+
 
 "killall scsynth".unixCmd;
