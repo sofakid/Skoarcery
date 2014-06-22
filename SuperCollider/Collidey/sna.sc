@@ -1,5 +1,5 @@
 (
-var bass = """ c~~
+var bass = """
 | Am |: ] ] o/ ] } ) :| G :| F :|
 """.pskoar;
 
@@ -11,12 +11,12 @@ Ppar([bass, mel]).play;
 )
 
 (
-var bass = """ c~~
+var bass = """
 | Am |: ] ] o/ ] } ) :| F :| G :|
 """.pskoar;
 
 var mel = """
-|: a]]] ~c]]] d]]]  c]]] d]]] e]]]  d]]] e]]] f]]]  a~] :|
+|: a]]] c]]] d]]]  c]]] d]]] e]]]  d]]] e]]] f]]]  _a] :|
 
 f ] a ] o/ f ] c ) o/ f ] e ) |
 g ] a ] o/ g ] c ) o/ g ] e ) :|
@@ -25,9 +25,9 @@ g ] a ] o/ g ] c ) o/ g ] e ) :|
 Ppar([bass, mel]).play;
 )
 
-"| a~]]] b]]] ~~c]]]  b~~]]] ~~c]]] d]]]  c]]] d]]] e]]]  d]]] e]]] ~a]. o/ |".pskoar.play;
+"| a ]]] b]]] _c ]]]  _b]]] c]]] d]]]  c]]] d]]] e]]]  d]]] e]]] _a]. o/ |".pskoar.play;
 
-" a~ ] b ] ~~c ]".pskoar.play;
+" a ] b ] c ]".pskoar.play;
 
 
 (
@@ -37,7 +37,7 @@ var bass = """ c~~
 """.pskoar;
 
 var mel = """
-| a]]] ~~c]]] d]]]  c]]] d]]] e]]]  d]]] e]]] f]]]  a] :|
+| a]]] _c]]] d]]]  c]]] d]]] e]]]  d]]] e]]] f]]]  a] :|
 
 f ] a ] o/ f ] c ) o/ f ] e ) :| g ] a ] o/ g ] c ) o/ g ] e ) :|
 """.pskoar;
@@ -61,12 +61,12 @@ SynthDef(\default, { arg out=0, freq=440, amp=0.1, pan=0, gate=1;
 
 // 28 days later
 var creepy = """
-@acid => @instrument
-| ~~d ] a~~ ] ~~a ] a~~] :| :| :| :| :| :| :| :| :| :| :| :|
+@smooth => @instrument
+| d ] _a ] a ] _a ] :| :| :| :| :| :| :| :| :| :| :| :|
 """.pskoar;
 
-var bass = """ d~~
-| D ))) | a# ))) | F ))) | G ))) :|
+var bass = """
+| D ] ]  ] ]  ] ]  ] ] | _a# ] ]  ] ]  ] ]  ] ]  | F ] ]  ] ]  ] ]  ] ]  | G ] ]  ] ]  ] ]  ] ]  :|
 """.pskoar;
 
 var guitar = "|: c# ) ) d ) ) e ) ) f ) ) :| :| :|".pskoar;
@@ -76,7 +76,7 @@ Ppar([creepy, bass, guitar]).play;
 
 (
 
-"b~~ ] ~~c ] d ]] oo/ ] c~ ]".pskoar.play
+"_b ] c ] d ]] oo/ ] c ]".pskoar.play
 
 
 "killall scsynth".unixCmd;
