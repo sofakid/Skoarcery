@@ -41,6 +41,20 @@ SkoarTokeInspector {
                 toke.val = 0;
             },
 
+            "Toke_OctaveShift" -> {
+                | toke |
+
+                var s = toke.lexeme;
+                var n = s.size - 1;
+
+                if (s.beginsWith("o")) {
+                    n =  n * -1;
+                };
+
+                toke.val = n;
+
+            },
+
             "Toke_NamedNoat" -> {
                 | toke |
 

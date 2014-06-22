@@ -33,6 +33,14 @@
 
 (
 """
+'soukous'
+|: ~o | A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ]]] | ooo/ ooo/ ooo/ ooo/ :|
+| o~~ | A ]]] oo/ ]]]       | G oo/ ]]] ooo/       | F oo/ ]]] ]]]       | o/                  :|
+""".pskoar.play;
+)
+
+(
+"""
 'gahu'
 |: C ]]] ooo/ ooo/ ]]] | Dm ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ooo/ | Em ooo/ ooo/ ]]] ooo/ |
 |  C ]]] oo/ ]]]       | Dm oo/ ]]] ooo/       | F oo/ ]]] ooo/       | Em oo/ ]]] ooo/      :|

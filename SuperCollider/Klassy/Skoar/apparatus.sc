@@ -487,6 +487,11 @@ Skoar {
     pedal_down {
     }
 
+    octave_shift {
+        | x |
+        hand.octave = hand.octave + x;
+    }
+
     // save these in a list for jumping around in
     add_marker {
         | marker_noad |

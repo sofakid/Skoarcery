@@ -103,6 +103,15 @@ Skoarmantics {
 
             "ottavas" -> {
                 | skoar, noad |
+
+                var toke;
+
+                toke = noad.absorb_toke;
+
+                if (toke.isKindOf(Toke_OctaveShift)) {
+                    noad.performer = {skoar.octave_shift(toke.val);};
+                };
+
             },
 
             "skoaroid" -> {

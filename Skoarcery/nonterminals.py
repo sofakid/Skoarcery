@@ -47,7 +47,7 @@ listy*             : ListS listy_suffix
 musical_keyword      : dynamic | ottavas | pedally | musical_keyword_misc
 musical_keyword_misc*: Rep | DubRep | Portamento
 pedally*             : PedalDown | PedalUp
-ottavas*             : OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
+ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
 acc              : AccSharp | AccNatural | AccFlat

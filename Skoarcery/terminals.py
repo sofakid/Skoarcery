@@ -88,6 +88,8 @@ AlCoda:           al(la)? coda
 AlSegno:          al segno
 AlFine:           al fine
 
+OctaveShift*:     ~+o|o~+
+
 OttavaA:          8va|ottava (alta|sopra)|all' ottava
 OttavaB:          8vb|ottava (bassa|sotto)
 
