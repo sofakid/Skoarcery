@@ -31,7 +31,7 @@ SynthDef(\acid, { arg out, freq = 1000, gate = 1, pan = 1, cut = 4000, rez = 0.8
             cut, rez),
         pan) * EnvGen.kr(Env.linen(0.01, 1, 0.3), gate, amp, doneAction:2);
     )
-}).add;
+}).store;
 )
 
 (

@@ -10,6 +10,8 @@ SkoarToke_ = "SkoarToke"
 lexeme_ = "lexeme"
 regex_ = "regex"
 val_ = "val"
+sharps_ = "sharps"
+low_ = "low"
 is_beat_ = "is_beat"
 is_rest_ = "is_rest"
 pre_repeat_ = "pre_repeat"
@@ -48,6 +50,8 @@ def skoarToke():
 
     # these should be in specific tokes, not all of them.
     _____.attrvar("<>", val_)
+    _____.attrvar("<>", low_)
+    _____.attrvar("<>", sharps_)
     _____.attrvar("<>", is_beat_)
     _____.attrvar("<>", is_rest_)
     _____.attrvar("<>", pre_repeat_)

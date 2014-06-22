@@ -53,7 +53,7 @@ def Toke_Eighths(toke):
     toke.val = 0
 
 
-def Toke_VectorNoat(toke):
+def Toke_NamedNoat(toke):
     toke.val = 0
 
 

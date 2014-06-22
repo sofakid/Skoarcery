@@ -1,7 +1,7 @@
 
 
 (
-SynthDef(\rachel, {
+SynthDef(\foo, {
     | gate=1, out=0, freq=440, amp=0.4, pan=0, ar=1, dr=1 |
 
     var audio;
@@ -32,7 +32,7 @@ SynthDef(\rachel, {
 
 (
 (
-instrument: \rachel,
+instrument: \foo,
 midinote:82
 ).play;
 )

@@ -54,7 +54,7 @@ acc              : AccSharp | AccNatural | AccFlat
 accidentally*    : acc noaty
 
 noaty*           : noat_literal | noat_reference
-noat_literal*    : Choard | VectorNoat
+noat_literal*    : Choard | NamedNoat
 noat_reference*  : Symbol | CurNoat | listy
 nouny            : cthulhu | noaty | conditional | nouny_literal | accidentally | musical_keyword
 +nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String

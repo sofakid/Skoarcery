@@ -126,12 +126,12 @@ def noaty(skoar, noad):
 
 
 def noat_literal(skoar, noad):
-    from Skoarcery.pymp.lex import Toke_VectorNoat
+    from Skoarcery.pymp.lex import Toke_NamedNoat
 
     noat = noad.absorb_toke()
     noad.noat = noat
 
-    if isinstance(noat, Toke_VectorNoat):
+    if isinstance(noat, Toke_NamedNoat):
         noad.performer = (lambda x: x.noat_go(noat))
 
 

@@ -21,7 +21,7 @@ BassClef:       F:|bass:
 AltoClef:       C:|alto:
 
 CurNoat:        [$]
-Portamento:     port\\.
+Portamento:     port\\.?
 Slur:           [+][+]
 
 # careful not to match ottavas with end in (ma,mb,va,vb), or steal from floats
@@ -66,8 +66,7 @@ AccSharp:         #|sharp
 AccNatural:       nat
 AccFlat:          flat
 
-VectorNoat*:      (~*)([a-eg]|f(?![ac-zA-Z_]))(#*|b*)(~*)
-#VectorNoat*:      [a-eg]|f(?![a-zA-Z_])
+NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
 BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor
 Choard*:          (D(?!\\.[CS]\\.)|[ABCEFG])([Mm0-9]|sus|dim)*
 CondS:            [{][?]

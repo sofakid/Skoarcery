@@ -191,7 +191,7 @@ Skoarmantics {
                 var noat = noad.absorb_toke;
                 noad.noat = noat;
         
-                if (noat.isKindOf(Toke_VectorNoat)) {
+                if (noat.isKindOf(Toke_NamedNoat)) {
                     noad.performer = {skoar.noat_go(noat)};
                 };
 

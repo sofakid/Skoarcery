@@ -41,14 +41,26 @@ SkoarTokeInspector {
                 toke.val = 0;
             },
 
-            "Toke_VectorNoat" -> {
+            "Toke_NamedNoat" -> {
                 | toke |
-            
-                var vector_noat_regex = "[a-g]";
-                var s = toke.lexeme;
-                var r = s.findRegexp(vector_noat_regex);
 
-                toke.val = r[0][1];
+                var noat_regex = "^(_?)([a-g])";
+                var sharps_regex = "[a-g](#*|b*)$";
+                var s = toke.lexeme;
+                var r = s.findRegexp(noat_regex);
+                var x = -1;
+
+                toke.low = r[1][1] != "";
+                toke.val = r[2][1];
+
+                r = s.findRegexp(sharps_regex);
+                s = r[1][1];
+
+                if (s.beginsWith("#")) {
+                    x = 1;
+                };
+
+                toke.sharps = s.size * x;
 
             },
             

@@ -57,7 +57,7 @@ def Toke_Eighths(toke):
 vector_noat_regex = re.compile(r"(~?)([a-g])(?:(#*)|(b*))(~?)")
 
 
-def Toke_VectorNoat(toke):
+def Toke_NamedNoat(toke):
     s = toke.lexeme
 
     r = vector_noat_regex.search(s)

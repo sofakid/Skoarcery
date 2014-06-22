@@ -61,6 +61,7 @@ SynthDef(\default, { arg out=0, freq=440, amp=0.1, pan=0, gate=1;
 
 // 28 days later
 var creepy = """
+@acid => @instrument
 | ~~d ] a~~ ] ~~a ] a~~] :| :| :| :| :| :| :| :| :| :| :| :|
 """.pskoar;
 

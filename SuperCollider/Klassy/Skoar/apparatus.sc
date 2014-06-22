@@ -151,6 +151,8 @@ SkoarNoad {
     depth_visit {
         | f |
 
+        name.postln;
+
         children.do {
             | x |
             if (x != nil) {
@@ -392,9 +394,10 @@ Skoar {
             };
         };
 
-        "decorating".postln;
-
+        "decorating...".postln;
         tree.depth_visit(inspect);
+        "skoar tree decorated.".postln;
+
     }
 
 
@@ -561,18 +564,7 @@ Hand {
     letter {
         | s |
 
-        var m;
-        var n;
-        var letter;
-
-        "mmm".postln;
-        // letter
-        m = s.findRegexp("^[^a-g]*([a-g])");
-        m.postln;
-        letter = m[1][1];
-
-        "kfdksl".postln;
-        n = switch (letter)
+        var n = switch (s)
             {"c"} {0}
             {"d"} {2}
             {"e"} {4}
@@ -580,21 +572,6 @@ Hand {
             {"g"} {7}
             {"a"} {9}
             {"b"} {11};
-
-        "juicy".postln;
-        // sharps
-        m = s.findRegexp("#+");
-        if (m.size > 0) {
-            // just one for now
-            n = n + 1;
-        };
-
-        // flats
-        m = s.findRegexp("[a-g](b+)");
-        if (m.size > 0) {
-            // just one for now
-            n = n - 1;
-        };
 
         ^n;
     }
@@ -607,6 +584,9 @@ Hand {
         var fifth = 5;
 
         var a = [ 0, nil ];
+
+        var i = 0;
+        var j = 0;
 
         // [ABCEFG])([Mm0-9]|sus|dim)*
 
@@ -632,6 +612,32 @@ Hand {
     }
 
     update {
+        | toke |
+
+        var sharps = toke.sharps;
+        var n = 0;
+        var m = sharps.sign;
+        var s = toke.lexeme;
+        var o = octave;
+
+        n = this.letter(toke.val);
+        if (sharps.abs > 0) {
+            forBy (0, sharps, m, {
+                | i |
+                n = m * 0.5 + n;
+            });
+        };
+
+        if (toke.low == false) {
+            o = o + 1;
+        };
+
+        finger = o * 12 + n;
+        finger.postln;
+
+    }
+
+    update_vector {
         | vector |
 
         var n = 0;
