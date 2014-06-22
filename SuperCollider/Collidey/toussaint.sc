@@ -25,9 +25,9 @@
 
 (
 """
-'soukous'
-| A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ]]] | ooo/ ooo/ ooo/ ooo/ |
-| A ]]] oo/ ]]]       | G oo/ ]]] ooo/       | F oo/ ]]] ]]]       | o/                  | Da Capo
+'soukous' ottava alta %S%
+| piano A ]]] ooo/ ooo/ ]]] | ottava alta ppp G ooo/ ooo/ ]]] ooo/ | ppiano F ooo/ ooo/ ]]] ]]] | ooo/ ooo/ ooo/ ooo/ |
+| ottava sotto forte A ]]] oo/ ]]]       | ff G oo/ ]]] ooo/       | F oo/ ]]] ]]]       | o/                 | D.S.
 """.pskoar.play;
 )
 

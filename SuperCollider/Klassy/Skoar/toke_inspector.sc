@@ -33,12 +33,30 @@ SkoarTokeInspector {
 
             "Toke_DynPiano" -> {
                 | toke |
-                toke.val = 0;
+                var s = toke.lexeme;
+                toke.val = switch (s)
+                    {"ppp"}     {16}
+                    {"pppiano"} {16}
+                    {"pp"}      {33}
+                    {"ppiano"}  {33}
+                    {"p"}       {49}
+                    {"piano"}   {49}
+                    {"mp"}      {64}
+                    {"mpiano"}  {64};
+
             },
 
             "Toke_DynForte" -> {
                 | toke |
-                toke.val = 0;
+                var s = toke.lexeme;
+                toke.val = switch(s)
+                    {"mf"}      {80}
+                    {"mforte"}  {80}
+                    {"forte"}   {96}
+                    {"ff"}      {112}
+                    {"fforte"}  {112}
+                    {"fff"}     {127}
+                    {"ffforte"} {127};
             },
 
             "Toke_OctaveShift" -> {

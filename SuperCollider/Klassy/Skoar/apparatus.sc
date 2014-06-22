@@ -435,6 +435,14 @@ Skoar {
         skoarboard[k] = v;
     }
 
+    dynamic {
+        | toke |
+
+        if (toke.isKindOf(Toke_DynPiano) || toke.isKindOf(Toke_DynForte)) {
+            skoarboard[\amp] = toke.val / 127;
+        };
+    }
+
     evaluate {
         | x |
 
@@ -520,7 +528,6 @@ Skoar {
             for (0, n - 1, {
                 | i |
                 if (noad == markers[i]) {
-"yaaaay".postln;
                     break.(i);
                 };
 

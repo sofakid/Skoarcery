@@ -112,6 +112,23 @@ Skoarmantics {
                     noad.performer = {skoar.octave_shift(toke.val);};
                 };
 
+                if (toke.isKindOf(Toke_OttavaA)) {
+                    noad.performer = {skoar.octave_shift(1);};
+                };
+
+                if (toke.isKindOf(Toke_OttavaB)) {
+                    noad.performer = {skoar.octave_shift(-1);};
+                };
+
+                if (toke.isKindOf(Toke_QuindicesimaA)) {
+                    noad.performer = {skoar.octave_shift(1);};
+                };
+
+                if (toke.isKindOf(Toke_QuindicesimaB)) {
+                    noad.performer = {skoar.octave_shift(-1);};
+                };
+
+
             },
 
             "skoaroid" -> {
@@ -148,6 +165,8 @@ Skoarmantics {
         
             "dynamic" -> {
                 | skoar, noad |
+                var toke = noad.absorb_toke;
+                noad.performer = {skoar.dynamic(toke);};
             },
         
             "optional_carrots" -> {
