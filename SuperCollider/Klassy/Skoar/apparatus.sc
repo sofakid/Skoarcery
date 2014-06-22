@@ -415,18 +415,6 @@ Skoar {
         ^e
 
     }
-    /*get_pattern_gen {
-        for x in SkoarIterator():
-            if (x.isKindOf(SkoarNoad)) {
-
-                // run performance handler
-                x.performer(this);
-
-                if (x.is_beat) {
-                    yield [cur_noat.lexeme, x.beat.value];
-                };
-            }
-        };*/
 
     // ----
     // misc
@@ -498,6 +486,68 @@ Skoar {
         markers.add(marker_noad);
     }
 
+    // find the start of the piece
+    the_capo {
+        var x = markers[0];
+
+        if (x != nil) {
+            ^x;
+        }
+
+        ^tree;
+    }
+
+    da_capo {
+        | noad |
+
+        var al_x = noad.children[1];
+
+        noad.go_here_next(this.the_capo);
+
+    }
+
+    dal_segno {
+
+        | noad |
+
+        var al_x = noad.children[1];
+
+        var n = markers.size;
+        var j;
+
+        j = block {
+            | break |
+            for (0, n - 1, {
+                | i |
+                if (noad == markers[i]) {
+"yaaaay".postln;
+                    break.(i);
+                };
+
+            });
+            SkoarError("couldn't find where we are in markers").throw;
+        };
+
+        // go backwards in list and find either a
+        // post_repeat or the start
+        block {
+            | break |
+            forBy(j - 1, 0, -1, {
+                | i |
+                var x = markers[i];
+                var t = x.toke;
+
+                if (t.isKindOf(Toke_Segno)) {
+"YAAAAAY".postln;
+                    noad.go_here_next(x);
+                    break.value;
+                };
+            });
+            SkoarError("no segno %S% found.").throw;
+        };
+
+    }
+
     jmp_colon {
         | noad |
 
@@ -538,7 +588,7 @@ Skoar {
                         break.value;
                     };
                 });
-                noad.go_here_next(markers[0]);
+                noad.go_here_next(this.the_capo);
             };
         };
     }

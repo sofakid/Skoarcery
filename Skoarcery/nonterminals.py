@@ -21,8 +21,8 @@ marker*            : Segno | Fine | coda | Volta | Bars
 coda*              : Coda optional_al_coda
 optional_al_coda   : AlCoda | <e>
 
-dal_goto*          : DaCapo al_whatnow | DalSegno al_whatnow
-al_whatnow         : AlCoda | AlSegno | AlFine | <e>
+dal_goto*          : DaCapo al_x | DalSegno al_x
+al_x               : AlCoda | AlSegno | AlFine | <e>
 
 beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
 meter_beat*        : Crotchets | Quavers | Quarters | Eighths | Slash
@@ -63,7 +63,7 @@ skoaroid*        : nouny skoaroid_prime
 +skoaroid_prime  : assignment skoaroid_prime | <e>
 
 assignment*      : AssOp settable
-+settable         : Caesura | CurNoat | Symbol | listy
++settable        : Caesura | CurNoat | Symbol | listy
 
 optional_carrots*: Carrots | <e>
 stmt*            : optional_carrots skoaroid msg_chain_node

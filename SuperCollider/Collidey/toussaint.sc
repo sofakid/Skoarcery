@@ -26,8 +26,8 @@
 (
 """
 'soukous'
-|: A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ]]] | ooo/ ooo/ ooo/ ooo/ :|
-|  A ]]] oo/ ]]]       | G oo/ ]]] ooo/       | F oo/ ]]] ]]]       | o/                  :|
+| A ]]] ooo/ ooo/ ]]] | G ooo/ ooo/ ]]] ooo/ | F ooo/ ooo/ ]]] ]]] | ooo/ ooo/ ooo/ ooo/ |
+| A ]]] oo/ ]]]       | G oo/ ]]] ooo/       | F oo/ ]]] ]]]       | o/                  | Da Capo
 """.pskoar.play;
 )
 

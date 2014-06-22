@@ -117,12 +117,13 @@ SkoarTokeInspector {
             
             "Toke_Segno" -> {
                 | toke |
-                var a = toke.lexeme.split("_");
+                /*var a = toke.lexeme.split("_");
+                "food".postln;
                 if (a.size > 1) {
                     toke.label = a[1];
                 } {
                     toke.label = "";
-                };
+                };*/
             },
             
             "Toke_String" -> {

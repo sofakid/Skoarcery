@@ -141,11 +141,7 @@ Skoarmantics {
             "msg" -> {
                 | skoar, noad |
             },
-        
-            "dal_goto" -> {
-                | skoar, noad |
-            },
-        
+
             "cthulhu" -> {
                 | skoar, noad |
             },
@@ -170,7 +166,24 @@ Skoarmantics {
                 // trim start and end tokens
                 noad.replace_children(noad.children.copyRange(1, n - 2));
             },
-        
+
+
+            "dal_goto" -> {
+                | skoar, noad |
+
+                var toke = noad.children[0].toke;
+                skoar.add_marker(noad);
+
+                if (toke.isKindOf(Toke_DaCapo)) {
+                    noad.performer = {skoar.da_capo(noad);};
+                };
+
+                if (toke.isKindOf(Toke_DalSegno)) {
+                    noad.performer = {skoar.dal_segno(noad);};
+                };
+
+            },
+
             "marker" -> {
                 | skoar, noad |
         
@@ -183,7 +196,7 @@ Skoarmantics {
                 if (toke.isKindOf(Toke_Bars) && toke.pre_repeat) {
                     noad.performer = {skoar.jmp_colon(noad);};
                 };
-        
+
             },
 
             "coda" -> {
