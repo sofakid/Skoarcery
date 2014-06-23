@@ -80,9 +80,6 @@ Skoarmantics {
                 y = noad.children[1];
                 toke = y.toke;
 
-                "meter_ass: ".post;
-                toke.post;
-
                 // we prepare the destination here, we'll setup the write in skoaroid
                 if (toke.isKindOf(Toke_Quarters) || toke.isKindOf(Toke_Eighths)) {
                     noad.setter = {
@@ -94,8 +91,6 @@ Skoarmantics {
                         };
                     };
                 };
-
-                noad.setter.postln;
             },
 
             "meter_stmt" -> {
@@ -136,8 +131,6 @@ Skoarmantics {
                         skoar.assign_symbol(x, y.toke);
                     };
                 };
-
-                noad.setter.postln;
             },
 
             "accidentally" -> {

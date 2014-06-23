@@ -168,11 +168,8 @@ SkoarTokeInspector {
                 | toke |
                 var s = toke.lexeme;
                 toke.is_rest = true;
-                "quavers: ".post;
-                s.postln;
                 // size -1 for the / (we just count the o's)
                 toke.val = SkoarTokeInspector.beat_short(s, s.size - 1);
-                toke.val.postln;
             },
 
             // unrests
@@ -199,8 +196,6 @@ SkoarTokeInspector {
         var is_dotted = s.endsWith(".");
         var x = 0.0;
 
-        is_dotted.postln;
-
         if (is_dotted == true) {
             n = n - 1;
         };
@@ -210,7 +205,6 @@ SkoarTokeInspector {
         if (is_dotted == true) {
             x = x * 1.5;
         };
-        x.postln;
         ^x;
     }
 
@@ -228,7 +222,6 @@ SkoarTokeInspector {
         if (is_dotted == true) {
             x = x * 1.5;
         };
-        x.postln;
         ^x;
     }
 

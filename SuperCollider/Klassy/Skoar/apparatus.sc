@@ -682,10 +682,6 @@ Hand {
         n = octave * 12 + n;
 
         finger = [n, n + third, n + fifth];
-
-        "Choard: ".post;
-        finger.postln;
-
     }
 
     update {
@@ -710,8 +706,6 @@ Hand {
         };
 
         finger = o * 12 + n;
-        finger.postln;
-
     }
 
 }
