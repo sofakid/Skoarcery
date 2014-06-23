@@ -72,6 +72,53 @@ Skoarmantics {
 
             "meter_ass" -> {
                 | skoar, noad |
+
+                // the settable
+                var y = nil;
+                var toke = nil;
+
+                y = noad.children[1];
+                toke = y.toke;
+
+                "meter_ass: ".post;
+                toke.post;
+
+                // we prepare the destination here, we'll setup the write in skoaroid
+                if (toke.isKindOf(Toke_Quarters) || toke.isKindOf(Toke_Eighths)) {
+                    noad.setter = {
+                        | x |
+                        var x_toke = x.toke;
+
+                        if (x_toke.isKindOf(Toke_Int) || x_toke.isKindOf(Toke_Float)) {
+                            skoar.set_tempo(x_toke.val, toke);
+                        };
+                    };
+                };
+
+                noad.setter.postln;
+            },
+
+            "meter_stmt" -> {
+                | skoar, noad |
+
+                var f = nil;
+                var x = nil;
+                var y = nil;
+
+                if (noad.children.size > 1) {
+                    x = noad.children[0];
+                    y = noad.children[1];
+
+                    if (y.name == "meter_ass") {
+
+                        f = y.setter;
+
+                        noad.performer = {
+                            f.(x);
+                        };
+
+                    };
+                };
             },
 
             "assignment" -> {

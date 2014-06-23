@@ -31,7 +31,7 @@ Ppar([bass, mel]).play;
 
 
 (
-var bass = """ c~~
+var bass = """ o~~
 | Am |: ] ] o/ ] } ) :| F :| G :|
 
 """.pskoar;

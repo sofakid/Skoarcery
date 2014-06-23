@@ -293,7 +293,6 @@ SkoarIterator {
                     e = skoar.event;
                     
                     e[\dur] = noad.toke.val;
-                    e[\tempo] = 50/60;
 
                     if (noad.is_rest == true) {
                         e[\note] = \rest;
@@ -360,6 +359,8 @@ Skoar {
 
         cur_noat = nil;
         hand = Hand.new;
+
+        this.skoarboard_defaults;
     }
 
     parse {
@@ -372,6 +373,15 @@ Skoar {
             toker.dump;
 
         }
+    }
+
+    skoarboard_defaults {
+
+        // 60 bpm
+        skoarboard[\tempo] = 1;
+
+        // mp
+        skoarboard[\amp] = 0.5;
     }
 
     decorate {
@@ -427,20 +437,7 @@ Skoar {
         var k = y.val;
         var v = this.evaluate(x);
 
-        "skoarboard[".post;
-        k.post;
-        "] = ".post;
-        v.postln;
-
         skoarboard[k] = v;
-    }
-
-    dynamic {
-        | toke |
-
-        if (toke.isKindOf(Toke_DynPiano) || toke.isKindOf(Toke_DynForte)) {
-            skoarboard[\amp] = toke.val / 127;
-        };
     }
 
     evaluate {
@@ -451,6 +448,22 @@ Skoar {
 
         ^t.val;
     }
+
+    set_tempo {
+        | bpm, toke |
+        var x = bpm / 60 * toke.val;
+
+        skoarboard[\tempo] = x;
+    }
+
+    dynamic {
+        | toke |
+
+        if (toke.isKindOf(Toke_DynPiano) || toke.isKindOf(Toke_DynForte)) {
+            skoarboard[\amp] = toke.val / 127;
+        };
+    }
+
 
     noat_go {
         | noat |

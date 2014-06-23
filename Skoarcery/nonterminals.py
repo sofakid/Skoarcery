@@ -29,7 +29,7 @@ meter_beat*        : Crotchets | Quavers | Quarters | Eighths | Slash
 
 meter*             : MeterS meter_stmts MeterE
 +meter_stmts       : meter_stmt meter_stmts | <e>
-meter_stmt         : Int meter_stmt_numbery | meteroid
+meter_stmt*        : Int meter_stmt_numbery | meteroid
 +meter_stmt_numbery: meter_ass | meter_sig_prime
 meter_ass*         : AssOp meter_ass_r
 +meter_ass_r       : Symbol | meter_beat | dynamic
