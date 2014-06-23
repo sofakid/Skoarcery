@@ -371,7 +371,6 @@ Skoar {
             | e |
             e.postln;
             toker.dump;
-
         }
     }
 
@@ -451,6 +450,7 @@ Skoar {
 
     set_tempo {
         | bpm, toke |
+
         var x = bpm / 60 * toke.val;
 
         skoarboard[\tempo] = x;
@@ -475,7 +475,6 @@ Skoar {
         | noat |
         hand.choard(noat);
         cur_noat = hand.finger;
-        cur_noat.postln;
     }
 
     choard_listy {
@@ -498,12 +497,14 @@ Skoar {
 
     octave_shift {
         | x |
+
         hand.octave = hand.octave + x;
     }
 
     // save these in a list for jumping around in
     add_marker {
         | marker_noad |
+
         markers.add(marker_noad);
     }
 
@@ -528,7 +529,6 @@ Skoar {
     }
 
     dal_segno {
-
         | noad |
 
         var al_x = noad.children[1];
@@ -538,8 +538,10 @@ Skoar {
 
         j = block {
             | break |
+
             for (0, n - 1, {
                 | i |
+
                 if (noad == markers[i]) {
                     break.(i);
                 };
@@ -552,13 +554,14 @@ Skoar {
         // post_repeat or the start
         block {
             | break |
+
             forBy(j - 1, 0, -1, {
                 | i |
+
                 var x = markers[i];
                 var t = x.toke;
 
                 if (t.isKindOf(Toke_Segno)) {
-"YAAAAAY".postln;
                     noad.go_here_next(x);
                     break.value;
                 };
@@ -586,6 +589,7 @@ Skoar {
                 | break |
                 for (0, n - 1, {
                     | i |
+
                     if (noad == markers[i]) {
                         break.(i);
                     };
@@ -600,6 +604,7 @@ Skoar {
                 | break |
                 forBy(j - 1, 0, -1, {
                     | i |
+
                     var x = markers[i];
                     var t = x.toke;
 
@@ -667,16 +672,13 @@ Hand {
 
         s = toke.lexeme;
 
-        s.postln;
         c = (s[0] ++ "").toLower;
-        c.postln;
 
         if (s.endsWith("m")) {
             third = third - 1;
         };
 
         n = this.letter(c);
-
         n = octave * 12 + n;
 
         finger = [n, n + third, n + fifth];
@@ -708,65 +710,6 @@ Hand {
         };
 
         finger = o * 12 + n;
-        finger.postln;
-
-    }
-
-    update_vector {
-        | vector |
-
-        var n = 0;
-        var m = nil;
-        var s = vector.lexeme;
-        var letter = nil;
-        var o = 0;
-        var semis = 0;
-        var target = 0;
-
-        // prevector
-        m = s.findRegexp("^~+");
-        if (m.size > 0) {
-            direction = 1;
-            o = m[0][1].size - 1;
-            "here".postln;
-            o.postln;
-            octave = octave + o;
-            if (octave > 12) {
-                direction = -1;
-            };
-        };
-
-
-        // postvector
-        m = s.findRegexp("~+$");
-        if (m.size > 0) {
-            direction = -1;
-            o = m[0][1].size -1;
-            octave = octave - o;
-            if (octave < 0) {
-                octave = 0;
-                direction = 1;
-            };
-        };
-
-        n = this.letter(s);
-
-        target = octave * 12 + n;
-        target.postln;
-        // have we crossed an octave boundary?
-        /*if (direction == -1) {
-            if (finger < target) {
-                octave = octave - 1;
-            };
-        };
-
-        if (direction == 1) {
-            if (finger > target) {
-                octave = octave + 1;
-            };
-        };*/
-
-        finger = octave * 12 + n;
         finger.postln;
 
     }
