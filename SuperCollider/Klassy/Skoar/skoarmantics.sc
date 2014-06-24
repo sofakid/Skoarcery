@@ -2,9 +2,22 @@
 // Skoarmantics
 // ============
 
-//
-// We went depth first so our children should be defined
-//
+/*
+
+This code is applied during the decoration stage of compiling the skoar tree.
+
+For stuff to happen during performing the tree, we set handlers here.
+
+We also shrink the tree, drop some punctuation noads;
+   when you see replace_children, that's what's going on. 
+
+absorb_toke assumes the only child is a toke, puts it in 
+   noad.toke and removes the child. (and returns the toke)
+
+We went depth first and run the code on the way back,
+   so children are processed first.
+
+*/
 Skoarmantics {
 
     *new {
@@ -39,12 +52,14 @@ Skoarmantics {
 
                 var n = noad.children.size;
                 var x = nil;
-                var items = List[];
+                var items = List.new;
 
-                for (1, n {
+                // skip the first and last tokens
+                for (1, n - 2, {
                     | i |
                     x = noad.children[i];
 
+                    // skip the separators
                     if (x.toke.isKindOf(Toke_ListSep) == false) {
                         items.add(x);
                     };
@@ -283,18 +298,20 @@ Skoarmantics {
         
             "noat_reference" -> {
                 | skoar, noad |
-        
+
+                var x = noad.children[0];
+
                 // TODO Symbol | CurNoat | listy
-                if (noad.name == "listy") {
-                    noad.performer = {skoar.choard_listy(noad)};
+                if (x.name == "listy") {
+                    x.performer = {skoar.choard_listy(x)};
                 };
 
-                if (noad.name == "CurNoat") {
-                    noad.performer = {skoar.reload_curnoat(noad)};
+                if (x.name == "CurNoat") {
+                    x.performer = {skoar.reload_curnoat(x)};
                 };
 
-                if (noad.name == "Symbol") {
-                    noad.performer = {skoar.noat_symbol(noad)};
+                if (x.name == "Symbol") {
+                    x.performer = {skoar.noat_symbol(x)};
                 };
 
             },

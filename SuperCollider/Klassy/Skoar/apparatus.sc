@@ -151,7 +151,7 @@ SkoarNoad {
     depth_visit {
         | f |
 
-        name.postln;
+        //name.postln;
 
         children.do {
             | x |
@@ -234,6 +234,48 @@ SkoarNoad {
         };
     }
 
+    // ------------------
+    // searching the tree
+    // ------------------
+
+    // desires - array of names of noads as string, or SkoarToke implementation classes
+    // writer - a function that will do something with the matches
+    match {
+        | desires, writer |
+
+        desires.do {
+            | item |
+
+            if (item.isKindOf(String)) {
+                if (item == name) {
+                    writer.(this);
+                };
+
+            } {
+                if (toke.isKindOf(item)) {
+                    writer.(this);
+                };
+
+            };
+        };
+    }
+
+    collect {
+        | desires |
+
+        var results = List.new;
+
+        this.depth_visit({
+            | x |
+
+            x.match(desires, {
+                | y |
+                results.add(y);
+            });
+        });
+
+        ^results.asArray;
+    }
 }
 
 
@@ -467,18 +509,48 @@ Skoar {
 
     noat_go {
         | noat |
+
         hand.update(noat);
         cur_noat = hand.finger;
     }
 
     choard_go {
         | noat |
+
         hand.choard(noat);
         cur_noat = hand.finger;
     }
 
     choard_listy {
-        | noat |
+        | noad |
+
+        var desires = List[ Toke_Int, Toke_Float, "noat_literal" ];
+        var items = noad.collect(desires);
+
+        cur_noat = Array.new(items.size - 1);
+
+        items.do {
+            | o |
+
+            if (o.name == "noat_literal") {
+                hand.update(o.toke);
+                cur_noat.add(hand.finger);
+
+                // remove the handler which will overwrite cur_noat with each noat
+                o.performer = nil;
+            };
+
+            if (o.toke.isKindOf(Toke_Int)) {
+                cur_noat.add(o.toke.val);
+
+                // remove the handler which will overwrite cur_noat with each noat
+                o.performer = nil;
+            };
+
+        };
+
+        "built choard: ".post; cur_noat.postln;
+
     }
 
     reload_curnoat {
