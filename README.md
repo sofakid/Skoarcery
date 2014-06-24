@@ -1,20 +1,15 @@
 Skoar and Skoarcery
 ===================
 
+Skoar is a musical notation language.
 
-Skoar is a musical notation language,
-
-Like, chords written the way you'd write them, and.. everything else the way I'd write them.
-
-Skoar's also for Python, but the focus is currently on SuperCollider.
-
-Skoarcery, is the compiler compiler that compiles skoar lexers and parsers for SuperCollider and Python.
+Skoarcery is the compiler compiler that compiles skoar lexers and parsers for SuperCollider and Python.
 
 
 Skoar
 -----
 
-Skoar is a mini language, it is compiled into a parse tree that can be traversed, implementing a SuperCollider Pattern.
+Skoar is a mini language, it is compiled into a parse tree that can be traversed, implementing a SuperCollider pattern.
 
 
     ("""
@@ -121,11 +116,9 @@ We use SuperCollider Symbols, but with a `@` instead of a `\`, and use a diction
 
 # messages
 
-todo
+    @sna.foo<3>
 
 # cthulhu
-
-(unimplemented)
 
 You can wake cthulhu, crashing the skoar..
 
@@ -148,7 +141,7 @@ Save him to wake later.
 
 # moar
 
-Lots more stuff in the grammar, and lots more possible.
+Lots more stuff in the grammar, and lots more needed. Conditons, functions,
 
 Install
 -------
