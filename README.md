@@ -2,8 +2,9 @@ Skoar and Skoarcery
 ===================
 
 
-Skoar is a musical notation language, intended to add another expressive dimension to SuperCollider,
-modelled after western music notation. Like, chords written the way you'd write them, and.. everything else the way I'd write them.
+Skoar is a musical notation language,
+
+Like, chords written the way you'd write them, and.. everything else the way I'd write them.
 
 Skoar's also for Python, but the focus is currently on SuperCollider.
 
@@ -13,29 +14,141 @@ Skoarcery, is the compiler compiler that compiles skoar lexers and parsers for S
 Skoar
 -----
 
-Oversimplified, a skoar starts as a SuperCollider string, and is compiled into a parse tree. This tree
-can then be traversed, behaving as a SuperCollider pattern.
+Skoar is a mini language, it is compiled into a parse tree that can be traversed, implementing a SuperCollider Pattern.
 
-    (
 
-    // 28 days later
-    var creepy = """
-    @creepy => @instrument
-    | ~~d ] a~~ ] ~~a ] a~~] :| :| :| :| :| :| :| :| :| :| :| :|
-    """.pskoar;
-
-    var koards = """
-    <? take the octave down, yeah ugly ?> d~~
-    | D ))) | a# ))) | F ))) | G ))) :|
-    """.pskoar;
-
-    var guitar = "|: c# ) ) d ) ) e ) ) f ) ) :| :| :|".pskoar;
-
-    Ppar([creepy, koards, guitar]).play;
-
+    ("""
+    ||: Am ]]] oo/ ]]]  | G oo/ ]]] ooo/ | F oo/ ]]] ooo/ | F ooo/ ]]] oo/ :||
+    """.pskoar.play;
     )
 
+# beats
 
+    ))) - whole noat
+    )) - half noat
+    ) - quarter noat
+    ] - eighth noat
+    ]] - sixteenth noat
+    ]]] - thirty second noat
+
+# rests
+
+    }}} - whole rest
+    }} - half rest
+    } - quarter rest
+    o/ - eighth rest
+    oo/ - sixteenth rest
+    ooo/ - thirty second rest
+
+# dottedness
+
+    ). - dotted quarter
+    ]]. - dotted sixteenth
+    o/. - dotted eighth rest
+
+# noats
+
+    <? you can use # or b after the noat to sharp or flat it. Also midi numbers. ?>
+
+    || c ) d ) eb ) | f ]] ]] g ] ] g# ) | } 81.5 ) 83 ) ||
+
+    <? you get two octaves to work with, prepend _ for the lower octave ?>
+
+    ||: d ) _a ) a ) _a ) :||
+
+# choards
+
+Choards need work, but this is the intention:
+
+    A Am A#m Asus2 Adim etc..
+
+Or use lists of noats:
+
+    | <a,c,e> ) <81, c#, e> ) |
+
+# octaving
+
+    <? up one octave ?>
+    ~o
+    8va
+    ottava alta
+
+    <? up two ?>
+    ~~o
+    15ma
+    alla quindicesima
+
+    <? down one ?>
+    o~
+    8vb
+    ottava bassa
+
+    <? down two ?>
+    o~~
+    15mb
+
+# dynamics
+
+Have to use the full word `forte`, `f` is a noat.
+
+    fff ffforte ppp pppiano piano mp mf ff pp p
+
+# repeats
+
+Colons
+
+    |: _a ]]] c ]]] e ]]] :|: g ]]] ooo/ ]]] :|
+
+Segnos `%S%` and Codas `(+)`:
+
+    | _a ) c ) e ) | %S% ) ]] ]] e ]] | f D.S. al fine ) ) ) fine
+
+Infinite repeats:
+
+    <? from the top ?>
+    | _a] c] e] | D.C. <? also accept Da Capo ?>
+
+    <? from the segno ?>
+    | _a] c] e] o/ | %S% _f] f] _f] o/ Dal Segno |
+
+# data
+
+We use SuperCollider Symbols, but with a `@` instead of a `\`, and use a dictionary.
+
+    @smooth => @instrument
+    <0,3,5> => @detune
+    |: a ) c ) e ) :|
+
+# messages
+
+todo
+
+# cthulhu
+
+(unimplemented)
+
+You can wake cthulhu, crashing the skoar..
+
+    <? crashes ?>
+    | a ) ^^(;,;)^^ |
+
+    <? ensure Dal Segno is working ?>
+    |: a ]] ]] Dal Segno ^^(;,;)^^ %S% ) ) :|
+
+
+Cthulhu can assert stuff too.
+
+    ^^(;@octave == 5;)^^
+
+Save him to wake later.
+
+    ^^(;,;)^^ => @foo
+
+    @foo.anything
+
+# moar
+
+Lots more stuff in the grammar, and lots more possible.
 
 Install
 -------
@@ -44,8 +157,8 @@ map Klass folder to the SuperCollider extensions folder.
 
     ln -s ~/.../Skoar/SuperCollider/Klassy ~/Library/Application\ Support/SuperCollider/Extensions/Klassy
 
-The lexical and syntactic analysers, lex.sc and rdpp.sc (ditto .py) are built with Skoarcery, and aren't
-in the master branch. They are built and written to SuperCollider/Klassy.
+The lexical and syntactic analysers, lex.sc and rdpp.sc (ditto .py) are built with Skoarcery.
+They are built and written to SuperCollider/Klassy.
 
 If you don't want to build, i'm checking in built versions to the built branch. Just switch branches.
 
@@ -91,7 +204,8 @@ its parent's children list.
 - Test the grammar for LL(1), test that it compiles in sclang, test skoars, etc..
 
 ### [factoary]
-- These are written as unit tests, they build our lexers and parsers.
+- These are written as unit tests, they build our lexers and parsers. Done this way because we
+generate some information, test it, build on it, test that ...
 
 - The important one at the moment is [Build_Sc.py], it will run tests,
 build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
@@ -127,14 +241,6 @@ Performance
 It is entirely too early to be performance tuning Skoar, but some notes:
 
 - We don't currently have precompiled regexes in SuperCollider.
-
-- There is no statement terminator, we don't have semicolons, and the parse tree grows to the right quickly.
- I kept the main operations near the top of the grammar, and intermediate steps aren't added to the produced SkoarNoad
- tree, but the recursion building it is deep. It's those phrasey phrases.
-
-    - In the meantime, if it becomes an issue, work with smaller skoars, and combine them.
-
-
 
 [terminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/terminals.py
 [nonterminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/nonterminals.py
