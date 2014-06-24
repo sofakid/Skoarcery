@@ -1,6 +1,8 @@
 Skoar and Skoarcery
 ===================
 
+"You realize everyone is going to think you are insane?" - miggles
+
 Skoar is a musical notation language.
 
 Skoarcery is the compiler compiler that compiles skoar lexers and parsers for SuperCollider and Python.
@@ -129,11 +131,11 @@ You can wake cthulhu, crashing the skoar..
     |: a ]] ]] Dal Segno ^^(;,;)^^ %S% ) ) :|
 
 
-Cthulhu can assert stuff too.
+Cthulhu can assert stuff too, you have to stick it right in his face, he's sleeping.
 
     ^^(;@octave == 5;)^^
 
-Save him to wake later.
+Or save him to wake later with any message.
 
     ^^(;,;)^^ => @foo
 
@@ -141,7 +143,8 @@ Save him to wake later.
 
 # moar
 
-Lots more stuff in the grammar, and lots more needed. Conditons, functions,
+Lots more stuff in the grammar, and more coming. Conditons, functions, meter stuff, validation of number of
+ beats per measure, taking values from other patterns...
 
 Install
 -------
