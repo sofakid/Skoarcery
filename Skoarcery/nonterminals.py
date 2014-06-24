@@ -55,7 +55,10 @@ accidentally*    : acc noaty
 
 noaty*           : noat_literal | noat_reference
 noat_literal*    : Choard | NamedNoat
+
+# this isn't right, these have other purposes than noats
 noat_reference*  : Symbol | CurNoat | listy
+
 nouny            : cthulhu | noaty | conditional | nouny_literal | accidentally | musical_keyword
 +nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String
 
@@ -76,8 +79,6 @@ boolean*         : skoaroid BooleanOp skoaroid
 conditional      : CondS optional_stmt CondSep boolean CondSep optional_stmt CondE
 cthulhu*         : LWing CondSep cthulhu_prime
 +cthulhu_prime   : boolean CondSep RWing | Nosey CondSep RWing
-
-
 
 """
 

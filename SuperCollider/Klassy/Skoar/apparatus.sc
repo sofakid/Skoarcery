@@ -483,7 +483,31 @@ Skoar {
 
     evaluate {
         | x |
+/*
+        var desires = List[ "listy", Toke_Int, Toke_Float, Toke_Symbol,  ];
+        var items = noad.collect(desires);
 
+        var listy = Array.new(items.size - 1);
+
+        items.do {
+            | o |
+
+            if (o.name == "listy") {
+                hand.update(o.toke);
+                cur_noat.add(hand.finger);
+
+                // remove the handler which will overwrite cur_noat with each noat
+                o.performer = nil;
+            };
+
+            if (o.toke.isKindOf(Toke_Int)) {
+                cur_noat.add(o.toke.val);
+
+                // remove the handler which will overwrite cur_noat with each noat
+                o.performer = nil;
+            };
+
+        };*/
         // just find the toke for now
         var t = x.next_toke;
 
