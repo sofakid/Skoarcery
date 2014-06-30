@@ -375,6 +375,7 @@ Skoar {
     var  <toker;        // friendly neighbourhood toker
     var   parser;       // recursive descent predictive parser
     var   markers;      // list of markers (for gotos/repeats)
+    var   codas;        // list of codas
     var   inspector;    // toke inspector for decorating
     var   skoarmantics; // semantic actions
     var   skoarboard;   // copied into event
@@ -395,6 +396,7 @@ Skoar {
         toker = Toker(skoarse);
         parser = SkoarParser.new(this);
         markers = List[];
+        codas = List[];
         inspector = SkoarTokeInspector.new;
         skoarmantics = Skoarmantics.new;
         skoarboard = IdentityDictionary.new;
@@ -530,7 +532,6 @@ Skoar {
         };
     }
 
-
     noat_go {
         | noat |
 
@@ -602,6 +603,13 @@ Skoar {
         | marker_noad |
 
         markers.add(marker_noad);
+    }
+
+    // save these in a list for jumping around in
+    add_coda {
+        | coda_noad |
+
+        codas.add(coda_noad);
     }
 
     // find the start of the piece
@@ -712,6 +720,21 @@ Skoar {
                 noad.go_here_next(this.the_capo);
             };
         };
+    }
+
+    cthulhu {
+        | noad |
+
+        // dump state
+
+        "^^(;,;)^^".postln;
+
+        this.dump;
+        hand.dump;
+
+        "".postln;
+        SkoarError("^^(;,;)^^").throw;
+
     }
 }
 

@@ -216,6 +216,7 @@ Skoarmantics {
 
             "cthulhu" -> {
                 | skoar, noad |
+                noad.performer = {skoar.cthulhu(noad);};
             },
         
             "dynamic" -> {
@@ -275,6 +276,7 @@ Skoarmantics {
 
             "coda" -> {
                 | skoar, noad |
+                skoar.add_coda(noad);
             },
 
             "noaty" -> {
