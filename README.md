@@ -7,15 +7,24 @@ Skoar is a musical notation language.
 
 Skoarcery is the compiler compiler that compiles skoar lexers and parsers for SuperCollider and Python.
 
+# current state
+
+This is alpha software. Most of the things described here are implemented. The python implementation needs alot of work
+to bring it to where the SuperCollider one is.
+
+Focus is on SuperCollider at the moment.
 
 Skoar
 =====
 
-Skoar is a mini language, it is compiled into a parse tree that can be traversed, implementing a SuperCollider pattern.
+Skoar is a mini language for describing music, it is compiled into a parse tree that can be traversed, implementing a
+SuperCollider pattern.
 
 
     ("""
+
     ||: Am ]]] oo/ ]]]  | G oo/ ]]] ooo/ | F oo/ ]]] ooo/ | F ooo/ ]]] oo/ :||
+
     """.pskoar.play;
     )
 
@@ -108,7 +117,7 @@ Infinite repeats:
     <? from the segno ?>
     | _a] c] e] o/ | %S% _f] f] _f] o/ Dal Segno |
 
-# data
+# data assignment
 
 We use SuperCollider Symbols, but with a `@` instead of a `\`, and use a dictionary.
 
@@ -116,9 +125,6 @@ We use SuperCollider Symbols, but with a `@` instead of a `\`, and use a diction
     <0,3,5> => @detune
     |: a ) c ) e ) :|
 
-# messages
-
-    @sna.foo<3>
 
 # cthulhu
 
@@ -141,10 +147,6 @@ Or save him to wake later with any message.
 
     @foo.anything
 
-# moar
-
-Lots more stuff in the grammar, and more coming. Conditons, functions, meter stuff, validation of number of
- beats per measure, taking values from other patterns...
 
 Install
 =======
@@ -156,10 +158,7 @@ map Klass folder to the SuperCollider extensions folder.
 The lexical and syntactic analysers, lex.sc and rdpp.sc (ditto .py) are built with Skoarcery.
 They are built and written to SuperCollider/Klassy.
 
-If you don't want to build, i'm checking in built versions to the built branch. Just switch branches.
-
-    git checkout built
-
+Currently the built code is checked in, so it should work after mapping the folder (and restarting SuperCollider).
 
 Skoarcery Koadmap
 =================
