@@ -146,7 +146,7 @@ SkoarTokeInspector {
             
             "Toke_String" -> {
                 | toke |
-                toke.val = toke.lexeme;
+                toke.val = toke.lexeme.asString;
             },
             
             "Toke_Bars" -> {

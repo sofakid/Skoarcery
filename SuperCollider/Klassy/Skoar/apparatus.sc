@@ -339,7 +339,11 @@ SkoarIterator {
                     if (noad.is_rest == true) {
                         e[\note] = \rest;
                     } {
-                        e[\midinote] = skoar.cur_noat;
+                        if (e[\type] == \instr) {
+                            e[\note] = skoar.cur_noat;
+                        } {
+                            e[\midinote] = skoar.cur_noat;
+                        };
                     };
 
                     //" Firing event:".postln;

@@ -1,7 +1,6 @@
 import unittest
 
-from Skoarcery import terminals, emissions
-from Skoarcery.schematics import lexer
+from Skoarcery import terminals, emissions, underskoar
 
 
 class Code_Lexer_Py(unittest.TestCase):
@@ -9,7 +8,7 @@ class Code_Lexer_Py(unittest.TestCase):
     def setUp(self):
         terminals.init()
         emissions.init()
-        lexer.init(emissions.PY)
+        underskoar.init(emissions.PY)
 
     def imports(self):
         emissions.PY.raw(
@@ -30,16 +29,16 @@ class SkoarError(AssertionError):
         )
 
     def base_token(self):
-        lexer.skoarToke()
+        underskoar.skoarToke()
 
     def EOF_token(self):
-        lexer.EOF_token()
+        underskoar.EOF_token()
 
     def whitespace_token(self):
-        lexer.whitespace_token()
+        underskoar.whitespace_token()
 
     def typical_token(self, token):
-        lexer.typical_token(token)
+        underskoar.typical_token(token)
 
     def test_PyLexer(self):
 

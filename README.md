@@ -9,7 +9,7 @@ Skoarcery is the compiler compiler that compiles skoar lexers and parsers for Su
 
 
 Skoar
------
+=====
 
 Skoar is a mini language, it is compiled into a parse tree that can be traversed, implementing a SuperCollider pattern.
 
@@ -147,7 +147,7 @@ Lots more stuff in the grammar, and more coming. Conditons, functions, meter stu
  beats per measure, taking values from other patterns...
 
 Install
--------
+=======
 
 map Klass folder to the SuperCollider extensions folder.
 
@@ -162,7 +162,7 @@ If you don't want to build, i'm checking in built versions to the built branch. 
 
 
 Skoarcery Koadmap
------------------
+=================
 
 ### [terminals.py]
 - Tokens by convention are UpperCamelCase.
@@ -193,6 +193,7 @@ its parent's children list.
 - [langoids.py] - Terminal, Nonterminal, Production objects,
 - [dragonsets.py] - FIRST and FOLLOW sets, from the Dragon Book.
 - [emissions.py] - Implements Python and SuperCollider coding.
+- [underskoar.py] - Templates for lexer code
 
 
 ### [laboaratoary]
@@ -224,7 +225,7 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 
 
 Dev Environment
----------------
+===============
 
 I use PyCharm. The "builds" are done throught the unittest interface.
 
@@ -232,7 +233,7 @@ PyCharm also works with the SC textmate bundle.
 
 
 Performance
------------
+===========
 
 It is entirely too early to be performance tuning Skoar, but some notes:
 
@@ -250,6 +251,7 @@ It is entirely too early to be performance tuning Skoar, but some notes:
 [langoids.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/langoids.py
 [dragonsets.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/dragonsets.py
 [emissions.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/emissions.py
+[underskoar.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/underskoar.py
 
 [laboaratoary]: https://github.com/sofakid/Skoarcery/tree/master/Skoarcery/laboaratoary/
 [factoary]: https://github.com/sofakid/Skoarcery/tree/master/Skoarcery/factoary/
