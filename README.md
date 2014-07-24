@@ -5,7 +5,7 @@ Skoar and Skoarcery
 
 Skoar is a musical notation language.
 
-Skoarcery is the compiler compiler that compiles skoar lexers and parsers for SuperCollider and Python.
+Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [SuperCollider](http://supercollider.sourceforge.net/) and Python.
 
 # current state
 
