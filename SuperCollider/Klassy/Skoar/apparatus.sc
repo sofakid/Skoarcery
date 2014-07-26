@@ -78,7 +78,7 @@ SkoarNoad {
         var k = 0;
         n = 0;
 
-        "recounting children".postln;
+//"recounting children".postln;
 
         children.do {
             | x |
@@ -151,7 +151,7 @@ SkoarNoad {
     depth_visit {
         | f |
 
-        //name.postln;
+//name.postln;
 
         children.do {
             | x |
@@ -467,7 +467,7 @@ Skoar {
             e[k] = v;
         };
 
-        e.postln;
+//e.postln;
 
         ^e
 
@@ -578,7 +578,7 @@ Skoar {
 
         };
 
-        "built choard: ".post; cur_noat.postln;
+//"built choard: ".post; cur_noat.postln;
 
     }
 
@@ -731,12 +731,12 @@ Skoar {
 
         // dump state
 
-        "^^(;,;)^^".postln;
+"^^(;,;)^^".postln;
 
         this.dump;
         hand.dump;
 
-        "".postln;
+"".postln;
         SkoarError("^^(;,;)^^").throw;
 
     }
@@ -840,7 +840,7 @@ Hand {
         r.parse;
         r.decorate;
 
-        r.tree.draw_tree.postln;
+        //r.tree.draw_tree.postln;
         ^r;
     }
 

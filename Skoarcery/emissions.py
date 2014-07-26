@@ -174,6 +174,18 @@ class Tongue:
     def nop(self):
         raise NIE
 
+    @abc.abstractmethod
+    def dict_new(self, name):
+        raise NIE
+
+    @abc.abstractmethod
+    def dict_set(self, name, str_key, value, end):
+        raise NIE
+
+    @abc.abstractmethod
+    def v_dict_get(self, name, str_key):
+        raise NIE
+
     # ------------------------------------
     # these v_guys return rather than code
     # ------------------------------------
@@ -406,6 +418,15 @@ class PyTongue(Tongue):
     def v_match(self, match):
         return match
 
+    def dict_new(self, name):
+        raise NIE
+
+    def dict_set(self, name, str_key, value, end):
+        raise NIE
+
+    def v_dict_get(self, name, str_key):
+        raise NIE
+
 
 # --------------------
 # SuperCollider Tongue
@@ -547,9 +568,18 @@ class ScTongue(Tongue):
     def nop(self):
         self.stmt("// pass", end="\n")
 
+    def dict_new(self, name):
+        self.stmt(name + " = IdentityDictionary()", end="\n")
+
+    def dict_set(self, name, str_key, value, end=");\n"):
+        self.stmt(name + ".put('" + str_key + "', " + value, end=end)
+
     # ------------------------------------
     # these v_guys return rather than code
     # ------------------------------------
+    def v_dict_get(self, name, str_key):
+        return name + "['" + str_key + "']"
+
     def v_match_regex(self, regex, buf, offs):
         return regex + ".matchRegexp(" + buf + "," + offs + ")"
 

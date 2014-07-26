@@ -32,6 +32,51 @@ class Code_Parser_Sc(unittest.TestCase):
         SC.tab += 1
         N = nonterminals.nonterminals.values()
 
+        # precompute desirables
+        SC.method("init_desirables")
+        for A in N:
+
+            R = A.production_rules
+
+            SC.nl()
+            SC.cmt(str(N))
+
+            # each production
+            for P in R:
+
+                if P.derives_empty:
+                    continue
+
+                # A -> alpha
+                alpha = P.production
+
+                desires = FIRST(alpha)
+
+                if Empty in desires:
+                    desires.discard(Empty)
+                    desires.update(FOLLOW(A))
+
+                SC.nl()
+
+                i = 0
+
+                n = len(desires)
+                SC.dict_set("desirables", str(P), "List[", end="")
+                for toke in desires:
+                    SC.raw(toke.toker_name)
+                    i += 1
+                    if i != n:
+                        if i % 5 == 0:
+                            SC.raw(",\n")
+                            SC.stmt("           ", end="")
+                        else:
+                            SC.raw(", ")
+
+                else:
+                    SC.raw("]);\n")
+
+        SC.end()
+
         # write each nonterminal as a function
         for A in N:
 
@@ -57,30 +102,9 @@ class Code_Parser_Sc(unittest.TestCase):
                 # A -> alpha
                 alpha = P.production
 
-                desires = FIRST(alpha)
-
-                if Empty in desires:
-                    desires.discard(Empty)
-                    desires.update(FOLLOW(A))
+                SC.stmt("desires = " + SC.v_dict_get("desirables", str(P)))
 
                 SC.cmt(str(P))
-
-                i = 0
-
-                n = len(desires)
-                SC.stmt("desires = List[", end="")
-                for toke in desires:
-                    SC.raw(toke.toker_name)
-                    i += 1
-                    if i != n:
-                        if i % 5 == 0:
-                            SC.raw(",\n")
-                            SC.stmt("           ", end="")
-                        else:
-                            SC.raw(", ")
-
-                else:
-                    SC.raw("];\n")
 
                 SC.if_("toker.sees(desires) != " + SC.null)
 
@@ -126,7 +150,7 @@ SkoarParseException : Exception {
 
 SkoarParser {
 
-    var <runtime, <toker, <tab;
+    var <runtime, <toker, <tab, desirables;
 
     *new {
         | runtime |
@@ -139,6 +163,8 @@ SkoarParser {
         runtime = runtime;
         toker = runtime.toker;
         tab = 0;
+        desirables = IdentityDictionary();
+        this.init_desirables();
     }
 
     fail {
