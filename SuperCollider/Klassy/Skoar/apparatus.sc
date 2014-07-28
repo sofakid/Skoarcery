@@ -431,6 +431,16 @@ Skoar {
         skoarboard[\amp] = 0.5;
     }
 
+    put {
+        | k, v |
+        skoarboard[k] = v;
+    }
+
+    at {
+        | k |
+        ^skoarboard[k];
+    }
+
     decorate {
 
         var inspect = {
@@ -837,10 +847,12 @@ Hand {
 +String {
 	skoar {
     	var r = Skoar.new(this);
+    	"parsing skoar".postln;
         r.parse;
+        "decorating parse tree".postln;
         r.decorate;
 
-        //r.tree.draw_tree.postln;
+        r.tree.draw_tree.postln;
         ^r;
     }
 

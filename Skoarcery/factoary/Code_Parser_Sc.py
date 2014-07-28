@@ -39,7 +39,7 @@ class Code_Parser_Sc(unittest.TestCase):
             R = A.production_rules
 
             SC.nl()
-            SC.cmt(str(N))
+            SC.cmt(str(A))
 
             # each production
             for P in R:
@@ -55,8 +55,6 @@ class Code_Parser_Sc(unittest.TestCase):
                 if Empty in desires:
                     desires.discard(Empty)
                     desires.update(FOLLOW(A))
-
-                SC.nl()
 
                 i = 0
 

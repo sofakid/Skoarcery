@@ -38,35 +38,54 @@ var melody_B = """
 """.pskoar;
 
 //Ptpar([Pseq([intro_melody, melody_A, melody_B]), Pseq([intro_bass, bass, bass])]).play;
-Ppar([Pseq([intro_melody, melody_A, melody_B]), Pseq([intro_bass, bass, bass])]).play;
+b = Ppar([Pchain([intro_melody, melody_A, melody_B]), Pchain([intro_bass, bass, bass])]);
 
 
-"=================== here =================== ".postln;
-
-//Ppar([bass, melody]).render("/Users/lucas/Desktop/zww.aif");
-
+"=================== here =================== ";
 
 )
 
+b.play;
+
 (
-"""
-<! 9/8 120 => ). !> -1 => @transpose mp
+b = """
+<? Zelda Wind Waker Theme - inspired by piano arrangement by Shinobu Amayake ?>
+
+<? after compiling do: myskoar[\midiout] = MIDIOut(0); ?>
+@midi => @type
+
+<? key is Db, so i flat everything and sharp c & f ?>
+-1 => @transpose
+
+<! 9/8 120 => ). !>
+mp
+
+| <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | _a )). }. |
 
 | _a)   d] f#)   e] d)     c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)   _a] _g)   d] _b)    c#] | d)   e]] ]] f#] d] e] _a)   ] |
 | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).      _a)   ] |
 | _a)  d]] e]] f#)  e] d)  c#] | e]] d].  _b] _g)  c#] _a] d] _b]  | c#)   _a] _g)   d] _b)    c#] | ]] d]] e]] ]] f#] d] e] _a) ] |
 | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).       a)   ] |
 
-mf
-
 |: g] f#] e] f#)  d] c#] d] e] | a] d] ] g] d] ] f#)    ] | g] a] b] b] g] e] a)  a]   | g] f#] d] e] f#] e]] f#]] e)  ] |
 |  d] c#] d] e)   e] a] g] c#] | g] d] ] f#)  ] e] c#] e] | d] b] d] g] a] b] f# d] g] | e).    ] f#] e] a)           ] :|
 
-D.C.
+| <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | <_a,_f#> )). _a ) ] |
 
-""".pskoar.play;
+""".skoar;
+b[\midiout] = m;
+a = SkoarIterator.new(b).pfunk;
+"=== done ===".postln;
 )
 
+a.play;
 
-windwaker.play
+a.dump;
 "killall scsynth".unixCmd
+(
+MIDIClient.init;
+MIDIClient.destinations;
+
+m = MIDIOut(0);
+m.dump;
+)
