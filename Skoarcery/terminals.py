@@ -10,9 +10,12 @@ src = """
 
 <e>:         unused
 EOF:         unused
-Whitespace:  \\s*
+Whitespace:  [ \\t]*
+Newline:     [\\n\\r\\f]+
 
-Comment:        <[?](.|[\\n\\r])*?[?]>
+Voice:       [a-zA-Z][a-zA-Z0-9]+:
+
+Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
 MeterS:         <!
 MeterE:         !>

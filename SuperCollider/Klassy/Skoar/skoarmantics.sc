@@ -24,6 +24,29 @@ Skoarmantics {
 
         var dict = Dictionary[
 
+            "voice" -> {
+                | skoar, noad |
+
+                var f = nil;
+                var x = nil;
+                var y = nil;
+
+                if (noad.children.size == 1) {
+                    // ignore just a newline
+                    noad.absorb_toke;
+
+                } {
+                    x = noad.children.pop;
+                    noad.children.pop;
+                    noad.n = 0;
+                    
+                    noad.toke = x.toke;
+
+                    "Voice: ".post; x.toke.lexeme.postln;
+                };
+
+            },
+
             "msg_chain_node" -> {
                 | skoar, noad |
             },

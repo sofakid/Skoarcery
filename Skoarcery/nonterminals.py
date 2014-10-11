@@ -14,12 +14,15 @@ src = """
 
 skoar   : phrases
 +phrases: phrasey phrases | <e>
-+phrasey: Comment | marker | meter | skoaroid | dal_goto | beat
++phrasey: Comment | marker | meter | skoaroid | dal_goto | beat | voice
 
-marker*            : Segno | Fine | coda | Volta | Bars
+voice*               : Newline optional_voice_label
++optional_voice_label: Voice | <e>
 
-coda*              : Coda optional_al_coda
-optional_al_coda   : AlCoda | <e>
+marker*             : Segno | Fine | coda | Volta | Bars
+
+coda*               : Coda optional_al_coda
+optional_al_coda    : AlCoda | <e>
 
 dal_goto*          : DaCapo al_x | DalSegno al_x
 al_x               : AlCoda | AlSegno | AlFine | <e>

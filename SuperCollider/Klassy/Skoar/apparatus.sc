@@ -29,6 +29,9 @@ SkoarNoad {
     *new {
         | name, toke, parent, i=0 |
 
+        "new SkoarNoad: ".post;
+        name.postln;
+
         ^super.new.init(name, toke, parent, i);
     }
 
@@ -151,7 +154,7 @@ SkoarNoad {
     depth_visit {
         | f |
 
-//name.postln;
+name.postln;
 
         children.do {
             | x |
@@ -446,8 +449,7 @@ Skoar {
         var inspect = {
             | x |
 
-            //"inspecting ".post;
-            //x.dump;
+//"inspecting ".post; x.dump;
 
             // tokens*
             if (x.toke != nil) {
@@ -461,9 +463,9 @@ Skoar {
             };
         };
 
-        "decorating...".postln;
+"decorating...".postln;
         tree.depth_visit(inspect);
-        "skoar tree decorated.".postln;
+"skoar tree decorated.".postln;
 
     }
 
