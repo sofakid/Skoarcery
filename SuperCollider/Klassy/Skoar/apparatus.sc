@@ -120,7 +120,7 @@ SkoarNoad {
             x = children.pop;
             n = 0;
 
-            if (x.isKindOf(SkoarNoad) && x.toke != nil) {
+            if (x != nil && x.isKindOf(SkoarNoad) && x.toke != nil) {
                 toke = x.toke;
             } {
                 toke = x;

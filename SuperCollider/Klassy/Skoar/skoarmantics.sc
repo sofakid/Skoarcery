@@ -24,17 +24,23 @@ Skoarmantics {
 
         var dict = Dictionary[
 
-            "voice" -> {
+            "skoar_line" -> {
                 | skoar, noad |
 
+                var n = 0;
                 var x = nil;
 
+                n = noad.n;
                 x = noad.children[0];
 
                 if (x != nil && x.isKindOf(Toke_Voice)) {
                     noad.toke = x;
                     "Voice: ".post; x.toke.lexeme.postln;
                 };
+
+                // drop the newline
+                noad.children.pop;
+                noad.n = n - 1;
 
             },
 
@@ -277,13 +283,16 @@ Skoarmantics {
                 | skoar, noad |
         
                 var toke;
-        
+
                 noad.absorb_toke;
                 skoar.add_marker(noad);
-        
+
                 toke = noad.toke;
-                if (toke.isKindOf(Toke_Bars) && toke.pre_repeat) {
-                    noad.performer = {skoar.jmp_colon(noad);};
+                if (toke != nil && toke.isKindOf(Toke_Bars)) {
+                    if (toke.pre_repeat) {
+                       noad.performer = {skoar.jmp_colon(noad);};
+                    };
+
                 };
 
             },

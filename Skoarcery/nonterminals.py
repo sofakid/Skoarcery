@@ -14,10 +14,9 @@ src = """
 
 skoar       : skoar_lines
 +skoar_lines: skoar_line skoar_lines | <e>
-+skoar_line : voice Newline
 
-voice*               : optional_voice_label phrases
-+optional_voice_label: Voice | <e>
+skoar_line*        : optional_voice phrases Newline
++optional_voice    : Voice | <e>
 
 +phrases            : phrasey phrases | <e>
 +phrasey            : Comment | marker | meter | skoaroid | dal_goto | beat
