@@ -102,7 +102,7 @@ Pbind(\instrument, \default, \dur, Pseq([1, 0.25, 0.25, 0.25, 0.25], inf), \root
     \cut, Pxrand([1000, 500, 2000, 300], inf), \rez, Pfunc({0.7.rand +0.3}), \amp, 0.2).play;
 )
 
-
+Ppar
 (
 Pseq([
     Pbind(\instrument, \acid, \dur, Pseq([0.25, 0.5, 0.25], 4), \root, -24,

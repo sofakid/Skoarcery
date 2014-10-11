@@ -12,7 +12,7 @@ src = """
 # * after a nonterminal means there is corresponding semantic code for this,
 # defined in skoarmantics.py
 
-skoar   : phrases
+skoar   : optional_voice_label phrases
 +phrases: phrasey phrases | <e>
 +phrasey: Comment | marker | meter | skoaroid | dal_goto | beat | voice
 
@@ -31,7 +31,7 @@ beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
 meter_beat*        : Crotchets | Quavers | Quarters | Eighths | Slash
 
 meter*             : MeterS meter_stmts MeterE
-+meter_stmts       : meter_stmt meter_stmts | <e>
++meter_stmts       : meter_stmt meter_stmts | Newline | <e>
 meter_stmt*        : Int meter_stmt_numbery | meteroid
 +meter_stmt_numbery: meter_ass | meter_sig_prime
 meter_ass*         : AssOp meter_ass_r
@@ -45,7 +45,7 @@ clef*              : TrebleClef | BassClef | AltoClef
 listy*             : ListS listy_suffix
 +listy_suffix      : listy_entries ListE
 +listy_entries     : skoaroid moar_listy_entries
-+moar_listy_entries: ListSep listy_entries | <e>
++moar_listy_entries: ListSep listy_entries | Newline | <e>
 
 musical_keyword      : dynamic | ottavas | pedally | musical_keyword_misc
 musical_keyword_misc*: Rep | DubRep | Portamento
@@ -73,7 +73,7 @@ assignment*      : AssOp settable
 
 optional_carrots*: Carrots | <e>
 stmt*            : optional_carrots skoaroid msg_chain_node
-optional_stmt    : stmt | <e>
+optional_stmt    : stmt | Newline | <e>
 msg_chain_node*  : optional_soak MsgOp msg msg_chain_node | <e>
 msg*             : MsgNameWithArgs listy_suffix | MsgName | listy
 optional_soak    : Soak | <e>

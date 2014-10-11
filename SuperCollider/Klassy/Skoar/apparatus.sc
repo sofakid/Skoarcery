@@ -342,15 +342,17 @@ SkoarIterator {
                     if (noad.is_rest == true) {
                         e[\note] = \rest;
                     } {
-                        if (e[\type] == \instr) {
-                            e[\note] = skoar.cur_noat;
-                        } {
-                            e[\midinote] = skoar.cur_noat;
+                        if (skoar.cur_noat != nil) {
+                            if (e[\type] == \instr) {
+                                e[\note] = skoar.cur_noat;
+                            } {
+                                e[\midinote] = skoar.cur_noat;
+                            };
                         };
                     };
 
                     //" Firing event:".postln;
-                    //e.array.dump;
+                    //e.postln;
                     e.yield;
                     e = skoar.event;
                 };

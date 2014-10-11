@@ -27,9 +27,7 @@ Skoarmantics {
             "voice" -> {
                 | skoar, noad |
 
-                var f = nil;
                 var x = nil;
-                var y = nil;
 
                 if (noad.children.size == 1) {
                     // ignore just a newline
@@ -39,7 +37,7 @@ Skoarmantics {
                     x = noad.children.pop;
                     noad.children.pop;
                     noad.n = 0;
-                    
+
                     noad.toke = x.toke;
 
                     "Voice: ".post; x.toke.lexeme.postln;

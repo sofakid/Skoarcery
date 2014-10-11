@@ -9,14 +9,14 @@
 // increase mod_freq and mod_index for interesting electronic percussion
 (
 SynthDef(\kick,
-	{ arg out = 0, freq = 32, mod_freq = 5, mod_index = 5, sustain = 0.4, amp = 0.8, beater_noise_level = 0.025;
+	{ arg out = 0, freq = 50, mod_freq = 5, mod_index = 5, sustain = 0.4, amp = 0.8, beater_noise_level = 0.025;
 	var pitch_contour, drum_osc, drum_lpf, drum_env;
 	var beater_source, beater_hpf, beater_lpf, lpf_cutoff_contour, beater_env;
 	var kick_mix;
 
 	// hardcoding, otherwise skoar will set to the length of the noat ) ] ]]] etc
     sustain = 0.4;
-    freq = 32;
+    freq = 50;
 
 	pitch_contour = Line.kr(freq*2, freq, 0.02);
 	drum_osc = PMOsc.ar( pitch_contour,
@@ -48,6 +48,7 @@ SynthDef(\snare,
 	var snare_drum_mix;
 
     sustain = 0.1;
+    freq = 405;
 
 	drum_mode_env = EnvGen.ar(Env.perc(0.005, sustain), 1.0, doneAction: 2);
 	drum_mode_sin_1 = SinOsc.ar(freq*0.53, 0, drum_mode_env * 0.5);
@@ -79,6 +80,9 @@ SynthDef(\hats,
 	var body_hpf, body_env;
 	var cymbal_mix;
 
+    sustain = 0.1;
+    freq = 6000;
+
 	root_cymbal_square = Pulse.ar(freq, 0.5, mul: 1);
 	root_cymbal_pmosc = PMOsc.ar(root_cymbal_square,
 					[freq*1.34, freq*2.405, freq*3.09, freq*1.309],
@@ -104,6 +108,9 @@ SynthDef(\tom,
 	var stick_noise, stick_env;
 	var drum_reson, tom_mix;
 
+    sustain = 0.4;
+    freq = 90;
+
 	drum_mode_env = EnvGen.ar(Env.perc(0.005, sustain), 1.0, doneAction: 2);
 	drum_mode_sin_1 = SinOsc.ar(freq*0.8, 0, drum_mode_env * 0.5);
 	drum_mode_sin_2 = SinOsc.ar(freq, 0, drum_mode_env * 0.5);
@@ -125,9 +132,9 @@ SynthDef(\tom,
 
 (
 """
-hats:  @hats  => @instrument 6000 => @freq
-snare: @snare => @instrument  405 => @freq
-kick:  @kick  => @instrument   32 => @freq
+snare: @snare => @instrument
+kick:  @kick  => @instrument
+hats:  @hats  => @instrument
 
 hats:  || ] ] ] ] ] ] ] ] ||
 snare: || }   )   }   )   ||
@@ -135,4 +142,27 @@ kick:  || ))      ))      ||
 
 """.pskoar.play;
 
+)
+(
+var hats = """
+hats:  @hats  => @instrument pp
+hats:  || ] ] ] ] ] ] ] ] || D.C.""".pskoar;
+
+var kick = """
+kick:  @kick  => @instrument ff
+kick:  || ))      ))      || D.C.""".pskoar;
+
+var snare = """
+snare: @snare => @instrument
+snare: || }   )   }   )   || D.C.""".pskoar;
+
+p = Ppar([hats,snare,kick]);
+p.play;
+
+)
+
+(
+"""
+kick:  @kick  => @instrument 32 => @freq
+kick:  || ))      ))      || D.C.""".pskoar.play;
 )
