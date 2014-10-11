@@ -132,9 +132,11 @@ SynthDef(\tom,
 
 (
 """
+<! 4/4 200 => ) !>
+
 snare: @snare => @instrument
-kick:  @kick  => @instrument
-hats:  @hats  => @instrument
+kick:  @kick  => @instrument ff
+hats:  @hats  => @instrument ppp
 
 hats:  || ] ] ] ] ] ] ] ] ||
 snare: || }   )   }   )   ||
@@ -145,19 +147,23 @@ kick:  || ))      ))      ||
 )
 (
 var hats = """
-hats:  @hats  => @instrument pp
-hats:  || ] ] ] ] ] ] ] ] || D.C.""".pskoar;
+hats:  @hats  => @instrument ppp
+hats:  || ] ] ] ] ] ] ] ] || D.C.
+""".pskoar;
 
 var kick = """
-kick:  @kick  => @instrument ff
-kick:  || ))      ))      || D.C.""".pskoar;
+kick:  @kick  => @instrument fff
+kick:  || ))      ))      || D.C.
+""".pskoar;
 
 var snare = """
-snare: @snare => @instrument
-snare: || }   )   }   )   || D.C.""".pskoar;
+snare: @snare => @instrument mp
+snare: || }   )   }   )   || D.C.
+""".pskoar;
 
-p = Ppar([hats,snare,kick]);
-p.play;
+p = Ppar([hats,kick]);
+q = Ppar([p,snare]);
+q.play;
 
 )
 

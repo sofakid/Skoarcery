@@ -25,6 +25,7 @@ SkoarNoad {
                          // like when setting bpm with an assignment)
 
     var  <inspectable;   // this toke carries information that must be inspected and processed.
+    var <>voice;         // what voice to use
 
     *new {
         | name, toke, parent, i=0 |
@@ -63,6 +64,8 @@ SkoarNoad {
         } {
             inspectable = false;
         };
+
+        voice = nil;
 
     }
 
@@ -152,18 +155,23 @@ SkoarNoad {
     // Climbing the Tree
     // -----------------
     depth_visit {
-        | f |
+        | f, g=nil, x=nil |
 
 name.postln;
 
+        // g is a function we use to inspect before decending, and pass info to the leaves
+        if (g != nil) {
+            x = g.(this);
+        };
+
         children.do {
-            | x |
-            if (x != nil) {
-                x.depth_visit(f);
+            | y |
+            if (y != nil) {
+                y.depth_visit(f, g, x);
             };
         };
 
-        f.(this);
+        f.(this, x);
     }
 
     // this will follow repeats and other jmps
@@ -282,158 +290,41 @@ name.postln;
 }
 
 
-// =============
-// SkoarIterator
-// =============
-SkoarIterator {
+SkoarVoice {
+    var  skoar;         // global skoar
+    var <skoarboard;    //
 
-    var noad;
-    var skoar;
+    var <name;          // name of voice as Symbol
 
-    *new {
-        | skr |
-        ^super.new.init(skr);
-    }
-
-    init {
-        | skr |
-        noad = skr.tree;
-        skoar = skr;
-    }
-
-    next {
-        var x = noad.next_item();
-
-        if (x.isKindOf(SkoarNoad)) {
-            noad = x;
-            x.on_enter;
-        };
-
-        ^x;
-    }
-
-    routine {
-        ^Routine({
-             loop {
-                this.next.yield;
-             };
-        });
-    }
-
-    eventStream {
-        ^Routine({
-            var e = skoar.event;
-            var noad = nil;
-
-            // collect until we get a beat
-            while {
-                noad = this.next;
-                noad.notNil;
-            } {
-
-                noad.action;
-
-                if (noad.is_beat == true) {
-
-                    e = skoar.event;
-                    
-                    e[\dur] = noad.toke.val;
-
-                    if (noad.is_rest == true) {
-                        e[\note] = \rest;
-                    } {
-                        if (skoar.cur_noat != nil) {
-                            if (e[\type] == \instr) {
-                                e[\note] = skoar.cur_noat;
-                            } {
-                                e[\midinote] = skoar.cur_noat;
-                            };
-                        };
-                    };
-
-                    //" Firing event:".postln;
-                    //e.postln;
-                    e.yield;
-                    e = skoar.event;
-                };
-
-                if (noad.toke.isKindOf(Toke_Int)) {
-                    e[\degree] = noad.toke.val;
-                };
-
-            };
-
-        });
-    }
-
-    pfunk {
-        var q = this.eventStream;
-        ^Pfunc({q.next;});
-    }
-
-}
-
-
-// =====
-// Skoar
-// =====
-Skoar {
-
-    var   skoarse;      // the skoarse code
-    var  <tree;         // root node of the tree (our start symbol, skoar)
-    var  <toker;        // friendly neighbourhood toker
-    var   parser;       // recursive descent predictive parser
     var   markers;      // list of markers (for gotos/repeats)
     var   codas;        // list of codas
-    var   inspector;    // toke inspector for decorating
-    var   skoarmantics; // semantic actions
-    var   skoarboard;   // copied into event
-
     var <>cur_noat;
     var   hand;
 
+
     *new {
-        | code |
-        ^super.new.init(code);
+        | parent, name |
+        ^super.new.init(parent, name);
     }
 
     init {
-        | code |
+        | parent, name |
 
-        skoarse = code;
-        tree = nil;
-        toker = Toker(skoarse);
-        parser = SkoarParser.new(this);
+        skoar = parent;
+
+        skoarboard = IdentityDictionary.new;
+        skoarboard.parent = skoar.skoarboard;
+
+        hand = Hand.new;
+        cur_noat = nil;
         markers = List[];
         codas = List[];
-        inspector = SkoarTokeInspector.new;
-        skoarmantics = Skoarmantics.new;
-        skoarboard = IdentityDictionary.new;
-
-        cur_noat = nil;
-        hand = Hand.new;
-
-        this.skoarboard_defaults;
     }
 
-    parse {
-        tree = parser.skoar(nil);
-        try {
-            toker.eof;
-        } {
-            | e |
-            e.postln;
-            toker.dump;
-        }
-    }
-
-    skoarboard_defaults {
-
-        // 60 bpm
-        skoarboard[\tempo] = 1;
-
-        // mp
-        skoarboard[\amp] = 0.5;
+    // this is how we inherit from the default voice
+    set_defaults_from {
+        | skb |
+        //skoarboard.parent = skb;
     }
 
     put {
@@ -444,31 +335,6 @@ Skoar {
     at {
         | k |
         ^skoarboard[k];
-    }
-
-    decorate {
-
-        var inspect = {
-            | x |
-
-//"inspecting ".post; x.dump;
-
-            // tokens*
-            if (x.toke != nil) {
-                // run the function x.name, pass the token
-                inspector[x.name].(x.toke);
-
-            // nonterminals*
-            } {
-                // run the function, pass the noad (not the nonterminal)
-                skoarmantics[x.name].(this, x);
-            };
-        };
-
-"decorating...".postln;
-        tree.depth_visit(inspect);
-"skoar tree decorated.".postln;
-
     }
 
 
@@ -487,11 +353,7 @@ Skoar {
 
     }
 
-    // ----
-    // misc
-    // ----
-
-    // x => y
+     // x => y
     assign_symbol {
         | x, y |
 
@@ -638,7 +500,7 @@ Skoar {
             ^x;
         }
 
-        ^tree;
+        ^skoar.tree;
     }
 
     da_capo {
@@ -740,6 +602,166 @@ Skoar {
         };
     }
 
+
+}
+
+
+
+// =====
+// Skoar
+// =====
+Skoar {
+
+    var   skoarse;      // the skoarse code
+    var  <tree;         // root node of the tree (our start symbol, skoar)
+    var  <toker;        // friendly neighbourhood toker
+    var   parser;       // recursive descent predictive parser
+    var   inspector;    // toke inspector for decorating
+    var   skoarmantics; // semantic actions
+    var  <skoarboard;   // copied into event
+    var  <voices;       // dictionary of voices
+
+    const  <default_voice = \default;
+
+    *new {
+        | code |
+        ^super.new.init(code);
+    }
+
+    init {
+        | code |
+
+        var v = nil;
+
+        skoarse = code;
+        tree = nil;
+        toker = Toker(skoarse);
+        parser = SkoarParser.new(this);
+
+        inspector = SkoarTokeInspector.new;
+        skoarmantics = Skoarmantics.new;
+        skoarboard = IdentityDictionary.new;
+
+        voices = IdentityDictionary.new;
+        v = SkoarVoice.new(this,default_voice);
+        v.set_defaults_from(skoarboard);
+        voices[default_voice] = v;
+
+        this.skoarboard_defaults;
+    }
+
+    parse {
+        tree = parser.skoar(nil);
+        try {
+            toker.eof;
+        } {
+            | e |
+            e.postln;
+            toker.dump;
+        }
+    }
+
+    skoarboard_defaults {
+
+        // 60 bpm
+        skoarboard[\tempo] = 1;
+
+        // mp
+        skoarboard[\amp] = 0.5;
+    }
+
+    put {
+        | k, v |
+        skoarboard[k] = v;
+    }
+
+    at {
+        | k |
+        ^skoarboard[k];
+    }
+
+    decorate {
+
+        var f = {
+            | x |
+
+//"inspecting ".post; x.dump;
+
+            // tokens*
+            if (x.toke != nil) {
+                // run the function x.name, pass the token
+                inspector[x.name].(x.toke);
+
+            // nonterminals*
+            } {
+                // run the function, pass the noad (not the nonterminal)
+                skoarmantics[x.name].(this, x);
+            };
+        };
+
+"decorating...".postln;
+        tree.depth_visit(f);
+"skoar tree decorated.".postln;
+
+        this.decorate_voices;
+    }
+
+    // we don't know the voices until the end of decorating, so we make a second pass.
+    decorate_voices {
+
+        var f = nil;
+        var g = nil;
+
+        // inspects current noad before decending into children
+        g = {
+            | noad, x |
+
+            // are we set up with a voice? return it and we'll paint the children
+            if (noad.voice != nil) {
+                ^noad.voice;
+            };
+
+            // did we pass in a voice?
+            if (x != nil) {
+                ^x;
+            };
+
+        };
+
+        f = {
+            | noad, x |
+            noad.voice = x;
+        };
+
+        tree.voice = voices[Skoar.default_voice];
+
+"configuring voices...".postln;
+        tree.depth_visit(f,g);
+"skoar tree decorated.".postln;
+    }
+
+    // ----
+    // misc
+    // ----
+
+    get_voice {
+        | k |
+
+        var voice = nil;
+
+        if (voices.includesKey(k)) {
+            voice = voices[k];
+        } {
+            voice = SkoarVoice(this,k);
+            voices[k] = voice;
+        };
+
+        ^voice;
+
+    }
+
+
+
     cthulhu {
         | noad |
 
@@ -748,7 +770,6 @@ Skoar {
 "^^(;,;)^^".postln;
 
         this.dump;
-        hand.dump;
 
 "".postln;
         SkoarError("^^(;,;)^^").throw;
@@ -756,111 +777,3 @@ Skoar {
     }
 }
 
-
-
-Hand {
-
-    var   direction;
-    var  <finger;
-    var <>octave;
-
-    *new {
-        | oct=5 |
-        ^super.new.init(oct);
-    }
-
-    init {
-        | oct |
-
-        // default to up
-        direction = 1;
-        octave = oct;
-        finger = 0;
-    }
-
-    letter {
-        | s |
-
-        var n = switch (s)
-            {"c"} {0}
-            {"d"} {2}
-            {"e"} {4}
-            {"f"} {5}
-            {"g"} {7}
-            {"a"} {9}
-            {"b"} {11};
-
-        ^n;
-    }
-
-    choard {
-        | toke |
-        // TODO this sucks
-        var s, c, m, n;
-        var third = 3;
-        var fifth = 5;
-
-        var a = [ 0, nil ];
-
-        var i = 0;
-        var j = 0;
-
-        // [ABCEFG])([Mm0-9]|sus|dim)*
-
-        s = toke.lexeme;
-
-        c = (s[0] ++ "").toLower;
-
-        if (s.endsWith("m")) {
-            third = third - 1;
-        };
-
-        n = this.letter(c);
-        n = octave * 12 + n;
-
-        finger = [n, n + third, n + fifth];
-    }
-
-    update {
-        | toke |
-
-        var sharps = toke.sharps;
-        var n = 0;
-        var m = sharps.sign;
-        var s = toke.lexeme;
-        var o = octave;
-
-        n = this.letter(toke.val);
-        if (sharps.abs > 0) {
-            forBy (0, sharps, m, {
-                | i |
-                n = m * 0.5 + n;
-            });
-        };
-
-        if (toke.low == false) {
-            o = o + 1;
-        };
-
-        finger = o * 12 + n;
-    }
-
-}
-
-
-+String {
-	skoar {
-    	var r = Skoar.new(this);
-    	"parsing skoar".postln;
-        r.parse;
-        "decorating parse tree".postln;
-        r.decorate;
-
-        r.tree.draw_tree.postln;
-        ^r;
-    }
-
-    pskoar {
-        ^SkoarIterator.new(this.skoar).pfunk;
-	}
-}

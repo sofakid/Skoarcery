@@ -132,6 +132,16 @@ SkoarTokeInspector {
                 | toke |
                 toke.val = toke.lexeme[1..].asSymbol;
             },
+
+            "Toke_Voice" -> {
+                | toke |
+                var s = toke.lexeme;
+                var n = s.size - 2;
+                "FOOD".postln;
+                toke.val = s[0..n].asSymbol;
+                "FEEEE".postln;
+            },
+
             
             "Toke_Segno" -> {
                 | toke |

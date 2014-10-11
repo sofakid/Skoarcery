@@ -35,7 +35,8 @@ Skoarmantics {
 
                 if (x != nil && x.isKindOf(Toke_Voice)) {
                     noad.toke = x;
-                    "Voice: ".post; x.toke.lexeme.postln;
+                    noad.voice = skoar.get_voice(x.toke.val);
+                    "Voice: ".post; x.toke.val.postln;
                 };
 
                 // drop the newline
@@ -122,7 +123,7 @@ Skoarmantics {
                         var x_toke = x.toke;
 
                         if (x_toke.isKindOf(Toke_Int) || x_toke.isKindOf(Toke_Float)) {
-                            skoar.set_tempo(x_toke.val, toke);
+                            noad.voice.set_tempo(x_toke.val, toke);
                         };
                     };
                 };
@@ -163,7 +164,7 @@ Skoarmantics {
                 if (y.toke.isKindOf(Toke_Symbol)) {
                     noad.setter = {
                         | x |
-                        skoar.assign_symbol(x, y.toke);
+                        noad.voice.assign_symbol(x, y.toke);
                     };
                 };
             },
@@ -184,23 +185,23 @@ Skoarmantics {
                 toke = noad.absorb_toke;
 
                 if (toke.isKindOf(Toke_OctaveShift)) {
-                    noad.performer = {skoar.octave_shift(toke.val);};
+                    noad.performer = {noad.voice.octave_shift(toke.val);};
                 };
 
                 if (toke.isKindOf(Toke_OttavaA)) {
-                    noad.performer = {skoar.octave_shift(1);};
+                    noad.performer = {noad.voice.octave_shift(1);};
                 };
 
                 if (toke.isKindOf(Toke_OttavaB)) {
-                    noad.performer = {skoar.octave_shift(-1);};
+                    noad.performer = {noad.voice.octave_shift(-1);};
                 };
 
                 if (toke.isKindOf(Toke_QuindicesimaA)) {
-                    noad.performer = {skoar.octave_shift(1);};
+                    noad.performer = {noad.voice.octave_shift(1);};
                 };
 
                 if (toke.isKindOf(Toke_QuindicesimaB)) {
-                    noad.performer = {skoar.octave_shift(-1);};
+                    noad.performer = {noad.voice.octave_shift(-1);};
                 };
 
 
@@ -242,7 +243,7 @@ Skoarmantics {
             "dynamic" -> {
                 | skoar, noad |
                 var toke = noad.absorb_toke;
-                noad.performer = {skoar.dynamic(toke);};
+                noad.performer = {noad.voice.dynamic(toke);};
             },
         
             "optional_carrots" -> {
@@ -270,11 +271,11 @@ Skoarmantics {
                 skoar.add_marker(noad);
 
                 if (toke.isKindOf(Toke_DaCapo)) {
-                    noad.performer = {skoar.da_capo(noad);};
+                    noad.performer = {noad.voice.da_capo(noad);};
                 };
 
                 if (toke.isKindOf(Toke_DalSegno)) {
-                    noad.performer = {skoar.dal_segno(noad);};
+                    noad.performer = {noad.voice.dal_segno(noad);};
                 };
 
             },
@@ -285,12 +286,12 @@ Skoarmantics {
                 var toke;
 
                 noad.absorb_toke;
-                skoar.add_marker(noad);
+                noad.voice.add_marker(noad);
 
                 toke = noad.toke;
                 if (toke != nil && toke.isKindOf(Toke_Bars)) {
                     if (toke.pre_repeat) {
-                       noad.performer = {skoar.jmp_colon(noad);};
+                       noad.performer = {noad.voice.jmp_colon(noad);};
                     };
 
                 };
@@ -299,7 +300,7 @@ Skoarmantics {
 
             "coda" -> {
                 | skoar, noad |
-                skoar.add_coda(noad);
+                noad.voice.add_coda(noad);
             },
 
             "noaty" -> {
@@ -313,11 +314,11 @@ Skoarmantics {
                 noad.noat = noat;
         
                 if (noat.isKindOf(Toke_NamedNoat)) {
-                    noad.performer = {skoar.noat_go(noat)};
+                    noad.performer = {noad.voice.noat_go(noat)};
                 };
 
                 if (noat.isKindOf(Toke_Choard)) {
-                    noad.performer = {skoar.choard_go(noat)};
+                    noad.performer = {noad.voice.choard_go(noat)};
                 };
             },
         
@@ -328,15 +329,15 @@ Skoarmantics {
 
                 // TODO Symbol | CurNoat | listy
                 if (x.name == "listy") {
-                    x.performer = {skoar.choard_listy(x)};
+                    x.performer = {noad.voice.choard_listy(x)};
                 };
 
                 if (x.name == "CurNoat") {
-                    x.performer = {skoar.reload_curnoat(x)};
+                    x.performer = {noad.voice.reload_curnoat(x)};
                 };
 
                 if (x.name == "Symbol") {
-                    x.performer = {skoar.noat_symbol(x)};
+                    x.performer = {noad.voice.noat_symbol(x)};
                 };
 
             },
@@ -345,11 +346,11 @@ Skoarmantics {
                 | skoar, noad |
 
                 if (noad.toke.isKindOf(Toke_PedalUp)) {
-                    noad.performer = {skoar.pedal_up;};
+                    noad.performer = {noad.voice.pedal_up;};
                 };
 
                 if (noad.toke.isKindOf(Toke_PedalDown)) {
-                    noad.performer = {skoar.pedal_down;};
+                    noad.performer = {noad.voice.pedal_down;};
                 };
 
             }
