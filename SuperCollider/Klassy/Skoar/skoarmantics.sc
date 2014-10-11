@@ -29,17 +29,10 @@ Skoarmantics {
 
                 var x = nil;
 
-                if (noad.children.size == 1) {
-                    // ignore just a newline
-                    noad.absorb_toke;
+                x = noad.children[0];
 
-                } {
-                    x = noad.children.pop;
-                    noad.children.pop;
-                    noad.n = 0;
-
-                    noad.toke = x.toke;
-
+                if (x != nil && x.isKindOf(Toke_Voice)) {
+                    noad.toke = x;
                     "Voice: ".post; x.toke.lexeme.postln;
                 };
 

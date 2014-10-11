@@ -12,12 +12,15 @@ src = """
 # * after a nonterminal means there is corresponding semantic code for this,
 # defined in skoarmantics.py
 
-skoar   : optional_voice_label phrases
-+phrases: phrasey phrases | <e>
-+phrasey: Comment | marker | meter | skoaroid | dal_goto | beat | voice
+skoar       : skoar_lines
++skoar_lines: skoar_line skoar_lines | <e>
++skoar_line : voice Newline
 
-voice*               : Newline optional_voice_label
+voice*               : optional_voice_label phrases
 +optional_voice_label: Voice | <e>
+
++phrases            : phrasey phrases | <e>
++phrasey            : Comment | marker | meter | skoaroid | dal_goto | beat
 
 marker*             : Segno | Fine | coda | Volta | Bars
 
