@@ -157,7 +157,7 @@ SkoarNoad {
     draw_tree {
         | tab = 1 |
 
-        var s = " ".padLeft(tab + 1) ++ name ++ "\n";
+        var s = " ".padLeft(tab + 1) ++ name ++ " - " ++ voice.name ++ "\n";
 
         children.do {
             | x |
@@ -175,7 +175,7 @@ SkoarNoad {
     depth_visit {
         | f |
 
-">>> ".post; name.postln;
+        //">>> ".post; name.postln;
 
         children.do {
             | y |
@@ -184,10 +184,12 @@ SkoarNoad {
             };
         };
 
-"--- ".post; name.postln;
+        //"--- ".post; name.postln;
+
         // note: leaves first
         f.(this);
-"<<< ".post; name.postln;
+
+        //"<<< ".post; name.postln;
     }
 
     // this will follow repeats and other jmps
@@ -199,17 +201,25 @@ SkoarNoad {
             ^next_jmp;
         };
 
-        if (j == n) {
-            if (parent == nil) {
-                ^nil;
+        "bloobs".postln;
+
+        while {j < n} {
+
+            nxt = children[j];
+            j = j + 1;
+
+            if (nxt.voice.name == voice.name) {
+                ^nxt;
             };
 
-            ^parent.next_item;
         };
 
-        nxt = children[j];
-        j = j + 1;
-        ^nxt;
+        if (parent == nil) {
+            ^nil;
+        };
+
+        ^parent.next_item;
+
     }
 
     // this finds the preceding noad
@@ -307,10 +317,10 @@ SkoarNoad {
 
 
 SkoarVoice {
-    var  skoar;         // global skoar
-    var <skoarboard;    //
+    var   skoar;        // global skoar
+    var  <skoarboard;   //
 
-    var <name;          // name of voice as Symbol
+    var  <name;         // name of voice as Symbol
 
     var   markers;      // list of markers (for gotos/repeats)
     var   codas;        // list of codas
@@ -319,14 +329,15 @@ SkoarVoice {
 
 
     *new {
-        | parent, name |
-        ^super.new.init(parent, name);
+        | skr, nom |
+        ^super.new.init(skr, nom);
     }
 
     init {
-        | parent, name |
+        | skr, nom |
 
-        skoar = parent;
+        skoar = skr;
+        name = nom;
 
         skoarboard = IdentityDictionary.new;
 

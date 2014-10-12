@@ -126,11 +126,8 @@ SynthDef(\tom,
 	Out.ar(out, [tom_mix, tom_mix]);
 }).add;
 
-"loaded"
-);
+"loaded".postln;
 
-
-(
 """
 <! 4/4 200 => ) !>
 
@@ -141,6 +138,8 @@ hats:  @hats  => @instrument ppp
 hats:  || ] ] ] ] ] ] ] ] ||
 snare: || }   )   }   )   ||
 kick:  || ))      ))      ||
+
+'poo'
 
 """.pskoar.play;
 
@@ -170,5 +169,31 @@ q.play;
 (
 """
 kick:  @kick  => @instrument 32 => @freq
-kick:  || ))      ))      || D.C.""".pskoar.play;
+kick:  || ))      ))      || D.C.
+""".pskoar.play;
+)
+
+
+(
+var hats = """
+hats:  @hats  => @instrument ppp
+hats:  || ] ] ] ] ] ] ] ] || D.C.
+""".skoar;
+//
+// var kick = """
+// kick:  @kick  => @instrument fff
+// kick:  || ))      ))      || D.C.
+// """.pskoar;
+//
+// var snare = """
+// snare: @snare => @instrument mp
+// snare: || }   )   }   )   || D.C.
+// """.pskoar;
+
+hats.dump;
+
+//p = Ppar([hats,kick]);
+// q = Ppar([p,snare]);
+// p.dump;
+
 )

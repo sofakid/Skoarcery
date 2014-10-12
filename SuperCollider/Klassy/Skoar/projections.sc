@@ -1,26 +1,75 @@
 
+// -------------------------------------
+// SkoarVoxer - A pattern for all voices
+// -------------------------------------
+SkoarVoxer {
+    var skoar;
+    var voicers;
 
-// =============
-// SkoarIterator
-// =============
-SkoarIterator {
+    *new {
+        | skr |
+        "fleep".postln;
+        ^super.new.init(skr);
+    }
+
+    init {
+        | skr |
+        var tree = nil;
+
+        skoar = skr;
+        tree = skoar.tree;
+
+        voicers = List.new;
+
+        skoar.voices.do {
+            | v |
+            voicers.add(SkoarVoicer.new(tree, v));
+        };
+    }
+
+    eventStream {
+
+        var voxen = List.new;
+
+        voicers.do {
+            | v |
+            voxen.add(v.pfunk);
+        };
+"bleefs".postln;
+        ^Ppar.new(voxen).asStream;
+
+    }
+
+    pfunk {
+        var q = this.eventStream;
+        ^Pfunc({q.next;});
+    }
+
+}
+
+// -----------------------------------
+// SkoarVoicer - A pattern for a voice
+// -----------------------------------
+SkoarVoicer {
 
     var noad;
     var voice;
 
     *new {
-        | nod |
-        ^super.new.init(nod);
+        | n, v |
+        ^super.new.init(n, v);
     }
 
     init {
-        | nod |
-        noad = nod;
-        voice = noad.voice;
+        | n, v |
+        noad = n;
+        voice = v;
     }
 
     next {
-        var x = noad.next_item();
+        var x = nil;
+
+        x = noad.next_item();
 
         if (x.isKindOf(SkoarNoad)) {
             noad = x;

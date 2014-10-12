@@ -164,7 +164,7 @@ Skoar {
     }
 
     pskoar {
-        ^SkoarIterator.new(tree).pfunk;
+        ^SkoarVoxer.new(this).pfunk;
     }
 }
 
