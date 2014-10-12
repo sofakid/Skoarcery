@@ -71,6 +71,7 @@ SkoarNoad {
 
     assign_voices {
         | v |
+
         if (voice == nil) {
             voice = v;
         } {
@@ -102,7 +103,6 @@ SkoarNoad {
         n = 0;
 
 //"recounting children".postln;
-
         children.do {
             | x |
             if (x.isKindOf(SkoarNoad)) {
@@ -200,8 +200,6 @@ SkoarNoad {
         if (next_jmp != nil) {
             ^next_jmp;
         };
-
-        "bloobs".postln;
 
         while {j < n} {
 

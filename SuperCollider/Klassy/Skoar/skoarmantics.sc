@@ -33,10 +33,15 @@ Skoarmantics {
                 n = noad.n;
                 x = noad.children[0];
 
-                if (x != nil && x.isKindOf(Toke_Voice)) {
-                    noad.toke = x;
-                    noad.voice = skoar.get_noad.voice(x.toke.val);
-                    "Voice: ".post; x.toke.val.postln;
+                "##############>>> ".post; x.dump;
+
+                if (x != nil && x.toke != nil) {
+                    x = x.toke;
+                    if (x.isKindOf(Toke_Voice)) {
+                        noad.toke = x;
+                        noad.voice = skoar.get_voice(x.val);
+                        "Voice: ".post; x.val.postln;
+                    };
                 };
 
                 // drop the newline
@@ -53,16 +58,12 @@ Skoarmantics {
                 | skoar, noad |
                 var t;
 
-                "FLIBBITY".postln;
                 noad.absorb_toke;
-                "FLOPPITY".postln;
                 t = noad.toke;
-                "FELICITY".postln;
 
                 noad.beat = t;
                 noad.is_beat = true;
                 noad.is_rest = t.is_rest;
-                "JONES".postln;
             },
         
             "meter_beat" -> {

@@ -8,7 +8,6 @@ SkoarVoxer {
 
     *new {
         | skr |
-        "fleep".postln;
         ^super.new.init(skr);
     }
 
@@ -35,9 +34,8 @@ SkoarVoxer {
             | v |
             voxen.add(v.pfunk);
         };
-"bleefs".postln;
-        ^Ppar.new(voxen).asStream;
 
+        ^Ppar.new(voxen).asStream;
     }
 
     pfunk {
