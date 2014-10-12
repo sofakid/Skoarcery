@@ -6,17 +6,17 @@
 SkoarIterator {
 
     var noad;
-    var skoar;
+    var voice;
 
     *new {
-        | skr |
-        ^super.new.init(skr);
+        | nod |
+        ^super.new.init(nod);
     }
 
     init {
-        | skr |
-        noad = skr.tree;
-        skoar = skr;
+        | nod |
+        noad = nod;
+        voice = noad.voice;
     }
 
     next {
@@ -40,7 +40,7 @@ SkoarIterator {
 
     eventStream {
         ^Routine({
-            var e = skoar.event;
+            var e = voice.event;
             var noad = nil;
 
             // collect until we get a beat
@@ -53,18 +53,18 @@ SkoarIterator {
 
                 if (noad.is_beat == true) {
 
-                    e = skoar.event;
+                    e = voice.event;
 
                     e[\dur] = noad.toke.val;
 
                     if (noad.is_rest == true) {
                         e[\note] = \rest;
                     } {
-                        if (skoar.cur_noat != nil) {
+                        if (voice.cur_noat != nil) {
                             if (e[\type] == \instr) {
-                                e[\note] = skoar.cur_noat;
+                                e[\note] = voice.cur_noat;
                             } {
-                                e[\midinote] = skoar.cur_noat;
+                                e[\midinote] = voice.cur_noat;
                             };
                         };
                     };
@@ -72,7 +72,7 @@ SkoarIterator {
                     //" Firing event:".postln;
                     //e.postln;
                     e.yield;
-                    e = skoar.event;
+                    e = voice.event;
                 };
 
                 if (noad.toke.isKindOf(Toke_Int)) {

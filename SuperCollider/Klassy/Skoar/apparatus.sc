@@ -69,6 +69,23 @@ SkoarNoad {
 
     }
 
+    assign_voices {
+        | v |
+        if (voice == nil) {
+            voice = v;
+        } {
+            // the voice has changed, this is what the children get
+            v = voice;
+        };
+
+        children.do {
+            | y |
+            if (y != nil) {
+                y.assign_voices(v);
+            };
+        };
+
+    }
 
     // ------------------
     // shrinking the tree
@@ -115,6 +132,7 @@ SkoarNoad {
         n = n + 1;
     }
 
+    // i'm unhappy with this
     absorb_toke {
         var x;
 
@@ -155,23 +173,21 @@ SkoarNoad {
     // Climbing the Tree
     // -----------------
     depth_visit {
-        | f, g=nil, x=nil |
+        | f |
 
-name.postln;
-
-        // g is a function we use to inspect before decending, and pass info to the leaves
-        if (g != nil) {
-            x = g.(this);
-        };
+">>> ".post; name.postln;
 
         children.do {
             | y |
             if (y != nil) {
-                y.depth_visit(f, g, x);
+                y.depth_visit(f);
             };
         };
 
-        f.(this, x);
+"--- ".post; name.postln;
+        // note: leaves first
+        f.(this);
+"<<< ".post; name.postln;
     }
 
     // this will follow repeats and other jmps
@@ -313,18 +329,14 @@ SkoarVoice {
         skoar = parent;
 
         skoarboard = IdentityDictionary.new;
+
+        // here's how we get defaults from the default voice (even the default voice)
         skoarboard.parent = skoar.skoarboard;
 
         hand = Hand.new;
         cur_noat = nil;
         markers = List[];
         codas = List[];
-    }
-
-    // this is how we inherit from the default voice
-    set_defaults_from {
-        | skb |
-        //skoarboard.parent = skb;
     }
 
     put {
@@ -347,7 +359,7 @@ SkoarVoice {
             e[k] = v;
         };
 
-//e.postln;
+e.postln;
 
         ^e
 
@@ -606,174 +618,4 @@ SkoarVoice {
 }
 
 
-
-// =====
-// Skoar
-// =====
-Skoar {
-
-    var   skoarse;      // the skoarse code
-    var  <tree;         // root node of the tree (our start symbol, skoar)
-    var  <toker;        // friendly neighbourhood toker
-    var   parser;       // recursive descent predictive parser
-    var   inspector;    // toke inspector for decorating
-    var   skoarmantics; // semantic actions
-    var  <skoarboard;   // copied into event
-    var  <voices;       // dictionary of voices
-
-    const  <default_voice = \default;
-
-    *new {
-        | code |
-        ^super.new.init(code);
-    }
-
-    init {
-        | code |
-
-        var v = nil;
-
-        skoarse = code;
-        tree = nil;
-        toker = Toker(skoarse);
-        parser = SkoarParser.new(this);
-
-        inspector = SkoarTokeInspector.new;
-        skoarmantics = Skoarmantics.new;
-        skoarboard = IdentityDictionary.new;
-
-        voices = IdentityDictionary.new;
-        v = SkoarVoice.new(this,default_voice);
-        v.set_defaults_from(skoarboard);
-        voices[default_voice] = v;
-
-        this.skoarboard_defaults;
-    }
-
-    parse {
-        tree = parser.skoar(nil);
-        try {
-            toker.eof;
-        } {
-            | e |
-            e.postln;
-            toker.dump;
-        }
-    }
-
-    skoarboard_defaults {
-
-        // 60 bpm
-        skoarboard[\tempo] = 1;
-
-        // mp
-        skoarboard[\amp] = 0.5;
-    }
-
-    put {
-        | k, v |
-        skoarboard[k] = v;
-    }
-
-    at {
-        | k |
-        ^skoarboard[k];
-    }
-
-    decorate {
-
-        var f = {
-            | x |
-
-//"inspecting ".post; x.dump;
-
-            // tokens*
-            if (x.toke != nil) {
-                // run the function x.name, pass the token
-                inspector[x.name].(x.toke);
-
-            // nonterminals*
-            } {
-                // run the function, pass the noad (not the nonterminal)
-                skoarmantics[x.name].(this, x);
-            };
-        };
-
-"decorating...".postln;
-        tree.depth_visit(f);
-"skoar tree decorated.".postln;
-
-        this.decorate_voices;
-    }
-
-    // we don't know the voices until the end of decorating, so we make a second pass.
-    decorate_voices {
-
-        var f = nil;
-        var g = nil;
-
-        // inspects current noad before decending into children
-        g = {
-            | noad, x |
-
-            // are we set up with a voice? return it and we'll paint the children
-            if (noad.voice != nil) {
-                ^noad.voice;
-            };
-
-            // did we pass in a voice?
-            if (x != nil) {
-                ^x;
-            };
-
-        };
-
-        f = {
-            | noad, x |
-            noad.voice = x;
-        };
-
-        tree.voice = voices[Skoar.default_voice];
-
-"configuring voices...".postln;
-        tree.depth_visit(f,g);
-"skoar tree decorated.".postln;
-    }
-
-    // ----
-    // misc
-    // ----
-
-    get_voice {
-        | k |
-
-        var voice = nil;
-
-        if (voices.includesKey(k)) {
-            voice = voices[k];
-        } {
-            voice = SkoarVoice(this,k);
-            voices[k] = voice;
-        };
-
-        ^voice;
-
-    }
-
-
-
-    cthulhu {
-        | noad |
-
-        // dump state
-
-"^^(;,;)^^".postln;
-
-        this.dump;
-
-"".postln;
-        SkoarError("^^(;,;)^^").throw;
-
-    }
-}
 

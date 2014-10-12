@@ -35,7 +35,7 @@ Skoarmantics {
 
                 if (x != nil && x.isKindOf(Toke_Voice)) {
                     noad.toke = x;
-                    noad.voice = skoar.get_voice(x.toke.val);
+                    noad.voice = skoar.get_noad.voice(x.toke.val);
                     "Voice: ".post; x.toke.val.postln;
                 };
 
@@ -52,13 +52,17 @@ Skoarmantics {
             "beat" -> {
                 | skoar, noad |
                 var t;
-        
+
+                "FLIBBITY".postln;
                 noad.absorb_toke;
+                "FLOPPITY".postln;
                 t = noad.toke;
+                "FELICITY".postln;
 
                 noad.beat = t;
                 noad.is_beat = true;
                 noad.is_rest = t.is_rest;
+                "JONES".postln;
             },
         
             "meter_beat" -> {
@@ -268,7 +272,7 @@ Skoarmantics {
                 | skoar, noad |
 
                 var toke = noad.children[0].toke;
-                skoar.add_marker(noad);
+                skoar.do_when_voices_ready({noad.voice.add_marker(noad);});
 
                 if (toke.isKindOf(Toke_DaCapo)) {
                     noad.performer = {noad.voice.da_capo(noad);};
@@ -286,7 +290,7 @@ Skoarmantics {
                 var toke;
 
                 noad.absorb_toke;
-                noad.voice.add_marker(noad);
+                skoar.do_when_voices_ready({noad.voice.add_marker(noad);});
 
                 toke = noad.toke;
                 if (toke != nil && toke.isKindOf(Toke_Bars)) {
@@ -300,7 +304,7 @@ Skoarmantics {
 
             "coda" -> {
                 | skoar, noad |
-                noad.voice.add_coda(noad);
+                skoar.do_when_voices_ready({noad.voice.add_coda(noad);});
             },
 
             "noaty" -> {

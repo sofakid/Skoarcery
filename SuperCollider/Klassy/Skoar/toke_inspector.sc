@@ -137,9 +137,7 @@ SkoarTokeInspector {
                 | toke |
                 var s = toke.lexeme;
                 var n = s.size - 2;
-                "FOOD".postln;
                 toke.val = s[0..n].asSymbol;
-                "FEEEE".postln;
             },
 
             
@@ -167,6 +165,7 @@ SkoarTokeInspector {
             },
 
             // rests
+            // } }} }}}
             "Toke_Crotchets" -> {
                 | toke |
                 var s = toke.lexeme;
@@ -174,6 +173,7 @@ SkoarTokeInspector {
                 toke.val = SkoarTokeInspector.beat_long(s, s.size);
             },
 
+            // o/ oo/ ooo/
             "Toke_Quavers" -> {
                 | toke |
                 var s = toke.lexeme;
@@ -192,9 +192,14 @@ SkoarTokeInspector {
 
             "Toke_Eighths" -> {
                 | toke |
-                var s = toke.lexeme;
+                var s = nil;
+                "FEEE".postln;
+                s = toke.lexeme;
+                "FAIIII".postln;
                 toke.is_rest = false;
+                "FOOOO".postln;
                 toke.val = SkoarTokeInspector.beat_short(s, s.size);
+                "FuuMM".postln;
             }
 
         ];        
