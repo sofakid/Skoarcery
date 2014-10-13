@@ -13,7 +13,7 @@ EOF:         unused
 Whitespace:  [ \\t]*
 Newline:     [\\n\\r\\f]+
 
-Voice*:       [a-zA-Z][a-zA-Z0-9]+:
+Voice*:       [a-zA-Z][a-zA-Z0-9_]*:
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 

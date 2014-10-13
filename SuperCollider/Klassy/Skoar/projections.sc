@@ -22,7 +22,7 @@ SkoarVoxer {
 
         skoar.voices.do {
             | v |
-            voicers.add(SkoarVoicer.new(tree, v));
+            voicers.add(SkoarVoicer.new(tree, v, skoar));
         };
     }
 
@@ -45,89 +45,112 @@ SkoarVoxer {
 
 }
 
-// -----------------------------------
-// SkoarVoicer - A pattern for a voice
-// -----------------------------------
+// ---------------------------------
+// SkoarVoicer - pattern for a voice
+// ---------------------------------
 SkoarVoicer {
 
+    var skoar;
     var noad;
     var voice;
+    var minstrel;
 
     *new {
-        | n, v |
-        ^super.new.init(n, v);
+        | n, v, skr |
+        ^super.new.init(n, v, skr);
     }
 
     init {
-        | n, v |
+        | n, v, skr |
         noad = n;
         voice = v;
+        skoar = skr;
+
+        minstrel = SkoarMinstrel(voice.name, voice, skoar).asStream;
     }
 
     next {
-        var x = nil;
 
-        x = noad.next_item();
+        "mmmmmmmmmmm".postln;
+        noad = minstrel.next;
 
-        if (x.isKindOf(SkoarNoad)) {
-            noad = x;
-            x.on_enter;
+        "blurp".postln;
+
+        if (noad.isKindOf(SkoarNoad)) {
+            noad.on_enter;
         };
 
-        ^x;
-    }
-
-    routine {
-        ^Routine({
-             loop {
-                this.next.yield;
-             };
-        });
+        "derps".postln;
+        ^noad;
     }
 
     eventStream {
         ^Routine({
             var e = voice.event;
-            var noad = nil;
 
             // collect until we get a beat
             while {
-                noad = this.next;
-                noad.notNil;
+                this.next;
+                noad != nil
             } {
+"deep".postln;
+                // we're watching two voices, the conductoar, and us.
 
-                noad.action;
+                // our voice
+                if (noad.voice == voice) {
 
-                if (noad.is_beat == true) {
+"our voice.".postln;
+                    noad.action;
 
-                    e = voice.event;
+"eh?".postln;
+                    if (noad.is_beat == true) {
+"no.".postln;
+                        e = voice.event;
 
-                    e[\dur] = noad.toke.val;
+                        e[\dur] = noad.toke.val;
 
-                    if (noad.is_rest == true) {
-                        e[\note] = \rest;
-                    } {
-                        if (voice.cur_noat != nil) {
-                            if (e[\type] == \instr) {
-                                e[\note] = voice.cur_noat;
-                            } {
-                                e[\midinote] = voice.cur_noat;
+                        if (noad.is_rest == true) {
+                            e[\note] = \rest;
+                        } {
+                            if (voice.cur_noat != nil) {
+                                if (e[\type] == \instr) {
+                                    e[\note] = voice.cur_noat;
+                                } {
+                                    e[\midinote] = voice.cur_noat;
+                                };
                             };
                         };
+"ohhh".postln;
+                        //" Firing event:".postln;
+                        //e.postln;
+                        e.yield;
+                        e = voice.event;
+                    };
+"flurp".postln;
+                    if (noad.toke.isKindOf(Toke_Int)) {
+                        e[\degree] = noad.toke.val;
                     };
 
-                    //" Firing event:".postln;
-                    //e.postln;
-                    e.yield;
-                    e = voice.event;
-                };
+                // conductoar noads
+                //   (unless this voice is the conductoar, where the above would happen)
+                } {
+                "derrrrrrp".postln;
+                    if (noad.is_beat == true) {
 
-                if (noad.toke.isKindOf(Toke_Int)) {
-                    e[\degree] = noad.toke.val;
-                };
+                        e = voice.event;
 
+                        e[\dur] = noad.toke.val;
+                        e[\note] = \rest;
+
+                        //" Firing event:".postln;
+                        //e.postln;
+                        e.yield;
+                        e = voice.event;
+                    };
+                };
+"mangosteen".postln;
             };
-
+"dart?".postln;
         });
     }
 

@@ -11,10 +11,9 @@ Skoar {
     var   skoarmantics; // semantic actions
     var  <skoarboard;   // copied into event
     var  <voices;       // dictionary of voices
+    var  <conductoar;   // default voice
 
     var   when_voices_ready;  // list of functions to run after voices have been assigned
-
-    const  <default_voice = \default;
 
     *new {
         | code |
@@ -36,8 +35,8 @@ Skoar {
         skoarboard = IdentityDictionary.new;
 
         voices = IdentityDictionary.new;
-        v = SkoarVoice.new(this,default_voice);
-        voices[default_voice] = v;
+        conductoar = SkoarVoice.new(this, \conductoar);
+        voices[\conductoar] = conductoar;
 
         this.skoarboard_defaults;
 
@@ -108,13 +107,11 @@ Skoar {
     // we don't know the voices until the end of decorating, so we make a second pass.
     decorate_voices {
 
-        var v = voices[default_voice];
+        tree.voice = conductoar;
 
-        tree.voice = v;
-
-"assigning voices...".postln;
-        tree.assign_voices(v);
-"the children have voices.".postln;
+        "assigning voices...".postln;
+        tree.assign_voices(conductoar);
+        "the children have voices.".postln;
 
         when_voices_ready.do {
             | f |
@@ -152,19 +149,25 @@ Skoar {
     cthulhu {
         | noad |
 
-        // dump state
+        // TODO more
 
-"^^(;,;)^^".postln;
+        "^^(;,;)^^".postln;
 
         this.dump;
 
-"".postln;
+        "".postln;
         SkoarError("^^(;,;)^^").throw;
 
     }
 
     pskoar {
         ^SkoarVoxer.new(this).pfunk;
+    }
+
+    pvoice {
+        | voice_name |
+
+        ^SkoarVoicer.new(this.tree, voices[voice_name], this).pfunk;
     }
 }
 

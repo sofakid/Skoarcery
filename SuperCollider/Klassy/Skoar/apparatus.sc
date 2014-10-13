@@ -16,7 +16,7 @@ SkoarNoad {
     var <>name;          // name of the nonterminal
 
     var <>performer;     // function to override when defining semantics.
-    var   next_jmp;      // if this is set, we will jump to this noad instead of the next noad
+    var  <next_jmp;      // if this is set, we will jump to this noad instead of the next noad
 
     var <>noat;
     var <>is_rest;
@@ -172,6 +172,8 @@ SkoarNoad {
     // -----------------
     // Climbing the Tree
     // -----------------
+
+    // depth-first, find the leaves, run handler, working towards trunk
     depth_visit {
         | f |
 
@@ -192,8 +194,31 @@ SkoarNoad {
         //"<<< ".post; name.postln;
     }
 
+    // handler f returns true to continue, false to abort.
+    inorder {
+        | f |
+
+        "inorder: ".post; name.postln;
+        if (f.(this) == False) {
+            ^False;
+        };
+
+        "doing children: ".post; name.postln;
+        children.do {
+            | y |
+            if (y != nil) {
+                if (y.inorder(f) == False) {
+                    ^False;
+                };
+            };
+        };
+
+        ^True;
+    }
+
     // this will follow repeats and other jmps
     next_item {
+        | v |
 
         var nxt = nil;
 
@@ -201,22 +226,18 @@ SkoarNoad {
             ^next_jmp;
         };
 
-        while {j < n} {
+        if (j == n) {
 
-            nxt = children[j];
-            j = j + 1;
-
-            if (nxt.voice.name == voice.name) {
-                ^nxt;
+            if (parent == nil) {
+                ^nil;
             };
 
+            ^parent.next_item(v);
         };
 
-        if (parent == nil) {
-            ^nil;
-        };
-
-        ^parent.next_item;
+        nxt = children[j];
+        j = j + 1;
+        ^nxt;
 
     }
 
@@ -311,6 +332,8 @@ SkoarNoad {
 
         ^results.asArray;
     }
+
+
 }
 
 
@@ -339,7 +362,7 @@ SkoarVoice {
 
         skoarboard = IdentityDictionary.new;
 
-        // here's how we get defaults from the default voice (even the default voice)
+        // here's how we get defaults from the conductoar voice (even the conductoar)
         skoarboard.parent = skoar.skoarboard;
 
         hand = Hand.new;

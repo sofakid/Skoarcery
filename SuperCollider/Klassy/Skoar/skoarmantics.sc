@@ -33,8 +33,6 @@ Skoarmantics {
                 n = noad.n;
                 x = noad.children[0];
 
-                "##############>>> ".post; x.dump;
-
                 if (x != nil && x.toke != nil) {
                     x = x.toke;
                     if (x.isKindOf(Toke_Voice)) {

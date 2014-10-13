@@ -128,22 +128,28 @@ SynthDef(\tom,
 
 "loaded".postln;
 
-"""
-<! 4/4 200 => ) !>
+x = """
+<! 4/4 100 => ) !>
 
-snare: @snare => @instrument
-kick:  @kick  => @instrument ff
-hats:  @hats  => @instrument ppp
+sn:  @snare => @instrument
+kk:  @kick  => @instrument ff
+hh:  @hats  => @instrument ppp
 
-hats:  || ] ] ] ] ] ] ] ] ||
-snare: || }   )   }   )   ||
-kick:  || ))      ))      ||
+hh:  || ] ] ] ] ] ] ] ] ||
+sn:  || }   )   }   )   ||
+kk:  || ))      ))      ||
 
-'poo'
 
-""".pskoar.play;
+""".skoar.pvoice(\hh);
 
 )
+
+
+x.play;
+
+
+
+
 (
 var hats = """
 hats:  @hats  => @instrument ppp
@@ -167,18 +173,21 @@ q.play;
 )
 
 (
-"""
+x = """
 kick:  @kick  => @instrument 32 => @freq
 kick:  || ))      ))      || D.C.
-""".pskoar.play;
-)
+""".skoar.pvoice(\kick);
 
+y = x.asStream;
+)
+x.play;
+y.next;
 
 (
 var hats = """
-hats:  @hats  => @instrument ppp
-hats:  || ] ] ] ] ] ] ] ] || D.C.
-""".skoar;
+@hats  => @instrument ppp
+|| ] ] ] ] ] ] ] ] || D.C.
+""".pskoar.play;
 //
 // var kick = """
 // kick:  @kick  => @instrument fff
@@ -190,10 +199,15 @@ hats:  || ] ] ] ] ] ] ] ] || D.C.
 // snare: || }   )   }   )   || D.C.
 // """.pskoar;
 
-hats.dump;
-
 //p = Ppar([hats,kick]);
 // q = Ppar([p,snare]);
 // p.dump;
 
+)
+
+(
+var a, b;
+a = Pbind(\note, Pseq([7, 4, 0], 4), \dur, Pseq([1, 0.5, 1.5], inf));
+b = Pbind(\note, Pseq([5, 10, 12], 4), \dur, 1);
+Ppar([ a, b ]).asStream;
 )
