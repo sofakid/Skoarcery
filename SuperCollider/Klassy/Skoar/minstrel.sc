@@ -1,3 +1,7 @@
+SkoarRecursiveTraverseAbortException : Exception {
+}
+
+
 SkoarMinstrel {
 
     var skoar;
@@ -34,22 +38,10 @@ SkoarMinstrel {
 
             var vi = line.voice;
 
-"---".postln;
-vi.dump;
-voice.dump;
-conductoar.dump;
-"---".postln;
-
-
             if ((vi == voice) || (vi == conductoar)) {
-            "yaay".postln;
                 list.add(line);
-            } {
-            "boooo".postln;
             };
         };
-
-list.dump;
 
         ^list;
     }
@@ -65,21 +57,29 @@ list.dump;
 
                 "part: ".post; subtree.name.postln;
 
-                subtree.inorder({
-                    | x |
+                try {
+                    subtree.inorder({
+                        | x |
 
-                    "x------->  ".post; x.dump;
+                        if (x.next_jmp != nil) {
+                            "jumping".postln;
+                            x.next_jmp.yield;
+                            SkoarRecursiveTraverseAbortException.throw;
+                        };
 
-                    if (x.next_jmp != nil) {
-                        "jumping".postln;
-                        x.next_jmp.yield;
-                        ^False;
+                        x.yield;
+                    });
+                } {
+                    | e |
+                    "Caught ".post;
+                    if (e.isKindOf(SkoarRecursiveTraverseAbortException).not) {
+                        "unknown exception, rethrowing.".postln;
+                        e.throw;
                     };
 
-                    "yeilding x".postln;
-                    x.yield;
-                    //^True;
-                });
+                    "SkoarRecursiveTraverseAbortException".postln;
+                };
+
             };
 
         });

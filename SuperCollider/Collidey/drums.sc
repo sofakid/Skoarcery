@@ -129,24 +129,34 @@ SynthDef(\tom,
 "loaded".postln;
 
 x = """
-<! 4/4 100 => ) !>
+
+<! 4/4 240 => ) !>
 
 sn:  @snare => @instrument
 kk:  @kick  => @instrument ff
 hh:  @hats  => @instrument ppp
 
-hh:  || ] ] ] ] ] ] ] ] ||
-sn:  || }   )   }   )   ||
-kk:  || ))      ))      ||
+hh:  ||: ] ] ] ] ] ] ] ] :||
+sn:  ||: }   )   }   )   :||
+kk:  ||: ))      ))      :||
 
+hh:  ||: ] ] ] ] ] ] ] ] :||
+sn:  ||: }   )   }   )   :||
+kk:  ||: ))      ))      :||
 
-""".skoar.pvoice(\hh);
+""".skoar;
 
 )
 
+"killall scsynth".unixCmd;
 
-x.play;
+x;
 
+x.pskoar.play;
+
+
+y = x.asStream;
+y.next
 
 
 
@@ -185,8 +195,7 @@ y.next;
 
 (
 var hats = """
-@hats  => @instrument ppp
-|| ] ] ] ] ] ] ] ] || D.C.
+|| a ] ] ] ] ] ] ] ] || D.C.
 """.pskoar.play;
 //
 // var kick = """

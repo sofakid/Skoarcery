@@ -71,16 +71,12 @@ SkoarVoicer {
 
     next {
 
-        "mmmmmmmmmmm".postln;
         noad = minstrel.next;
-
-        "blurp".postln;
 
         if (noad.isKindOf(SkoarNoad)) {
             noad.on_enter;
         };
 
-        "derps".postln;
         ^noad;
     }
 
@@ -93,18 +89,15 @@ SkoarVoicer {
                 this.next;
                 noad != nil
             } {
-"deep".postln;
                 // we're watching two voices, the conductoar, and us.
 
                 // our voice
                 if (noad.voice == voice) {
 
-"our voice.".postln;
+voice.name.post; ": our voice.".postln;
                     noad.action;
 
-"eh?".postln;
                     if (noad.is_beat == true) {
-"no.".postln;
                         e = voice.event;
 
                         e[\dur] = noad.toke.val;
@@ -120,13 +113,11 @@ SkoarVoicer {
                                 };
                             };
                         };
-"ohhh".postln;
                         //" Firing event:".postln;
                         //e.postln;
                         e.yield;
                         e = voice.event;
                     };
-"flurp".postln;
                     if (noad.toke.isKindOf(Toke_Int)) {
                         e[\degree] = noad.toke.val;
                     };
@@ -134,7 +125,7 @@ SkoarVoicer {
                 // conductoar noads
                 //   (unless this voice is the conductoar, where the above would happen)
                 } {
-                "derrrrrrp".postln;
+voice.name.post; ": derrrrrrp".postln;
                     if (noad.is_beat == true) {
 
                         e = voice.event;
@@ -148,9 +139,9 @@ SkoarVoicer {
                         e = voice.event;
                     };
                 };
-"mangosteen".postln;
+voice.name.post; ": mangosteen".postln;
             };
-"dart?".postln;
+voice.name.post; ": dart?".postln;
         });
     }
 

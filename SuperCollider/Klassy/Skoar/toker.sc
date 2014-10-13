@@ -73,7 +73,6 @@ Toker {
         };
 
         SkoarError("Burned wrong toke").throw;
-        //raise Exception("I tried to burn " + want.__name__ + ", but what I saw is " + toke.__class__.__name__)
     }
 
     eof {

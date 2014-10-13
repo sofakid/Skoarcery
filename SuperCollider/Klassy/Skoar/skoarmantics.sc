@@ -145,6 +145,7 @@ Skoarmantics {
 
                     if (y.name == "meter_ass") {
 
+                        // this is configured in "meter_ass" above.
                         f = y.setter;
 
                         noad.performer = {
