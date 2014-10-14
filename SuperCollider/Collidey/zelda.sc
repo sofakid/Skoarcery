@@ -74,11 +74,11 @@ mp
 
 """.skoar;
 b[\midiout] = m;
-a = SkoarIterator.new(b).pfunk;
+//a = SkoarIterator.new(b).pfunk;
 "=== done ===".postln;
 )
 
-a.play;
+b.pskoar.play;
 
 a.dump;
 "killall scsynth".unixCmd

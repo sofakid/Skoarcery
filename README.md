@@ -7,7 +7,7 @@ Skoar is a musical notation language.
 
 Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [SuperCollider] and Python.
 
-# Dubstep drumming example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/beets)
+# Drumming example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/beets)
 
 
     <? Special thanks to The Breakbeat Bible for the dope dubstepz.
@@ -111,7 +111,7 @@ SuperCollider pattern.
 
     ||: Am ]]] oo/ ]]]  | G oo/ ]]] ooo/ | F oo/ ]]] ooo/ | F ooo/ ]]] oo/ :||
 
-    """.pskoar.play;
+    """.skoar.pskoar.play;
     )
 
 # beats
