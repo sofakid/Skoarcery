@@ -59,7 +59,7 @@ class Code_Parser_Sc(unittest.TestCase):
                 i = 0
 
                 n = len(desires)
-                SC.dict_set("desirables", str(P), "List[", end="")
+                SC.dict_set("desirables", str(P), "[", end="")
                 for toke in desires:
                     SC.raw(toke.toker_name)
                     i += 1

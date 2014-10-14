@@ -28,7 +28,7 @@ Toker {
                 ^i_saw
             }
         } {
-            i_am_here = i_am_here + Toke_Whitespace.burn(skoarse, i_am_here);
+
             i_saw = want.match(skoarse, i_am_here);
             ^i_saw;
         }
@@ -41,6 +41,8 @@ Toker {
 
         var x = block {
             | break |
+
+            i_am_here = i_am_here + Toke_Whitespace.burn(skoarse, i_am_here);
 
             wants.do {
                 | want |
