@@ -24,7 +24,7 @@ Skoarmantics {
 
         var dict = Dictionary[
 
-            "skoar_line" -> {
+            "branch" -> {
                 | skoar, noad |
 
                 var n = 0;
@@ -38,6 +38,7 @@ Skoarmantics {
                     if (x.isKindOf(Toke_Voice)) {
                         noad.toke = x;
                         noad.voice = skoar.get_voice(x.val);
+                        noad.branch = noad;
                         "Voice: ".post; x.val.postln;
                     };
                 };

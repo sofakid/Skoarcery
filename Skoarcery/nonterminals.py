@@ -12,19 +12,19 @@ src = """
 # * after a nonterminal means there is corresponding semantic code for this,
 # defined in skoarmantics.py
 
-skoar       : skoar_lines
-+skoar_lines: skoar_line skoar_lines | <e>
+skoar              : branches
++branches          : branch branches | <e>
 
-skoar_line*        : optional_voice phrases Newline
+branch*            : optional_voice phrases Newline
 +optional_voice    : Voice | <e>
 
-+phrases            : phrasey phrases | <e>
-+phrasey            : Comment | marker | meter | skoaroid | dal_goto | beat
++phrases           : phrasey phrases | <e>
++phrasey           : Comment | marker | meter | skoaroid | dal_goto | beat
 
-marker*             : Segno | Fine | coda | Volta | Bars
+marker*            : Segno | Fine | coda | Volta | Bars
 
-coda*               : Coda optional_al_coda
-optional_al_coda    : AlCoda | <e>
+coda*              : Coda optional_al_coda
+optional_al_coda   : AlCoda | <e>
 
 dal_goto*          : DaCapo al_x | DalSegno al_x
 al_x               : AlCoda | AlSegno | AlFine | <e>

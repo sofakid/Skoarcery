@@ -94,7 +94,6 @@ SkoarVoicer {
                 // our voice
                 if (noad.voice == voice) {
 
-voice.name.post; ": our voice.".postln;
                     noad.action;
 
                     if (noad.is_beat == true) {
@@ -125,7 +124,6 @@ voice.name.post; ": our voice.".postln;
                 // conductoar noads
                 //   (unless this voice is the conductoar, where the above would happen)
                 } {
-voice.name.post; ": derrrrrrp".postln;
                     if (noad.is_beat == true) {
 
                         e = voice.event;
@@ -139,9 +137,8 @@ voice.name.post; ": derrrrrrp".postln;
                         e = voice.event;
                     };
                 };
-voice.name.post; ": mangosteen".postln;
             };
-voice.name.post; ": dart?".postln;
+voice.name.post; ": Done.".postln;
         });
     }
 

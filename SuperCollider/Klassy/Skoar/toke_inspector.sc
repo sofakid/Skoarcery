@@ -161,7 +161,6 @@ SkoarTokeInspector {
                 | toke |
                 toke.pre_repeat = toke.lexeme.beginsWith(":");
                 toke.post_repeat = toke.lexeme.endsWith(":");
-                toke.unspent = true;
             },
 
             // rests

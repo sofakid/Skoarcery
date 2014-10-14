@@ -110,7 +110,7 @@ Skoar {
         tree.voice = conductoar;
 
         "assigning voices...".postln;
-        tree.assign_voices(conductoar);
+        tree.assign_voices(conductoar,nil);
         "the children have voices.".postln;
 
         when_voices_ready.do {

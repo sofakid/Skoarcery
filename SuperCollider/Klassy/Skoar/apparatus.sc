@@ -26,13 +26,10 @@ SkoarNoad {
 
     var  <inspectable;   // this toke carries information that must be inspected and processed.
     var <>voice;         // what voice to use
+    var <>branch;        // what branch are we on, along the trunk (what line)
 
     *new {
         | name, toke, parent, i=0 |
-
-        "new SkoarNoad: ".post;
-        name.postln;
-
         ^super.new.init(name, toke, parent, i);
     }
 
@@ -70,7 +67,7 @@ SkoarNoad {
     }
 
     assign_voices {
-        | v |
+        | v, b |
 
         if (voice == nil) {
             voice = v;
@@ -79,10 +76,17 @@ SkoarNoad {
             v = voice;
         };
 
+        if (branch == nil) {
+            branch = b;
+        } {
+            // the branch has changed, this is what the children get
+            b = branch;
+        };
+
         children.do {
             | y |
             if (y != nil) {
-                y.assign_voices(v);
+                y.assign_voices(v,b);
             };
         };
 

@@ -273,50 +273,45 @@ e.postln;
 
     }
 
+    // starts at noad and goes backwards until it finds a |:
     jmp_colon {
         | noad |
 
         var toke = noad.toke;
 
-        if (toke.unspent) {
-            // find where we are in markers
-            var n = markers.size;
-            var j;
+        // find where we are in markers
+        var n = markers.size;
+        var j;
 
+        j = block {
+            | break |
+            for (0, n - 1, {
+                | i |
 
-            // spend it
-            toke.unspent = false;
+                if (noad == markers[i]) {
+                    break.(i);
+                };
 
-            j = block {
-                | break |
-                for (0, n - 1, {
-                    | i |
+            });
+            SkoarError("couldn't find where we are in markers").throw;
+        };
 
-                    if (noad == markers[i]) {
-                        break.(i);
-                    };
+        // go backwards in list and find either a
+        // post_repeat or the start
+        block {
+            | break |
+            forBy(j - 1, 0, -1, {
+                | i |
 
-                });
-                SkoarError("couldn't find where we are in markers").throw;
-            };
+                var x = markers[i];
+                var t = x.toke;
 
-            // go backwards in list and find either a
-            // post_repeat or the start
-            block {
-                | break |
-                forBy(j - 1, 0, -1, {
-                    | i |
-
-                    var x = markers[i];
-                    var t = x.toke;
-
-                    if (t.isKindOf(Toke_Bars) && t.post_repeat) {
-                        noad.go_here_next(x);
-                        break.value;
-                    };
-                });
-                noad.go_here_next(this.the_capo);
-            };
+                if (t.isKindOf(Toke_Bars) && t.post_repeat) {
+                    noad.go_here_next(x);
+                    break.value;
+                };
+            });
+            noad.go_here_next(this.the_capo);
         };
     }
 

@@ -133,31 +133,85 @@ x = """
 <! 4/4 240 => ) !>
 
 sn:  @snare => @instrument
-kk:  @kick  => @instrument ff
+kk:  @kick  => @instrument
 hh:  @hats  => @instrument ppp
 
-hh:  ||: ] ] ] ] ] ] ] ] :||
-sn:  ||: }   )   }   )   :||
-kk:  ||: ))      ))      :||
-
-hh:  ||: ] ] ] ] ] ] ] ] :||
-sn:  ||: }   )   }   )   :||
-kk:  ||: ))      ))      :||
+hh:  | ] ] ] ] ] ] ] ] :|
+sn:  | }   )   }   )   :|
+kk:  | ))      ))      :|
 
 """.skoar;
 
 )
 
-"killall scsynth".unixCmd;
-
-x;
-
 x.pskoar.play;
 
+(
+try {
+    SkoarJumpException(0).throw;
+} { | e |
+    e.postProtectedBacktrace;
+}
+)
+(
+x = """
 
+<! 4/4 240 => ) !>
+
+sn:  @snare => @instrument mf
+kk:  @kick  => @instrument
+hh:  @hats  => @instrument ppp
+
+hh:  | ] ] ] ] ] ] ] ] |
+sn:  | }   )   }   )   |
+kk:  | ))      ))      |
+
+hh:  | ] ] ] ] ] ] ] ] |
+sn:  | }   )   }   )   |
+kk:  | ))      ))      |
+
+hh:  | ] ] ] ] ] ] ] ] |
+sn:  |: }   )   }   )  |
+kk:  | ))      ))      |
+
+hh:  |: ] ] ] ] ] ] ] ] |
+sn:  |  }   )   ] ] ] ] |
+kk:  |  ))      )   )   |
+
+hh:  |  ] ] ] ] ] ] ] ] |
+sn:  |  }   )   }   )   |
+kk:  |: ) )      ) )    |
+
+hh:  | ] ] ] ] ] ] ] ] |
+sn:  | }   ] ] }   ] ] |
+kk:  | ))      ))      |
+
+hh:  | ] ] ] ] ] ] ] ] |
+sn:  | }   )   }   )   |
+kk:  | ))      ))      |
+
+hh: mf  | ]] ]] ]] ]]  ] ]  ]] ]] ]  ]] ]] ] |
+sn:     | }            )    }        )       |
+kk:     | ))                ))               |
+
+hh: ppp | ] ] ] ] ] ] ] ] :|
+sn: ff  | )   )   ] ]  )  mf :|
+kk:     | ))      ))      :|
+
+""".skoar;
+
+)
+
+x.pskoar.play;
+Exception
+s.score.dump
 y = x.asStream;
 y.next
 
+
+"killall scsynth".unixCmd;
+
+x;
 
 
 (
