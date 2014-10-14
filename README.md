@@ -15,9 +15,9 @@ Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [S
 
     <! 4/4 70 => ) !>
 
-    s:  @snare => @instrument forte
-    k:  @kick => @instrument
     h:  @hats  => @instrument
+    s:  @snare => @instrument forte
+    k:  @kick  => @instrument
 
     h:  | }}}     |
     s:  | } ) } ) |
