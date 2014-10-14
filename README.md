@@ -7,7 +7,66 @@ Skoar is a musical notation language.
 
 Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [SuperCollider] and Python.
 
-# example
+# Dubstep drumming example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/beets)
+
+
+    <? Special thanks to The Breakbeat Bible for the dope dubstepz.
+       The synths are the SOS drums from the SuperCollider examples folder. ?>
+
+    <! 4/4 70 => ) !>
+
+    s:  @snare => @instrument forte
+    k:  @kick => @instrument
+    h:  @hats  => @instrument
+
+    h:  | }}}     |
+    s:  | } ) } ) |
+    k:  | ) } ) } |
+
+
+    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    s:  |: }            )            }             )           :|
+    k:  |: )            o/.      ]]  oo/ ]] ]] oo/ }           :|
+
+    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    s:  |: }            )            }             )           :|
+    k:  |: ]]. ]].  ]]  o/    ]] ]]  }             o/    ]     :|
+
+
+    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]] ]]]  ]] ]]] ]]] ]] ]]  ]] ]] ]] ]] :|
+    s:  |: }            )                 }                 ].       ]] :|
+    k:  |: ]     ]] ]]  o/    ]] ]]       o/         ]      o/    ]     :|
+
+    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]]] ]]] ]]] ]]] :|
+    s:  |: }            )            }             ].            ]]      :|
+    k:  |: ].       ]]  oo/  ].      o/    ]       }                     :|
+
+
+    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    s:  |: }            )            }             ]]. ]].  ]] :|
+    k:  |: ]]. ]].  ]]  }            ]]. ]].  ]]   }           :|
+
+    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    s:  |: }            )            }             )           :|
+    k:  |: ]]. ]].  ]]  o/.      ]]  ]] o/    ]]   }           :|
+
+
+    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    s:  |: }            ]]. ]].  ]]  }             ].       ]] :|
+    k:  |: )            }            ]     ]       }           :|
+
+    h:  |: ]]] ]]] ]]] ]]] ]] ]]   ]] ]] ]] ]]] ]]]   ]] ]]] ]]] ]] ]]   ]] ]] ]] ]] :|
+    s:  |: }                       )                  }                  )           :|
+    k:  |: ]               ]       }                  o/         ]       oo/ ].      :|
+
+
+    h:  | ))) |
+    s:  | ))) |
+    k:  | ))) |
+
+
+
+# MIDI example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/windwaker-sv1)
 
     <? Zelda Wind Waker Theme - inspired by piano arrangement by Shinobu Amayake ?>
 
@@ -32,9 +91,7 @@ Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [S
 
     | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | <_a,_f#> )). _a ) ] |
 
-Played over MIDI to the Korg SV1: [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/windwaker-sv1)
-
-<iframe width="100%" height="166" scrolling="no" frameborder="no" src="https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/160514191&amp;color=ff5500&amp;auto_play=false&amp;hide_related=false&amp;show_comments=true&amp;show_user=true&amp;show_reposts=false"></iframe>
+This was played over MIDI to my Korg SV1.
 
 # current state
 
