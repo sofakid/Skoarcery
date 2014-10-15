@@ -13,7 +13,7 @@ EOF:         unused
 Whitespace:  [ \\t]*
 Newline:     [\\n\\r\\f]+
 
-Voice*:       (^?[a-zA-Z][a-zA-Z0-9_]*)?:
+Voice*:         (\\^?[a-zA-Z][a-zA-Z0-9_]*)?:
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
@@ -31,14 +31,18 @@ ListS:          <(?![!=?])
 ListE:          >
 ListSep:        ,
 
-# one or many ^ but don't eat ^^( which is cthulhu's left wing
-Carrots*:       \\^+(?!\\^\\^[(])?
+# one ^ but don't eat ^^( which is cthulhu's left wing
+Carrot*:        \\^(?!\\^[(])
 LWing:          \\^\\^[(]
 RWing:          [)]\\^\\^
 
 Tuplet*:        /\\d+(:\\d+)?|(du|tri|quadru)plets?|(quin|sex|sep|oc)tuplets?
 Crotchets*:     [}]+\\.?
 Quavers*:       o+/\\.?
+
+Quarters*:       \\.?[)]+\\.?
+Eighths*:        \\.?\\]+\\.?
+
 Caesura:        //
 
 # we can't allow f for forte as f is a noat, so we allow
@@ -55,8 +59,6 @@ DynForte*:       mf(orte)?|f+orte|ff+
 DynSFZ:          sfz
 DynFP:           fp
 
-Quarters*:       [)]+\\.?
-Eighths*:        \\]+\\.?
 AssOp:            =>
 MsgOp:            \\.
 Soak:             [?]
@@ -106,7 +108,7 @@ String*:          \'[^']*\'
 
 Bars*:            :?\\|+:?
 
-PedalDown:        Ped\\.?
+PedalDown:        Ped
 PedalUp:          [*]
 
 """

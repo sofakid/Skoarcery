@@ -14,6 +14,7 @@ sharps_ = "sharps"
 low_ = "low"
 is_beat_ = "is_beat"
 is_rest_ = "is_rest"
+is_staccato_ = "is_staccato"
 pre_repeat_ = "pre_repeat"
 post_repeat_ = "post_repeat"
 inspectable_ = "inspectable"
@@ -55,6 +56,7 @@ def skoarToke():
     _____.attrvar("<>", is_rest_)
     _____.attrvar("<>", pre_repeat_)
     _____.attrvar("<>", post_repeat_)
+    _____.attrvar("<>", is_staccato_)
 
     _____.classvar("<", regex_, _.null)
     _____.classvar("<", inspectable_, _.false)

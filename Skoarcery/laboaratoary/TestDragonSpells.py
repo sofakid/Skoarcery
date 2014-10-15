@@ -53,24 +53,3 @@ class DragonTests(unittest.TestCase):
 
             print("{:>50} {}".format(str(K), str(FK)))
 
-
-    def test_carrots(self):
-        FIRST = dragonsets.FIRST
-        FOLLOW = dragonsets.FOLLOW
-
-        Symbol = terminals.tokens["Symbol"]
-        Carrots = terminals.tokens["Carrots"]
-
-        optional_carrots = nonterminals.nonterminals["optional_carrots"]
-        msg_chain_node = nonterminals.nonterminals["msg_chain_node"]
-
-
-        X = FIRST(optional_carrots)
-
-        self.assertSetEqual({Carrots, terminals.Empty}, X)
-
-        X = FIRST([optional_carrots, Symbol, msg_chain_node])
-
-        print("FIRST([optional_carrots, Symbol, msg_chain_node]): " + repr(X))
-        self.assertSetEqual({Carrots, Symbol}, X)
-

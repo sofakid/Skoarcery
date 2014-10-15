@@ -37,7 +37,7 @@ listy*             : ListS listy_suffix
 +moar_listy_entries: ListSep listy_entries | Newline | <e>
 
 musical_keyword      : dynamic | ottavas | pedally | musical_keyword_misc
-musical_keyword_misc*: Rep | DubRep | Portamento
+musical_keyword_misc*: Rep | DubRep | Portamento | Carrot
 pedally*             : PedalDown | PedalUp
 ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
@@ -60,8 +60,7 @@ skoaroid*        : nouny skoaroid_prime
 assignment*      : AssOp settable
 +settable        : Caesura | CurNoat | Symbol | listy | Quarters | Eighths
 
-optional_carrots*: Carrots | <e>
-stmt*            : optional_carrots skoaroid msg_chain_node
+stmt*            : skoaroid msg_chain_node
 optional_stmt    : stmt | Newline | <e>
 msg_chain_node*  : optional_soak MsgOp msg msg_chain_node | <e>
 msg*             : MsgNameWithArgs listy_suffix | MsgName | listy

@@ -191,16 +191,32 @@ SkoarTokeInspector {
             "Toke_Quarters" -> {
                 | toke |
                 var s = toke.lexeme;
+                var n = s.size;
+
+                if (s.beginsWith(".")) {
+                    n = n - 1;
+                    toke.is_staccato = true;
+                } {
+                    toke.is_staccato = false;
+                };
                 toke.is_rest = false;
-                toke.val = SkoarTokeInspector.beat_long(s, s.size);
+                toke.val = SkoarTokeInspector.beat_long(s, n);
             },
 
             "Toke_Eighths" -> {
                 | toke |
-                var s = nil;
-                s = toke.lexeme;
+                var s = toke.lexeme;
+                var n = s.size;
+
+                if (s.beginsWith(".")) {
+                    n = n - 1;
+                    toke.is_staccato = true;
+                } {
+                    toke.is_staccato = false;
+                };
+
                 toke.is_rest = false;
-                toke.val = SkoarTokeInspector.beat_short(s, s.size);
+                toke.val = SkoarTokeInspector.beat_short(s, n);
             }
 
         ];        
