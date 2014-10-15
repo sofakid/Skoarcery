@@ -306,16 +306,21 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 - [Code_Parser_Py.py], [Code_Parser_Sc.py] - Build rdpp.py, rdpp.sc
 
 
-### Generated Code
+### The Generated Code
 
 - [lex.sc] - Lexical analyser, defines classes for each token, extending SkoarToke.
     - in Skoar, we call them Tokes, in Skoarcery, they are Terminals, or tokens.
 
 - [rdpp.sc] - Recursive decsent predictive parser. Builds the parse tree.
 
-### Nongenerated Runtime Code
+### The Hand Coded Code - Mostly The Runtime
 
-- [apparatus.sc] - Stuff to do with the parse tree, and iterators of it. Lots in here.
+- [skoar.sc] - The skoar object you get from compiling your skoar. From here you get a pattern object and play it.
+- [apparatus.sc] - The parse tree code. Noads, searching, iteration, etc.
+- [voice.sc] - Voice object - each voice is performed by a minstrel.
+- [minstrel.sc] - Minstrels are agents who read and perform their own voice of a skoar piece.
+- [projections.sc] - Produce SuperCollider Pattern objects from the minstrels' labours.
+- [pitchy.sc] - The code for pitchy stuff. Noats, choards, etc.
 - [toker.sc] - The guy the parser deals with when it wants tokes.
 
 
@@ -327,12 +332,6 @@ I use PyCharm. The "builds" are done throught the unittest interface.
 PyCharm also works with the SC textmate bundle.
 
 
-Performance
-===========
-
-It is entirely too early to be performance tuning Skoar, but some notes:
-
-- We don't currently have precompiled regexes in SuperCollider.
 
 [terminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/terminals.py
 [nonterminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/nonterminals.py
@@ -360,6 +359,11 @@ It is entirely too early to be performance tuning Skoar, but some notes:
 [lex.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/lex.sc
 [rdpp.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/rdpp.sc
 [apparatus.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/apparatus.sc
+[skoar.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoar.sc
+[minstrel.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/minstrel.sc
+[pitchy.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/pitchy.sc
+[projections.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/projections.sc
+[voice.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/voice.sc
 [toker.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toker.sc
 
 [SuperCollider]: http://supercollider.sourceforge.net/

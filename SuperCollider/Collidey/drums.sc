@@ -132,7 +132,7 @@ SynthDef(\tom,
 (
 x = """
 
-<! 4/4 240 => ) !>
+4/4 240 => )
 
 sn:  @snare => @instrument
 kk:  @kick  => @instrument
@@ -158,7 +158,7 @@ try {
 (
 x = """
 
-<! 4/4 240 => ) !>
+4/4 240 => )
 
 sn:  @snare => @instrument mf
 kk:  @kick  => @instrument
@@ -168,17 +168,25 @@ hh:  | ] ] ] ] ] ] ] ] |
 sn:  | }   )   }   )   |
 kk:  | ))      ))      |
 
+220 => )
+
 hh:  | ] ] ] ] ] ] ] ] |
 sn:  | }   )   }   )   |
 kk:  | ))      ))      |
+
+190 => )
 
 hh:  |  ] ] ] ] ] ] ] ] |
 sn:  |: }   )   }   )   |
 kk:  |  ))      ))      |
 
+160 => )
+
 hh:  |: ] ] ] ] ] ] ] ] |
 sn:  |  }   )   ] ] ] ] |
 kk:  |  ))      )   )  :|
+
+120 => )
 
 hh:  |  ] ] ] ] ] ] ] ] |
 sn:  |  }   )   }   )   |
@@ -203,13 +211,13 @@ kk:     | ))      ))        :|
 """.skoar;
 
 )
-
+x.pskoar.play;
 (
 x = """
 <? Special thanks to The Breakbeat Bible for the dope dubstepz.
    The synths are the SOS drums from the SuperCollider examples folder. ?>
 
-<? 4/4 120 => ) ?>
+4/4 120 => )
 
 s:  @snare => @instrument forte
 k:  @kick => @instrument

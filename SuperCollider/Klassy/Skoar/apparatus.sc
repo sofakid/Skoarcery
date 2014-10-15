@@ -280,8 +280,10 @@ SkoarNoad {
         j = 0;
     }
 
+    // we pass the voice that is performing it, as it may be the conductoar's instructions we're acting on.
     action {
         | performer_voice |
+
         if (performer != nil) {
             performer.(performer_voice);
         };
