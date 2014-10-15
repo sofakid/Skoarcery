@@ -281,8 +281,9 @@ SkoarNoad {
     }
 
     action {
+        | performer_voice |
         if (performer != nil) {
-            performer.value;
+            performer.(performer_voice);
         };
     }
 

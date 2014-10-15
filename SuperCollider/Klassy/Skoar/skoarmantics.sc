@@ -64,14 +64,7 @@ Skoarmantics {
                 noad.is_beat = true;
                 noad.is_rest = t.is_rest;
             },
-        
-            "meter_beat" -> {
-                | skoar, noad |
-        
-                noad.absorb_toke;
-                noad.beat = noad.toke;
-            },
-        
+
             "listy" -> {
                 | skoar, noad |
 
@@ -97,81 +90,13 @@ Skoarmantics {
             "clef" -> {
                 | skoar, noad |
             },
-        
-            "meter_symbolic" -> {
-                | skoar, noad |
-            },
-        
+
             "stmt" -> {
                 | skoar, noad |
             },
         
             "musical_keyword_misc" -> {
                 | skoar, noad |
-            },
-
-            "meter_ass" -> {
-                | skoar, noad |
-
-                // the settable
-                var y = nil;
-                var toke = nil;
-
-                y = noad.children[1];
-                toke = y.toke;
-
-                // we prepare the destination here, we'll setup the write in skoaroid
-                if (toke.isKindOf(Toke_Quarters) || toke.isKindOf(Toke_Eighths)) {
-                    noad.setter = {
-                        | x |
-                        var x_toke = x.toke;
-
-                        if (x_toke.isKindOf(Toke_Int) || x_toke.isKindOf(Toke_Float)) {
-                            noad.voice.set_tempo(x_toke.val, toke);
-                        };
-                    };
-                };
-            },
-
-            "meter_stmt" -> {
-                | skoar, noad |
-
-                var f = nil;
-                var x = nil;
-                var y = nil;
-
-                if (noad.children.size > 1) {
-                    x = noad.children[0];
-                    y = noad.children[1];
-
-                    if (y.name == "meter_ass") {
-
-                        // this is configured in "meter_ass" above.
-                        f = y.setter;
-
-                        noad.performer = {
-                            f.(x);
-                        };
-
-                    };
-                };
-            },
-
-            "assignment" -> {
-                | skoar, noad |
-
-                // the settable
-                var y = nil;
-
-                y = noad.children[1];
-
-                // we prepare the destination here, we'll setup the write in skoaroid
-                if (y.toke.isKindOf(Toke_Symbol)) {
-                    noad.setter = {
-                        | x |
-                        noad.voice.assign_symbol(x, y.toke);
-                    };
-                };
             },
 
             "accidentally" -> {
@@ -212,6 +137,44 @@ Skoarmantics {
 
             },
 
+             "assignment" -> {
+                | skoar, noad |
+
+                // the settable
+                var y = nil;
+                var y_toke = nil;
+
+                y = noad.children[1];
+                y_toke = y.toke;
+
+                // we prepare the destination here (noad.setter), we'll setup the write in skoaroid
+
+                // set a value on voice's skoarboard, keyed by a symbol
+                if (y_toke.isKindOf(Toke_Symbol)) {
+                    noad.setter = {
+                        | x, v |
+                        v.assign_symbol(x, y_toke);
+                    };
+                };
+
+                // set tempo
+                if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
+                    noad.setter = {
+                        | x, v |
+                        var x_toke = x.next_toke;
+
+                        "XTOKE: ".post; x_toke.dump;
+
+                        if (x_toke.isKindOf(Toke_Int) || x_toke.isKindOf(Toke_Float)) {
+                            v.set_tempo(x_toke.val, y_toke);
+                        } {
+                            SkoarError("Tried to use a " ++ x_toke.name ++ " for tempo.").throw;
+                        };
+                    };
+                };
+
+            },
+
             "skoaroid" -> {
                 | skoar, noad |
 
@@ -228,7 +191,8 @@ Skoarmantics {
                         f = y.setter;
 
                         noad.performer = {
-                            f.(x);
+                            | v |
+                            f.(x, v);
                         };
 
                     };
@@ -248,26 +212,15 @@ Skoarmantics {
             "dynamic" -> {
                 | skoar, noad |
                 var toke = noad.absorb_toke;
-                noad.performer = {noad.voice.dynamic(toke);};
+                noad.performer = {
+                    | v |
+                    v.dynamic(toke);
+                };
             },
         
             "optional_carrots" -> {
                 | skoar, noad |
             },
-
-            "meter_sig_prime" -> {
-                | skoar, noad |
-            },
-        
-            "meter" -> {
-                | skoar, noad |
-
-                var n = noad.children.size;
-
-                // trim start and end tokens
-                noad.replace_children(noad.children.copyRange(1, n - 2));
-            },
-
 
             "dal_goto" -> {
                 | skoar, noad |
@@ -276,11 +229,17 @@ Skoarmantics {
                 skoar.do_when_voices_ready({noad.voice.add_marker(noad);});
 
                 if (toke.isKindOf(Toke_DaCapo)) {
-                    noad.performer = {noad.voice.da_capo(noad);};
+                    noad.performer = {
+                        | v |
+                        v.da_capo(noad);
+                    };
                 };
 
                 if (toke.isKindOf(Toke_DalSegno)) {
-                    noad.performer = {noad.voice.dal_segno(noad);};
+                    noad.performer = {
+                        | v |
+                        v.dal_segno(noad);
+                    };
                 };
 
             },
@@ -296,7 +255,10 @@ Skoarmantics {
                 toke = noad.toke;
                 if (toke != nil && toke.isKindOf(Toke_Bars)) {
                     if (toke.pre_repeat) {
-                       noad.performer = {noad.voice.jmp_colon(noad);};
+                        noad.performer = {
+                            | v |
+                            v.jmp_colon(noad);
+                        };
                     };
 
                 };

@@ -89,54 +89,35 @@ SkoarVoicer {
                 this.next;
                 noad != nil
             } {
-                // we're watching two voices, the conductoar, and us.
 
-                // our voice
-                if (noad.voice == voice) {
+                noad.action(voice);
 
-                    noad.action;
+                if (noad.is_beat == true) {
+                    e = voice.event;
 
-                    if (noad.is_beat == true) {
-                        e = voice.event;
+                    e[\dur] = noad.toke.val;
 
-                        e[\dur] = noad.toke.val;
-
-                        if (noad.is_rest == true) {
-                            e[\note] = \rest;
-                        } {
-                            if (voice.cur_noat != nil) {
-                                if (e[\type] == \instr) {
-                                    e[\note] = voice.cur_noat;
-                                } {
-                                    e[\midinote] = voice.cur_noat;
-                                };
+                    if (noad.is_rest == true) {
+                        e[\note] = \rest;
+                    } {
+                        if (voice.cur_noat != nil) {
+                            if (e[\type] == \instr) {
+                                e[\note] = voice.cur_noat;
+                            } {
+                                e[\midinote] = voice.cur_noat;
                             };
                         };
-                        //" Firing event:".postln;
-                        //e.postln;
-                        e.yield;
-                        e = voice.event;
                     };
-                    if (noad.toke.isKindOf(Toke_Int)) {
-                        e[\degree] = noad.toke.val;
-                    };
-
-                // conductoar noads
-                //   (unless this voice is the conductoar, where the above would happen)
-                } {
-                    if (noad.is_beat == true) {
-
-                        e = voice.event;
-
-                        e[\dur] = noad.toke.val;
-                        e[\note] = \rest;
-
-                        //" Firing event:".postln;
-                        //e.postln;
-                        e.yield;
-                        e = voice.event;
-                    };
+                    //" Firing event:".postln;
+                    //e.postln;
+                    e.yield;
+                    e = voice.event;
                 };
+
+                if (noad.toke.isKindOf(Toke_Int)) {
+                    e[\degree] = noad.toke.val;
+                };
+
             };
 voice.name.post; ": Done.".postln;
         });

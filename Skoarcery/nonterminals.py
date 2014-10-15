@@ -19,7 +19,7 @@ branch*            : optional_voice phrases Newline
 +optional_voice    : Voice | <e>
 
 +phrases           : phrasey phrases | <e>
-+phrasey           : Comment | marker | meter | skoaroid | dal_goto | beat
++phrasey           : Comment | marker | Meter | skoaroid | dal_goto | beat
 
 marker*            : Segno | Fine | coda | Volta | Bars
 
@@ -30,19 +30,6 @@ dal_goto*          : DaCapo al_x | DalSegno al_x
 al_x               : AlCoda | AlSegno | AlFine | <e>
 
 beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
-meter_beat*        : Crotchets | Quavers | Quarters | Eighths | Slash
-
-meter*             : MeterS meter_stmts MeterE
-+meter_stmts       : meter_stmt meter_stmts | Newline | <e>
-meter_stmt*        : Int meter_stmt_numbery | meteroid
-+meter_stmt_numbery: meter_ass | meter_sig_prime
-meter_ass*         : AssOp meter_ass_r
-+meter_ass_r       : Symbol | meter_beat | dynamic
-meter_sig_prime*   : Slash Int
-
-meteroid           : meter_symbolic | clef
-meter_symbolic*    : optional_carrots Symbol msg_chain_node
-clef*              : TrebleClef | BassClef | AltoClef
 
 listy*             : ListS listy_suffix
 +listy_suffix      : listy_entries ListE
@@ -71,7 +58,7 @@ skoaroid*        : nouny skoaroid_prime
 +skoaroid_prime  : assignment skoaroid_prime | <e>
 
 assignment*      : AssOp settable
-+settable        : Caesura | CurNoat | Symbol | listy
++settable        : Caesura | CurNoat | Symbol | listy | Quarters | Eighths
 
 optional_carrots*: Carrots | <e>
 stmt*            : optional_carrots skoaroid msg_chain_node

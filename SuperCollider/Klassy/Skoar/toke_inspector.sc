@@ -15,12 +15,18 @@ SkoarTokeInspector {
                 | toke |
                 toke.val = toke.lexeme.asInteger;
             },
-            
+
             "Toke_Float" -> {
                 | toke |
                 toke.val = toke.lexeme.asFloat;
             },
-            
+
+            "Toke_Meter" -> {
+                | toke |
+                var a = toke.lexeme.split;
+                toke.val = [a[0].asInteger, a[1].asInteger];
+            },
+
             "Toke_Carrots" -> {
                 | toke |
                 toke.val = toke.lexeme.size;
@@ -192,13 +198,9 @@ SkoarTokeInspector {
             "Toke_Eighths" -> {
                 | toke |
                 var s = nil;
-                "FEEE".postln;
                 s = toke.lexeme;
-                "FAIIII".postln;
                 toke.is_rest = false;
-                "FOOOO".postln;
                 toke.val = SkoarTokeInspector.beat_short(s, s.size);
-                "FuuMM".postln;
             }
 
         ];        
@@ -239,4 +241,23 @@ SkoarTokeInspector {
         ^x;
     }
 
+}
+
+
+SkoarBar {
+    var <>i;             // each voice will number their bars, starting at 0
+    var <>pre_repeat;
+    var <>post_repeat;
+    var <>n_beats;
+
+    *new {
+        | toke |
+        ^super.new.init(toke);
+    }
+
+    init {
+        | toke |
+
+
+    }
 }

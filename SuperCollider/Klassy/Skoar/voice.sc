@@ -22,14 +22,7 @@ SkoarVoice {
         skoar = skr;
         name = nom;
 
-        if (nom == \conductoar) {
-            skoarboard = skoar.skoarboard;
-        } {
-            skoarboard = IdentityDictionary.new;
-
-            // here's how we get defaults from the conductoar voice
-            skoarboard.parent = skoar.skoarboard;
-        };
+        skoarboard = IdentityDictionary.new;
 
         hand = Hand.new;
         cur_noat = nil;
@@ -50,14 +43,6 @@ SkoarVoice {
 
     event {
         var e = (type: \note);
-
-        if (name != \conductoar) {
-            skoarboard.parent.keysValuesDo {
-                | k, v |
-
-                e[k] = v;
-            };
-        };
 
         skoarboard.keysValuesDo {
             | k, v |
@@ -118,7 +103,9 @@ e.postln;
         | bpm, toke |
 
         var x = bpm / 60 * toke.val;
-
+"SETTING TEMPO".postln;
+x.postln;
+name.postln;
         skoarboard[\tempo] = x;
     }
 

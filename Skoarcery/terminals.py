@@ -17,19 +17,15 @@ Voice*:       [a-zA-Z][a-zA-Z0-9_]*:
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
-MeterS:         <!
-MeterE:         !>
-TrebleClef:     G:|treble:
-BassClef:       F:|bass:
-AltoClef:       C:|alto:
-
 CurNoat:        [$]
 Portamento:     port\\.?
 Slur:           [+][+]
 
 # careful not to match ottavas with end in (ma,mb,va,vb), or steal from floats
-Int*:           (-)?(0|[1-9][0-9]*)(?![mv][ab]|\\.[0-9])
+Int*:           (-)?(0|[1-9][0-9]*)(?![mv][ab]|\\.[0-9]|/)
 Float*:         (-)?(0|[1-9][0-9]*)\\.[0-9]+
+
+Meter*:         [1-9][0-9]*/[1-9[0-9]*
 
 ListS:          <(?![!=?])
 ListE:          >

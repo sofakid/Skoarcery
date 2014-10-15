@@ -33,7 +33,7 @@ SynthDef(\kick,
 	beater_env = beater_lpf * EnvGen.ar(Env.perc, 1.0, doneAction: 2);
 	kick_mix = Mix.new([drum_env, beater_env]) * 2 * amp;
 	Out.ar(out, [kick_mix, kick_mix])
-}).add;
+}).store;
 
 
 // snare -------
@@ -69,7 +69,7 @@ SynthDef(\snare,
 	snare_reson = Resonz.ar(snare_brf_4, snare_tightness, mul: snare_level) ;
 	snare_drum_mix = Mix.new([drum_mode_mix, snare_reson]) * 5 * amp;
 	Out.ar(out, [snare_drum_mix, snare_drum_mix]);
-}).add;
+}).store;
 
 // hats -------
 // http://www.soundonsound.com/sos/Jun02/articles/synthsecrets0602.asp
@@ -98,7 +98,7 @@ SynthDef(\hats,
 	body_hpf = HPF.ar(in: root_cymbal, freq: Line.kr(9000, 12000, sustain),mul: body_env, add: 0);
 	cymbal_mix = Mix.new([initial_bpf, body_hpf]) * amp;
 	Out.ar(out, [cymbal_mix, cymbal_mix])
-}).add;
+}).store;
 
 // SOStom -------
 // http://www.soundonsound.com/sos/Mar02/articles/synthsecrets0302.asp
@@ -125,10 +125,11 @@ SynthDef(\tom,
 	stick_env = EnvGen.ar(Env.perc(0.005, 0.01), 1.0) * 3;
 	tom_mix = Mix.new([drum_mode_mix, stick_env]) * 2 * amp;
 	Out.ar(out, [tom_mix, tom_mix]);
-}).add;
+}).store;
 
-"loaded".postln;
+)
 
+(
 x = """
 
 <! 4/4 240 => ) !>
@@ -208,7 +209,7 @@ x = """
 <? Special thanks to The Breakbeat Bible for the dope dubstepz.
    The synths are the SOS drums from the SuperCollider examples folder. ?>
 
-<! 4/4 70 => ) !>
+<? 4/4 120 => ) ?>
 
 s:  @snare => @instrument forte
 k:  @kick => @instrument
@@ -217,7 +218,6 @@ h:  @hats  => @instrument
 h:  | }}}     |
 s:  | } ) } ) |
 k:  | ) } ) } |
-
 
 h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
 s:  |: }            )            }             )           :|

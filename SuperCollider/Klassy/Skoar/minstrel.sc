@@ -46,7 +46,7 @@ SkoarMinstrel {
         parts_index = Dictionary.new;
         colons_seen = Dictionary.new;
 
-        // collect minstrel's voice and conductoar's voice
+        // collect minstrel's lines and conductoar's lines
         lines = skoar.tree.children;
 
         lines.do {

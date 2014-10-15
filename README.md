@@ -13,8 +13,12 @@ Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [S
     <? Special thanks to The Breakbeat Bible for the dope dubstepz.
        The synths are the SOS drums from the SuperCollider examples folder. ?>
 
-    <! 4/4 70 => ) !>
+    <? 4/4 time, 70 beats per min. No voice label on this line, all voices will read it ?>
 
+    4/4 70 => )
+
+
+    <? each line begins with a voice label, we are using three voices ?>
     h:  @hats  => @instrument
     s:  @snare => @instrument forte
     k:  @kick  => @instrument
@@ -76,7 +80,7 @@ Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [S
     <? key is Db, so i flat everything and sharp c & f ?>
     -1 => @transpose
 
-    <! 9/8 120 => ). !>
+    9/8 120 => ).
     mp
 
     | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | _a )). }. |
@@ -99,6 +103,12 @@ This is alpha software. Most of the things described here are implemented. The p
 to bring it to where the SuperCollider one is.
 
 Focus is on SuperCollider at the moment.
+
+# why is everything named crazily?
+
+SuperCollider already has well known objects called Score, Note, Chord, etc.. So here we use skoar, noat, choard, etc..
+
+You just thought I was being cute? Well that's important too: Skoar is a performance.
 
 Skoar
 =====
