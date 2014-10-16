@@ -134,13 +134,13 @@ x = """
 
 4/4 240 => )
 
-sn:  @snare => @instrument
-kk:  @kick  => @instrument
-hh:  @hats  => @instrument ppp
+.s  @snare => @instrument
+.k  @kick  => @instrument
+.h  @hats  => @instrument ppp
 
-hh:  | ] ] ] ] ] ] ] ] :|
-sn:  | }   )   }   )   :|
-kk:  | ))      ))      :|
+.h  | ] ] ] ] ] ] ] ] :|
+.s  | }   )   }   )   :|
+.k  | ))      ))      :|
 
 """.skoar;
 
@@ -160,53 +160,53 @@ x = """
 
 4/4 240 => )
 
-sn:  @snare => @instrument mf
-kk:  @kick  => @instrument
-hh:  @hats  => @instrument ppp
+.s  @snare => @instrument mf
+.k  @kick  => @instrument
+.h  @hats  => @instrument ppp
 
-hh:  | ] ] ] ] ] ] ] ] |
-sn:  | }   )   }   )   |
-kk:  | ))      ))      |
+.h  | ] ] ] ] ] ] ] ] |
+.s  | }   )   }   )   |
+.k  | ))      ))      |
 
 220 => )
 
-hh:  | ] ] ] ] ] ] ] ] |
-sn:  | }   )   }   )   |
-kk:  | ))      ))      |
+.h  | ] ] ] ] ] ] ] ] |
+.s  | }   )   }   )   |
+.k  | ))      ))      |
 
 190 => )
 
-hh:  |  ] ] ] ] ] ] ] ] |
-sn:  |: }   )   }   )   |
-kk:  |  ))      ))      |
+.h  |  ] ] ] ] ] ] ] ] |
+.s  |: }   )   }   )   |
+.k  |  ))      ))      |
 
 160 => )
 
-hh:  |: ] ] ] ] ] ] ] ] |
-sn:  |  }   )   ] ] ] ] |
-kk:  |  ))      )   )  :|
+.h  |: ] ] ] ] ] ] ] ] |
+.s  |  }   )   ] ] ] ] |
+.k  |  ))      )   )  :|
 
 120 => )
 
-hh:  |  ] ] ] ] ] ] ] ] |
-sn:  |  }   )   }   )   |
-kk:  |: )   ] ]  ) )    |
+.h  |  ] ] ] ] ] ] ] ] |
+.s  |  }   )   }   )   |
+.k  |: )   ] ]  ) )    |
 
-hh:  | ] ] ] ] ] ] ] ]  |
-sn:  | }   ] ] }   ] ] :|
-kk:  | ))      ))       |
+.h  | ] ] ] ] ] ] ] ]  |
+.s  | }   ] ] }   ] ] :|
+.k  | ))      ))       |
 
-hh:  | ] ] ] ] ] ] ] ] |
-sn:  | }   )   }   )   |
-kk:  | ))      ))      |
+.h  | ] ] ] ] ] ] ] ] |
+.s  | }   )   }   )   |
+.k  | ))      ))      |
 
-hh: mf  | ]] ]] ]] ]]  ] ]  ]] ]] ]  ]] ]] ] :|
-sn:     | }            )    }        )        |
-kk:     | ))                ))                |
+.h mf  | ]] ]] ]] ]]  ] ]  ]] ]] ]  ]] ]] ] :|
+.s     | }            )    }        )        |
+.k     | ))                ))                |
 
-hh: ppp | ] ] ] ] ] ] ] ]   :|
-sn: ff  | )   )   ] ] )  mf :|
-kk:     | ))      ))        :|
+.h ppp | ] ] ] ] ] ] ] ]   :|
+.s ff  | )   )   ] ] )  mf :|
+.k     | ))      ))        :|
 
 """.skoar;
 
@@ -217,9 +217,9 @@ x = """
 <? Special thanks to The Breakbeat Bible for the dope dubstepz.
    The synths are the SOS drums from the SuperCollider examples folder. ?>
 
-4/4 120 => )
+4/4 90 => )
 
-s:  @snare => @instrument forte
+s:  @snare => @instrument
 k:  @kick => @instrument
 h:  @hats  => @instrument
 
@@ -235,6 +235,7 @@ h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
 s:  |: }            )            }             )           :|
 k:  |: ]]. ]].  ]]  o/    ]] ]]  }             o/    ]     :|
 
+100 => )
 
 h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]] ]]]  ]] ]]] ]]] ]] ]]  ]] ]] ]] ]] :|
 s:  |: }            )                 }                 ].       ]] :|
@@ -244,6 +245,7 @@ h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]]] ]]] ]]] ]]] :|
 s:  |: }            )            }             ].            ]]      :|
 k:  |: ].       ]]  oo/  ].      o/    ]       }                     :|
 
+120 => )
 
 h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
 s:  |: }            )            }             ]]. ]].  ]] :|
@@ -271,7 +273,7 @@ k:  | ))) |
 """.skoar;
 )
 x.pskoar.play;
-Exception
+
 s.score.dump
 y = x.asStream;
 y.next
@@ -340,5 +342,5 @@ var hats = """
 var a, b;
 a = Pbind(\note, Pseq([7, 4, 0], 4), \dur, Pseq([1, 0.5, 1.5], inf));
 b = Pbind(\note, Pseq([5, 10, 12], 4), \dur, 1);
-Ppar([ a, b ]).asStream;
+Ppar([ a, b ]).play;
 )

@@ -20,9 +20,15 @@ SkoarVoxer {
 
         voicers = List.new;
 
-        skoar.voices.do {
-            | v |
-            voicers.add(SkoarVoicer.new(tree, v, skoar));
+        if (skoar.voices.size == 1) {
+            voicers.add(SkoarVoicer.new(tree, skoar.conductoar, skoar));
+        } {
+            skoar.voices.do {
+                | v |
+                if (v != skoar.conductoar) {
+                    voicers.add(SkoarVoicer.new(tree, v, skoar));
+                };
+            };
         };
     }
 
@@ -69,24 +75,13 @@ SkoarVoicer {
         minstrel = SkoarMinstrel(voice.name, voice, skoar).asStream;
     }
 
-    next {
-
-        noad = minstrel.next;
-
-        if (noad.isKindOf(SkoarNoad)) {
-            noad.on_enter;
-        };
-
-        ^noad;
-    }
-
     eventStream {
         ^Routine({
             var e = voice.event;
 
             // collect until we get a beat
             while {
-                this.next;
+                noad = minstrel.next;
                 noad != nil
             } {
 

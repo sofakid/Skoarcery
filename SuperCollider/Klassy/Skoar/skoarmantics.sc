@@ -33,13 +33,14 @@ Skoarmantics {
                 n = noad.n;
                 x = noad.children[0];
 
+                noad.branch = noad;
+
                 if (x != nil && x.toke != nil) {
                     x = x.toke;
+
                     if (x.isKindOf(Toke_Voice)) {
                         noad.toke = x;
                         noad.voice = skoar.get_voice(x.val);
-                        noad.branch = noad;
-                        "Voice: ".post; x.val.postln;
                     };
                 };
 
@@ -55,10 +56,7 @@ Skoarmantics {
         
             "beat" -> {
                 | skoar, noad |
-                var t;
-
-                noad.absorb_toke;
-                t = noad.toke;
+                var t = noad.absorb_toke;
 
                 noad.beat = t;
                 noad.is_beat = true;
@@ -97,6 +95,13 @@ Skoarmantics {
         
             "musical_keyword_misc" -> {
                 | skoar, noad |
+
+                var toke = noad.absorb_toke;
+
+                if (toke.isKindOf(Toke_Carrot)) {
+                    noad.one_shots = {"TODO stress noat".postln;};
+                };
+
             },
 
             "accidentally" -> {
@@ -206,6 +211,7 @@ Skoarmantics {
 
             "cthulhu" -> {
                 | skoar, noad |
+                noad.name = "^^(;,;)^^";
                 noad.performer = {skoar.cthulhu(noad);};
             },
         
@@ -216,10 +222,6 @@ Skoarmantics {
                     | v |
                     v.dynamic(toke);
                 };
-            },
-        
-            "optional_carrots" -> {
-                | skoar, noad |
             },
 
             "dal_goto" -> {

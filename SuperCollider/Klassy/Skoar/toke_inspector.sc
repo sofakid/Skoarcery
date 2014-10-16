@@ -142,8 +142,8 @@ SkoarTokeInspector {
             "Toke_Voice" -> {
                 | toke |
                 var s = toke.lexeme;
-                var n = s.size - 2;
-                toke.val = s[0..n].asSymbol;
+                var n = s.size - 1;
+                toke.val = s[1..n].asSymbol;
             },
 
             

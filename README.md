@@ -19,54 +19,54 @@ Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [S
 
 
     <? each line begins with a voice label, we are using three voices ?>
-    h:  @hats  => @instrument
-    s:  @snare => @instrument forte
-    k:  @kick  => @instrument
+    .h  @hats  => @instrument
+    .s  @snare => @instrument forte
+    .k  @kick  => @instrument
 
-    h:  | }}}     |
-    s:  | } ) } ) |
-    k:  | ) } ) } |
-
-
-    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
-    s:  |: }            )            }             )           :|
-    k:  |: )            o/.      ]]  oo/ ]] ]] oo/ }           :|
-
-    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
-    s:  |: }            )            }             )           :|
-    k:  |: ]]. ]].  ]]  o/    ]] ]]  }             o/    ]     :|
+    .h  | }}}     |
+    .s  | } ) } ) |
+    .k  | ) } ) } |
 
 
-    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]] ]]]  ]] ]]] ]]] ]] ]]  ]] ]] ]] ]] :|
-    s:  |: }            )                 }                 ].       ]] :|
-    k:  |: ]     ]] ]]  o/    ]] ]]       o/         ]      o/    ]     :|
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            )            }             )           :|
+    .k  |: )            o/.      ]]  oo/ ]] ]] oo/ }           :|
 
-    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]]] ]]] ]]] ]]] :|
-    s:  |: }            )            }             ].            ]]      :|
-    k:  |: ].       ]]  oo/  ].      o/    ]       }                     :|
-
-
-    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
-    s:  |: }            )            }             ]]. ]].  ]] :|
-    k:  |: ]]. ]].  ]]  }            ]]. ]].  ]]   }           :|
-
-    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
-    s:  |: }            )            }             )           :|
-    k:  |: ]]. ]].  ]]  o/.      ]]  ]] o/    ]]   }           :|
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            )            }             )           :|
+    .k  |: ]]. ]].  ]]  o/    ]] ]]  }             o/    ]     :|
 
 
-    h:  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
-    s:  |: }            ]]. ]].  ]]  }             ].       ]] :|
-    k:  |: )            }            ]     ]       }           :|
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]] ]]]  ]] ]]] ]]] ]] ]]  ]] ]] ]] ]] :|
+    .s  |: }            )                 }                 ].       ]] :|
+    .k  |: ]     ]] ]]  o/    ]] ]]       o/         ]      o/    ]     :|
 
-    h:  |: ]]] ]]] ]]] ]]] ]] ]]   ]] ]] ]] ]]] ]]]   ]] ]]] ]]] ]] ]]   ]] ]] ]] ]] :|
-    s:  |: }                       )                  }                  )           :|
-    k:  |: ]               ]       }                  o/         ]       oo/ ].      :|
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]]] ]]] ]]] ]]] :|
+    .s  |: }            )            }             ].            ]]      :|
+    .k  |: ].       ]]  oo/  ].      o/    ]       }                     :|
 
 
-    h:  | ))) |
-    s:  | ))) |
-    k:  | ))) |
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            )            }             ]]. ]].  ]] :|
+    .k  |: ]]. ]].  ]]  }            ]]. ]].  ]]   }           :|
+
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            )            }             )           :|
+    .k  |: ]]. ]].  ]]  o/.      ]]  ]] o/    ]]   }           :|
+
+
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            ]]. ]].  ]]  }             ].       ]] :|
+    .k  |: )            }            ]     ]       }           :|
+
+    .h  |: ]]] ]]] ]]] ]]] ]] ]]   ]] ]] ]] ]]] ]]]   ]] ]]] ]]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }                       )                  }                  )           :|
+    .k  |: ]               ]       }                  o/         ]       oo/ ].      :|
+
+
+    .h  | ))) |
+    .s  | ))) |
+    .k  | ))) |
 
 
 
@@ -154,7 +154,7 @@ SuperCollider pattern.
 
     || c ) d ) eb ) | f ]] ]] g ] ] g# ) | } 81.5 ) 83 ) ||
 
-    <? you get two octaves to work with, prepend _ for the lower octave ?>
+    <? you get two octaves to work with, prepend _ for the lower octave. ?>
 
     ||: d ) _a ) a ) _a ) :||
 
@@ -306,6 +306,7 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 - [Code_Parser_Py.py], [Code_Parser_Sc.py] - Build rdpp.py, rdpp.sc
 
 
+### Skoar Code
 ### The Generated Code
 
 - [lex.sc] - Lexical analyser, defines classes for each token, extending SkoarToke.

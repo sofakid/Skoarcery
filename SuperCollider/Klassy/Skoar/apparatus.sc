@@ -5,7 +5,6 @@
 SkoarNoad {
 
     var <>parent;        // the parent noad
-    var <>j;             // the currently performing child
     var <>i;             // position in parent
     var <>n;             // number of children
     var <>toke;          // a toke, if this noad absorbed a toke
@@ -15,7 +14,9 @@ SkoarNoad {
 
     var <>name;          // name of the nonterminal
 
-    var <>performer;     // function to override when defining semantics.
+    var <>performer;     // function to set when defining semantics.
+    var <>one_shots;     // function to set for stuff that applies for one beat.
+
     var  <next_jmp;      // if this is set, we will jump to this noad instead of the next noad
 
     var <>noat;
@@ -40,7 +41,6 @@ SkoarNoad {
         parent = parentArg;
 
         i = i;
-        j = 0;
         n = 0;
 
         name = nameArg;
@@ -66,6 +66,9 @@ SkoarNoad {
 
     }
 
+    // -------------------
+    // decorating the tree
+    // -------------------
     assign_voices {
         | v, b |
 
@@ -161,7 +164,7 @@ SkoarNoad {
     draw_tree {
         | tab = 1 |
 
-        var s = " ".padLeft(tab + 1) ++ name ++ " - " ++ voice.name ++ "\n";
+        var s = voice.name ++ ":".padRight(tab + 1) ++ name ++ "\n";
 
         children.do {
             | x |
@@ -174,7 +177,7 @@ SkoarNoad {
     }
 
     // -----------------
-    // Climbing the Tree
+    // climbing the Tree
     // -----------------
 
     // depth-first, find the leaves, run handler, working towards trunk
@@ -212,31 +215,6 @@ SkoarNoad {
 
     }
 
-    // this will follow repeats and other jmps
-    next_item {
-        | v |
-
-        var nxt = nil;
-
-        if (next_jmp != nil) {
-            ^next_jmp;
-        };
-
-        if (j == n) {
-
-            if (parent == nil) {
-                ^nil;
-            };
-
-            ^parent.next_item(v);
-        };
-
-        nxt = children[j];
-        j = j + 1;
-        ^nxt;
-
-    }
-
     // this finds the preceding noad
     prev_noad {
         var prv = nil;
@@ -270,15 +248,11 @@ SkoarNoad {
         | noad |
 
         next_jmp = noad;
-        noad.parent.j = noad.i;
     }
 
     // -------------------
     // performing the tree
     // -------------------
-    on_enter {
-        j = 0;
-    }
 
     // we pass the voice that is performing it, as it may be the conductoar's instructions we're acting on.
     action {
