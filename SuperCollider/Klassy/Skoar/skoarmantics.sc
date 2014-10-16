@@ -142,7 +142,7 @@ Skoarmantics {
 
             },
 
-             "assignment" -> {
+            "assignment" -> {
                 | skoar, noad |
 
                 // the settable
@@ -167,8 +167,6 @@ Skoarmantics {
                     noad.setter = {
                         | x, v |
                         var x_toke = x.next_toke;
-
-                        "XTOKE: ".post; x_toke.dump;
 
                         if (x_toke.isKindOf(Toke_Int) || x_toke.isKindOf(Toke_Float)) {
                             v.set_tempo(x_toke.val, y_toke);
@@ -196,8 +194,8 @@ Skoarmantics {
                         f = y.setter;
 
                         noad.performer = {
-                            | v |
-                            f.(x, v);
+                            | m |
+                            f.(x, m.voice);
                         };
 
                     };
@@ -219,8 +217,8 @@ Skoarmantics {
                 | skoar, noad |
                 var toke = noad.absorb_toke;
                 noad.performer = {
-                    | v |
-                    v.dynamic(toke);
+                    | m |
+                    m.voice.dynamic(toke);
                 };
             },
 
@@ -228,48 +226,94 @@ Skoarmantics {
                 | skoar, noad |
 
                 var toke = noad.children[0].toke;
-                skoar.do_when_voices_ready({noad.voice.add_marker(noad);});
+                var al_x = noad.children[1].toke;
+                var al_fine = false;
+
+                if (al_x != nil && al_x.isKindOf(Toke_AlFine)) {
+                    al_fine = true;
+                };
 
                 if (toke.isKindOf(Toke_DaCapo)) {
                     noad.performer = {
-                        | v |
-                        v.da_capo(noad);
+                        | m |
+                        m.al_fine = al_fine;
+                        SkoarDaCapoException.throw;
                     };
                 };
 
                 if (toke.isKindOf(Toke_DalSegno)) {
                     noad.performer = {
-                        | v |
-                        v.dal_segno(noad);
+                        | m |
+                        m.al_fine = al_fine;
+                        SkoarSegnoException.throw;
                     };
                 };
 
+            },
+
+            "al_x" -> {
+                | skoar, noad |
+
+                noad.absorb_toke;
             },
 
             "marker" -> {
                 | skoar, noad |
-        
-                var toke;
 
-                noad.absorb_toke;
-                skoar.do_when_voices_ready({noad.voice.add_marker(noad);});
+                var toke = noad.absorb_toke;
 
-                toke = noad.toke;
-                if (toke != nil && toke.isKindOf(Toke_Bars)) {
-                    if (toke.pre_repeat) {
+                if (toke != nil) {
+
+                    if (toke.isKindOf(Toke_Bars)) {
+
+                        if (toke.pre_repeat) {
+                            noad.performer = {
+                                | m |
+
+                                if (m.colons_burned.falseAt(noad)) {
+                                    m.colons_burned[noad] = true;
+                                    SkoarJumpException.throw;
+                                };
+
+                                if (toke.post_repeat) {
+                                    m.colon_seen = noad;
+                                };
+
+                            };
+                        } {
+                            if (toke.post_repeat) {
+                                noad.performer = {
+                                    | m |
+                                    m.colon_seen = noad;
+                                };
+                            };
+                        };
+
+                    };
+
+                    if (toke.isKindOf(Toke_Segno)) {
                         noad.performer = {
-                            | v |
-                            v.jmp_colon(noad);
+                            | m |
+                            m.segno_seen = noad;
+
                         };
                     };
 
-                };
+                    if (toke.isKindOf(Toke_Fine)) {
+                        noad.performer = {
+                            | m |
+                            if (m.al_fine) {
+"SkoarFineException.throw;".postln;
+                                SkoarFineException.throw;
+                            };
 
+                        };
+                    };
+                };
             },
 
             "coda" -> {
                 | skoar, noad |
-                skoar.do_when_voices_ready({noad.voice.add_coda(noad);});
             },
 
             "noaty" -> {

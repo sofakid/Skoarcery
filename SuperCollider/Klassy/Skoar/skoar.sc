@@ -160,14 +160,18 @@ Skoar {
 
     }
 
+    play {
+        this.pskoar.play;
+    }
+
     pskoar {
-        ^SkoarVoxer.new(this).pfunk;
+        ^Skoarchestra.new(this).pfunk;
     }
 
     pvoice {
         | voice_name |
 
-        ^SkoarVoicer.new(this.tree, voices[voice_name], this).pfunk;
+        ^SkoarMinstrel.new(this.tree, voices[voice_name], this).pfunk;
     }
 }
 

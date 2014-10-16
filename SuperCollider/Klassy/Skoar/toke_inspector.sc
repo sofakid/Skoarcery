@@ -146,7 +146,6 @@ SkoarTokeInspector {
                 toke.val = s[1..n].asSymbol;
             },
 
-            
             "Toke_Segno" -> {
                 | toke |
                 /*var a = toke.lexeme.split("_");
@@ -167,6 +166,11 @@ SkoarTokeInspector {
                 | toke |
                 toke.pre_repeat = toke.lexeme.beginsWith(":");
                 toke.post_repeat = toke.lexeme.endsWith(":");
+            },
+
+            "Toke_Rep" -> {
+                | toke |
+                toke.val = toke.lexeme.size;
             },
 
             // rests

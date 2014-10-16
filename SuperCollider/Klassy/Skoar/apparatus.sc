@@ -4,30 +4,30 @@
 // ==========================
 SkoarNoad {
 
-    var <>parent;        // the parent noad
-    var <>i;             // position in parent
-    var <>n;             // number of children
-    var <>toke;          // a toke, if this noad absorbed a toke
-    var <>children;      // a list of child noads
+    var <>parent;          // the parent noad
+    var <>i;               // position in parent
+    var <>n;               // number of children
+    var <>toke;            // a toke, if this noad absorbed a toke
+    var <>children;        // a list of child noads
 
-    var <>setter;        // a function to perform assignment
+    var <>setter;          // a function to perform assignment
 
-    var <>name;          // name of the nonterminal
+    var <>name;            // name of the nonterminal
 
-    var <>performer;     // function to set when defining semantics.
-    var <>one_shots;     // function to set for stuff that applies for one beat.
+    var <>performer;       // function to set when defining semantics.
+    var <>one_shots;       // function to set for stuff that applies for one beat.
 
-    var  <next_jmp;      // if this is set, we will jump to this noad instead of the next noad
+    var  <next_jmp;        // if this is set, we will jump to this noad instead of the next noad
 
     var <>noat;
     var <>is_rest;
-    var <>is_beat;       // flag indicates if it's a beat.
-    var <>beat;          // beat toke (note this could be a beat toke, and is_beat=false,
-                         // like when setting bpm with an assignment)
+    var <>is_beat;         // flag indicates if it's a beat.
+    var <>beat;            // beat toke (note this could be a beat toke, and is_beat=false,
+                           // like when setting bpm with an assignment)
 
-    var  <inspectable;   // this toke carries information that must be inspected and processed.
-    var <>voice;         // what voice to use
-    var <>branch;        // what branch are we on, along the trunk (what line)
+    var  <inspectable;     // this toke carries information that must be inspected and processed.
+    var <>voice;           // what voice to use
+    var <>branch;          // what branch are we on, along the trunk (what line)
 
     *new {
         | name, toke, parent, i=0 |
@@ -217,7 +217,6 @@ SkoarNoad {
 
     // this finds the preceding noad
     prev_noad {
-        var prv = nil;
 
         // are we leftmost sibling?
         if (i == 0) {
@@ -229,8 +228,7 @@ SkoarNoad {
         };
 
         // return sibling to left
-        prv = parent.children[i-1];
-        ^prv;
+        ^parent.children[i-1];
     }
 
     // find next (first) toke, depthfirst
@@ -243,23 +241,14 @@ SkoarNoad {
         ^x.next_toke;
     }
 
-    // this sets the destination of a jump
-    go_here_next {
-        | noad |
-
-        next_jmp = noad;
-    }
-
     // -------------------
     // performing the tree
     // -------------------
-
-    // we pass the voice that is performing it, as it may be the conductoar's instructions we're acting on.
-    action {
-        | performer_voice |
+    perform {
+        | minstrel |
 
         if (performer != nil) {
-            performer.(performer_voice);
+            performer.(minstrel);
         };
     }
 

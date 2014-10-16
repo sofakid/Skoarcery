@@ -5,8 +5,6 @@ SkoarVoice {
 
     var  <name;         // name of voice as Symbol
 
-    var   markers;      // list of markers (for gotos/repeats)
-    var   codas;        // list of codas
     var <>cur_noat;
     var   hand;
 
@@ -26,8 +24,6 @@ SkoarVoice {
 
         hand = Hand.new;
         cur_noat = nil;
-        markers = List[];
-        codas = List[];
     }
 
     put {
@@ -44,16 +40,7 @@ SkoarVoice {
     event {
         var e = (type: \note);
 
-        skoarboard.keysValuesDo {
-            | k, v |
-
-            e[k] = v;
-        };
-
-e.postln;
-
-        ^e
-
+        ^skoarboard.transformEvent(e);
     }
 
      // x => y
@@ -103,9 +90,6 @@ e.postln;
         | bpm, toke |
 
         var x = bpm / 60 * toke.val;
-"SETTING TEMPO".postln;
-x.postln;
-name.postln;
         skoarboard[\tempo] = x;
     }
 
@@ -159,8 +143,6 @@ name.postln;
 
         };
 
-//"built choard: ".post; cur_noat.postln;
-
     }
 
     reload_curnoat {
@@ -179,129 +161,8 @@ name.postln;
 
     octave_shift {
         | x |
-
         hand.octave = hand.octave + x;
     }
-
-    // save these in a list for jumping around in
-    add_marker {
-        | marker_noad |
-
-        markers.add(marker_noad);
-    }
-
-    // save these in a list for jumping around in
-    add_coda {
-        | coda_noad |
-
-        codas.add(coda_noad);
-    }
-
-    // find the start of the piece
-    the_capo {
-        var x = markers[0];
-
-        if (x != nil) {
-            ^x;
-        }
-
-        ^skoar.tree;
-    }
-
-    da_capo {
-        | noad |
-
-        var al_x = noad.children[1];
-
-        noad.go_here_next(this.the_capo);
-
-    }
-
-    dal_segno {
-        | noad |
-
-        var al_x = noad.children[1];
-
-        var n = markers.size;
-        var j;
-
-        j = block {
-            | break |
-
-            for (0, n - 1, {
-                | i |
-
-                if (noad == markers[i]) {
-                    break.(i);
-                };
-
-            });
-            SkoarError("couldn't find where we are in markers").throw;
-        };
-
-        // go backwards in list and find either a
-        // post_repeat or the start
-        block {
-            | break |
-
-            forBy(j - 1, 0, -1, {
-                | i |
-
-                var x = markers[i];
-                var t = x.toke;
-
-                if (t.isKindOf(Toke_Segno)) {
-                    noad.go_here_next(x);
-                    break.value;
-                };
-            });
-            SkoarError("no segno %S% found.").throw;
-        };
-
-    }
-
-    // starts at noad and goes backwards until it finds a |:
-    jmp_colon {
-        | noad |
-
-        var toke = noad.toke;
-
-        // find where we are in markers
-        var n = markers.size;
-        var j;
-
-        j = block {
-            | break |
-            for (0, n - 1, {
-                | i |
-
-                if (noad == markers[i]) {
-                    break.(i);
-                };
-
-            });
-            SkoarError("couldn't find where we are in markers").throw;
-        };
-
-        // go backwards in list and find either a
-        // post_repeat or the start
-        block {
-            | break |
-            forBy(j - 1, 0, -1, {
-                | i |
-
-                var x = markers[i];
-                var t = x.toke;
-
-                if (t.isKindOf(Toke_Bars) && t.post_repeat) {
-                    noad.go_here_next(x);
-                    break.value;
-                };
-            });
-            noad.go_here_next(this.the_capo);
-        };
-    }
-
 
 }
 

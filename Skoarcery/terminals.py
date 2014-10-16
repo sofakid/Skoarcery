@@ -83,8 +83,7 @@ DalSegno:         D\\.S\\.|Dal Segno
 Fine:             fine
 Segno*:           %S%(?:_[a-zA-Z_][a-zA-Z0-9_]*)*
 Coda:             \\([+]\\)
-Rep:              \\./\\.
-DubRep:           /\\.\\|\\./
+Rep*:              %+(?!S)
 AlCoda:           al(la)? coda
 AlSegno:          al segno
 AlFine:           al fine

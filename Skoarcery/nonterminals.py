@@ -27,7 +27,7 @@ coda*              : Coda optional_al_coda
 optional_al_coda   : AlCoda | <e>
 
 dal_goto*          : DaCapo al_x | DalSegno al_x
-al_x               : AlCoda | AlSegno | AlFine | <e>
+al_x*              : AlCoda | AlSegno | AlFine | <e>
 
 beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
 
@@ -37,7 +37,7 @@ listy*             : ListS listy_suffix
 +moar_listy_entries: ListSep listy_entries | Newline | <e>
 
 musical_keyword      : dynamic | ottavas | pedally | musical_keyword_misc
-musical_keyword_misc*: Rep | DubRep | Portamento | Carrot
+musical_keyword_misc*: Rep | Portamento | Carrot
 pedally*             : PedalDown | PedalUp
 ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
