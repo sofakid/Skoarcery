@@ -216,6 +216,7 @@ Skoarmantics {
             "dynamic" -> {
                 | skoar, noad |
                 var toke = noad.absorb_toke;
+                
                 noad.performer = {
                     | m |
                     m.voice.dynamic(toke);
@@ -236,7 +237,11 @@ Skoarmantics {
                 if (toke.isKindOf(Toke_DaCapo)) {
                     noad.performer = {
                         | m, nav |
-                        m.al_fine = al_fine;
+
+                        if (al_fine) {
+                            m.al_fine = true;
+                        };
+
                         nav.(\nav_da_capo);
                     };
                 };
@@ -244,7 +249,12 @@ Skoarmantics {
                 if (toke.isKindOf(Toke_DalSegno)) {
                     noad.performer = {
                         | m, nav |
-                        m.al_fine = al_fine;
+
+                        if (al_fine) {
+                            m.al_fine = true;
+                        };
+
+                        m.reset_colons;
                         nav.(\nav_segno);
                     };
                 };
@@ -295,7 +305,6 @@ Skoarmantics {
                         noad.performer = {
                             | m |
                             m.segno_seen = noad;
-
                         };
                     };
 
@@ -305,7 +314,6 @@ Skoarmantics {
                             if (m.al_fine) {
                                 nav.(\nav_fine);
                             };
-
                         };
                     };
                 };

@@ -108,7 +108,7 @@ Focus is on SuperCollider at the moment.
 
 SuperCollider already has well known objects called Score, Note, Chord, etc.. So here we use skoar, noat, choard, etc..
 
-You just thought I was being cute? Well that's important too: Skoar is a performance.
+You thought I was just being cute?
 
 Skoar
 =====
@@ -142,11 +142,16 @@ SuperCollider pattern.
     oo/ - sixteenth rest
     ooo/ - thirty second rest
 
-# dottedness
+# dotted (x1.5 duration) beats
 
     ). - dotted quarter
     ]]. - dotted sixteenth
     o/. - dotted eighth rest
+
+# staccatto
+
+    .) - staccatto quarter
+    .]]. - staccatto and dotted sixteenth
 
 # noats
 
@@ -201,9 +206,9 @@ Colons
 
     |: _a ]]] c ]]] e ]]] :|: g ]]] ooo/ ]]] :|
 
-Segnos `%S%` and Codas `(+)`:
+Segnos and Codas:
 
-    | _a ) c ) e ) | %S% ) ]] ]] e ]] | f D.S. al fine ) ) ) fine
+    | _a ) c ) e ) | ,segno` ) ]] ]] e ]] | f D.S. al fine ) ) ) fine
 
 Infinite repeats:
 
@@ -211,7 +216,7 @@ Infinite repeats:
     | _a] c] e] | D.C. <? also accept Da Capo ?>
 
     <? from the segno ?>
-    | _a] c] e] o/ | %S% _f] f] _f] o/ Dal Segno |
+    | _a] c] e] o/ | ,segno` _f] f] _f] o/ Dal Segno |
 
 # data assignment
 
@@ -230,7 +235,7 @@ You can wake cthulhu, crashing the skoar..
     | a ) ^^(;,;)^^ |
 
     <? ensure Dal Segno is working ?>
-    |: a ]] ]] Dal Segno ^^(;,;)^^ %S% ) ) :|
+    |: a ]] ]] Dal Segno ^^(;,;)^^ ,segno` ) ) :|
 
 
 Cthulhu can assert stuff too, you have to stick it right in his face, he's sleeping.
@@ -247,7 +252,7 @@ Or save him to wake later with any message.
 Install
 =======
 
-map Klass folder to the SuperCollider extensions folder.
+map Klassy folder to the SuperCollider extensions folder.
 
     ln -s ~/.../Skoar/SuperCollider/Klassy ~/Library/Application\ Support/SuperCollider/Extensions/Klassy
 

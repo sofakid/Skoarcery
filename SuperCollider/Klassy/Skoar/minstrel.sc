@@ -9,7 +9,7 @@ SkoarMinstrel {
     var   parts;
     var   parts_index;
 
-    var <>colons_burned;
+    var  <colons_burned;
     var <>colon_seen;
     var <>segno_seen;
     var <>al_fine;
@@ -97,17 +97,20 @@ SkoarMinstrel {
 
                     {\nav_coda} { j = 0; }
 
-                    {\nav_da_capo} { j = 0; }
+                    {\nav_da_capo} {
+                        dst = parts[0].children[0];
+                        j = 0;
+                    }
 
                     {\nav_segno} {
                         dst = segno_seen;
                         j = parts_index[dst.branch];
-                        colons_burned = Dictionary.new;
                     }
 
                     {\nav_jump} {
                         dst = colon_seen;
                         if (dst == nil) {
+                            dst = parts[0].children[0];
                             j = 0;
                         } {
                             j = parts_index[dst.branch];
@@ -129,13 +132,13 @@ SkoarMinstrel {
                 noad != nil;
             } {
 
-                if (noad.is_beat == true) {
+                if (noad.is_beat) {
 
                     // create an event with everything we've collected up until now
                     e = voice.event;
                     e[\dur] = noad.toke.val;
 
-                    if (noad.is_rest == true) {
+                    if (noad.is_rest) {
                         e[\note] = \rest;
                     } {
                         if (voice.cur_noat != nil) {
@@ -146,18 +149,22 @@ SkoarMinstrel {
                             };
                         };
                     };
-                    //" Firing event:".postln;
-                    //e.postln;
 
                     ^e;
                 };
 
             };
-voice.name.post; ": Done.".postln;
+
+            voice.name.post; ": Done.".postln;
+            ^nil;
     }
 
     pfunk {
         ^Pfunc({this.nextEvent;});
+    }
+
+    reset_colons {
+        colons_burned = Dictionary.new;
     }
 
 }

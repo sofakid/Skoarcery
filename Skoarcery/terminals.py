@@ -81,9 +81,9 @@ Nosey:            ,
 DaCapo:           D\\.C\\.|Da Capo
 DalSegno:         D\\.S\\.|Dal Segno
 Fine:             fine
-Segno*:           %S%(?:_[a-zA-Z_][a-zA-Z0-9_]*)*
+Segno*:           ,($|segno)`(?:_[a-zA-Z_][a-zA-Z0-9_]*`)*
 Coda:             \\([+]\\)
-Rep*:              %+(?!S)
+Rep*:             %+
 AlCoda:           al(la)? coda
 AlSegno:          al segno
 AlFine:           al fine
