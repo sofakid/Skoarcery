@@ -1,17 +1,3 @@
-SkoarJumpException : Exception {
-}
-
-SkoarSegnoException : Exception {
-}
-
-SkoarFineException : Exception {
-}
-
-SkoarCodaException : Exception {
-}
-
-SkoarDaCapoException : Exception {
-}
 
 SkoarMinstrel {
 
@@ -27,6 +13,8 @@ SkoarMinstrel {
     var <>colon_seen;
     var <>segno_seen;
     var <>al_fine;
+
+    var noad_stream;
 
 
     *new {
@@ -66,21 +54,17 @@ SkoarMinstrel {
         };
 
 
-    }
-
-    // get the next noad
-    noadStream {
-        ^Routine({
-            var n = 0;
+        noad_stream = Routine({
+            var n = parts.size - 1;
             var j = 0;
-            var src = nil;
             var dst = nil;
             var running = true;
-
-            n = parts.size - 1;
+            var nav_result = nil;
 
             while {running} {
-                try {
+
+                nav_result = block {
+                    | nav |
 
                     for ( j, n, {
                         | i |
@@ -92,12 +76,12 @@ SkoarMinstrel {
                                 if (x == dst) {
                                     dst = nil;
 
-                                    x.perform(this);
+                                    x.perform(this, nav);
                                     x.yield;
                                 };
 
                             } {
-                                x.perform(this);
+                                x.perform(this, nav);
                                 x.yield;
                             };
 
@@ -105,43 +89,39 @@ SkoarMinstrel {
                     });
 
                     running = false;
-                } {
-                    | e |
+                };
 
-                    // We've broken out of the loop. but we're going right back in.
-                    //  - dst is the noad to go to
-                    //  - j is the index in parts, for the branch dst is on.
-                    case {e.isKindOf(SkoarJumpException)} {
-                        dst = colon_seen;
-                        j = parts_index[dst.branch];
+                switch (nav_result)
 
-                    } {e.isKindOf(SkoarSegnoException)} {
+                    {\nav_fine} { running = false; }
+
+                    {\nav_coda} { j = 0; }
+
+                    {\nav_da_capo} { j = 0; }
+
+                    {\nav_segno} {
                         dst = segno_seen;
                         j = parts_index[dst.branch];
                         colons_burned = Dictionary.new;
+                    }
 
-                    }  {e.isKindOf(SkoarDaCapoException)} {
-                        j = 0;
-
-                    } {e.isKindOf(SkoarCodaException)} {
-                        j = 0;
-                    } {
-                        "unknown exception, rethrowing.".postln;
-                        e.postProtectedBacktrace;
-                        e.throw;
+                    {\nav_jump} {
+                        dst = colon_seen;
+                        if (dst == nil) {
+                            j = 0;
+                        } {
+                            j = parts_index[dst.branch];
+                        };
                     };
 
-                };
             };
         });
 
     }
 
-    // goes along, configuring a new event, which it yeilds when it finds a beat.
-    eventStream {
-        ^Routine({
+    // goes along, configuring a new event, which it returns when it finds a beat.
+    nextEvent {
             var e = nil;
-            var noad_stream = this.noadStream;
             var noad = nil;
 
             while {
@@ -149,11 +129,10 @@ SkoarMinstrel {
                 noad != nil;
             } {
 
-                case {noad.is_beat == true} {
+                if (noad.is_beat == true) {
 
                     // create an event with everything we've collected up until now
                     e = voice.event;
-
                     e[\dur] = noad.toke.val;
 
                     if (noad.is_rest == true) {
@@ -169,19 +148,16 @@ SkoarMinstrel {
                     };
                     //" Firing event:".postln;
                     //e.postln;
-                    e.yield;
-                    e = nil;
 
+                    ^e;
                 };
 
             };
 voice.name.post; ": Done.".postln;
-        });
     }
 
     pfunk {
-        var q = this.eventStream;
-        ^Pfunc({q.next;});
+        ^Pfunc({this.nextEvent;});
     }
 
 }

@@ -245,10 +245,10 @@ SkoarNoad {
     // performing the tree
     // -------------------
     perform {
-        | minstrel |
+        | minstrel, nav |
 
         if (performer != nil) {
-            performer.(minstrel);
+            performer.(minstrel, nav);
         };
     }
 

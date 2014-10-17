@@ -235,17 +235,17 @@ Skoarmantics {
 
                 if (toke.isKindOf(Toke_DaCapo)) {
                     noad.performer = {
-                        | m |
+                        | m, nav |
                         m.al_fine = al_fine;
-                        SkoarDaCapoException.throw;
+                        nav.(\nav_da_capo);
                     };
                 };
 
                 if (toke.isKindOf(Toke_DalSegno)) {
                     noad.performer = {
-                        | m |
+                        | m, nav |
                         m.al_fine = al_fine;
-                        SkoarSegnoException.throw;
+                        nav.(\nav_segno);
                     };
                 };
 
@@ -268,11 +268,11 @@ Skoarmantics {
 
                         if (toke.pre_repeat) {
                             noad.performer = {
-                                | m |
+                                | m, nav |
 
                                 if (m.colons_burned.falseAt(noad)) {
                                     m.colons_burned[noad] = true;
-                                    SkoarJumpException.throw;
+                                    nav.(\nav_jump);
                                 };
 
                                 if (toke.post_repeat) {
@@ -301,10 +301,9 @@ Skoarmantics {
 
                     if (toke.isKindOf(Toke_Fine)) {
                         noad.performer = {
-                            | m |
+                            | m, nav |
                             if (m.al_fine) {
-"SkoarFineException.throw;".postln;
-                                SkoarFineException.throw;
+                                nav.(\nav_fine);
                             };
 
                         };
