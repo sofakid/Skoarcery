@@ -50,13 +50,14 @@ SkoarVoice {
         var k = y.val;
         var v = this.evaluate(x);
 
+        ("@" ++ k ++ " = ").post; v.dump;
         skoarboard[k] = v;
     }
 
     evaluate {
         | x |
-/*
-        var desires = List[ "listy", Toke_Int, Toke_Float, Toke_Symbol,  ];
+
+        var desires = List[ "listy", Toke_Int, Toke_Float, Toke_Symbol ];
         var items = noad.collect(desires);
 
         var listy = Array.new(items.size - 1);
@@ -79,7 +80,7 @@ SkoarVoice {
                 o.performer = nil;
             };
 
-        };*/
+        };
         // just find the toke for now
         var t = x.next_toke;
 

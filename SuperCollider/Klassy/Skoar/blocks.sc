@@ -29,6 +29,7 @@ SkoarBlock {
 
 SkoarBlockIter {
 
+    var label;
     var <>i;
     var <>n;
     var lines;
@@ -41,18 +42,20 @@ SkoarBlockIter {
     init {
         | blk |
         lines = blk.lines;
-
+        label = blk.label;
         n = blk.size;
         i = -1;
     }
 
     random {
-        ^lines[n.rand];
+        i = n.rand;
+        (label ++ " random: " ++ i).postln;
+        ^lines[i];
     }
 
     next {
         i = 1 + i % n;
-        "iter next: ".post; i.postln;
+        (label ++ " next: " ++ i).postln;
         ^lines[i];
     }
 

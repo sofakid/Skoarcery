@@ -258,13 +258,10 @@ Skoarmantics {
                 var x = nil;
 
                 x = noad.children[0].toke;
-"BLOOB".post; x.dump;
                 if (x.isKindOf(Toke_BlockRef)) {
                     noad.performer = {
                         | m, nav |
-"BLARB".postln;
                         m.gosub(x.val, nav);
-"BLEEZEBURBS".postln;
                     };
                 };
 
@@ -424,7 +421,7 @@ Skoarmantics {
                 if (x.name == "listy") {
                     x.performer = {
                         | m, nav |
-                        m.choard_listy(x);
+                        m.voice.choard_listy(x);
                     };
                 };
 
