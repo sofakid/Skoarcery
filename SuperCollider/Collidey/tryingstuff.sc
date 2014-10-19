@@ -130,13 +130,38 @@ x = """
 
 4/4 90 => )
 
+.d  @default => @instrument
 .s  @snare => @instrument
 .k  @kick => @instrument
 .h  @hats => @instrument
 
+!! dorp !!
+ | ]].      ]]. ]]     |
+ | ]] ooo/ ^]] ]] ooo/ |
+ | ]] ]]  ]  o/. ]]    |
+!!
+
+!! derp !! <0,3,5> => @detune
+ | ]]. ]]. ]]     |
+ | )              |
+ | ]] ]] ] o/. ]] |
+!!
+
+
+<?
+ 5 -> )
+ 5 +> )
+90 => )
+
+?>
+
+< _a, c, e, a > => @zip
+
+.d ,segno` | a ]] b ]] c ]] c# ] :| o/ :| o/. D.S.
+
 ,segno`
 
-.h  |: ]] ]] ]] ]]  ^]] ^]] ^]] ^]]  .]] .]] oo/ .]]        ]] ]] ]]      ]] :|
+.h  |: ]] ]] ]] ]]  ^]] ^]] ^]] ^]]  .]] .]] oo/ .]]       ]] ]] ]]      ]] :|
 .s  |: }            ^)                }                   ^]     ]]] ]]] ]]  |
 .k  |: )             o/.              ]]  oo/ ^]] ]] oo/   }                 |
 
@@ -152,11 +177,30 @@ fine
 
 D.S. al fine
 
+
 """.skoar;
 )
 x.play;
 
-Ppar
+("""
+mp
+
+!! dorp !! c#
+ | ]].      ]]. ]]     |
+ | ]] ooo/ ^]] ]] ooo/ |
+ | ]] ]]  ]  o/. ]]    |
+ | mf ]] ] ]] fine     |
+!!
+
+,segno`
+
+| a ] ] b ] ] c ] ] !dorp |
+
+D.S. al fine
+
+""".skoar.play;
+)
+
 
 (
 
@@ -170,7 +214,8 @@ a = case
 y = """
 90 => )
 
-%S%
+,segno`
+
 _a )  fine c ] e ] a )
 D.S. al fine
 
@@ -181,6 +226,40 @@ D.S. al fine
 )
 
 "killall scsynth".unixCmd;
+
+(
+
+x = """
+
+4/4 90 => )
+
+.s  @snare => @instrument
+.k  @kick => @instrument
+.h  @hats => @instrument
+
+,segno`
+
+.h  |: ]] ]] ]] ]]  ^]] ^]] ^]] ^]]  .]] .]] oo/ .]]       ]] ]] ]]      ]] :|
+.s  |: }            ^)                }                   ^]     ]]] ]]] ]]  |
+.k  |: )             o/.              ]]  oo/ ^]] ]] oo/   }                 |
+
+fine
+
+.h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+.s  |  }            )            }             )           :|
+.k  |  ]]. ]].  ]]  o/    ]] ]]  }             o/    ]      |
+
+.h  | ]] ]] ]] ]]  ]] ]] ]] ]]] ]]]  ]] ]]] ]]] ]] ]]  ]] ]] ]] ]] |
+.s  | }            )                 }                 ].       ]] |
+.k  | ]     ]] ]]  o/    ]] ]]       o/         ]      o/    ]     |
+
+D.S. al fine
+
+
+""".skoar;
+)
+x.play;
+
 
 
 (

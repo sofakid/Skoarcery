@@ -24,6 +24,44 @@ Skoarmantics {
 
         var dict = Dictionary[
 
+            "block" -> {
+                | skoar, noad |
+
+                var n = 0;
+                var label = nil;
+                var m = 0;
+
+                n = noad.n;
+                label = noad.children[1].toke.val;
+                noad.label = label;
+
+                noad.branch = nil;
+
+                // trim the children
+                m = noad.children.size - 2;
+                noad.children = noad.children[3..m];
+                noad.n = n - 4;
+
+                // we save it here, the block will be removed from the tree by branch.
+                skoar.blocks[label] = SkoarBlock(noad);
+
+            },
+
+            "block_line" -> {
+                | skoar, noad |
+
+                var n = 0;
+                var x = nil;
+
+                n = noad.n;
+                x = noad.children[0];
+
+                // drop the newline
+                noad.children.pop;
+                noad.n = n - 1;
+
+            },
+
             "branch" -> {
                 | skoar, noad |
 
@@ -35,18 +73,19 @@ Skoarmantics {
 
                 noad.branch = noad;
 
-                if (x != nil && x.toke != nil) {
+                if (x.name == "block") {
+                    noad.children = [];
+                    noad.n = 0;
+                } {
                     x = x.toke;
-
                     if (x.isKindOf(Toke_Voice)) {
                         noad.toke = x;
                         noad.voice = skoar.get_voice(x.val);
                     };
+                    // drop the newline
+                    noad.children.pop;
+                    noad.n = n - 1;
                 };
-
-                // drop the newline
-                noad.children.pop;
-                noad.n = n - 1;
 
             },
 
@@ -84,10 +123,6 @@ Skoarmantics {
                 noad.replace_children(items);
 
             },
-        
-            "clef" -> {
-                | skoar, noad |
-            },
 
             "stmt" -> {
                 | skoar, noad |
@@ -120,25 +155,39 @@ Skoarmantics {
                 toke = noad.absorb_toke;
 
                 if (toke.isKindOf(Toke_OctaveShift)) {
-                    noad.performer = {noad.voice.octave_shift(toke.val);};
+                    noad.performer = {
+                        | m, nav |
+                        m.voice.octave_shift(toke.val);
+                    };
                 };
 
                 if (toke.isKindOf(Toke_OttavaA)) {
-                    noad.performer = {noad.voice.octave_shift(1);};
+                    noad.performer = {
+                        | m, nav |
+                        m.voice.octave_shift(1);
+                    };
                 };
 
                 if (toke.isKindOf(Toke_OttavaB)) {
-                    noad.performer = {noad.voice.octave_shift(-1);};
+                    noad.performer = {
+                        | m, nav |
+                        m.voice.octave_shift(-1);
+                    };
                 };
 
                 if (toke.isKindOf(Toke_QuindicesimaA)) {
-                    noad.performer = {noad.voice.octave_shift(1);};
+                    noad.performer = {
+                        | m, nav |
+                        m.voice.octave_shift(1);
+                    };
                 };
 
                 if (toke.isKindOf(Toke_QuindicesimaB)) {
-                    noad.performer = {noad.voice.octave_shift(-1);};
+                    noad.performer = {
+                        | m, nav |
+                        m.voice.octave_shift(-1);
+                    };
                 };
-
 
             },
 
@@ -202,7 +251,25 @@ Skoarmantics {
                 };
 
             },
-        
+
+            "nouny" -> {
+                | skoar, noad |
+
+                var x = nil;
+
+                x = noad.children[0].toke;
+"BLOOB".post; x.dump;
+                if (x.isKindOf(Toke_BlockRef)) {
+                    noad.performer = {
+                        | m, nav |
+"BLARB".postln;
+                        m.gosub(x.val, nav);
+"BLEEZEBURBS".postln;
+                    };
+                };
+
+            },
+
             "msg" -> {
                 | skoar, noad |
             },
@@ -216,7 +283,7 @@ Skoarmantics {
             "dynamic" -> {
                 | skoar, noad |
                 var toke = noad.absorb_toke;
-                
+
                 noad.performer = {
                     | m |
                     m.voice.dynamic(toke);
@@ -334,11 +401,17 @@ Skoarmantics {
                 noad.noat = noat;
         
                 if (noat.isKindOf(Toke_NamedNoat)) {
-                    noad.performer = {noad.voice.noat_go(noat)};
+                    noad.performer = {
+                        | m, nav |
+                        m.voice.noat_go(noat);
+                    };
                 };
 
                 if (noat.isKindOf(Toke_Choard)) {
-                    noad.performer = {noad.voice.choard_go(noat)};
+                    noad.performer = {
+                        | m, nav |
+                        m.voice.choard_go(noat);
+                    };
                 };
             },
         
@@ -347,17 +420,26 @@ Skoarmantics {
 
                 var x = noad.children[0];
 
-                // TODO Symbol | CurNoat | listy
+                // TODO Symbol | OnBeat | listy
                 if (x.name == "listy") {
-                    x.performer = {noad.voice.choard_listy(x)};
+                    x.performer = {
+                        | m, nav |
+                        m.choard_listy(x);
+                    };
                 };
 
-                if (x.name == "CurNoat") {
-                    x.performer = {noad.voice.reload_curnoat(x)};
+                if (x.name == "OnBeat") {
+                    x.performer = {
+                        | m, nav |
+                        m.voice.reload_on_beat(x);
+                    };
                 };
 
                 if (x.name == "Symbol") {
-                    x.performer = {noad.voice.noat_symbol(x)};
+                    x.performer = {
+                        | m, nav |
+                        m.voice.noat_symbol(x);
+                    };
                 };
 
             },
@@ -366,11 +448,17 @@ Skoarmantics {
                 | skoar, noad |
 
                 if (noad.toke.isKindOf(Toke_PedalUp)) {
-                    noad.performer = {noad.voice.pedal_up;};
+                    noad.performer = {
+                        | m, nav |
+                        m.voice.pedal_up;
+                    };
                 };
 
                 if (noad.toke.isKindOf(Toke_PedalDown)) {
-                    noad.performer = {noad.voice.pedal_down;};
+                    noad.performer = {
+                        | m, nav |
+                        m.voice.pedal_down;
+                    };
                 };
 
             }

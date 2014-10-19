@@ -13,11 +13,15 @@ EOF:         unused
 Whitespace:  [ \\t]*
 Newline:     [\\n\\r\\f]+
 
-Voice*:         \\.(([a-zA-Z][a-zA-Z0-9_]*)?|\\.+)
+Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
-CurNoat:        [$]
+BlockSep:       !!
+BlockName*:     [a-zA-Z_][a-zA-Z0-9_]*
+BlockRef*:      ![a-zA-Z_][a-zA-Z0-9_]*
+
+OnBeat:         [$]
 Portamento:     port\\.?
 Slur:           [+][+]
 
@@ -25,7 +29,7 @@ Slur:           [+][+]
 Int*:           (-)?(0|[1-9][0-9]*)(?![mv][ab]|\\.[0-9]|/)
 Float*:         (-)?(0|[1-9][0-9]*)\\.[0-9]+
 
-Meter*:         [1-9][0-9]*/[1-9[0-9]*
+Meter*:         [1-9][0-9]*/[1-9][0-9]*
 
 ListS:          <(?![!=?])
 ListE:          >
@@ -81,7 +85,7 @@ Nosey:            ,
 DaCapo:           D\\.C\\.|Da Capo
 DalSegno:         D\\.S\\.|Dal Segno
 Fine:             fine
-Segno*:           ,($|segno)`(?:_[a-zA-Z_][a-zA-Z0-9_]*`)*
+Segno*:           ,([$]|segno)`(?:_[a-zA-Z_][a-zA-Z0-9_]*`)*
 Coda:             \\([+]\\)
 Rep*:             %+
 AlCoda:           al(la)? coda

@@ -145,7 +145,7 @@ SkoarVoice {
 
     }
 
-    reload_curnoat {
+    reload_on_beat {
         | noat |
     }
 

@@ -15,7 +15,7 @@ src = """
 skoar              : branches
 +branches          : branch branches | <e>
 
-branch*            : optional_voice phrases Newline
+branch*            : optional_voice phrases Newline | block Newline
 +optional_voice    : Voice | <e>
 
 +phrases           : phrasey phrases | <e>
@@ -30,6 +30,10 @@ dal_goto*          : DaCapo al_x | DalSegno al_x
 al_x*              : AlCoda | AlSegno | AlFine | <e>
 
 beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
+
+block*             : BlockSep BlockName BlockSep block_lines BlockSep
++block_lines       : block_line block_lines | <e>
+block_line*        : phrases Newline
 
 listy*             : ListS listy_suffix
 +listy_suffix      : listy_entries ListE
@@ -49,16 +53,16 @@ noaty*           : noat_literal | noat_reference
 noat_literal*    : Choard | NamedNoat
 
 # this isn't right, these have other purposes than noats
-noat_reference*  : Symbol | CurNoat | listy
+noat_reference*  : Symbol | OnBeat | listy
 
-nouny            : cthulhu | noaty | conditional | nouny_literal | accidentally | musical_keyword
-+nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String
+nouny*           : cthulhu | noaty | conditional | nouny_literal | accidentally | musical_keyword
++nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | BlockRef
 
 skoaroid*        : nouny skoaroid_prime
 +skoaroid_prime  : assignment skoaroid_prime | <e>
 
 assignment*      : AssOp settable
-+settable        : Caesura | CurNoat | Symbol | listy | Quarters | Eighths
++settable        : Caesura | OnBeat | Symbol | listy | Quarters | Eighths
 
 stmt*            : skoaroid msg_chain_node
 optional_stmt    : stmt | Newline | <e>

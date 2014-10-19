@@ -12,6 +12,7 @@ Skoar {
     var  <skoarboard;   // copied into event
     var  <voices;       // dictionary of voices
     var  <conductoar;   // default voice
+    var  <blocks;       // collection of blocks
 
     var   when_voices_ready;  // list of functions to run after voices have been assigned
 
@@ -37,6 +38,8 @@ Skoar {
         voices = IdentityDictionary.new;
         conductoar = SkoarVoice.new(this, \conductoar);
         voices[\conductoar] = conductoar;
+
+        blocks = IdentityDictionary.new;
 
         this.skoarboard_defaults;
 

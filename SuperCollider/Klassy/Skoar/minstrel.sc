@@ -14,6 +14,8 @@ SkoarMinstrel {
     var <>segno_seen;
     var <>al_fine;
 
+    var block_iters;
+
     var noad_stream;
 
 
@@ -36,6 +38,8 @@ SkoarMinstrel {
         parts = List[];
         parts_index = Dictionary.new;
         colons_burned = Dictionary.new;
+
+        block_iters = IdentityDictionary.new;
 
         // when set true, we will halt at a Toke_Fine
         al_fine = false;
@@ -120,6 +124,32 @@ SkoarMinstrel {
             };
         });
 
+    }
+
+    gosub {
+        | label, nav |
+
+        var blk = skoar.blocks[label];
+        var sub;
+        var iter;
+
+        var f = {
+            | x |
+            x.perform(this, nav);
+            x.yield;
+        };
+
+        // first line
+        blk.init_line.inorder(f);
+
+        iter = block_iters[label];
+        if (iter == nil) {
+            iter = blk.iter;
+            block_iters[label] = iter;
+        };
+
+        // current line
+        iter.next.inorder(f);
     }
 
     // goes along, configuring a new event, which it returns when it finds a beat.

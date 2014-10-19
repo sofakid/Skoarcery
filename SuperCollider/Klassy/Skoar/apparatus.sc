@@ -13,6 +13,7 @@ SkoarNoad {
     var <>setter;          // a function to perform assignment
 
     var <>name;            // name of the nonterminal
+    var <>label;
 
     var <>performer;       // function to set when defining semantics.
     var <>one_shots;       // function to set for stuff that applies for one beat.
@@ -63,6 +64,7 @@ SkoarNoad {
         };
 
         voice = nil;
+        label = nil;
 
     }
 
@@ -126,7 +128,6 @@ SkoarNoad {
     // ----------------
     add_noad {
         | noad |
-
         children.add(noad);
         noad.i = n;
         n = n + 1;

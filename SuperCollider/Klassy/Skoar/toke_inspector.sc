@@ -139,6 +139,16 @@ SkoarTokeInspector {
                 toke.val = toke.lexeme[1..].asSymbol;
             },
 
+            "Toke_BlockName" -> {
+                | toke |
+                toke.val = toke.lexeme.asSymbol;
+            },
+
+            "Toke_BlockRef" -> {
+                | toke |
+                toke.val = toke.lexeme[1..].asSymbol;
+            },
+
             "Toke_Voice" -> {
                 | toke |
                 var s = toke.lexeme;

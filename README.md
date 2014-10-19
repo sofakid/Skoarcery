@@ -10,9 +10,6 @@ Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [S
 # Drumming example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/beets)
 
 
-    <? Special thanks to The Breakbeat Bible for the dope dubstepz.
-       The synths are the SOS drums from the SuperCollider examples folder. ?>
-
     <? 4/4 time, 70 beats per min. No voice label on this line, all voices will read it ?>
 
     4/4 70 => )
@@ -68,7 +65,8 @@ Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [S
     .s  | ))) |
     .k  | ))) |
 
-
+    <? Special thanks to The Breakbeat Bible for the dope dubstepz.
+       The synths are the SOS drums from the SuperCollider examples folder. ?>
 
 # MIDI example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/windwaker-sv1)
 
@@ -121,7 +119,7 @@ SuperCollider pattern.
 
     ||: Am ]]] oo/ ]]]  | G oo/ ]]] ooo/ | F oo/ ]]] ooo/ | F ooo/ ]]] oo/ :||
 
-    """.skoar.pskoar.play;
+    """.skoar.play;
     )
 
 # beats
