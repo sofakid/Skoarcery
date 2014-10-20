@@ -403,6 +403,7 @@ Skoarmantics {
 
             "msg" -> {
                 | skoar, noad |
+                
             },
 
             "msg_chain_node" -> {

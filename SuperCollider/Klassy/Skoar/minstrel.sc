@@ -149,7 +149,7 @@ SkoarMinstrel {
         };
 
         // current line
-        iter.next.inorder(f);
+        iter.random.inorder(f);
     }
 
     // goes along, configuring a new event, which it returns when it finds a beat.

@@ -240,14 +240,22 @@ _a ) c ] ] <_a, e> ).
 (
 y = """
 90 => )
+!! dorp !!
+_c
+_d
+_e
+_g
+_a
+c
+d
+e
+g
+a
+!!
 
-,segno`
+!dorp.next ]]
 
-<3,3.14,c> )
-
-_a )  fine c ] e ] a )
-D.S. al fine
-
+D.C.
 """.skoar.play;
 
 

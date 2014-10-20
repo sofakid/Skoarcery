@@ -266,11 +266,11 @@ SkoarNoad {
 
         // setting a performer handler overrides value performer
         case {performer != nil} {
-            (name ++ " performer").postln;
+            //(name ++ " performer").postln;
             performer.(minstrel, nav);
 
         } {val != nil} {
-            (name ++ " value performer").postln;
+            //(name ++ " value performer").postln;
             val.postln;
             val.performer(minstrel, nav);
 

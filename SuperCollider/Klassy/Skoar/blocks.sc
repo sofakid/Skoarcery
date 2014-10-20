@@ -49,13 +49,13 @@ SkoarBlockIter {
 
     random {
         i = n.rand;
-        (label ++ " random: " ++ i).postln;
+        //(label ++ " random: " ++ i).postln;
         ^lines[i];
     }
 
     next {
         i = 1 + i % n;
-        (label ++ " next: " ++ i).postln;
+        //(label ++ " next: " ++ i).postln;
         ^lines[i];
     }
 

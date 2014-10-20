@@ -19,7 +19,7 @@ branch*            : optional_voice phrases Newline | block Newline
 +optional_voice    : Voice | <e>
 
 +phrases           : phrasey phrases | <e>
-+phrasey           : Comment | marker | Meter | skoaroid | dal_goto | beat
++phrasey           : Comment | marker | Meter | stmt | dal_goto | beat
 
 marker*            : Segno | Fine | coda | Volta | Bars
 

@@ -30,13 +30,25 @@ var melody_A = """
 | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).       a)   ] |
 """.pskoar;
 
+
+)
+
+(
 var melody_B = """
-<! 9/8 120 => ). !> -1 => @transpose mp
+120 => ).
+
+-1 => @transpose
+
+mp
+
 |: g] f#] e] f#)  d] c#] d] e] | a] d] ] g] d] ] f#)    ] | g] a] b] b] g] e] a)  a]   | g] f#] d] e] f#] e]] f#]] e)  ] |
 |  d] c#] d] e)   e] a] g] c#] | g] d] ] f#)  ] e] c#] e] | d] b] d] g] a] b] f# d] g] | e).    ] f#] e] a)           ] :|
 
-""".pskoar;
+""".skoar.play;
 
+)
+
+(
 //Ptpar([Pseq([intro_melody, melody_A, melody_B]), Pseq([intro_bass, bass, bass])]).play;
 b = Ppar([Pchain([intro_melody, melody_A, melody_B]), Pchain([intro_bass, bass, bass])]);
 
@@ -57,7 +69,8 @@ b = """
 <? key is Db, so i flat everything and sharp c & f ?>
 -1 => @transpose
 
-<! 9/8 120 => ). !>
+9/8 120 => ).
+
 mp
 
 | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | _a )). }. |
