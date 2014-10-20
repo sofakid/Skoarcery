@@ -271,7 +271,7 @@ SkoarNoad {
 
         } {val != nil} {
             //(name ++ " value performer").postln;
-            val.postln;
+            //val.postln;
             val.performer(minstrel, nav);
 
         };

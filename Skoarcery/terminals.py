@@ -63,7 +63,7 @@ DynForte*:       mf(orte)?|f+orte|ff+
 DynSFZ:          sfz
 DynFP:           fp
 
-AssOp:            =>
+AssOp:            =>|[+]>|->
 MsgOp:            \\.
 Soak:             [?]
 

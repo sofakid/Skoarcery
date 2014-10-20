@@ -36,14 +36,81 @@ SkoarVoice {
         ^skoarboard[k];
     }
 
-
     event {
         var e = (type: \note);
 
         ^skoarboard.transformEvent(e);
     }
 
+    assign_incr {
+        | x, y |
+        var x_val = x.next_val;
+        var y_toke = y.toke;
+
+        if (y_toke.isKindOf(Toke_Symbol)) {
+            y.val = SkoarValueSymbol(y_toke.val);
+            this.incr_symbol(x_val, y.val);
+        };
+
+        if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
+            this.incr_tempo(x.val, y.toke);
+        };
+    }
+
+    assign_decr {
+        | x, y |
+        var x_val = x.next_val;
+        var y_toke = y.toke;
+
+        if (y_toke.isKindOf(Toke_Symbol)) {
+            y.val = SkoarValueSymbol(y_toke.val);
+            this.decr_symbol(x_val, y.val);
+        };
+
+        if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
+            this.decr_tempo(x.val, y_toke);
+        };
+    }
+
+    assign_set {
+        | x, y |
+        var x_val = x.next_val;
+        var y_toke = y.toke;
+
+        if (y.toke.isKindOf(Toke_Symbol)) {
+            y.val = SkoarValueSymbol(y.toke.val);
+            this.assign_symbol(x_val, y.val);
+        };
+
+        if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
+            this.set_tempo(x.val, y_toke);
+        };
+
+    }
+
      // x => y
+    incr_symbol {
+        | x, y |
+        var k = y.val;
+        var v = x.flatten;
+
+        v = skoarboard[k] + v;
+
+        ("@" ++ k ++ " <= ").post; v.dump;
+        skoarboard[k] = v;
+    }
+
+    decr_symbol {
+        | x, y |
+        var k = y.val;
+        var v = x.flatten;
+
+        v = skoarboard[k] - v;
+
+        ("@" ++ k ++ " <= ").post; v.dump;
+        skoarboard[k] = v;
+    }
+
     assign_symbol {
         | x, y |
         var k = y.val;
@@ -51,6 +118,23 @@ SkoarVoice {
 
         ("@" ++ k ++ " <= ").post; v.dump;
         skoarboard[k] = v;
+    }
+
+
+    incr_tempo {
+        | bpm, beat |
+
+        var x = bpm.flatten / 60 * beat.val;
+        var y = skoarboard[\tempo] + x;
+        skoarboard[\tempo] = y;
+    }
+
+    decr_tempo {
+        | bpm, beat |
+
+        var x = bpm.flatten / 60 * beat.val;
+        var y = skoarboard[\tempo] - x;
+        skoarboard[\tempo] = y;
     }
 
     set_tempo {

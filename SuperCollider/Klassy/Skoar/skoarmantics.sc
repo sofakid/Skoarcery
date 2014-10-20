@@ -166,36 +166,35 @@ Skoarmantics {
             "assignment" -> {
                 | skoar, noad |
 
+                var op = nil;
+
                 // the settable
                 var y = nil;
                 var y_toke = nil;
 
+                op = noad.children[0].toke.lexeme;
                 y = noad.children[1];
-                y_toke = y.toke;
 
                 // we prepare the destination here (noad.setter), we'll setup the write in skoaroid
 
-                // set a value on voice's skoarboard, keyed by a symbol
-                if (y_toke.isKindOf(Toke_Symbol)) {
-                    y.val = SkoarValueSymbol(y_toke.val);
-
-                    noad.setter = {
+                noad.setter = switch (op)
+                    {"+>"} {{
                         | x, voice |
                         var x_val = x.next_val;
+                        voice.assign_incr(x, y);
+                    }}
 
-                        "derfderfderf".postln; x_val.dump; y.val.dump;
-                        voice.assign_symbol(x_val, y.val);
-                    };
-                };
-
-                // set tempo
-                if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
-                    noad.setter = {
+                    {"->"} {{
                         | x, voice |
-                        voice.set_tempo(x.val, y_toke);
+                        var x_val = x.next_val;
+                        voice.assign_decr(x, y);
+                    }}
 
-                    };
-                };
+                    {"=>"} {{
+                        | x, voice |
+                        var x_val = x.next_val;
+                        voice.assign_set(x, y);
+                    }};
 
             },
 
@@ -403,7 +402,7 @@ Skoarmantics {
 
             "msg" -> {
                 | skoar, noad |
-                
+
             },
 
             "msg_chain_node" -> {

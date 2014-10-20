@@ -239,23 +239,41 @@ _a ) c ] ] <_a, e> ).
 )
 (
 y = """
-90 => )
+100 => )
+
+!! zorp !!
+ | ]].      ]]. ]]     |
+ | ]] ]]  ]            |
+ | o/. ]]              |
+ | ]] ]]     100 +> )          |
+ | ]  o/. ]]           |
+ | ]] ooo/ ^]]         |
+ | ]] ooo/             |
+ | ]] ooo/             |
+ | ^]] ]] ooo/         |
+!!
+
 !! dorp !!
-_c
-_d
-_e
-_g
 _a
+_a
+c
 c
 d
 e
 g
 a
+a
 !!
 
-!dorp.next ]]
 
-D.C.
+,segno`
+
+
+!dorp.next !zorp.next
+
+
+
+D.S.
 """.skoar.play;
 
 
