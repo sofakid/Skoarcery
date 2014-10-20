@@ -89,10 +89,6 @@ Skoarmantics {
 
             },
 
-            "msg_chain_node" -> {
-                | skoar, noad |
-            },
-        
             "beat" -> {
                 | skoar, noad |
                 var t = noad.absorb_toke;
@@ -104,30 +100,14 @@ Skoarmantics {
 
             "listy" -> {
                 | skoar, noad |
+                noad.val = SkoarValueArray(noad.collect_values);
 
-                var n = noad.children.size;
-                var x = nil;
-                var items = List.new;
-
-                // skip the first and last tokens
-                for (1, n - 2, {
-                    | i |
-                    x = noad.children[i];
-
-                    // skip the separators
-                    if (x.toke.isKindOf(Toke_ListSep) == false) {
-                        items.add(x);
-                    };
-                });
-
-                noad.replace_children(items);
+                noad.n = 0;
+                noad.children = [];
+                noad.toke = nil;
 
             },
 
-            "stmt" -> {
-                | skoar, noad |
-            },
-        
             "musical_keyword_misc" -> {
                 | skoar, noad |
 
@@ -137,14 +117,6 @@ Skoarmantics {
                     noad.one_shots = {"TODO stress noat".postln;};
                 };
 
-            },
-
-            "accidentally" -> {
-                | skoar, noad |
-            },
-
-            "boolean" -> {
-                | skoar, noad |
             },
 
             "ottavas" -> {
@@ -205,23 +177,23 @@ Skoarmantics {
 
                 // set a value on voice's skoarboard, keyed by a symbol
                 if (y_toke.isKindOf(Toke_Symbol)) {
+                    y.val = SkoarValueSymbol(y_toke.val);
+
                     noad.setter = {
-                        | x, v |
-                        v.assign_symbol(x, y_toke);
+                        | x, voice |
+                        var x_val = x.next_val;
+                        voice.assign_symbol(x_val, y.val);
                     };
                 };
 
                 // set tempo
                 if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
                     noad.setter = {
-                        | x, v |
-                        var x_toke = x.next_toke;
+                        | x, voice |
+                        var x_val = x.next_val;
 
-                        if (x_toke.isKindOf(Toke_Int) || x_toke.isKindOf(Toke_Float)) {
-                            v.set_tempo(x_toke.val, y_toke);
-                        } {
-                            SkoarError("Tried to use a " ++ x_toke.name ++ " for tempo.").throw;
-                        };
+                        voice.set_tempo(x_val, y_toke);
+
                     };
                 };
 
@@ -256,19 +228,43 @@ Skoarmantics {
                 | skoar, noad |
 
                 var x = nil;
+                var clean = {
+                    noad.toke = nil;
+                    noad.children = [];
+                    noad.n = 0;
+                };
 
                 x = noad.children[0].toke;
-                if (x.isKindOf(Toke_BlockRef)) {
+                case {x.isKindOf(Toke_BlockRef)} {
                     noad.performer = {
                         | m, nav |
                         m.gosub(x.val, nav);
                     };
+                } {x.isKindOf(Toke_Int)} {
+                    noad.val = SkoarValueInt(x.val);
+                    clean.();
+
+                } {x.isKindOf(Toke_Float)} {
+                    noad.val = SkoarValueFloat(x.val);
+                    clean.();
+
+                } {x.isKindOf(Toke_NamedNoat)} {
+                    noad.val = SkoarValueNoat(x);
+                    clean.();
+
+                } {x.isKindOf(Toke_Choard)} {
+                    noad.val = SkoarValueChoard(x);
+                    clean.();
+
+                } {x.isKindOf(Toke_Symbol)} {
+                    noad.val = SkoarValueSymbol(x.val);
+                    clean.();
+
+                } {x.isKindOf(Toke_String)} {
+                    noad.val = SkoarValueString(x.val);
+                    clean.();
                 };
 
-            },
-
-            "msg" -> {
-                | skoar, noad |
             },
 
             "cthulhu" -> {
@@ -383,64 +379,7 @@ Skoarmantics {
                 };
             },
 
-            "coda" -> {
-                | skoar, noad |
-            },
 
-            "noaty" -> {
-                | skoar, noad |
-            },
-        
-            "noat_literal" -> {
-                | skoar, noad |
-        
-                var noat = noad.absorb_toke;
-                noad.noat = noat;
-        
-                if (noat.isKindOf(Toke_NamedNoat)) {
-                    noad.performer = {
-                        | m, nav |
-                        m.voice.noat_go(noat);
-                    };
-                };
-
-                if (noat.isKindOf(Toke_Choard)) {
-                    noad.performer = {
-                        | m, nav |
-                        m.voice.choard_go(noat);
-                    };
-                };
-            },
-        
-            "noat_reference" -> {
-                | skoar, noad |
-
-                var x = noad.children[0];
-
-                // TODO Symbol | OnBeat | listy
-                if (x.name == "listy") {
-                    x.performer = {
-                        | m, nav |
-                        m.voice.choard_listy(x);
-                    };
-                };
-
-                if (x.name == "OnBeat") {
-                    x.performer = {
-                        | m, nav |
-                        m.voice.reload_on_beat(x);
-                    };
-                };
-
-                if (x.name == "Symbol") {
-                    x.performer = {
-                        | m, nav |
-                        m.voice.noat_symbol(x);
-                    };
-                };
-
-            },
-        
             "pedally" -> {
                 | skoar, noad |
 
@@ -458,6 +397,26 @@ Skoarmantics {
                     };
                 };
 
+            },
+
+            "msg" -> {
+                | skoar, noad |
+            },
+
+            "msg_chain_node" -> {
+                | skoar, noad |
+            },
+
+            "stmt" -> {
+                | skoar, noad |
+            },
+
+            "boolean" -> {
+                | skoar, noad |
+            },
+
+            "coda" -> {
+                | skoar, noad |
             }
 
         ];

@@ -46,17 +46,8 @@ pedally*             : PedalDown | PedalUp
 ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
-acc              : AccSharp | AccNatural | AccFlat
-accidentally*    : acc noaty
-
-noaty*           : noat_literal | noat_reference
-noat_literal*    : Choard | NamedNoat
-
-# this isn't right, these have other purposes than noats
-noat_reference*  : Symbol | OnBeat | listy
-
-nouny*           : cthulhu | noaty | conditional | nouny_literal | accidentally | musical_keyword
-+nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | BlockRef
+nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy
++nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | BlockRef | Choard | NamedNoat | Symbol | OnBeat
 
 skoaroid*        : nouny skoaroid_prime
 +skoaroid_prime  : assignment skoaroid_prime | <e>

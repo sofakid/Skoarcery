@@ -14,6 +14,7 @@ SkoarNoad {
 
     var <>name;            // name of the nonterminal
     var <>label;
+    var <>val;             // value types go here
 
     var <>performer;       // function to set when defining semantics.
     var <>one_shots;       // function to set for stuff that applies for one beat.
@@ -38,7 +39,6 @@ SkoarNoad {
     init {
         | nameArg, tokeArg, parentArg, i=0 |
 
-        performer = {};
         parent = parentArg;
 
         i = i;
@@ -49,13 +49,9 @@ SkoarNoad {
 
         children = List[];
 
-        noat = nil;
-
         // do i use these?
         is_rest = false;
         is_beat = false;
-
-        next_jmp = nil;
 
         if (toke.isKindOf(SkoarToke)) {
             inspectable = toke.class.inspectable;
@@ -63,8 +59,6 @@ SkoarNoad {
             inspectable = false;
         };
 
-        voice = nil;
-        label = nil;
 
     }
 
@@ -165,7 +159,13 @@ SkoarNoad {
     draw_tree {
         | tab = 1 |
 
-        var s = voice.name ++ ":".padRight(tab + 1) ++ name ++ "\n";
+        var s = voice.name ++ ":".padRight(tab + 1) ++ name;
+
+        if (val != nil) {
+            s = s ++ ": " ++ val.val;
+        };
+
+        s = s ++ "\n";
 
         children.do {
             | x |
@@ -242,14 +242,32 @@ SkoarNoad {
         ^x.next_toke;
     }
 
+    // find next value
+    next_val {
+        var x = children[0];
+        if (x.val != nil) {
+            ^x.val;
+        };
+
+        ^x.next_val;
+    }
+
     // -------------------
     // performing the tree
     // -------------------
     perform {
         | minstrel, nav |
 
-        if (performer != nil) {
+        // setting a performer handler overrides value performer
+        case {performer != nil} {
+            (name ++ " performer").postln;
             performer.(minstrel, nav);
+
+        } {val != nil} {
+            (name ++ " value performer").postln;
+            val.postln;
+            val.performer(minstrel, nav);
+
         };
     }
 
@@ -294,6 +312,22 @@ SkoarNoad {
         });
 
         ^results.asArray;
+    }
+
+    collect_values {
+
+        var results = List.new;
+
+        this.inorder({
+            | x |
+
+            if (x.val != nil) {
+                results.add(x.val);
+            };
+        });
+
+        ^results.asArray;
+
     }
 
 

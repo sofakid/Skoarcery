@@ -67,10 +67,6 @@ AssOp:            =>
 MsgOp:            \\.
 Soak:             [?]
 
-AccSharp:         #|sharp
-AccNatural:       nat
-AccFlat:          flat
-
 NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
 BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor
 Choard*:          (D(?![a.])|[ABCEFG])([Mm0-9]|sus|dim)*

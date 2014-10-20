@@ -266,22 +266,3 @@ SkoarTokeInspector {
     }
 
 }
-
-
-SkoarBar {
-    var <>i;             // each voice will number their bars, starting at 0
-    var <>pre_repeat;
-    var <>post_repeat;
-    var <>n_beats;
-
-    *new {
-        | toke |
-        ^super.new.init(toke);
-    }
-
-    init {
-        | toke |
-
-
-    }
-}
