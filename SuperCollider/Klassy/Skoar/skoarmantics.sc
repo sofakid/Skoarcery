@@ -182,6 +182,8 @@ Skoarmantics {
                     noad.setter = {
                         | x, voice |
                         var x_val = x.next_val;
+
+                        "derfderfderf".postln; x_val.dump; y.val.dump;
                         voice.assign_symbol(x_val, y.val);
                     };
                 };
@@ -190,9 +192,7 @@ Skoarmantics {
                 if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
                     noad.setter = {
                         | x, voice |
-                        var x_val = x.next_val;
-
-                        voice.set_tempo(x_val, y_toke);
+                        voice.set_tempo(x.val, y_toke);
 
                     };
                 };
@@ -211,6 +211,8 @@ Skoarmantics {
                     y = noad.children[1];
 
                     if (y.name == "assignment") {
+
+                        x.performer = {};
 
                         f = y.setter;
 

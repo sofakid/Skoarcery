@@ -46,18 +46,17 @@ SkoarVoice {
      // x => y
     assign_symbol {
         | x, y |
-
         var k = y.val;
-        var v = x.val;
+        var v = x.flatten;
 
-        ("@" ++ k ++ " = ").post; v.dump;
+        ("@" ++ k ++ " <= ").post; v.dump;
         skoarboard[k] = v;
     }
 
     set_tempo {
-        | bpm, val |
+        | bpm, beat |
 
-        var x = bpm / 60 * val.val;
+        var x = bpm.flatten / 60 * beat.val;
         skoarboard[\tempo] = x;
     }
 
@@ -71,7 +70,6 @@ SkoarVoice {
 
     noat_go {
         | noat |
-"noat_go ".post; noat.dump;
 
         hand.update(noat);
         cur_noat = hand.finger;
@@ -85,11 +83,9 @@ SkoarVoice {
     }
 
     choard_listy {
-        | noad |
+        | items |
 
-        var items = noad.val;
-
-        cur_noat = Array.new(items.size - 1);
+        cur_noat = Array.new(items.size);
 
         items.do {
             | o |

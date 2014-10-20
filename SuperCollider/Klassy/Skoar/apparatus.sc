@@ -244,12 +244,18 @@ SkoarNoad {
 
     // find next value
     next_val {
-        var x = children[0];
-        if (x.val != nil) {
-            ^x.val;
+        var x;
+
+        if (val != nil) {
+            ^val;
         };
 
-        ^x.next_val;
+        x = children[0];
+        if (x != nil) {
+            ^x.next_val;
+        };
+
+        ^nil;
     }
 
     // -------------------

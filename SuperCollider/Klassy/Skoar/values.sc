@@ -10,6 +10,8 @@ SkoarValue {
     as_noat { | m | ^val;}
 
     performer {}
+
+    flatten {^val;}
 }
 
 
@@ -49,6 +51,19 @@ SkoarValueSymbol : SkoarValue {
 }
 
 SkoarValueArray : SkoarValue {
+
+    flatten {
+        var out = Array.new(val.size);
+
+        val.do {
+            | x |
+            out.add(x.flatten);
+        };
+
+        "flattened array: ".post; out.postln;
+
+        ^out;
+    }
 
     performer {
         | m, nav |

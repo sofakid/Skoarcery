@@ -165,7 +165,7 @@ x = """
 
 fine
 
-.h  |: ]] ]] ]] ]]  !derp  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+.h  |: ]] ]] ]] ]]  !derp        ]] ]] ]] ]]   ]] ]] ]] ]] :|
 .s  |  }            )            }             )           :|
 .k  |  ]]. ]].  ]]  o/    ]] ]]  }             o/    ]      |
 
@@ -180,35 +180,60 @@ D.S. al fine
 
 """.skoar;
 )
-x.play;
 
-("""
+x.play;
+(
+"""
+<0,3,5> => @detune
+""".skoar.play;
+)
+(x = """
+
+90 => )
 mp
 
-@acid => @instrument
+@default => @instrument
+
+!! zorp !!
+ | < _a, c# >            |
+ | < a, _e >             |
+ | <0,3,5> => @detune c# |
+!!
 
 !! dorp !!
  | ]].      ]]. ]]     |
  | ]] ooo/ ^]] ]] ooo/ |
  | ]] ]]  ]  o/. ]]    |
+ | ]].      ]]. ]]     |
+ | ]] ]]  ]  o/. ]]    |
+ | ]] ooo/ ^]] ]] ooo/ |
+ | ]] ]]  ]  o/. ]]    |
+ | ]] ooo/ ^]] ]] ooo/ |
+ | ]] ]]  ]  o/. ]]    |
+ | ]] ooo/ ^]] ]] ooo/ |
+ | ]] ]]  ]  o/. ]]    |
+ | ]] ooo/ ^]] ]] ooo/ |
  | mf ]] ] ]] fine     |
 !!
 
 ,segno`
 
-| _a ] ]] oo/ _b ] ]] oo/ c ] ] !dorp |
+0 => @detune
+
+| _a ] ]] oo/ _b !dorp c ] ] !zorp !dorp |
 
 D.S. al fine
 
-""".skoar.play;
+""".skoar;
 )
-
-
+x.play
 (
+y = """ff
+<0,3,5> => @detune
+-1 => @pan
+_a ) c ] ] <_a, e> ).
 
-a = case
-{2 == 1} {"yay".postln;}
-{"food".postln;};
+""".skoar.play;
 
 
 )
@@ -217,6 +242,8 @@ y = """
 90 => )
 
 ,segno`
+
+<3,3.14,c> )
 
 _a )  fine c ] e ] a )
 D.S. al fine
