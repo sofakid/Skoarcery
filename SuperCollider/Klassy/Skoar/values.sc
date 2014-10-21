@@ -119,7 +119,7 @@ SkoarValueChoard : SkoarValue {
 
     performer {
         | m, nav |
-        //m.voice.choard_go(val);
+        m.voice.choard_go(val);
     }
 
 }
