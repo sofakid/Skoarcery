@@ -1,7 +1,7 @@
 Skoarpion {
 
     var <name;
-    var <size;
+    var <n;
 
     var <head;
     var <body;
@@ -15,7 +15,7 @@ Skoarpion {
     init {
         | noad |
         var kids = noad.children;
-        var n = kids.size;
+        var m = kids.size;
 
         name = noad.label;
 
@@ -24,24 +24,16 @@ Skoarpion {
         // 2 - sep
         // 3 - head
         head = kids[3];
-
+        body = kids[4..m-3];
         // n-2: sep
         // n-1: stinger
-        stinger = kids[n-1];
+        stinger = kids[m-1];
 
-        kids.do {
-            | x |
-            x.name.postln;
-        };
-
-        if (stinger.name == "stinger") {
-            body = kids[4..n-2];
-        } {
+        if (stinger.n == 0) {
             stinger = nil;
-            body = kids[4..n-1];
         };
-        
-        size = body.size;
+
+        n = body.size;
     }
 
     iter {
@@ -66,7 +58,7 @@ SkoarpionIter {
         | skrp |
         body = skrp.body;
         name = skrp.name;
-        n = skrp.size;
+        n = skrp.n;
         i = -1;
     }
 

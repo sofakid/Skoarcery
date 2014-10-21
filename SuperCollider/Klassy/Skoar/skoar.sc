@@ -196,7 +196,7 @@ Skoar {
 
             v.head.postln;
             "head:".postln;
-            v.head.draw_tree.postln;
+            v.head.draw_tree.post;
 
             "body:".postln;
             v.body.do {|x| x.draw_tree.post;};
@@ -205,6 +205,8 @@ Skoar {
                 "stinger: ".postln;
                 v.stinger.draw_tree.post;
             };
+
+            "".postln;
 
         };
 

@@ -58,9 +58,8 @@ assignment*      : AssOp settable
 
 stmt*            : skoaroid msg_chain_node
 optional_stmt    : stmt | Newline | <e>
-msg_chain_node*  : optional_soak MsgOp msg msg_chain_node | <e>
++msg_chain_node  : MsgOp msg msg_chain_node | <e>
 msg*             : MsgNameWithArgs listy_suffix | MsgName | listy
-optional_soak    : Soak | <e>
 
 boolean*         : skoaroid BooleanOp skoaroid
 conditional      : CondS optional_stmt CondSep boolean CondSep optional_stmt CondE

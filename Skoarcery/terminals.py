@@ -31,7 +31,7 @@ Float*:         (-)?(0|[1-9][0-9]*)\\.[0-9]+
 
 Meter*:         [1-9][0-9]*/[1-9][0-9]*
 
-ListS:          <(?![!=?])
+ListS:          <(?![=?])
 ListE:          >
 ListSep:        ,
 
@@ -48,6 +48,8 @@ Quarters*:       \\.?[)]+\\.?
 Eighths*:        \\.?\\]+\\.?
 
 Caesura:        //
+Slash:          /(?!/)
+
 
 # we can't allow f for forte as f is a noat, so we allow
 #
@@ -65,7 +67,6 @@ DynFP:           fp
 
 AssOp:            =>|[+]>|->
 MsgOp:            \\.
-Soak:             [?]
 
 NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
 BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor
@@ -100,7 +101,6 @@ Loco:             loco
 Volta*:           \\[\\d+\\.\\]
 
 Symbol*:          [\\\\@][a-zA-Z][a-zA-Z0-9]+
-Slash:            /
 
 # TODO: deal with \"
 String*:          \'[^']*\'

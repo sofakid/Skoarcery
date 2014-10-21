@@ -228,36 +228,41 @@ D.S. al fine
 )
 x.play
 (
-y = """ff
-<0,3,5> => @detune
--1 => @pan
-_a ) c ] ] <_a, e> ).
+y = """
+
+
+<1,3,5>.choose.postln
+
+<0,2,4>.choose
+
 
 """.skoar.play;
 
 
 )
 y.play;
-
+Integer
 (
 y = """
 
 60 => ) mf
+a
 
 !! zerp !!
  | ]].      ]]. ]]     |
  | ]] ooo/ ^]] ]] ooo/ |
  | ]] ]]  ]  o/. ]]    |
-!! <_a,c,e,g>.random
+!! <_a, c, e>.choose
 
 ,segno` !zerp.next D.S.
 
 """.skoar;
 
 )
-
+String.pop
+if (nil.isKindOf(Toke_MsgOp)) {} { "food".postln;};
 "killall scsynth".unixCmd;
-
+Class
 (
 
 x = """
@@ -270,9 +275,9 @@ x = """
 
 ,segno`
 
-.h  |: ]] ]] ]] ]]  ^]] ^]] ^]] ^]]  .]] .]] oo/ .]]       ]] ]] ]]      ]] :|
-.s  |: }            ^)                }                   ^]     ]]] ]]] ]]  |
-.k  |: )             o/.              ]]  oo/ ^]] ]] oo/   }                 |
+.h  |: ]] ]] ]] ]]  / ^]] ^]] ^]] ^]]  .]] .]] oo/ .]]       ]] ]] ]]      ]] :|
+.s  |: }            ^)                }                   ^]     ]]] ]]] ]]    |
+.k  |: )             o/.              ]]  oo/ ^]] ]] oo/   }                   |
 
 fine
 
@@ -290,34 +295,3 @@ D.S. al fine
 """.skoar;
 )
 x.play;
-Prand
-
-List
-SkoarBoard {
-
-    var data;
-
-    init {
-        data = IdentityDictionary.new;
-    }
-
-    put {
-        | k, v |
-        data[k] = v;
-    }
-
-    at {
-        | k |
-        ^data[k];
-    }
-
-    event {
-        var e = (type: \note);
-
-        ^data.transformEvent(e);
-    }
-
-
-}
-
-Event

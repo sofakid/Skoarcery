@@ -218,49 +218,6 @@ Skoarmantics {
 
             },
 
-            "nouny" -> {
-                | skoar, noad |
-
-                var x = nil;
-                var clean = {
-                    noad.toke = nil;
-                    noad.children = [];
-                    noad.n = 0;
-                };
-
-                x = noad.children[0].toke;
-                case {x.isKindOf(Toke_SkoarpionRef)} {
-                    noad.performer = {
-                        | m, nav |
-                        m.gosub(x.val, nav);
-                    };
-                } {x.isKindOf(Toke_Int)} {
-                    noad.val = SkoarValueInt(x.val);
-                    clean.();
-
-                } {x.isKindOf(Toke_Float)} {
-                    noad.val = SkoarValueFloat(x.val);
-                    clean.();
-
-                } {x.isKindOf(Toke_NamedNoat)} {
-                    noad.val = SkoarValueNoat(x);
-                    clean.();
-
-                } {x.isKindOf(Toke_Choard)} {
-                    noad.val = SkoarValueChoard(x);
-                    clean.();
-
-                } {x.isKindOf(Toke_Symbol)} {
-                    noad.val = SkoarValueSymbol(x.val);
-                    clean.();
-
-                } {x.isKindOf(Toke_String)} {
-                    noad.val = SkoarValueString(x.val);
-                    clean.();
-                };
-
-            },
-
             "cthulhu" -> {
                 | skoar, noad |
                 noad.name = "^^(;,;)^^";
@@ -393,17 +350,105 @@ Skoarmantics {
 
             },
 
-            "msg" -> {
+
+            "nouny" -> {
                 | skoar, noad |
+
+                var x = nil;
+                var clean = {
+                    noad.toke = nil;
+                    noad.children = [];
+                    noad.n = 0;
+                };
+
+                x = noad.children[0].toke;
+                case {x.isKindOf(Toke_SkoarpionRef)} {
+                    noad.performer = {
+                        | m, nav |
+                        m.gosub(x.val, nav);
+                    };
+                } {x.isKindOf(Toke_Int)} {
+                    noad.val = SkoarValueInt(x.val);
+                    clean.();
+
+                } {x.isKindOf(Toke_Float)} {
+                    noad.val = SkoarValueFloat(x.val);
+                    clean.();
+
+                } {x.isKindOf(Toke_NamedNoat)} {
+                    noad.val = SkoarValueNoat(x);
+                    clean.();
+
+                } {x.isKindOf(Toke_Choard)} {
+                    noad.val = SkoarValueChoard(x);
+                    clean.();
+
+                } {x.isKindOf(Toke_Symbol)} {
+                    noad.val = SkoarValueSymbol(x.val);
+                    clean.();
+
+                } {x.isKindOf(Toke_String)} {
+                    noad.val = SkoarValueString(x.val);
+                    clean.();
+                };
 
             },
 
-            "msg_chain_node" -> {
+            "msg" -> {
                 | skoar, noad |
+
+                var x = nil;
+                var args = nil;
+
+                var clean = {
+                    noad.toke = nil;
+                    noad.children = [];
+                    noad.n = 0;
+                };
+
+                x = noad.children[0].toke;
+                args = SkoarValueArray(noad.collect_values);
+
+                noad.val = SkoarValueMsg(x);
+                noad.val.args = args;
+
+                clean.();
+
             },
 
             "stmt" -> {
                 | skoar, noad |
+
+                var kids = List[];
+                var result;
+
+                // strip out the operators
+                noad.children.do {
+                    | x |
+                    if (x.toke.isKindOf(Toke_MsgOp) == false) {
+                        kids.add(x);
+                    };
+                };
+
+                noad.children = kids;
+                noad.n = kids.size;
+
+                noad.performer = {
+                    | m, nav |
+                    result = kids[0].next_val;
+
+                    for (1, noad.n-1, {
+                        | i |
+                        var x = kids[i].val;
+                        if (x.isKindOf(SkoarValueMsg)) {
+                            result = result.skoar_msg(x);
+                        };
+                    });
+
+                    result.performer(m, nav);
+                };
+
+
             },
 
             "boolean" -> {
