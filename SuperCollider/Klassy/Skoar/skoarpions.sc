@@ -25,18 +25,15 @@ Skoarpion {
         // 3 - head
         head = kids[3];
 
-
         // n-2: sep
         // n-1: stinger
         stinger = kids[n-1];
 
-        "SKAD:LSAKJD:SLAKJD:SALKJDS:ALKDJSA:LDKSA".postln;
         kids.do {
             | x |
             x.name.postln;
         };
 
-        stinger.dump;
         if (stinger.name == "stinger") {
             body = kids[4..n-2];
         } {

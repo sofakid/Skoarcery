@@ -241,40 +241,18 @@ y.play;
 
 (
 y = """
+
+60 => ) mf
+
 !! zerp !!
  | ]].      ]]. ]]     |
  | ]] ooo/ ^]] ]] ooo/ |
  | ]] ]]  ]  o/. ]]    |
-!! !dorp
+!! <_a,c,e,g>.random
 
-!! dorp !!
-_a
-_a
-c
-c
-c
-d
-e
-e
-g
-a
-a
-!!
+,segno` !zerp.next D.S.
 
-<0,3,5> => @detune
-
-200 => )
-
-Am
-
-,segno`
-
-!zerp
-
-D.S.
 """.skoar;
-
-
 
 )
 

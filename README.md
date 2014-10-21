@@ -252,7 +252,7 @@ Install
 
 map Klassy folder to the SuperCollider extensions folder.
 
-    ln -s ~/.../Skoar/SuperCollider/Klassy ~/Library/Application\ Support/SuperCollider/Extensions/Klassy
+    ln -s ~/.../Skoar/SuperCollider/Klassy/Skoar ~/Library/Application\ Support/SuperCollider/Extensions/Klassy/Skoar
 
 The lexical and syntactic analysers, lex.sc and rdpp.sc (ditto .py) are built with Skoarcery.
 They are built and written to SuperCollider/Klassy.
@@ -273,7 +273,7 @@ All we do is recognise, no capture groups.
 
 
 ### [nonterminals.py]
-- Defines an LL(1) grammar suitable for building recursive decent parsers for skoar.
+- Defines an LL(1) grammar suitable for building recursive decent predictive parsers for skoar.
 
 - Nonterminals by convention are like_this
 
@@ -323,10 +323,10 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 - [apparatus.sc] - The parse tree code. Noads, searching, iteration, etc.
 - [voice.sc] - Voice object - each voice is performed by a minstrel.
 - [minstrel.sc] - Minstrels are agents who read and perform their own voice of a skoar piece.
-- [projections.sc] - Produce SuperCollider Pattern objects from the minstrels' labours.
+- [skoarpions.sc] - Implements the Skoarpion construct.
 - [pitchy.sc] - The code for pitchy stuff. Noats, choards, etc.
-- [toker.sc] - The guy the parser deals with when it wants tokes.
-
+- [toker.sc] - Toker for the parser.
+- [values.sc] - Value types.
 
 Dev Environment
 ===============
@@ -366,8 +366,9 @@ PyCharm also works with the SC textmate bundle.
 [skoar.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoar.sc
 [minstrel.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/minstrel.sc
 [pitchy.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/pitchy.sc
-[projections.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/projections.sc
+[skoarpions.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarpions.sc
 [voice.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/voice.sc
+[values.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/values.sc
 [toker.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toker.sc
 
 [SuperCollider]: http://supercollider.sourceforge.net/
