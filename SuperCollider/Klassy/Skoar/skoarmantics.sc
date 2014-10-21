@@ -24,9 +24,8 @@ Skoarmantics {
 
         var dict = Dictionary[
 
-            "block" -> {
+            "skoarpion" -> {
                 | skoar, noad |
-
                 var n = 0;
                 var label = nil;
                 var m = 0;
@@ -34,20 +33,14 @@ Skoarmantics {
                 n = noad.n;
                 label = noad.children[1].toke.val;
                 noad.label = label;
-
                 noad.branch = nil;
 
-                // trim the children
-                m = noad.children.size - 2;
-                noad.children = noad.children[3..m];
-                noad.n = n - 4;
-
-                // we save it here, the block will be removed from the tree by branch.
-                skoar.blocks[label] = SkoarBlock(noad);
+                // we save it here, the skoarpion will be removed from the tree by branch.
+                skoar.skoarpions[label] = Skoarpion(noad);
 
             },
 
-            "block_line" -> {
+            "skoarpion_line" -> {
                 | skoar, noad |
 
                 var n = 0;
@@ -73,7 +66,7 @@ Skoarmantics {
 
                 noad.branch = noad;
 
-                if (x.name == "block") {
+                if (x.name == "skoarpion") {
                     noad.children = [];
                     noad.n = 0;
                 } {
@@ -181,19 +174,19 @@ Skoarmantics {
                     {"+>"} {{
                         | x, voice |
                         var x_val = x.next_val;
-                        voice.assign_incr(x, y);
+                        voice.assign_incr(x_val, y);
                     }}
 
                     {"->"} {{
                         | x, voice |
                         var x_val = x.next_val;
-                        voice.assign_decr(x, y);
+                        voice.assign_decr(x_val, y);
                     }}
 
                     {"=>"} {{
                         | x, voice |
                         var x_val = x.next_val;
-                        voice.assign_set(x, y);
+                        voice.assign_set(x_val, y);
                     }};
 
             },
@@ -236,7 +229,7 @@ Skoarmantics {
                 };
 
                 x = noad.children[0].toke;
-                case {x.isKindOf(Toke_BlockRef)} {
+                case {x.isKindOf(Toke_SkoarpionRef)} {
                     noad.performer = {
                         | m, nav |
                         m.gosub(x.val, nav);

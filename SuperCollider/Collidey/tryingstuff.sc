@@ -237,44 +237,42 @@ _a ) c ] ] <_a, e> ).
 
 
 )
+y.play;
+
 (
 y = """
-100 => )
-
-!! zorp !!
+!! zerp !!
  | ]].      ]]. ]]     |
- | ]] ]]  ]            |
- | o/. ]]              |
- | ]] ]]     100 +> )          |
- | ]  o/. ]]           |
- | ]] ooo/ ^]]         |
- | ]] ooo/             |
- | ]] ooo/             |
- | ^]] ]] ooo/         |
-!!
+ | ]] ooo/ ^]] ]] ooo/ |
+ | ]] ]]  ]  o/. ]]    |
+!! !dorp
 
 !! dorp !!
 _a
 _a
 c
 c
+c
 d
+e
 e
 g
 a
 a
 !!
 
+<0,3,5> => @detune
+
+200 => )
+
+Am
 
 ,segno`
 
-
-!dorp.next !zorp.next
-
-
+!zerp
 
 D.S.
-""".skoar.play;
+""".skoar;
 
 
 
@@ -315,3 +313,33 @@ D.S. al fine
 )
 x.play;
 Prand
+
+List
+SkoarBoard {
+
+    var data;
+
+    init {
+        data = IdentityDictionary.new;
+    }
+
+    put {
+        | k, v |
+        data[k] = v;
+    }
+
+    at {
+        | k |
+        ^data[k];
+    }
+
+    event {
+        var e = (type: \note);
+
+        ^data.transformEvent(e);
+    }
+
+
+}
+
+Event

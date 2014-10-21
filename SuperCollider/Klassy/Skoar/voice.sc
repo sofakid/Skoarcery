@@ -43,8 +43,8 @@ SkoarVoice {
     }
 
     assign_incr {
-        | x, y |
-        var x_val = x.next_val;
+        | x_val, y |
+
         var y_toke = y.toke;
 
         if (y_toke.isKindOf(Toke_Symbol)) {
@@ -53,13 +53,13 @@ SkoarVoice {
         };
 
         if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
-            this.incr_tempo(x.val, y.toke);
+            this.incr_tempo(x_val, y_toke);
         };
     }
 
     assign_decr {
-        | x, y |
-        var x_val = x.next_val;
+        | x_val, y |
+
         var y_toke = y.toke;
 
         if (y_toke.isKindOf(Toke_Symbol)) {
@@ -68,22 +68,22 @@ SkoarVoice {
         };
 
         if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
-            this.decr_tempo(x.val, y_toke);
+            this.decr_tempo(x_val, y_toke);
         };
     }
 
     assign_set {
-        | x, y |
-        var x_val = x.next_val;
+        | x_val, y |
+
         var y_toke = y.toke;
 
-        if (y.toke.isKindOf(Toke_Symbol)) {
-            y.val = SkoarValueSymbol(y.toke.val);
+        if (y_toke.isKindOf(Toke_Symbol)) {
+            y.val = SkoarValueSymbol(y_toke.val);
             this.assign_symbol(x_val, y.val);
         };
 
         if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
-            this.set_tempo(x.val, y_toke);
+            this.set_tempo(x_val, y_toke);
         };
 
     }
@@ -96,7 +96,7 @@ SkoarVoice {
 
         v = skoarboard[k] + v;
 
-        ("@" ++ k ++ " <= ").post; v.dump;
+        //("@" ++ k ++ " <= ").post; v.dump;
         skoarboard[k] = v;
     }
 
@@ -107,7 +107,7 @@ SkoarVoice {
 
         v = skoarboard[k] - v;
 
-        ("@" ++ k ++ " <= ").post; v.dump;
+        //("@" ++ k ++ " <= ").post; v.dump;
         skoarboard[k] = v;
     }
 
@@ -116,7 +116,7 @@ SkoarVoice {
         var k = y.val;
         var v = x.flatten;
 
-        ("@" ++ k ++ " <= ").post; v.dump;
+        //("@" ++ k ++ " <= ").post; v.dump;
         skoarboard[k] = v;
     }
 

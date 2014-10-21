@@ -139,12 +139,12 @@ SkoarTokeInspector {
                 toke.val = toke.lexeme[1..].asSymbol;
             },
 
-            "Toke_BlockName" -> {
+            "Toke_SkoarpionName" -> {
                 | toke |
                 toke.val = toke.lexeme.asSymbol;
             },
 
-            "Toke_BlockRef" -> {
+            "Toke_SkoarpionRef" -> {
                 | toke |
                 toke.val = toke.lexeme[1..].asSymbol;
             },

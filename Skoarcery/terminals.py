@@ -17,9 +17,9 @@ Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
-BlockSep:       !!
-BlockName*:     [a-zA-Z_][a-zA-Z0-9_]*
-BlockRef*:      ![a-zA-Z_][a-zA-Z0-9_]*
+SkoarpionSep:       !!
+SkoarpionName*:     [a-zA-Z_][a-zA-Z0-9_]*
+SkoarpionRef*:      ![a-zA-Z_][a-zA-Z0-9_]*
 
 OnBeat:         [$]
 Portamento:     port\\.?

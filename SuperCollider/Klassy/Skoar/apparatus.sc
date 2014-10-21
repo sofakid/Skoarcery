@@ -159,7 +159,15 @@ SkoarNoad {
     draw_tree {
         | tab = 1 |
 
-        var s = voice.name ++ ":".padRight(tab + 1) ++ name;
+        var s;
+
+        if (voice != nil) {
+            s = voice.name ++ ":";
+        } {
+            s = ""
+        };
+
+        s = s ++ " ".padLeft(tab + 1) ++ name;
 
         if (val != nil) {
             s = s ++ ": " ++ val.val;
@@ -203,14 +211,18 @@ SkoarNoad {
     }
 
     inorder {
-        | f |
+        | f, stinger=nil |
+
+        if (stinger != nil && is_beat == true) {
+            stinger.inorder(f);
+        };
 
         f.(this);
 
         children.do {
             | y |
             if (y != nil) {
-                y.inorder(f);
+                y.inorder(f, stinger);
             };
         };
 

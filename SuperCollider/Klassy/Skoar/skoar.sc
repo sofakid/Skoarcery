@@ -12,7 +12,7 @@ Skoar {
     var  <skoarboard;   // copied into event
     var  <voices;       // dictionary of voices
     var  <conductoar;   // default voice
-    var  <blocks;       // collection of blocks
+    var  <skoarpions;   // collection of skoarpions
 
     var   when_voices_ready;  // list of functions to run after voices have been assigned
 
@@ -39,7 +39,7 @@ Skoar {
         conductoar = SkoarVoice.new(this, \conductoar);
         voices[\conductoar] = conductoar;
 
-        blocks = IdentityDictionary.new;
+        skoarpions = IdentityDictionary.new;
 
         this.skoarboard_defaults;
 
@@ -95,9 +95,9 @@ Skoar {
             };
         };
 
-"decorating...".postln;
+">>> decorating...".postln;
         tree.depth_visit(f);
-"skoar tree decorated.".postln;
+"<<< decorated.".postln;
 
         this.decorate_voices;
     }
@@ -112,9 +112,9 @@ Skoar {
 
         tree.voice = conductoar;
 
-        "assigning voices...".postln;
+        ">>> assigning voices...".postln;
         tree.assign_voices(conductoar,nil);
-        "the children have voices.".postln;
+        "<<< all the children have voices.".postln;
 
         when_voices_ready.do {
             | f |
@@ -182,12 +182,33 @@ Skoar {
 +String {
 	skoar {
     	var r = Skoar.new(this);
-    	"parsing skoar".postln;
+    	">>> Parsing skoar...".postln;
         r.parse;
-        "decorating parse tree".postln;
+        "<<< parsed.".postln;
         r.decorate;
 
+        "---< Skoar Tree >---".postln;
         r.tree.draw_tree.postln;
+
+        r.skoarpions.keysValuesDo {
+            | k, v |
+            ("---< Skoarpion " ++ k ++ " >---").postln;
+
+            v.head.postln;
+            "head:".postln;
+            v.head.draw_tree.postln;
+
+            "body:".postln;
+            v.body.do {|x| x.draw_tree.post;};
+
+            if (v.stinger != nil) {
+                "stinger: ".postln;
+                v.stinger.draw_tree.post;
+            };
+
+        };
+
+        "Skoar parsed.".postln;
         ^r;
     }
 
