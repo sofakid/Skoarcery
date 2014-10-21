@@ -10,7 +10,8 @@ SkoarNoad {
     var <>toke;            // a toke, if this noad absorbed a toke
     var <>children;        // a list of child noads
 
-    var <>setter;          // a function to perform assignment
+    var <>eval_msgs;       // pass functions between skoarmantic levels here
+    var <>setter;          // pass functions between skoarmantic levels here
 
     var <>name;            // name of the nonterminal
     var <>label;
@@ -276,17 +277,11 @@ SkoarNoad {
     perform {
         | minstrel, nav |
 
-        // setting a performer handler overrides value performer
-        case {performer != nil} {
-            //(name ++ " performer").postln;
+        if (performer != nil) {
             performer.(minstrel, nav);
 
-        } {val != nil} {
-            //(name ++ " value performer").postln;
-            //val.postln;
-            val.performer(minstrel, nav);
-
         };
+
     }
 
     // ------------------

@@ -21,7 +21,7 @@ SkoarpionSep:       !!
 SkoarpionName*:     [a-zA-Z_][a-zA-Z0-9_]*
 SkoarpionRef*:      ![a-zA-Z_][a-zA-Z0-9_]*
 
-OnBeat:         [$]
+CurNoat:         [$]
 Portamento:     port\\.?
 Slur:           [+][+]
 

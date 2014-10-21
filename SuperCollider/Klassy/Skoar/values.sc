@@ -30,12 +30,15 @@ SkoarValue {
             ^SkoarValueFloat(ret);
 
         } {ret.isKindOf(String)} {
+"ret str".postln;
             ^SkoarValueString(ret);
 
         } {ret.isKindOf(Symbol)} {
+"ret symbol".postln;
             ^SkoarValueSymbol(ret);
 
         } {ret.isKindOf(Array)} {
+"ret array".postln;
             ^SkoarValueArray(ret);
 
         } {
@@ -54,6 +57,14 @@ SkoarValueInt : SkoarValue {
 
 
 SkoarValueFloat : SkoarValue {
+}
+
+SkoarValueSkoarpionRef : SkoarValue {
+
+    performer {
+        | m, nav |
+        m.gosub(val, nav);
+    }
 }
 
 

@@ -156,68 +156,6 @@ Skoarmantics {
 
             },
 
-            "assignment" -> {
-                | skoar, noad |
-
-                var op = nil;
-
-                // the settable
-                var y = nil;
-                var y_toke = nil;
-
-                op = noad.children[0].toke.lexeme;
-                y = noad.children[1];
-
-                // we prepare the destination here (noad.setter), we'll setup the write in skoaroid
-
-                noad.setter = switch (op)
-                    {"+>"} {{
-                        | x, voice |
-                        var x_val = x.next_val;
-                        voice.assign_incr(x_val, y);
-                    }}
-
-                    {"->"} {{
-                        | x, voice |
-                        var x_val = x.next_val;
-                        voice.assign_decr(x_val, y);
-                    }}
-
-                    {"=>"} {{
-                        | x, voice |
-                        var x_val = x.next_val;
-                        voice.assign_set(x_val, y);
-                    }};
-
-            },
-
-            "skoaroid" -> {
-                | skoar, noad |
-
-                var f = nil;
-                var x = nil;
-                var y = nil;
-
-                if (noad.children.size > 1) {
-                    x = noad.children[0];
-                    y = noad.children[1];
-
-                    if (y.name == "assignment") {
-
-                        x.performer = {};
-
-                        f = y.setter;
-
-                        noad.performer = {
-                            | m |
-                            f.(x, m.voice);
-                        };
-
-                    };
-                };
-
-            },
-
             "cthulhu" -> {
                 | skoar, noad |
                 noad.name = "^^(;,;)^^";
@@ -363,10 +301,9 @@ Skoarmantics {
 
                 x = noad.children[0].toke;
                 case {x.isKindOf(Toke_SkoarpionRef)} {
-                    noad.performer = {
-                        | m, nav |
-                        m.gosub(x.val, nav);
-                    };
+                    noad.val = SkoarValueSkoarpionRef(x.val);
+                    clean.();
+
                 } {x.isKindOf(Toke_Int)} {
                     noad.val = SkoarValueInt(x.val);
                     clean.();
@@ -418,9 +355,54 @@ Skoarmantics {
 
             "stmt" -> {
                 | skoar, noad |
+                var x = nil;
+                var y = nil;
+
+
+                y = noad.children[1];
+
+                // assignment
+                if (y != nil) {
+                    if (y.name == "assignment") {
+
+                        noad.performer = {
+                            | m, nav |
+                            var res;
+
+                            x = noad.children[0];
+
+"fee".postln;
+                            x = x.eval_msgs;
+"fai".postln;
+                            x = x.value;
+
+"foh".postln;
+                            y.setter.(x, m.voice);
+
+"fum".postln;
+                        };
+
+                    };
+
+                } { // just a skoaroid
+                    noad.performer = {
+                        | m, nav |
+
+                        x = noad.children[0];
+                        if (x.n > 1) {
+    "FEE".postln;
+                            x = x.eval_msgs.value.performer(m, nav);
+    "FUM".postln;
+                        };
+                    };
+                };
+
+            },
+
+            "skoaroid" -> {
+                | skoar, noad |
 
                 var kids = List[];
-                var result;
 
                 // strip out the operators
                 noad.children.do {
@@ -430,24 +412,65 @@ Skoarmantics {
                     };
                 };
 
-                noad.children = kids;
+                noad.children = kids.asArray;
+                kids = noad.children;
                 noad.n = kids.size;
 
-                noad.performer = {
-                    | m, nav |
-                    result = kids[0].next_val;
 
-                    for (1, noad.n-1, {
-                        | i |
-                        var x = kids[i].val;
-                        if (x.isKindOf(SkoarValueMsg)) {
-                            result = result.skoar_msg(x);
+                // evaluate messages, returning the result
+                noad.eval_msgs = {
+
+                    var result = kids[0].next_val;
+
+                    if (result != nil) {
+                        kids.do {
+                            | y |
+                            var x = y.val;
+                            if (x.isKindOf(SkoarValueMsg)) {
+                                result = result.skoar_msg(x);
+                            };
+
                         };
-                    });
+                    };
 
-                    result.performer(m, nav);
+                    "result: ".post; result.val.postln;
+                    result
                 };
 
+            },
+
+            "assignment" -> {
+                | skoar, noad |
+
+                var op = nil;
+
+                // the settable
+                var y = nil;
+                var y_toke = nil;
+
+                op = noad.children[0].toke.lexeme;
+                y = noad.children[1];
+
+                // we prepare the destination here (noad.f), we'll setup the write in skoaroid
+
+                noad.setter = switch (op)
+                    {"+>"} {{
+                        | x, voice |
+                        var x_val = x.next_val;
+                        voice.assign_incr(x_val, y);
+                    }}
+
+                    {"->"} {{
+                        | x, voice |
+                        var x_val = x.next_val;
+                        voice.assign_decr(x_val, y);
+                    }}
+
+                    {"=>"} {{
+                        | x, voice |
+                        var x_val = x.next_val;
+                        voice.assign_set(x_val, y);
+                    }};
 
             },
 

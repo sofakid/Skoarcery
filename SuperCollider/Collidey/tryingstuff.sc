@@ -231,9 +231,7 @@ x.play
 y = """
 
 
-<1,3,5>.choose.postln
-
-<0,2,4>.choose
+<<b,d,f>,a,c,e>.choose )
 
 
 """.skoar.play;
@@ -245,20 +243,20 @@ Integer
 (
 y = """
 
-60 => ) mf
-a
+
 
 !! zerp !!
  | ]].      ]]. ]]     |
  | ]] ooo/ ^]] ]] ooo/ |
  | ]] ]]  ]  o/. ]]    |
-!! <_a, c, e>.choose
+!!
 
-,segno` !zerp.next D.S.
+,segno` !zerp D.S.
 
-""".skoar;
+""".skoar.play;
 
 )
+Array
 String.pop
 if (nil.isKindOf(Toke_MsgOp)) {} { "food".postln;};
 "killall scsynth".unixCmd;

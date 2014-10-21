@@ -48,16 +48,16 @@ ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | Quindic
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
 nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy
-+nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | SkoarpionRef | Choard | NamedNoat | Symbol | OnBeat
++nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | SkoarpionRef | Choard | NamedNoat | Symbol | CurNoat
 
-skoaroid*        : nouny skoaroid_prime
-+skoaroid_prime  : assignment skoaroid_prime | <e>
+stmt*            : skoaroid stmt_prime
++stmt_prime      : assignment stmt_prime | <e>
+optional_stmt    : stmt | Newline | <e>
 
 assignment*      : AssOp settable
-+settable        : Caesura | OnBeat | Symbol | listy | Quarters | Eighths
++settable        : Caesura | CurNoat | Symbol | listy | Quarters | Eighths
 
-stmt*            : skoaroid msg_chain_node
-optional_stmt    : stmt | Newline | <e>
+skoaroid*        : nouny msg_chain_node
 +msg_chain_node  : MsgOp msg msg_chain_node | <e>
 msg*             : MsgNameWithArgs listy_suffix | MsgName | listy
 
