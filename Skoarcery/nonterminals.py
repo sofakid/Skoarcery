@@ -37,7 +37,7 @@ skoarpion_line*    : phrases Newline
 stinger            : phrases
 
 listy*             : ListS listy_suffix
-+listy_suffix      : listy_entries ListE
++listy_suffix      : listy_entries ListE | ListE
 +listy_entries     : skoaroid moar_listy_entries
 +moar_listy_entries: ListSep listy_entries | Newline | <e>
 

@@ -374,7 +374,7 @@ Skoarmantics {
 "fee".postln;
                             res = x.evaluate.();
 
-"foh, this is a value now btdubs".postln;
+"foh".post; res.dump;
                             y.setter.(res, m.voice);
 
 "fum".postln;
@@ -430,8 +430,14 @@ Skoarmantics {
                         "result: ".post; result.val.postln;
                         result
                     } {
-                        "no evaluation.".postln;
-                        noad
+                        var x = noad.next_val;
+
+                        if (x != nil) {
+                            x
+                        } {
+                            "no evaluation.".postln; noad.dump;
+                            noad
+                        }
                     }
                 };
 
@@ -454,20 +460,17 @@ Skoarmantics {
                 noad.setter = switch (op)
                     {"+>"} {{
                         | x, voice |
-                        var x_val = x.next_val;
-                        voice.assign_incr(x_val, y);
+                        voice.assign_incr(x, y);
                     }}
 
                     {"->"} {{
                         | x, voice |
-                        var x_val = x.next_val;
-                        voice.assign_decr(x_val, y);
+                        voice.assign_decr(x, y);
                     }}
 
                     {"=>"} {{
                         | x, voice |
-                        var x_val = x.next_val;
-                        voice.assign_set(x_val, y);
+                        voice.assign_set(x, y);
                     }};
 
             },

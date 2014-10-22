@@ -66,7 +66,7 @@ DynSFZ:          sfz
 DynFP:           fp
 
 AssOp:            =>|[+]>|->
-MsgOp:            \\.
+MsgOp:            \\.(?![)\\]])
 
 NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
 BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor

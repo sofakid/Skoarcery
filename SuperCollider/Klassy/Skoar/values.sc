@@ -96,6 +96,8 @@ SkoarValueSymbol : SkoarValue {
         | m, nav |
         var v = this.lookup(m);
 
+        "SYMBOL LOOKEDUP : ".post; v.dump;
+
         if (v.isKindOf(SkoarValue)) {
             v.performer(m, nav);
         };
@@ -110,7 +112,7 @@ SkoarValueArray : SkoarValue {
 
         val.do {
             | x |
-            out.add(x.flatten);
+            out.add(if (x.respondsTo(\flatten)) {x.flatten} {x});
         };
 
         ^out;
@@ -126,6 +128,8 @@ SkoarValueArray : SkoarValue {
 // noaty stuff
 SkoarValueNoat : SkoarValue {
 
+    flatten {^this;}
+
     performer {
         | m, nav |
         m.voice.noat_go(val);
@@ -135,6 +139,8 @@ SkoarValueNoat : SkoarValue {
 
 
 SkoarValueChoard : SkoarValue {
+
+    flatten {^this;}
 
     performer {
         | m, nav |
