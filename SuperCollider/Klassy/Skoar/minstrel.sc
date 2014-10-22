@@ -134,7 +134,6 @@ SkoarMinstrel {
         var f = {
             | x |
             x.perform(this, nav);
-            x.yield;
         };
 
         if (config == nil) {

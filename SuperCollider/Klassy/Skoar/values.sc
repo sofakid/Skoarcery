@@ -72,6 +72,7 @@ SkoarpuscleSkoarpionRef : Skoarpuscle {
     performer {
         | m, nav |
         m.gosub(val, nav, config);
+        "SMEAR".postln;
     }
 }
 

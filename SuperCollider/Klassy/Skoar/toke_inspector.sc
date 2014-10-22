@@ -135,6 +135,7 @@ SkoarTokeInspector {
             "Toke_SkoarpionRef" -> {
                 | noad |
                 noad.val = SkoarpuscleSkoarpionRef(noad.toke.lexeme[1..].asSymbol);
+                noad.toke = nil;
             },
 
             "Toke_Int" -> {

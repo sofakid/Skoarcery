@@ -2,8 +2,6 @@
 SkoarpuscleBeat : Skoarpuscle {
 
     var <s;
-    var <is_rest;
-    var <is_beat;
     var <is_staccato;
     var <has_tie;
 
@@ -55,8 +53,6 @@ SkoarpuscleBeat : Skoarpuscle {
             is_staccato = false;
         };
 
-        is_rest = false;
-
         if (s.contains("__")) {
             has_tie = true;
             n = n - 2;
@@ -67,7 +63,6 @@ SkoarpuscleBeat : Skoarpuscle {
         } {
             val = SkoarpuscleBeat.beat_long(s, n);
         };
-"here".postln;
 
     }
 
@@ -87,9 +82,8 @@ SkoarpuscleBeat : Skoarpuscle {
                 e[\midinote] = cur_noat;
             };
         };
-"floop".postln;
+
         e.yield;
-"florp".postln;
     }
 
 }
@@ -97,13 +91,11 @@ SkoarpuscleBeat : Skoarpuscle {
 SkoarpuscleRest : SkoarpuscleBeat {
 
     init {
-        | toke, long |
+        | toke |
         var n;
 
         s = toke.lexeme;
         n = s.size;
-
-        toke.is_rest = true;
 
         if (toke.isKindOf(Toke_Quavers)) {
             // size -1 for the / (we just count the o's)
@@ -123,9 +115,8 @@ SkoarpuscleRest : SkoarpuscleBeat {
 
         e[\dur] = val;
         e[\note] = \rest;
-"floop".postln;
+
         e.yield;
-"florp".postln;
     }
 
 }

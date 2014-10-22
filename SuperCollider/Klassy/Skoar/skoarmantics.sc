@@ -366,9 +366,9 @@ Skoarmantics {
                         | m, nav |
 
                         x = noad.children[0];
-    ("FEE").postln;
+ "FEE".postln;
                         x.evaluate.().performer(m, nav);
-    "FUM".postln;
+ "FUM".postln;
                     };
                 };
 
@@ -406,7 +406,7 @@ Skoarmantics {
 
                         };
 
-                        "result: ".post; result.val.postln;
+                        //"result: ".post; result.val.postln;
                         result
                     } {
                         var x = noad.next_val;
@@ -414,7 +414,7 @@ Skoarmantics {
                         if (x != nil) {
                             x
                         } {
-                            "no evaluation.".postln; noad.dump;
+                            //"no evaluation.".postln; noad.dump;
                             noad
                         }
                     }

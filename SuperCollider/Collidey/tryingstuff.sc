@@ -180,7 +180,7 @@ D.S. al fine
 
 """.skoar;
 )
-
+nil.dump;
 x.play;
 (
 """
@@ -232,46 +232,105 @@ y = """
 
 fff
 
-<<b,d,f>,a,c,e>.choose )
+<<b,d#,f>,a,c,e>.choose )
 
+!! food !!
+a )
+!!
+
+g ) !food.next
+
+~o c ] ] o~
+
+D.C.
 
 """.skoar.play;
 
 
 )
+
+(
+y = """
+
+
+<a,c#,e>.choose )
+
+!! zerf !!
+ g )
+~o c# ] e ] o~
+!!
+
+!zerf.choose o/ ] o/ ]
+
+<<b,d,f>,a,c,e>.choose ) o/
+
+D.C.
+
+""".skoar.play;
+
+
+)
+
 (
 y = """
 fff
 
-<a,c#,e> )
+<Am,C,Em>.choose => @food
+
+_a ]] oo/
+
+@food )
+
+""".skoar.play;
+
+
+)
+1.flatten
+[].class.fib(10);
+Object
+(
+y = """
+fff
+
+a ) b )
 
 !! zerf !!
-~~o g ) o~~
+~o ) o~ ] ]
+] ] }
+]] ]] oo/ ]]
 !!
 
-!zerf.next o/ ] o/ ]
+!zerf<d,e#,g>.line<2> o/ ] o/ ]
 
 <<b,d,f>,a,c,e>.choose )
 
+a )__ )__.
 
 """.skoar.play;
 
 
 )
 y.play;
+t = y.tree.next_toke;
+SkoarValueMsg(
 Integer
+    String
 (
 y = """
+ff
+70 => )
 
-!! zerp !!
- | ]].      ]]. ]]     |
- | ]] ooo/ ^]] ]] ooo/ |
- | ]] ]]  ]  o/. ]]    |
-!!
+!! zorp !!
+ | o~ )          |
+ | ] ~o   ]      |
+ | ]] oo/ ]] oo/ |
+ | ]] ]] ]] ]]   |
+ | )             | } |
+!! <_a, c, e>.choose
 
-,segno` ) !zerp D.S.
+,segno` !zorp.choose D.S.
 
-""".skoar;
+""".skoar.play;
 
 )
 Array
