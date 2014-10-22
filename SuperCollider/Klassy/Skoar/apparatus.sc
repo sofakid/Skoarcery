@@ -10,7 +10,7 @@ SkoarNoad {
     var <>toke;            // a toke, if this noad absorbed a toke
     var <>children;        // a list of child noads
 
-    var <>eval_msgs;       // pass functions between skoarmantic levels here
+    var <>evaluate;       // pass functions between skoarmantic levels here
     var <>setter;          // pass functions between skoarmantic levels here
 
     var <>name;            // name of the nonterminal

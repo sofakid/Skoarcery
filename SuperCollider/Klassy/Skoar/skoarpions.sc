@@ -7,6 +7,8 @@ Skoarpion {
     var <body;
     var <stinger;
 
+    var <body_noad;
+
     *new {
         | noad |
         ^super.new.init(noad);
@@ -34,6 +36,10 @@ Skoarpion {
         };
 
         n = body.size;
+
+        body_noad = SkoarNoad("xient:body_noad:" ++ name, nil, nil);
+        body_noad.children = body;
+        body_noad.n = n;
     }
 
     iter {
@@ -48,6 +54,7 @@ SkoarpionIter {
     var <>i;
     var <>n;
     var body;
+    var body_noad;
 
     *new {
         | skrp |
@@ -57,23 +64,31 @@ SkoarpionIter {
     init {
         | skrp |
         body = skrp.body;
+        body_noad = skrp.body_noad;
         name = skrp.name;
         n = skrp.n;
         i = -1;
     }
 
-    random {
+    choose {
         i = n.rand;
-        //(name ++ " random: " ++ i).postln;
+        ^body[i];
+    }
+
+    wchoose {
+        | weights |
+        i = weights.val.windex;
         ^body[i];
     }
 
     next {
         i = 1 + i % n;
-        //(name ++ " next: " ++ i).postln;
         ^body[i];
     }
 
+    block {
+        ^body_noad;
+    }
 
 }
 

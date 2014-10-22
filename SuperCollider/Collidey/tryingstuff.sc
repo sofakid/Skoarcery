@@ -230,6 +230,26 @@ x.play
 (
 y = """
 
+fff
+
+<<b,d,f>,a,c,e>.choose )
+
+
+""".skoar.play;
+
+
+)
+(
+y = """
+fff
+
+<a,c#,e> )
+
+!! zerf !!
+~~o g ) o~~
+!!
+
+!zerf.next o/ ] o/ ]
 
 <<b,d,f>,a,c,e>.choose )
 
@@ -243,17 +263,15 @@ Integer
 (
 y = """
 
-
-
 !! zerp !!
  | ]].      ]]. ]]     |
  | ]] ooo/ ^]] ]] ooo/ |
  | ]] ]]  ]  o/. ]]    |
 !!
 
-,segno` !zerp D.S.
+,segno` ) !zerp D.S.
 
-""".skoar.play;
+""".skoar;
 
 )
 Array

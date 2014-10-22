@@ -127,11 +127,13 @@ SkoarMinstrel {
     }
 
     gosub {
-        | label, nav |
+        | label, nav, config |
 
         var skrp = skoar.skoarpions[label];
         var sub;
         var iter;
+
+        var z;
 
         var f = {
             | x |
@@ -139,17 +141,31 @@ SkoarMinstrel {
             x.yield;
         };
 
+        if (config == nil) {
+            config = [\choose];
+        };
+
+"dorf".postln;
         // first line
         skrp.head.inorder(f, skrp.stinger);
 
+"derf".postln;
         iter = skoarpion_iters[label];
+"dirf".postln;
         if (iter == nil) {
+"dprf".postln;
             iter = skrp.iter;
             skoarpion_iters[label] = iter;
         };
 
+"darf ".post; iter.dump;
+
         // current line
-        iter.random.inorder(f, skrp.stinger);
+        z = iter.performMsg(config);
+"blarf ".post; z.dump;
+
+        z.inorder(f, skrp.stinger);
+"barth".postln;
     }
 
     // goes along, configuring a new event, which it returns when it finds a beat.

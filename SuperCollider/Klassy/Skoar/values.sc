@@ -61,9 +61,17 @@ SkoarValueFloat : SkoarValue {
 
 SkoarValueSkoarpionRef : SkoarValue {
 
+    var config;
+
+    skoar_msg {
+        | msg |
+        config = msg.get_msg;
+        ^this;
+    }
+
     performer {
         | m, nav |
-        m.gosub(val, nav);
+        m.gosub(val, nav, config);
     }
 }
 
@@ -162,7 +170,6 @@ SkoarValueMsg : SkoarValue {
     get_msg {
         var x = Array.new(args.size + 1);
         x.add(val);
-    //    x.add(args);
         args.flatten.do {
             | y |
             x.add(y);

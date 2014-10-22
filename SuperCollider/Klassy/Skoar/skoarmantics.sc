@@ -372,12 +372,10 @@ Skoarmantics {
                             x = noad.children[0];
 
 "fee".postln;
-                            x = x.eval_msgs;
-"fai".postln;
-                            x = x.value;
+                            res = x.evaluate.();
 
-"foh".postln;
-                            y.setter.(x, m.voice);
+"foh, this is a value now btdubs".postln;
+                            y.setter.(res, m.voice);
 
 "fum".postln;
                         };
@@ -389,11 +387,9 @@ Skoarmantics {
                         | m, nav |
 
                         x = noad.children[0];
-                        if (x.n > 1) {
     "FEE".postln;
-                            x = x.eval_msgs.value.performer(m, nav);
+                        x.evaluate.().performer(m, nav);
     "FUM".postln;
-                        };
                     };
                 };
 
@@ -416,9 +412,8 @@ Skoarmantics {
                 kids = noad.children;
                 noad.n = kids.size;
 
-
                 // evaluate messages, returning the result
-                noad.eval_msgs = {
+                noad.evaluate = {
 
                     var result = kids[0].next_val;
 
@@ -431,10 +426,13 @@ Skoarmantics {
                             };
 
                         };
-                    };
 
-                    "result: ".post; result.val.postln;
-                    result
+                        "result: ".post; result.val.postln;
+                        result
+                    } {
+                        "no evaluation.".postln;
+                        noad
+                    }
                 };
 
             },
