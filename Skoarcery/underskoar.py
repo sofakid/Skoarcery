@@ -10,11 +10,6 @@ SkoarToke_ = "SkoarToke"
 lexeme_ = "lexeme"
 regex_ = "regex"
 val_ = "val"
-sharps_ = "sharps"
-low_ = "low"
-is_beat_ = "is_beat"
-is_rest_ = "is_rest"
-is_staccato_ = "is_staccato"
 pre_repeat_ = "pre_repeat"
 post_repeat_ = "post_repeat"
 inspectable_ = "inspectable"
@@ -48,15 +43,10 @@ def skoarToke():
 
     _____.attrvar("<", lexeme_)
 
-    # these should be in specific tokes, not all of them.
+    # these should be in Skoarpuscles
     _____.attrvar("<>", val_)
-    _____.attrvar("<>", low_)
-    _____.attrvar("<>", sharps_)
-    _____.attrvar("<>", is_beat_)
-    _____.attrvar("<>", is_rest_)
     _____.attrvar("<>", pre_repeat_)
     _____.attrvar("<>", post_repeat_)
-    _____.attrvar("<>", is_staccato_)
 
     _____.classvar("<", regex_, _.null)
     _____.classvar("<", inspectable_, _.false)

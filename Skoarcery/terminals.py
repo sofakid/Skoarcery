@@ -44,8 +44,8 @@ Tuplet*:        /\\d+(:\\d+)?|(du|tri|quadru)plets?|(quin|sex|sep|oc)tuplets?
 Crotchets*:     [}]+\\.?
 Quavers*:       o+/\\.?
 
-Quarters*:       \\.?[)]+\\.?
-Eighths*:        \\.?\\]+\\.?
+Quarters*:       \\.?[)]+(?:__)?\\.?
+Eighths*:        \\.?\\]+(?:__)?\\.?
 
 Caesura:        //
 Slash:          /(?!/)

@@ -36,7 +36,7 @@ Hand {
     }
 
     choard {
-        | toke |
+        | val |
         // TODO this sucks
         var s, c, m, n;
         var third = 3;
@@ -49,7 +49,7 @@ Hand {
 
         // [ABCEFG])([Mm0-9]|sus|dim)*
 
-        s = toke.lexeme;
+        s = val.lexeme;
 
         c = (s[0] ++ "").toLower;
 
@@ -64,15 +64,15 @@ Hand {
     }
 
     update {
-        | toke |
+        | val |
 
-        var sharps = toke.sharps;
+        var sharps = val.sharps;
         var n = 0;
         var m = sharps.sign;
-        var s = toke.lexeme;
+        var s = val.lexeme;
         var o = octave;
 
-        n = this.letter(toke.val);
+        n = this.letter(val.val);
         if (sharps.abs > 0) {
             forBy (0, sharps, m, {
                 | i |
@@ -80,7 +80,7 @@ Hand {
             });
         };
 
-        if (toke.low == false) {
+        if (val.low == false) {
             o = o + 1;
         };
 

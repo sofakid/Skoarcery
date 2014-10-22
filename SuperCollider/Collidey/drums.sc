@@ -214,8 +214,6 @@ x = """
 x.pskoar.play;
 (
 x = """
-<? Special thanks to The Breakbeat Bible for the dope dubstepz.
-   The synths are the SOS drums from the SuperCollider examples folder. ?>
 
 4/4 90 => )
 

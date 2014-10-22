@@ -16,7 +16,7 @@ SkoarMinstrel {
 
     var   skoarpion_iters;
 
-    var   noad_stream;
+    var   event_stream;
 
 
     *new {
@@ -57,8 +57,7 @@ SkoarMinstrel {
             };
         };
 
-
-        noad_stream = Routine({
+        event_stream = Routine({
             var n = parts.size - 1;
             var j = 0;
             var dst = nil;
@@ -75,18 +74,15 @@ SkoarMinstrel {
 
                         parts[i].inorder({
                             | x |
-
                             if (dst != nil) {
+
                                 if (x == dst) {
                                     dst = nil;
-
                                     x.perform(this, nav);
-                                    x.yield;
                                 };
 
                             } {
                                 x.perform(this, nav);
-                                x.yield;
                             };
 
                         });
@@ -145,64 +141,23 @@ SkoarMinstrel {
             config = [\choose];
         };
 
-"dorf".postln;
         // first line
         skrp.head.inorder(f, skrp.stinger);
 
-"derf".postln;
         iter = skoarpion_iters[label];
-"dirf".postln;
         if (iter == nil) {
-"dprf".postln;
             iter = skrp.iter;
             skoarpion_iters[label] = iter;
         };
 
-"darf ".post; iter.dump;
-
         // current line
         z = iter.performMsg(config);
-"blarf ".post; z.dump;
-
         z.inorder(f, skrp.stinger);
-"barth".postln;
     }
 
     // goes along, configuring a new event, which it returns when it finds a beat.
     nextEvent {
-            var e = nil;
-            var noad = nil;
-
-            while {
-                noad = noad_stream.next;
-                noad != nil;
-            } {
-
-                if (noad.is_beat) {
-
-                    // create an event with everything we've collected up until now
-                    e = voice.event;
-                    e[\dur] = noad.toke.val;
-
-                    if (noad.is_rest) {
-                        e[\note] = \rest;
-                    } {
-                        if (voice.cur_noat != nil) {
-                            if (e[\type] == \instr) {
-                                e[\note] = voice.cur_noat;
-                            } {
-                                e[\midinote] = voice.cur_noat;
-                            };
-                        };
-                    };
-
-                    ^e;
-                };
-
-            };
-
-            voice.name.post; ": Done.".postln;
-            ^nil;
+            ^event_stream.next;
     }
 
     pfunk {

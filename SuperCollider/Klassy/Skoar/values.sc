@@ -1,7 +1,7 @@
 // ===========
 // Value types
 // ===========
-SkoarValue {
+Skoarpuscle {
     var <>val;
 
     *new { | v | ^super.new.init(v); }
@@ -18,48 +18,48 @@ SkoarValue {
         var o = msg.get_msg;
         var ret = val.performMsg(o);
 
-        case {ret.isKindOf(SkoarValue)} {
+        case {ret.isKindOf(Skoarpuscle)} {
             ^ret;
 
         } {ret.isKindOf(Integer)} {
 "ret int".postln;
-            ^SkoarValueInt(ret);
+            ^SkoarpuscleInt(ret);
 
         } {ret.isKindOf(Number)} {
 "ret float".postln;
-            ^SkoarValueFloat(ret);
+            ^SkoarpuscleFloat(ret);
 
         } {ret.isKindOf(String)} {
 "ret str".postln;
-            ^SkoarValueString(ret);
+            ^SkoarpuscleString(ret);
 
         } {ret.isKindOf(Symbol)} {
 "ret symbol".postln;
-            ^SkoarValueSymbol(ret);
+            ^SkoarpuscleSymbol(ret);
 
         } {ret.isKindOf(Array)} {
 "ret array".postln;
-            ^SkoarValueArray(ret);
+            ^SkoarpuscleArray(ret);
 
         } {
-"ret unknown".post; ret.dump;
-            ^SkoarValueUnknown(ret);
+"ret unknown: ".post; ret.dump;
+            ^SkoarpuscleUnknown(ret);
         };
 
     }
 }
 
-SkoarValueUnknown : SkoarValue {
+SkoarpuscleUnknown : Skoarpuscle {
 }
 
-SkoarValueInt : SkoarValue {
+SkoarpuscleInt : Skoarpuscle {
 }
 
 
-SkoarValueFloat : SkoarValue {
+SkoarpuscleFloat : Skoarpuscle {
 }
 
-SkoarValueSkoarpionRef : SkoarValue {
+SkoarpuscleSkoarpionRef : Skoarpuscle {
 
     var config;
 
@@ -76,11 +76,11 @@ SkoarValueSkoarpionRef : SkoarValue {
 }
 
 
-SkoarValueString : SkoarValue {
+SkoarpuscleString : Skoarpuscle {
     as_noat { | m | ^nil; }
 }
 
-SkoarValueSymbol : SkoarValue {
+SkoarpuscleSymbol : Skoarpuscle {
 
     lookup {
         | m |
@@ -98,14 +98,14 @@ SkoarValueSymbol : SkoarValue {
 
         "SYMBOL LOOKEDUP : ".post; v.dump;
 
-        if (v.isKindOf(SkoarValue)) {
+        if (v.isKindOf(Skoarpuscle)) {
             v.performer(m, nav);
         };
     }
 
 }
 
-SkoarValueArray : SkoarValue {
+SkoarpuscleArray : Skoarpuscle {
 
     flatten {
         var out = Array.new(val.size);
@@ -126,32 +126,59 @@ SkoarValueArray : SkoarValue {
 }
 
 // noaty stuff
-SkoarValueNoat : SkoarValue {
+SkoarpuscleNoat : Skoarpuscle {
+
+    var <lexeme;
+    var <low;
+    var <sharps;
+
+    init {
+        | lexeme |
+
+        var noat_regex = "^(_?)([a-g])";
+        var sharps_regex = "[a-g](#*|b*)$";
+        var s = lexeme;
+        var r = s.findRegexp(noat_regex);
+        var x = -1;
+
+        low = r[1][1] != "";
+        val = r[2][1];
+
+        r = s.findRegexp(sharps_regex);
+        s = r[1][1];
+
+        if (s.beginsWith("#")) {
+            x = 1;
+        };
+
+        sharps = s.size * x;
+
+    }
 
     flatten {^this;}
 
     performer {
         | m, nav |
-        m.voice.noat_go(val);
+        m.voice.noat_go(this);
     }
 
 }
 
 
-SkoarValueChoard : SkoarValue {
+SkoarpuscleChoard : Skoarpuscle {
 
     flatten {^this;}
 
     performer {
         | m, nav |
-        m.voice.choard_go(val);
+        m.voice.choard_go(this);
     }
 
 }
 
 
 // messagy stuff
-SkoarValueMsg : SkoarValue {
+SkoarpuscleMsg : Skoarpuscle {
 
     var <>args;
 
@@ -184,3 +211,7 @@ SkoarValueMsg : SkoarValue {
     }
 
 }
+
+// -------------
+// rhythm values
+// -------------

@@ -146,10 +146,10 @@ SuperCollider pattern.
     ]]. - dotted sixteenth
     o/. - dotted eighth rest
 
-# staccatto
+# staccato
 
-    .) - staccatto quarter
-    .]]. - staccatto and dotted sixteenth
+    .) - staccato quarter
+    .]]. - staccato and dotted sixteenth
 
 # noats
 

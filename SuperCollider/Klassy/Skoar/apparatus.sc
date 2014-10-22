@@ -23,10 +23,6 @@ SkoarNoad {
     var  <next_jmp;        // if this is set, we will jump to this noad instead of the next noad
 
     var <>noat;
-    var <>is_rest;
-    var <>is_beat;         // flag indicates if it's a beat.
-    var <>beat;            // beat toke (note this could be a beat toke, and is_beat=false,
-                           // like when setting bpm with an assignment)
 
     var  <inspectable;     // this toke carries information that must be inspected and processed.
     var <>voice;           // what voice to use
@@ -49,10 +45,6 @@ SkoarNoad {
         toke = tokeArg;
 
         children = List[];
-
-        // do i use these?
-        is_rest = false;
-        is_beat = false;
 
         if (toke.isKindOf(SkoarToke)) {
             inspectable = toke.class.inspectable;
@@ -214,7 +206,7 @@ SkoarNoad {
     inorder {
         | f, stinger=nil |
 
-        if (stinger != nil && is_beat == true) {
+        if (stinger != nil && val.isKindOf(SkoarpuscleBeat)) {
             stinger.inorder(f);
         };
 

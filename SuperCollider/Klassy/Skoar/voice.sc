@@ -43,47 +43,38 @@ SkoarVoice {
     }
 
     assign_incr {
-        | x_val, y |
+        | x, y |
 
-        var y_toke = y.toke;
-
-        if (y_toke.isKindOf(Toke_Symbol)) {
-            y.val = SkoarValueSymbol(y_toke.val);
-            this.incr_symbol(x_val, y.val);
+        if (y.isKindOf(SkoarpuscleSymbol)) {
+            this.incr_symbol(x, y);
         };
 
-        if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
-            this.incr_tempo(x_val, y_toke);
+        if (y.isKindOf(SkoarpuscleBeat)) {
+            this.incr_tempo(x, y);
         };
     }
 
     assign_decr {
-        | x_val, y |
+        | x, y |
 
-        var y_toke = y.toke;
-
-        if (y_toke.isKindOf(Toke_Symbol)) {
-            y.val = SkoarValueSymbol(y_toke.val);
-            this.decr_symbol(x_val, y.val);
+        if (y.isKindOf(SkoarpuscleSymbol)) {
+            this.decr_symbol(x, y);
         };
 
-        if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
-            this.decr_tempo(x_val, y_toke);
+        if (y.isKindOf(SkoarpuscleBeat)) {
+            this.decr_tempo(x, y);
         };
     }
 
     assign_set {
-        | x_val, y |
+        | x, y |
 
-        var y_toke = y.toke;
-
-        if (y_toke.isKindOf(Toke_Symbol)) {
-            y.val = SkoarValueSymbol(y_toke.val);
-            this.assign_symbol(x_val, y.val);
+        if (y.isKindOf(SkoarpuscleSymbol)) {
+            this.assign_symbol(x, y);
         };
 
-        if (y_toke.isKindOf(Toke_Quarters) || y_toke.isKindOf(Toke_Eighths)) {
-            this.set_tempo(x_val, y_toke);
+        if (y.isKindOf(SkoarpuscleBeat)) {
+            this.set_tempo(x, y);
         };
 
     }
@@ -174,8 +165,8 @@ SkoarVoice {
         items.do {
             | o |
 
-            if (o.isKindOf(SkoarValueNoat)) {
-                hand.update(o.val);
+            if (o.isKindOf(SkoarpuscleNoat)) {
+                hand.update(o);
                 cur_noat.add(hand.finger);
             } {
                 o = o.as_noat;

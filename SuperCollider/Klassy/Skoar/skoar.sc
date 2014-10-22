@@ -14,8 +14,6 @@ Skoar {
     var  <conductoar;   // default voice
     var  <skoarpions;   // collection of skoarpions
 
-    var   when_voices_ready;  // list of functions to run after voices have been assigned
-
     *new {
         | code |
         ^super.new.init(code);
@@ -43,7 +41,6 @@ Skoar {
 
         this.skoarboard_defaults;
 
-        when_voices_ready = List.new;
     }
 
     parse {
@@ -85,8 +82,8 @@ Skoar {
 
             // tokens*
             if (x.toke != nil) {
-                // run the function x.name, pass the token
-                inspector[x.name].(x.toke);
+                // run the function x.name, pass the noad
+                inspector[x.name].(x);
 
             // nonterminals*
             } {
@@ -116,16 +113,6 @@ Skoar {
         tree.assign_voices(conductoar,nil);
         "<<< all the children have voices.".postln;
 
-        when_voices_ready.do {
-            | f |
-            f.();
-        };
-    }
-
-
-    do_when_voices_ready {
-        | f |
-        when_voices_ready.add(f);
     }
 
     // ----

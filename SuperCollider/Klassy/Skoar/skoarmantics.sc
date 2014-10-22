@@ -84,16 +84,19 @@ Skoarmantics {
 
             "beat" -> {
                 | skoar, noad |
-                var t = noad.absorb_toke;
-
-                noad.beat = t;
-                noad.is_beat = true;
-                noad.is_rest = t.is_rest;
+                noad.val = noad.next_val;
+                noad.children = [];
+                noad.n = 0;
+                noad.toke = nil;
+                noad.performer = {
+                    | m, nav |
+                    noad.val.performer(m, nav);
+                };
             },
 
             "listy" -> {
                 | skoar, noad |
-                noad.val = SkoarValueArray(noad.collect_values);
+                noad.val = SkoarpuscleArray(noad.collect_values);
 
                 noad.n = 0;
                 noad.children = [];
@@ -299,33 +302,9 @@ Skoarmantics {
                     noad.n = 0;
                 };
 
-                x = noad.children[0].toke;
-                case {x.isKindOf(Toke_SkoarpionRef)} {
-                    noad.val = SkoarValueSkoarpionRef(x.val);
-                    clean.();
-
-                } {x.isKindOf(Toke_Int)} {
-                    noad.val = SkoarValueInt(x.val);
-                    clean.();
-
-                } {x.isKindOf(Toke_Float)} {
-                    noad.val = SkoarValueFloat(x.val);
-                    clean.();
-
-                } {x.isKindOf(Toke_NamedNoat)} {
-                    noad.val = SkoarValueNoat(x);
-                    clean.();
-
-                } {x.isKindOf(Toke_Choard)} {
-                    noad.val = SkoarValueChoard(x);
-                    clean.();
-
-                } {x.isKindOf(Toke_Symbol)} {
-                    noad.val = SkoarValueSymbol(x.val);
-                    clean.();
-
-                } {x.isKindOf(Toke_String)} {
-                    noad.val = SkoarValueString(x.val);
+                x = noad.next_val;
+                if (x != nil) {
+                    noad.val = x;
                     clean.();
                 };
 
@@ -344,9 +323,9 @@ Skoarmantics {
                 };
 
                 x = noad.children[0].toke;
-                args = SkoarValueArray(noad.collect_values);
+                args = SkoarpuscleArray(noad.collect_values);
 
-                noad.val = SkoarValueMsg(x);
+                noad.val = SkoarpuscleMsg(x);
                 noad.val.args = args;
 
                 clean.();
@@ -387,7 +366,7 @@ Skoarmantics {
                         | m, nav |
 
                         x = noad.children[0];
-    "FEE".postln;
+    ("FEE").postln;
                         x.evaluate.().performer(m, nav);
     "FUM".postln;
                     };
@@ -421,7 +400,7 @@ Skoarmantics {
                         kids.do {
                             | y |
                             var x = y.val;
-                            if (x.isKindOf(SkoarValueMsg)) {
+                            if (x.isKindOf(SkoarpuscleMsg)) {
                                 result = result.skoar_msg(x);
                             };
 
