@@ -49,7 +49,7 @@ Hand {
 
         // [ABCEFG])([Mm0-9]|sus|dim)*
 
-        s = val.lexeme;
+        s = val;
 
         c = (s[0] ++ "").toLower;
 

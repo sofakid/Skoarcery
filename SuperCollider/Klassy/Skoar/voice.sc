@@ -69,6 +69,7 @@ SkoarVoice {
     assign_set {
         | x, y |
 
+        "assign_set.".post; x.post; y.postln;
         if (y.isKindOf(SkoarpuscleSymbol)) {
             this.assign_symbol(x, y);
         };
@@ -144,16 +145,16 @@ SkoarVoice {
     }
 
     noat_go {
-        | noat |
+        | x |
 
-        hand.update(noat);
+        hand.update(x);
         cur_noat = hand.finger;
     }
 
     choard_go {
-        | noat |
+        | x |
 
-        hand.choard(noat);
+        hand.choard(x);
         cur_noat = hand.finger;
     }
 

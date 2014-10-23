@@ -18,32 +18,43 @@ Skoarpuscle {
         var o = msg.get_msg;
         var ret = val.performMsg(o);
 
-        case {ret.isKindOf(Skoarpuscle)} {
-            ^ret;
+        ^Skoarpuscle.wrap(ret);
+    }
 
-        } {ret.isKindOf(Integer)} {
-"ret int".postln;
-            ^SkoarpuscleInt(ret);
+    *wrap {
+        | x |
+        case {x.isKindOf(Skoarpuscle)} {
+            "already wrapped".postln;
+            ^x;
 
-        } {ret.isKindOf(Number)} {
-"ret float".postln;
-            ^SkoarpuscleFloat(ret);
+        } {x.isKindOf(Integer)} {
+            "x int".postln;
+            ^SkoarpuscleInt(x);
 
-        } {ret.isKindOf(String)} {
-"ret str".postln;
-            ^SkoarpuscleString(ret);
+        } {x.isKindOf(Number)} {
+            "x float".postln;
+            ^SkoarpuscleFloat(x);
 
-        } {ret.isKindOf(Symbol)} {
-"ret symbol".postln;
-            ^SkoarpuscleSymbol(ret);
+        } {x.isKindOf(String)} {
+            "x str".postln;
+            ^SkoarpuscleString(x);
 
-        } {ret.isKindOf(Array)} {
-"ret array".postln;
-            ^SkoarpuscleArray(ret);
+        } {x.isKindOf(Symbol)} {
+            "x symbol".postln;
+            ^SkoarpuscleSymbol(x);
 
+        } {x.isKindOf(Array)} {
+            var a = Array.new(x.size);
+            "x array".postln;
+            x.do {
+                | el |
+                a.add(Skoarpuscle.wrap(el));
+            };
+
+            ^SkoarpuscleArray(a);
         } {
-"ret unknown: ".post; ret.dump;
-            ^SkoarpuscleUnknown(ret);
+            "x unknown: ".post; x.dump;
+            ^SkoarpuscleUnknown(x);
         };
 
     }
@@ -72,7 +83,6 @@ SkoarpuscleSkoarpionRef : Skoarpuscle {
     performer {
         | m, nav |
         m.gosub(val, nav, config);
-        "SMEAR".postln;
     }
 }
 
@@ -172,7 +182,7 @@ SkoarpuscleChoard : Skoarpuscle {
 
     performer {
         | m, nav |
-        m.voice.choard_go(this);
+        m.voice.choard_go(val);
     }
 
 }

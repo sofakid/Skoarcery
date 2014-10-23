@@ -159,7 +159,7 @@ SkoarTokeInspector {
 
             "Toke_Choard" -> {
                 | noad |
-                noad.val = SkoarpuscleChoard(noad.toke);
+                noad.val = SkoarpuscleChoard(noad.toke.lexeme);
                 noad.toke = nil;
             },
 

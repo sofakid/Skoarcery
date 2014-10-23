@@ -433,6 +433,8 @@ Skoarmantics {
 
                 op = noad.children[0].toke.lexeme;
                 y = noad.children[1];
+                y.val = y.next_val;
+                y = y.val;
 
                 // we prepare the destination here (noad.f), we'll setup the write in skoaroid
 
