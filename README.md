@@ -296,16 +296,30 @@ Arrays and arraylike things can be iterated like skoarpions.
 
 That is, the `!xxx` notation starts an interator that sticks around.
 
+# messages
+
+With messages you can work with the underlying objects (i.e. the SuperCollider objects)
+
+    <? a random number between zero and five ?>
+    5.rand => @food
+
+    <? print foo to the post screen ?>
+    'foo'.postln
+
+    <? choose a random note and post it to the screen ?>
+    <c,d,e,f,g,a,b>.choose.postln
+
+Static methods can be called on underlying classes, just write them as symbols:
+
+    @Array.fib<20,27,3> => @food
+
+    @MyRediculousClass.new<'srsly', 2.1828> => @zagwaggler
+
 # cthulhu
 
-You can wake cthulhu, crashing the skoar..
+You can wake cthulhu, crashing the skoar.
 
-    <? crashes ?>
-    | a ) ^^(;,;)^^ |
-
-    <? ensure Dal Segno is working ?>
-    |: a ]] ]] Dal Segno ^^(;,;)^^ ,segno` ) ) :|
-
+    ^^(;,;)^^
 
 Cthulhu can assert stuff too, you have to stick it right in his face, he's sleeping.
 
@@ -316,6 +330,7 @@ Or save him to wake later with any message.
     ^^(;,;)^^ => @foo
 
     @foo.anything
+
 
 
 Install
@@ -437,6 +452,7 @@ PyCharm also works with the SC textmate bundle.
 [apparatus.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/apparatus.sc
 [skoar.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoar.sc
 [minstrel.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/minstrel.sc
+[beaty.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/beaty.sc
 [pitchy.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/pitchy.sc
 [skoarpions.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarpions.sc
 [voice.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/voice.sc
