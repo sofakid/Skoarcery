@@ -79,28 +79,22 @@ SkoarTokeInspector {
             
             "Toke_MsgName" -> {
                 | noad |
-                noad.toke.val = noad.toke.lexeme;
+                noad.toke.val = noad.toke.lexeme.asSymbol;
             },
             
             "Toke_MsgNameWithArgs" -> {
                 | noad |
-                var x = "<";
                 var s = noad.toke.lexeme;
-
-                if (s.last == x) {
-                    s = s.copyRange(0, s.size - 2);
-                };
-
-                noad.toke.val = s;
+                noad.toke.val = s[0..s.size-2].asSymbol;
             },
             
             "Toke_Volta" -> {
                 | noad |
-                noad.toke.val = int(noad.toke.lexeme.strip("[.]"));
+                noad.toke.val = noad.toke.lexeme.strip("[.]").asInteger;
             },
             
 
-            "Toke_SkoarpionName" -> {
+            "Toke_SymbolName" -> {
                 | noad |
                 noad.toke.val = noad.toke.lexeme.asSymbol;
             },
@@ -132,12 +126,6 @@ SkoarTokeInspector {
             // ------------
             // Skoarpuscles
             // ------------
-            "Toke_SkoarpionRef" -> {
-                | noad |
-                noad.val = SkoarpuscleSkoarpionRef(noad.toke.lexeme[1..].asSymbol);
-                noad.toke = nil;
-            },
-
             "Toke_Int" -> {
                 | noad |
                 noad.val = SkoarpuscleInt(noad.toke.lexeme.asInteger);
@@ -152,7 +140,6 @@ SkoarTokeInspector {
 
             "Toke_NamedNoat" -> {
                 | noad |
-                "fllsslsl".postln;
                 noad.val = SkoarpuscleNoat(noad.toke.lexeme);
                 noad.toke = nil;
             },

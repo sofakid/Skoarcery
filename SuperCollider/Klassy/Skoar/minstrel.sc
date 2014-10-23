@@ -14,10 +14,10 @@ SkoarMinstrel {
     var <>segno_seen;
     var <>al_fine;
 
-    var   skoarpion_iters;
+    var   skrp_iters;
+    var   skrp_stack;
 
     var   event_stream;
-
 
     *new {
         | nom, v, skr |
@@ -39,7 +39,7 @@ SkoarMinstrel {
         parts_index = Dictionary.new;
         colons_burned = Dictionary.new;
 
-        skoarpion_iters = IdentityDictionary.new;
+        skrp_iters = IdentityDictionary.new;
 
         // when set true, we will halt at a Toke_Fine
         al_fine = false;
@@ -125,7 +125,9 @@ SkoarMinstrel {
     }
 
     gosub {
-        | label, nav, config |
+        // skrp_args is the args to the skoarpion
+        // msg_arr is an array like [\msg, arg1, arg2, arg3 ...]
+        | label, nav, msg_arr, skrp_args |
 
         var skrp = skoar.skoarpions[label];
         var sub;
@@ -133,32 +135,34 @@ SkoarMinstrel {
 
         var z;
 
+        // TODO scope this!
+        //skrp_args.dump;
+
         var f = {
             | x |
             x.perform(this, nav);
         };
 
-        if (config == nil) {
-            config = [\choose];
+        if (msg_arr == nil) {
+            msg_arr = [\choose];
         };
 
         // first line
         skrp.head.inorder(f, skrp.stinger);
 
-        iter = skoarpion_iters[label];
+        iter = skrp_iters[label];
         if (iter == nil) {
             iter = skrp.iter;
-            skoarpion_iters[label] = iter;
+            skrp_iters[label] = iter;
         };
 
         // current line
-        z = iter.performMsg(config);
+        z = iter.performMsg(msg_arr);
         z.inorder(f, skrp.stinger);
     }
 
-    // goes along, configuring a new event, which it returns when it finds a beat.
     nextEvent {
-            ^event_stream.next;
+        ^event_stream.next;
     }
 
     pfunk {

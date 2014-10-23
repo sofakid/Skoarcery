@@ -31,10 +31,16 @@ al_x*              : AlCoda | AlSegno | AlFine | <e>
 
 beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
 
-skoarpion*         : SkoarpionSep SkoarpionName SkoarpionSep skoarpion_lines SkoarpionSep stinger
+skoarpion*         : SkoarpionSep SymbolName args SkoarpionSep skoarpion_lines SkoarpionSep stinger
 +skoarpion_lines   : skoarpion_line skoarpion_lines | <e>
 skoarpion_line*    : phrases Newline
 stinger            : phrases
+
+args*              : ListS args_suffix | <e>
++args_suffix       : args_entries ListE
++args_entries      : SymbolName moar_args_entries
++moar_args_entries : ListSep args_entries | <e>
+
 
 listy*             : ListS listy_suffix
 +listy_suffix      : listy_entries ListE | ListE
@@ -47,8 +53,11 @@ pedally*             : PedalDown | PedalUp
 ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
-nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy
-+nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | SkoarpionRef | Choard | NamedNoat | Symbol | CurNoat
+nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy | seq_ref
++nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | Choard | NamedNoat | Symbol | CurNoat
+
+seq_ref*         : SeqRef seq_ref_prime
++seq_ref_prime   : MsgNameWithArgs listy_suffix | MsgName
 
 stmt*            : skoaroid stmt_prime
 +stmt_prime      : assignment stmt_prime | <e>

@@ -26,17 +26,12 @@ Skoarmantics {
 
             "skoarpion" -> {
                 | skoar, noad |
-                var n = 0;
-                var label = nil;
-                var m = 0;
-
-                n = noad.n;
-                label = noad.children[1].toke.val;
-                noad.label = label;
-                noad.branch = nil;
-
+                var x;
+"conjuring skoarpion".postln;
+                x = Skoarpion(noad);
+x.dump;
                 // we save it here, the skoarpion will be removed from the tree by branch.
-                skoar.skoarpions[label] = Skoarpion(noad);
+                skoar.skoarpions[x.name] = x;
 
             },
 
@@ -146,14 +141,14 @@ Skoarmantics {
                 if (toke.isKindOf(Toke_QuindicesimaA)) {
                     noad.performer = {
                         | m, nav |
-                        m.voice.octave_shift(1);
+                        m.voice.octave_shift(2);
                     };
                 };
 
                 if (toke.isKindOf(Toke_QuindicesimaB)) {
                     noad.performer = {
                         | m, nav |
-                        m.voice.octave_shift(-1);
+                        m.voice.octave_shift(-2);
                     };
                 };
 
@@ -310,6 +305,48 @@ Skoarmantics {
 
             },
 
+            // seq_ref*         : SeqRef MsgNameWithArgs listy_suffix
+            //                  | SeqRef MsgName
+            "seq_ref" -> {
+                | skoar, noad |
+
+                var x;
+                var args;
+                var msg_name;
+
+                var clean = {
+                    noad.toke = nil;
+                    noad.children = [];
+                    noad.n = 0;
+                };
+
+                msg_name = noad.children[1].toke.val;
+msg_name.postln;
+                if (noad.children.size > 2) {
+"mizzle".postln;
+                    args = SkoarpuscleArgs(noad.children[2].collect_values);
+                };
+"hizzle ".post; msg_name.dump; args.dump;
+                noad.val = SkoarpuscleSeqRef(msg_name, args);
+"dizzle".postln;
+                clean.();
+
+            },
+
+            "args" -> {
+                | skoar, noad |
+
+                var clean = {
+                    noad.toke = nil;
+                    noad.children = [];
+                    noad.n = 0;
+                };
+
+                noad.val = SkoarpuscleArgs(noad.collect_values);
+                clean.();
+
+            },
+
             "msg" -> {
                 | skoar, noad |
 
@@ -322,11 +359,9 @@ Skoarmantics {
                     noad.n = 0;
                 };
 
-                x = noad.children[0].toke;
+                x = noad.children[0].toke.val;
                 args = SkoarpuscleArray(noad.collect_values);
-
-                noad.val = SkoarpuscleMsg(x);
-                noad.val.args = args;
+                noad.val = SkoarpuscleMsg(x, args);
 
                 clean.();
 

@@ -167,11 +167,12 @@ SkoarNoad {
         };
 
         s = s ++ "\n";
-
+s.post;
         children.do {
             | x |
             if (x != nil) {
-                s = s ++ x.draw_tree(tab + 1);
+                //s = s ++ x.draw_tree(tab + 1);
+                x.draw_tree(tab + 1);
             };
         };
 

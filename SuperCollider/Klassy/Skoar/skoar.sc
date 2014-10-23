@@ -172,6 +172,9 @@ Skoar {
     	">>> Parsing skoar...".postln;
         r.parse;
         "<<< parsed.".postln;
+        "---< Undecorated Skoar Tree >---".postln;
+        r.tree.draw_tree.postln;
+
         r.decorate;
 
         "---< Skoar Tree >---".postln;

@@ -17,10 +17,6 @@ Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
-SkoarpionSep:       !!
-SkoarpionName*:     [a-zA-Z_][a-zA-Z0-9_]*
-SkoarpionRef*:      ![a-zA-Z_][a-zA-Z0-9_]*
-
 CurNoat:         [$]
 Portamento:     port\\.?
 Slur:           [+][+]
@@ -74,8 +70,15 @@ Choard*:          (D(?![a.])|[ABCEFG])([Mm0-9]|sus|dim)*
 CondS:            [{][?]
 CondSep:          ;
 CondE:            [?][}]
-MsgName*:         [a-zA-Z_][a-zA-Z0-9_]*
+
+# we do this, because skoaroids can follow skoaroids.
+MsgName*:         [a-zA-Z_][a-zA-Z0-9_]*(?!<)
 MsgNameWithArgs*: [a-zA-Z_][a-zA-Z0-9_]*<
+
+Symbol*:          [\\\\@][a-zA-Z_][a-zA-Z0-9_]*
+SymbolName*:      [a-zA-Z_][a-zA-Z0-9_]*
+SkoarpionSep:     !!
+SeqRef:           !(?!!)
 
 Nosey:            ,
 
@@ -99,8 +102,6 @@ QuindicesimaB:    15mb|alla quindicesimb
 
 Loco:             loco
 Volta*:           \\[\\d+\\.\\]
-
-Symbol*:          [\\\\@][a-zA-Z][a-zA-Z0-9]+
 
 # TODO: deal with \"
 String*:          \'[^']*\'

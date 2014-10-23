@@ -1,5 +1,4 @@
 
-
 Hand {
 
     var   direction;
@@ -89,3 +88,56 @@ Hand {
 
 }
 
+
+// -------------------
+// Pitchy Skoarpuscles
+// -------------------
+SkoarpuscleNoat : Skoarpuscle {
+
+    var <lexeme;
+    var <low;
+    var <sharps;
+
+    init {
+        | lexeme |
+
+        var noat_regex = "^(_?)([a-g])";
+        var sharps_regex = "[a-g](#*|b*)$";
+        var s = lexeme;
+        var r = s.findRegexp(noat_regex);
+        var x = -1;
+
+        low = r[1][1] != "";
+        val = r[2][1];
+
+        r = s.findRegexp(sharps_regex);
+        s = r[1][1];
+
+        if (s.beginsWith("#")) {
+            x = 1;
+        };
+
+        sharps = s.size * x;
+
+    }
+
+    flatten {^this;}
+
+    performer {
+        | m, nav |
+        m.voice.noat_go(this);
+    }
+
+}
+
+
+SkoarpuscleChoard : Skoarpuscle {
+
+    flatten {^this;}
+
+    performer {
+        | m, nav |
+        m.voice.choard_go(val);
+    }
+
+}

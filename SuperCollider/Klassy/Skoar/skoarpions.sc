@@ -1,3 +1,4 @@
+// The Skoarpion is our general purpose control structure.
 Skoarpion {
 
     var <name;
@@ -6,6 +7,8 @@ Skoarpion {
     var <head;
     var <body;
     var <stinger;
+
+    var <args;
 
     var <body_noad;
 
@@ -19,14 +22,15 @@ Skoarpion {
         var kids = noad.children;
         var m = kids.size;
 
-        name = noad.label;
-
         // 0 - sep
         // 1 - label
-        // 2 - sep
-        // 3 - head
-        head = kids[3];
-        body = kids[4..m-3];
+        name = kids[1].toke.lexeme.asSymbol;
+        // 2 - args
+        args = kids[2].next_val;
+        // 3 - sep
+        // 4 - head
+        head = kids[4];
+        body = kids[5..m-4];
         // n-2: sep
         // n-1: stinger
         stinger = kids[m-1];
@@ -102,3 +106,37 @@ SkoarpionIter {
 
 }
 
+// ---------------------
+// Sequency Skoarpuscles
+// ---------------------
+SkoarpuscleSeqRef : Skoarpuscle {
+
+    var msg_arr;
+    var args;
+
+    *new {
+        | v, a |
+        ^super.new.init(v, a);
+    }
+
+    init {
+        | v, a |
+
+        "dorp.post; ".post; v.dump; a.dump;
+        val = v;
+        args = a;
+    }
+
+    skoar_msg {
+        | msg, minstrel |
+        msg_arr = msg.get_msg_arr;
+        ^this;
+    }
+
+    performer {
+        | m, nav |
+        "flerp".postln; msg_arr.dump; args.dump;
+        m.gosub(val, nav, msg_arr, args);
+    }
+
+}

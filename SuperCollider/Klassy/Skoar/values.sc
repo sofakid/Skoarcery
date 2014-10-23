@@ -15,7 +15,7 @@ Skoarpuscle {
 
     skoar_msg {
         | msg, minstrel |
-        var o = msg.get_msg;
+        var o = msg.get_msg_arr;
         var ret = val.performMsg(o);
 
         ^Skoarpuscle.wrap(ret);
@@ -80,21 +80,8 @@ SkoarpuscleFloat : Skoarpuscle {
 
 }
 
-SkoarpuscleSkoarpionRef : Skoarpuscle {
 
-    var config;
 
-    skoar_msg {
-        | msg, minstrel |
-        config = msg.get_msg;
-        ^this;
-    }
-
-    performer {
-        | m, nav |
-        m.gosub(val, nav, config);
-    }
-}
 
 
 SkoarpuscleString : Skoarpuscle {
@@ -126,7 +113,7 @@ SkoarpuscleSymbol : Skoarpuscle {
 
     skoar_msg {
         | msg, minstrel |
-        var o = msg.get_msg;
+        var o = msg.get_msg_arr;
         var ret = val;
         var x = this.lookup(minstrel);
 
@@ -167,74 +154,28 @@ SkoarpuscleArray : Skoarpuscle {
 
 }
 
-// noaty stuff
-SkoarpuscleNoat : Skoarpuscle {
-
-    var <lexeme;
-    var <low;
-    var <sharps;
-
-    init {
-        | lexeme |
-
-        var noat_regex = "^(_?)([a-g])";
-        var sharps_regex = "[a-g](#*|b*)$";
-        var s = lexeme;
-        var r = s.findRegexp(noat_regex);
-        var x = -1;
-
-        low = r[1][1] != "";
-        val = r[2][1];
-
-        r = s.findRegexp(sharps_regex);
-        s = r[1][1];
-
-        if (s.beginsWith("#")) {
-            x = 1;
-        };
-
-        sharps = s.size * x;
-
-    }
-
-    flatten {^this;}
+SkoarpuscleArgs : SkoarpuscleArray {
 
     performer {
         | m, nav |
-        m.voice.noat_go(this);
     }
 
 }
 
 
-SkoarpuscleChoard : Skoarpuscle {
-
-    flatten {^this;}
-
-    performer {
-        | m, nav |
-        m.voice.choard_go(val);
-    }
-
-}
-
-
-// messagy stuff
 SkoarpuscleMsg : Skoarpuscle {
 
     var <>args;
 
+    *new {
+        | v, a |
+        ^super.new.init(nil).init(v, a);
+    }
+
     init {
-        | t |
-
-        val = t.lexeme;
-        args = [];
-
-        if (t.isKindOf(Toke_MsgNameWithArgs)) {
-            val.pop;
-        };
-
-        val = val.asSymbol;
+        | v, a |
+        val = v;
+        args = a;
     }
 
     performer {
@@ -242,7 +183,7 @@ SkoarpuscleMsg : Skoarpuscle {
         //val.postln;
     }
 
-    get_msg {
+    get_msg_arr {
         var x = Array.new(args.size + 1);
         x.add(val);
         args.flatten.do {
@@ -253,7 +194,3 @@ SkoarpuscleMsg : Skoarpuscle {
     }
 
 }
-
-// -------------
-// rhythm values
-// -------------
