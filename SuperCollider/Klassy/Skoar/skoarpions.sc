@@ -70,20 +70,30 @@ SkoarpionIter {
         i = -1;
     }
 
-    choose {
-        i = n.rand;
+    selector {
+        | f |
+        i = f.value % n;
         ^body[i];
+    }
+
+    at {
+        | j |
+        ^this.selector({j});
+    }
+
+    choose {
+        ^this.selector({n.rand});
+
     }
 
     wchoose {
         | weights |
-        i = weights.val.windex;
-        ^body[i];
+        ^this.selector({weights.val.windex});
+
     }
 
     next {
-        i = 1 + i % n;
-        ^body[i];
+        ^this.selector({1 + i});
     }
 
     block {
