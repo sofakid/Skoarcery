@@ -225,6 +225,57 @@ We use SuperCollider Symbols, but with a `@` instead of a `\`, and use a diction
     <0,3,5> => @detune
     |: a ) c ) e ) :|
 
+# Skoarpions
+
+The Skoarpion is a flexible device; we can use it as a function, a sequence, a block, a
+source of chaos..
+
+    !! name<args> !! head
+      body
+      ...
+    !! stinger
+
+
+When you call the skoarpion, `head` runs, then the `body`; the `stinger` runs before every
+beat. `args` can be omitted if you don't want to define any.
+
+    !! zorp<derp> !!
+     | )         )          |
+     | )         ]    ]     |
+     | ] ]  ]] ]] ]         |
+     | )  }                 |
+     | )    ]] oo/ ]        |
+     | ] ]  ]] ]] oo/ ]]    |
+    !! @derp.choose
+
+    <? - this calls !zorp.choose, setting @derp to <_a, c#, e>
+       - @derp.choose in the stinger, means it will pick one noat from @derp each beat.
+       - the !zorp.choose will choose one line at random ?>
+    !zorp<<_a, c#, e>>.choose
+
+They can be used as a block of code:
+
+    !! alice !!
+    ~o mp
+    @acid => @instrument
+    <0,5,7> => @detune
+    <c#, e, _a, g#> => @favorites
+    !!
+
+    !! bob<x> !!
+    o~~
+    forte
+    @x.value => @favorites
+    @bass => @instrument
+    !!
+
+    .a !alice.block
+    .b !bob<a,e>.block
+
+    ...
+
+You can cycle the lines in order with `.next` or backwards with `.last`
+
 
 # cthulhu
 
