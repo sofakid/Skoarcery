@@ -276,6 +276,25 @@ They can be used as a block of code:
 
 You can cycle the lines in order with `.next` or backwards with `.last`
 
+# other sequences
+
+Arrays and arraylike things can be iterated like skoarpions.
+
+    <c, e, g> => @food
+
+    <? this sends .next to the array, does nothing useful. ?>
+    @food.next )
+
+    <? this returns c ?>
+    !food.next )
+
+    <? this returns e ?>
+    !food.next )
+
+    <? at random ?>
+    !food.choose )
+
+That is, the `!xxx` notation starts an interator that sticks around.
 
 # cthulhu
 
