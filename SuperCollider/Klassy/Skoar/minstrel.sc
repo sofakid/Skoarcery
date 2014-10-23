@@ -118,6 +118,8 @@ SkoarMinstrel {
                     };
 
             };
+
+            ("Minstrel " ++ voice.name ++ " done.").postln;
         });
 
     }

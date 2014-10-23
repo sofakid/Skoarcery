@@ -14,7 +14,7 @@ Skoarpuscle {
     flatten {^val;}
 
     skoar_msg {
-        | msg |
+        | msg, minstrel |
         var o = msg.get_msg;
         var ret = val.performMsg(o);
 
@@ -64,10 +64,20 @@ SkoarpuscleUnknown : Skoarpuscle {
 }
 
 SkoarpuscleInt : Skoarpuscle {
+
+    flatten {
+        ^val.asInteger;
+    }
+
 }
 
 
 SkoarpuscleFloat : Skoarpuscle {
+
+    flatten {
+        ^val.asFloat;
+    }
+
 }
 
 SkoarpuscleSkoarpionRef : Skoarpuscle {
@@ -75,7 +85,7 @@ SkoarpuscleSkoarpionRef : Skoarpuscle {
     var config;
 
     skoar_msg {
-        | msg |
+        | msg, minstrel |
         config = msg.get_msg;
         ^this;
     }
@@ -113,6 +123,27 @@ SkoarpuscleSymbol : Skoarpuscle {
             v.performer(m, nav);
         };
     }
+
+    skoar_msg {
+        | msg, minstrel |
+        var o = msg.get_msg;
+        var ret = val;
+        var x = this.lookup(minstrel);
+
+        if (x == nil) {
+            x = val.asClass;
+        };
+
+        if (x != nil) {
+            ret = x.performMsg(o);
+        } {
+            ret = val.performMsg(o);
+        };
+
+        ^Skoarpuscle.wrap(ret);
+    }
+
+
 
 }
 
@@ -194,10 +225,10 @@ SkoarpuscleMsg : Skoarpuscle {
     var <>args;
 
     init {
-        | t, a |
+        | t |
 
         val = t.lexeme;
-        args = a;
+        args = [];
 
         if (t.isKindOf(Toke_MsgNameWithArgs)) {
             val.pop;
