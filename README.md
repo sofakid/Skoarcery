@@ -216,6 +216,7 @@ Infinite repeats:
     <? from the segno ?>
     | _a] c] e] o/ | ,segno` _f] f] _f] o/ Dal Segno |
 
+
 # data assignment
 
 We use SuperCollider Symbols, but with a `@` instead of a `\`, and use a dictionary.
@@ -324,9 +325,10 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 - [voice.sc] - Voice object - each voice is performed by a minstrel.
 - [minstrel.sc] - Minstrels are agents who read and perform their own voice of a skoar piece.
 - [skoarpions.sc] - Implements the Skoarpion construct.
+- [beaty.sc] - The code for beats and rests.
 - [pitchy.sc] - The code for pitchy stuff. Noats, choards, etc.
 - [toker.sc] - Toker for the parser.
-- [values.sc] - Value types.
+- [values.sc] - Value types, aka Skoarpuscles.
 
 Dev Environment
 ===============
