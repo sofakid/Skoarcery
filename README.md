@@ -1,11 +1,38 @@
 Skoar and Skoarcery
 ===================
 
-"You realize everyone is going to think you are insane?" - miggles
+__Skoar__ is a high-level language for coding music.
 
-Skoar is a musical notation language.
+It runs on [SuperCollider], a free and fantastic audio programming environment.
 
-Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [SuperCollider] and Python.
+__Skoarcery__ is a set of tools to define, test, and build the Skoar language.
+
+Examples
+========
+
+# MIDI example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/windwaker-sv1)
+
+    <? Zelda Wind Waker Theme - inspired by piano arrangement by Shinobu Amayake ?>
+
+    @midi => @type
+    -1 => @transpose
+
+    9/8 120 => ).
+    mp
+
+    | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | _a )). }. |
+
+    | _a)   d] f#)   e] d)     c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)   _a] _g)   d] _b)    c#] | d)   e]] ]] f#] d] e] _a)   ] |
+    | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).      _a)   ] |
+    | _a)  d]] e]] f#)  e] d)  c#] | e]] d].  _b] _g)  c#] _a] d] _b]  | c#)   _a] _g)   d] _b)    c#] | ]] d]] e]] ]] f#] d] e] _a) ] |
+    | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).       a)   ] |
+
+    |: g] f#] e] f#)  d] c#] d] e] | a] d] ] g] d] ] f#)    ] | g] a] b] b] g] e] a)  a]   | g] f#] d] e] f#] e]] f#]] e)  ] |
+    |  d] c#] d] e)   e] a] g] c#] | g] d] ] f#)  ] e] c#] e] | d] b] d] g] a] b] f# d] g] | e).    ] f#] e] a)           ] :|
+
+    | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | <_a,_f#> )). _a ) ] |
+
+This was played over MIDI to my Korg SV1.
 
 # Drumming example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/beets)
 
@@ -65,101 +92,48 @@ Skoarcery is the compiler compiler that compiles skoar lexers and parsers for [S
     .s  | ))) |
     .k  | ))) |
 
-    <? Special thanks to The Breakbeat Bible for the dope dubstepz.
-       The synths are the SOS drums from the SuperCollider examples folder. ?>
-
-# MIDI example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/windwaker-sv1)
-
-    <? Zelda Wind Waker Theme - inspired by piano arrangement by Shinobu Amayake ?>
-
-    <? after compiling do: myskoar[\midiout] = MIDIOut(0); ?>
-    @midi => @type
-
-    <? key is Db, so i flat everything and sharp c & f ?>
-    -1 => @transpose
-
-    9/8 120 => ).
-    mp
-
-    | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | _a )). }. |
-
-    | _a)   d] f#)   e] d)     c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)   _a] _g)   d] _b)    c#] | d)   e]] ]] f#] d] e] _a)   ] |
-    | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).      _a)   ] |
-    | _a)  d]] e]] f#)  e] d)  c#] | e]] d].  _b] _g)  c#] _a] d] _b]  | c#)   _a] _g)   d] _b)    c#] | ]] d]] e]] ]] f#] d] e] _a) ] |
-    | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).       a)   ] |
-
-    |: g] f#] e] f#)  d] c#] d] e] | a] d] ] g] d] ] f#)    ] | g] a] b] b] g] e] a)  a]   | g] f#] d] e] f#] e]] f#]] e)  ] |
-    |  d] c#] d] e)   e] a] g] c#] | g] d] ] f#)  ] e] c#] e] | d] b] d] g] a] b] f# d] g] | e).    ] f#] e] a)           ] :|
-
-    | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | <_a,_f#> )). _a ) ] |
-
-This was played over MIDI to my Korg SV1.
-
-# current state
-
-This is alpha software. Most of the things described here are implemented. The python implementation needs alot of work
-to bring it to where the SuperCollider one is.
-
-Focus is on SuperCollider at the moment.
-
-# why is everything named crazily?
-
-SuperCollider already has well known objects called Score, Note, Chord, etc.. So here we use skoar, noat, choard, etc..
-
-You thought I was just being cute?
 
 Skoar
 =====
 
-Skoar is a mini language for describing music, it is compiled into a parse tree that can be traversed, implementing a
-SuperCollider pattern.
+Skoar is a language for coding music.
+
+# beats and rests
+
+    __beats_______________   __rests_______________
+
+    ))) - whole               }}} - whole
+    ))  - half                 }} - quarter
+    )   - quarter               } - quarter
+    ]   - eighth               o/ - eighth
+    ]]  - sixteenth           oo/ - sixteenth
+    ]]] - thirty secondth    ooo/ - thirthy secondth
 
 
-    ("""
+# fancy beats - dotted, staccato, ties
 
-    ||: Am ]]] oo/ ]]]  | G oo/ ]]] ooo/ | F oo/ ]]] ooo/ | F ooo/ ]]] oo/ :||
-
-    """.skoar.play;
-    )
-
-# beats
-
-    ))) - whole noat
-    )) - half noat
-    ) - quarter noat
-    ] - eighth noat
-    ]] - sixteenth noat
-    ]]] - thirty second noat
-
-# rests
-
-    }}} - whole rest
-    }} - half rest
-    } - quarter rest
-    o/ - eighth rest
-    oo/ - sixteenth rest
-    ooo/ - thirty second rest
-
-# dotted (x1.5 duration) beats
-
-    ). - dotted quarter
+    ).  - dotted quarter
     ]]. - dotted sixteenth
     o/. - dotted eighth rest
 
-# staccato
-
-    .) - staccato quarter
+    .)   - staccato quarter
     .]]. - staccato and dotted sixteenth
+
+    )__  - quarter with a tie (ties to the next beat)
+    )__. - dotted quarter with a tie
 
 # noats
 
-    <? you can use # or b after the noat to sharp or flat it. Also midi numbers. ?>
+We call them __noats__, not __notes__, you see, __notes__ are already things;
+nor are these __noats__ the nearly named __noads__, which are also totally things..
 
-    || c ) d ) eb ) | f ]] ]] g ] ] g# ) | } 81.5 ) 83 ) ||
+    <? use # or b after the noat to sharp or flat it. Or use scale degree numbers. ?>
+
+    c ) d ) eb ) f ]] ]] g ] ] g# )
 
     <? you get two octaves to work with, prepend _ for the lower octave. ?>
 
-    ||: d ) _a ) a ) _a ) :||
+    <_c, _d, _e, _f, _g, _a, _b, c, d, e, f, g, a, b>.choose ]]
 
 # choards
 
@@ -169,44 +143,37 @@ Choards need work, but this is the intention:
 
 Or use lists of noats:
 
-    | <a,c,e> ) <81, c#, e> ) |
+    <a,c,e> )  <a,c#,e> )
 
 # octaving
 
-    <? up one octave ?>
-    ~o
-    8va
-    ottava alta
+    <? up one octave ?>    <? down one ?>
+    ~o                     o~
+    8va                    8vb
+    ottava alta            ottava bassa
 
-    <? up two ?>
-    ~~o
-    15ma
+    <? up two ?>           <? down two ?>
+    ~~o                    o~~
+    15ma                   15mb
     alla quindicesima
-
-    <? down one ?>
-    o~
-    8vb
-    ottava bassa
-
-    <? down two ?>
-    o~~
-    15mb
 
 # dynamics
 
 Have to use the full word `forte`, `f` is a noat.
 
-    fff ffforte ppp pppiano piano mp mf ff pp p
+    fff ffforte ppp pppiano piano mp mf ff pp p sfp
 
 # repeats
 
-Colons
+Colons:
 
-    |: _a ]]] c ]]] e ]]] :|: g ]]] ooo/ ]]] :|
+    |: _a ]]] c ]]] e ]]] :| g ]]] ooo/ ]]] :|
 
 Segnos and Codas:
 
     | _a ) c ) e ) | ,segno` ) ]] ]] e ]] | f D.S. al fine ) ) ) fine
+
+    |,segno` c ]] D.S. al Coda  '............'  (+) | a) c) e) } |
 
 Infinite repeats:
 
@@ -217,18 +184,19 @@ Infinite repeats:
     | _a] c] e] o/ | ,segno` _f] f] _f] o/ Dal Segno |
 
 
-# data assignment
+# data
 
-We use SuperCollider Symbols, but with a `@` instead of a `\`, and use a dictionary.
+We can set and get values from a dictionary local to the voice. Anything set here
+will be copied into the resulting event every beat; which we can use to configure the voice.
 
     @smooth => @instrument
+
     <0,3,5> => @detune
-    |: a ) c ) e ) :|
 
 # Skoarpions
 
-The Skoarpion is a flexible device; we can use it as a function, a sequence, a block, a
-source of chaos..
+The __Skoarpion__ is a flexible device; we can use it as a function, a sequence, a block, or a
+source of chaos.
 
     !! name<args> !! head
       body
@@ -236,8 +204,10 @@ source of chaos..
     !! stinger
 
 
-When you call the skoarpion, `head` runs, then the `body`; the `stinger` runs before every
-beat. `args` can be omitted if you don't want to define any.
+Each time you call the skoarpion, `head` runs, then the `body`; the `stinger` runs before every
+beat.
+
+Example:
 
     !! zorp<derp> !!
      | )         )          |
@@ -253,7 +223,7 @@ beat. `args` can be omitted if you don't want to define any.
        - the !zorp.choose will choose one line at random ?>
     !zorp<<_a, c#, e>>.choose
 
-They can be used as a block of code:
+They can be used as a block of code with `.block`:
 
     !! alice !!
     ~o mp
@@ -285,14 +255,10 @@ Arrays and arraylike things can be iterated like skoarpions.
     <? this sends .next to the array, does nothing useful. ?>
     @food.next )
 
-    <? this returns c ?>
-    !food.next )
-
-    <? this returns e ?>
-    !food.next )
-
-    <? at random ?>
-    !food.choose )
+    !food.next )   <? plays: c ?>
+    !food.next )   <? plays: e ?>
+    !food.last )   <? plays: c ?>
+    !food.choose ) <? at random ?>
 
 That is, the `!xxx` notation starts an interator that sticks around.
 
@@ -315,38 +281,32 @@ Static methods can be called on underlying classes, just write them as symbols:
 
     @MyRediculousClass.new<'srsly', 2.1828> => @zagwaggler
 
-# cthulhu
+    @zagwaggler.bringTheWub<'wub'>.wub.wub.wub.wub
 
-You can wake cthulhu, crashing the skoar.
+# Cthulhu
+
+You can wake Cthulhu, crashing the skoar.
 
     ^^(;,;)^^
 
-Cthulhu can assert stuff too, you have to stick it right in his face, he's sleeping.
+Cthulhu can also make assertions.
 
     ^^(;@octave == 5;)^^
-
-Or save him to wake later with any message.
-
-    ^^(;,;)^^ => @foo
-
-    @foo.anything
-
-
 
 Install
 =======
 
-map Klassy folder to the SuperCollider extensions folder.
+In SuperCollider's interpreter options, __include__ the folder `~/.../Skoar/SuperCollider/Klassy/Skoar` and
+restart the interpreter
 
-    ln -s ~/.../Skoar/SuperCollider/Klassy/Skoar ~/Library/Application\ Support/SuperCollider/Extensions/Klassy/Skoar
+The lexical and syntactic analysers, `lex.sc` and `rdpp.sc` (ditto `.py`) are built with Skoarcery.
+They are built and written to `.../SuperCollider/Klassy/Skoar`.
 
-The lexical and syntactic analysers, lex.sc and rdpp.sc (ditto .py) are built with Skoarcery.
-They are built and written to SuperCollider/Klassy.
+Currently the built code is checked in, you don't need to get Skoarcery working unless you want to
+work on the language.
 
-Currently the built code is checked in, so it should work after mapping the folder (and restarting SuperCollider).
-
-Skoarcery Koadmap
-=================
+Skoarcery
+=========
 
 ### [terminals.py]
 - Tokens by convention are UpperCamelCase.
@@ -401,7 +361,7 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 - [lex.sc] - Lexical analyser, defines classes for each token, extending SkoarToke.
     - in Skoar, we call them Tokes, in Skoarcery, they are Terminals, or tokens.
 
-- [rdpp.sc] - Recursive decsent predictive parser. Builds the parse tree.
+- [rdpp.sc] - Recursive descent predictive parser. Builds the parse tree.
 
 ### The Hand Coded Code - Mostly The Runtime
 
@@ -409,18 +369,12 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 - [apparatus.sc] - The parse tree code. Noads, searching, iteration, etc.
 - [voice.sc] - Voice object - each voice is performed by a minstrel.
 - [minstrel.sc] - Minstrels are agents who read and perform their own voice of a skoar piece.
-- [skoarpions.sc] - Implements the Skoarpion construct.
+- [skoarpions.sc] - Implements the Skoarpion, our general purpose control-flow construct.
 - [beaty.sc] - The code for beats and rests.
 - [pitchy.sc] - The code for pitchy stuff. Noats, choards, etc.
 - [toker.sc] - Toker for the parser.
-- [values.sc] - Value types, aka Skoarpuscles.
+- [skoarpuscles.sc] - Skoarpuscles.
 
-Dev Environment
-===============
-
-I use PyCharm. The "builds" are done throught the unittest interface.
-
-PyCharm also works with the SC textmate bundle.
 
 
 
@@ -456,7 +410,7 @@ PyCharm also works with the SC textmate bundle.
 [pitchy.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/pitchy.sc
 [skoarpions.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarpions.sc
 [voice.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/voice.sc
-[values.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/values.sc
+[skoarpuscles.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarpuscles.sc
 [toker.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toker.sc
 
 [SuperCollider]: http://supercollider.sourceforge.net/
