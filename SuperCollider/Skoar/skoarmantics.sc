@@ -8,8 +8,7 @@ This code is applied during the decoration stage of compiling the skoar tree.
 
 For stuff to happen during performing the tree, we set handlers here.
 
-We also shrink the tree, drop some punctuation noads;
-   when you see replace_children, that's what's going on. 
+We also shrink the tree, drop some punctuation noads.
 
 absorb_toke assumes the only child is a toke, puts it in 
    noad.toke and removes the child. (and returns the toke)

@@ -1,0 +1,2 @@
+
+SkoarSanity.new.run;

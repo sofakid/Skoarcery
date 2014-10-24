@@ -30,7 +30,7 @@ Skoarpion {
         // 3 - sep
         // 4 - head
         head = kids[4];
-        body = kids[5..m-4];
+        body = kids[5..m-3];
         // n-2: sep
         // n-1: stinger
         stinger = kids[m-1];
@@ -98,6 +98,10 @@ SkoarpionIter {
 
     next {
         ^this.selector({1 + i});
+    }
+
+    last {
+        ^this.selector({i - 1});
     }
 
     block {

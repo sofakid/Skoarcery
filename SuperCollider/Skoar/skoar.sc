@@ -45,13 +45,14 @@ Skoar {
 
     parse {
         tree = parser.skoar(nil);
-        try {
+        //"huzzzzzzah?".postln;
+        //try {
             toker.eof;
-        } {
-            | e |
-            e.postln;
-            toker.dump;
-        }
+        //} {
+        //    | e |
+        //    e.postln;
+        //    toker.dump;
+        //}
     }
 
     skoarboard_defaults {

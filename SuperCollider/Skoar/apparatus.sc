@@ -84,32 +84,6 @@ SkoarNoad {
 
     }
 
-    // ------------------
-    // shrinking the tree
-    // ------------------
-    replace_children {
-        | x |
-
-        children = x;
-        this.recount_children;
-    }
-
-    recount_children {
-        var k = 0;
-        n = 0;
-
-//"recounting children".postln;
-        children.do {
-            | x |
-            if (x.isKindOf(SkoarNoad)) {
-                x.i = k;
-            };
-            k = k + 1;
-            n = n + 1;
-        }
-    }
-
-
     // ----------------
     // growing the tree
     // ----------------
@@ -167,12 +141,12 @@ SkoarNoad {
         };
 
         s = s ++ "\n";
-s.post;
+        //s.post;
         children.do {
             | x |
             if (x != nil) {
-                //s = s ++ x.draw_tree(tab + 1);
-                x.draw_tree(tab + 1);
+                s = s ++ x.draw_tree(tab + 1);
+                //x.draw_tree(tab + 1);
             };
         };
 
@@ -187,7 +161,7 @@ s.post;
     depth_visit {
         | f |
 
-        //">>> ".post; name.postln;
+        ">>> depth_visit: ".post; name.postln;
 
         children.do {
             | y |
@@ -196,29 +170,37 @@ s.post;
             };
         };
 
-        //"--- ".post; name.postln;
+        "--- depth_visit: ".post; name.postln;
 
         // note: leaves first
         f.(this);
 
-        //"<<< ".post; name.postln;
+        "<<< depth_visit: ".post; name.postln;
     }
 
     inorder {
         | f, stinger=nil |
 
+        ">>> inorder: ".post; name.postln;
+
         if (stinger != nil && val.isKindOf(SkoarpuscleBeat)) {
+
+            "!!! stinger: ".post; stinger.postln;
             stinger.inorder(f);
         };
 
+        "--- inorder: ".post; name.postln;
         f.(this);
 
+        "=== inorder: ".post; name.postln;
         children.do {
             | y |
             if (y != nil) {
                 y.inorder(f, stinger);
             };
         };
+        "<<< inorder: ".post; name.postln;
+
 
     }
 

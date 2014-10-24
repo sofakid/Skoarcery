@@ -42,7 +42,7 @@ class SkoarError(AssertionError):
 
     def test_PyLexer(self):
 
-        fd = open("../pymp/lex.py", mode="w")
+        fd = open("../SkoarPyon/lex.py", mode="w")
 
         emissions.PY.fd = fd
 

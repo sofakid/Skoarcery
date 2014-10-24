@@ -23,7 +23,7 @@ def meter_beat(skoar, noad):
 
 
 def listy(skoar, noad):
-    from Skoarcery.pymp.lex import Toke_ListSep
+    from Skoarcery.SkoarPyon.lex import Toke_ListSep
 
     X = []
 
@@ -110,7 +110,7 @@ def meter(skoar, noad):
 
 
 def marker(skoar, noad):
-    from Skoarcery.pymp.lex import Toke_Bars
+    from Skoarcery.SkoarPyon.lex import Toke_Bars
 
     noad.absorb_toke()
     skoar.add_marker(noad)
@@ -126,7 +126,7 @@ def noaty(skoar, noad):
 
 
 def noat_literal(skoar, noad):
-    from Skoarcery.pymp.lex import Toke_NamedNoat
+    from Skoarcery.SkoarPyon.lex import Toke_NamedNoat
 
     noat = noad.absorb_toke()
     noad.noat = noat

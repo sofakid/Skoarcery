@@ -2,7 +2,7 @@ import unittest
 from Skoarcery import langoids, terminals, nonterminals, dragonsets, parsetable
 from Skoarcery.langoids import Terminal, Nonterminal
 from Skoarcery.emissions import PY
-from Skoarcery.pymp import apparatus
+from Skoarcery.SkoarPyon import apparatus
 
 
 class Test_Performer(unittest.TestCase):

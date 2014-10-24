@@ -25,7 +25,7 @@ class Build_Pymp(Buildoar):
         # Lexer
         self.step("Build Lexer", Code_Lexer_Py)
 
-        from Skoarcery.pymp import lex
+        from Skoarcery.SkoarPyon import lex
         reload(lex)
 
         # #
@@ -39,7 +39,7 @@ class Build_Pymp(Buildoar):
         # Parser
         self.step("Build Parser", Code_Parser_Py)
 
-        from Skoarcery.pymp import rdpp
+        from Skoarcery.SkoarPyon import rdpp
         reload(rdpp)
 
         #

@@ -296,11 +296,11 @@ Cthulhu can also make assertions.
 Install
 =======
 
-In SuperCollider's interpreter options, __include__ the folder `~/.../Skoar/SuperCollider/Klassy/Skoar` and
+In SuperCollider's interpreter options, __include__ the folder `~/.../Skoar/SuperCollider/Skoar` and
 restart the interpreter
 
 The lexical and syntactic analysers, `lex.sc` and `rdpp.sc` (ditto `.py`) are built with Skoarcery.
-They are built and written to `.../SuperCollider/Klassy/Skoar`.
+They are built and written to `.../SuperCollider/Skoar`.
 
 Currently the built code is checked in, you don't need to get Skoarcery working unless you want to
 work on the language.
@@ -373,44 +373,44 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 - [beaty.sc] - The code for beats and rests.
 - [pitchy.sc] - The code for pitchy stuff. Noats, choards, etc.
 - [toker.sc] - Toker for the parser.
-- [skoarpuscles.sc] - Skoarpuscles.
+- [skoarpuscles.sc] - Skoarpuscles, the thingy things are all skoarpuscles.
 
 
 
 
-[terminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/terminals.py
+[terminals.py]:    https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/terminals.py
 [nonterminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/nonterminals.py
 
-[toke_inspector.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toke_inspector.sc
+[toke_inspector.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/toke_inspector.sc
 [toke_inspector.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/toke_inspector.py
 
-[skoarmantics.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarmantics.sc
+[skoarmantics.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/skoarmantics.sc
 [skoarmantics.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/skoarmantics.py
 
-[langoids.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/langoids.py
+[langoids.py]:   https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/langoids.py
 [dragonsets.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/dragonsets.py
-[emissions.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/emissions.py
+[emissions.py]:  https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/emissions.py
 [underskoar.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/underskoar.py
 
-[laboaratoary]: https://github.com/sofakid/Skoarcery/tree/master/Skoarcery/laboaratoary/
-[factoary]: https://github.com/sofakid/Skoarcery/tree/master/Skoarcery/factoary/
+[laboaratoary]:  https://github.com/sofakid/Skoarcery/tree/master/Skoarcery/laboaratoary/
+[factoary]:      https://github.com/sofakid/Skoarcery/tree/master/Skoarcery/factoary/
 
-[Build_Sc.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Build_Sc.py
-[Code_Lexer_Py.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Lexer_Py.py
-[Code_Lexer_Sc.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Lexer_Sc.py
+[Build_Sc.py]:       https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Build_Sc.py
+[Code_Lexer_Py.py]:  https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Lexer_Py.py
+[Code_Lexer_Sc.py]:  https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Lexer_Sc.py
 [Code_Parser_Py.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Parser_Py.py
 [Code_Parser_Sc.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/factoary/Code_Parser_Sc.py
 
-[lex.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/lex.sc
-[rdpp.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/rdpp.sc
-[apparatus.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/apparatus.sc
-[skoar.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoar.sc
-[minstrel.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/minstrel.sc
-[beaty.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/beaty.sc
-[pitchy.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/pitchy.sc
-[skoarpions.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarpions.sc
-[voice.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/voice.sc
-[skoarpuscles.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/skoarpuscles.sc
-[toker.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Klassy/Skoar/toker.sc
+[lex.sc]:          https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/lex.sc
+[rdpp.sc]:         https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/rdpp.sc
+[apparatus.sc]:    https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/apparatus.sc
+[skoar.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/skoar.sc
+[minstrel.sc]:     https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/minstrel.sc
+[beaty.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/beaty.sc
+[pitchy.sc]:       https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/pitchy.sc
+[skoarpions.sc]:   https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/skoarpions.sc
+[voice.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/voice.sc
+[skoarpuscles.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/skoarpuscles.sc
+[toker.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/toker.sc
 
 [SuperCollider]: http://supercollider.sourceforge.net/

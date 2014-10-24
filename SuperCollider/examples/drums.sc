@@ -1,4 +1,3 @@
-// Skoar drums, almost completely from DrumSynths.scd, modified to work better skoarwise.
 
 // SOS Drums by Renick Bell, renick_at_gmail.com
 // recipes from Gordon Reid in his Sound on Sound articles
@@ -32,7 +31,7 @@ SynthDef(\kick,
 	beater_env = beater_lpf * EnvGen.ar(Env.perc, 1.0, doneAction: 2);
 	kick_mix = Mix.new([drum_env, beater_env]) * 2 * amp;
 	Out.ar(out, [kick_mix, kick_mix])
-}).add;
+}).store;
 
 
 // snare -------
@@ -68,7 +67,7 @@ SynthDef(\snare,
 	snare_reson = Resonz.ar(snare_brf_4, snare_tightness, mul: snare_level) ;
 	snare_drum_mix = Mix.new([drum_mode_mix, snare_reson]) * 5 * amp;
 	Out.ar(out, [snare_drum_mix, snare_drum_mix]);
-}).add;
+}).store;
 
 // hats -------
 // http://www.soundonsound.com/sos/Jun02/articles/synthsecrets0602.asp
@@ -97,7 +96,7 @@ SynthDef(\hats,
 	body_hpf = HPF.ar(in: root_cymbal, freq: Line.kr(9000, 12000, sustain),mul: body_env, add: 0);
 	cymbal_mix = Mix.new([initial_bpf, body_hpf]) * amp;
 	Out.ar(out, [cymbal_mix, cymbal_mix])
-}).add;
+}).store;
 
 // SOStom -------
 // http://www.soundonsound.com/sos/Mar02/articles/synthsecrets0302.asp
@@ -124,249 +123,143 @@ SynthDef(\tom,
 	stick_env = EnvGen.ar(Env.perc(0.005, 0.01), 1.0) * 3;
 	tom_mix = Mix.new([drum_mode_mix, stick_env]) * 2 * amp;
 	Out.ar(out, [tom_mix, tom_mix]);
-}).add;
+}).store;
 
+)
+
+(
+x = """
+
+4/4 240 => )
+
+.s  @snare => @instrument
+.k  @kick  => @instrument
+.h  @hats  => @instrument ppp
+
+.h  | ] ] ] ] ] ] ] ] :|
+.s  | }   )   }   )   :|
+.k  | ))      ))      :|
+
+""".skoar;
+
+)
+
+x.pskoar.play;
+
+(
+x = """
+
+4/4 240 => )
+
+.s  @snare => @instrument mf
+.k  @kick  => @instrument
+.h  @hats  => @instrument ppp
+
+.h  | ] ] ] ] ] ] ] ] |
+.s  | }   )   }   )   |
+.k  | ))      ))      |
+
+220 => )
+
+.h  | ] ] ] ] ] ] ] ] |
+.s  | }   )   }   )   |
+.k  | ))      ))      |
+
+190 => )
+
+.h  |  ] ] ] ] ] ] ] ] |
+.s  |: }   )   }   )   |
+.k  |  ))      ))      |
+
+160 => )
+
+.h  |: ] ] ] ] ] ] ] ] |
+.s  |  }   )   ] ] ] ] |
+.k  |  ))      )   )  :|
+
+120 => )
+
+.h  |  ] ] ] ] ] ] ] ] |
+.s  |  }   )   }   )   |
+.k  |: )   ] ]  ) )    |
+
+.h  | ] ] ] ] ] ] ] ]  |
+.s  | }   ] ] }   ] ] :|
+.k  | ))      ))       |
+
+.h  | ] ] ] ] ] ] ] ] |
+.s  | }   )   }   )   |
+.k  | ))      ))      |
+
+.h mf  | ]] ]] ]] ]]  ] ]  ]] ]] ]  ]] ]] ] :|
+.s     | }            )    }        )        |
+.k     | ))                ))                |
+
+.h ppp | ] ] ] ] ] ] ] ]   :|
+.s ff  | )   )   ] ] )  mf :|
+.k     | ))      ))        :|
+
+""".skoar;
+
+)
+x.play;
+(
 x = """
 
 4/4 90 => )
 
-.d  @default => @instrument
-.s  @snare => @instrument
-.k  @kick => @instrument
-.h  @hats => @instrument
-
-!! dorp !!
- | ]].      ]]. ]]     |
- | ]] ooo/ ^]] ]] ooo/ |
- | ]] ]]  ]  o/. ]]    |
+!! hatz !!
+ | ]] oo/ ]]] ]]] ]]   ]] ]] oo/ ]]  ]] ]] ]] ]]   ]] ]] ]] ]] |
+ | ]] oo/ ]] ]]] ]]]  ]] ]] oo/ ]]  ]] ]] ]] ]]   ]] ]] ]] ]] |
  | fine |
 !!
 
-!! derp !!
- | ]]. ]]. ]]        |
- | )      ~o         |
- | ]] ]] ] o~ o/. ]] |
+!! foo !!
+ | )            o/.      ]]  oo/ ]] ]] oo/ }           |
+ | ]]. ]].  ]]  o/    ]] ]]  }             o/    ]     |
+ | ].       ]]  oo/  ].      o/    ]       }           |
+ | ]]. ]].  ]]  }            ]]. ]].  ]]   }           |
+ | )            }            ]     ]       }           |
+ | ]     ]      }            o/         ]       oo/ ]. |
 !!
 
-!! verp !!
- | ]] ]] ]] ]]  ]] ]] ]] ]]] ]]]  ]] ]]] ]]] ]] ]]  ]] ]] ]] ]] |
- | ]] ]] oo/ ]]  ]] ]] ]] oo/  ]] oo/ ]] ]]  ]] o/ ]]           |
+!! derp !! !zorp
+ | }     )            }     )                 |
+ | }     )            }     !zorp ].       ]] |
+ | }     )            }     !zorp ]]. ]].  ]] |
+ | }     ]]. ]].  ]]  }     ].       ]]       |
+ | fine |
 !!
-
-.d ,segno` | _a ]] _b ]] c ]] c# ] :| o/ :| o/. !dorp !derp D.S. al fine
-
-,segno`
-
-.h  |: ]] ]] ]] ]]  !dorp  .]] .]] oo/ .]]       ]] ]] ]]      ]] :|
-.s  |: }            !dorp             }                   ^]     ]]] ]]] ]]  |
-.k  |: )             o/.              ]]  oo/ ^]] ]] oo/   }                 |
-
-.h !verp
-
-fine
-
-.h  |: ]] ]] ]] ]]  !derp        ]] ]] ]] ]]   ]] ]] ]] ]] :|
-.s  |  }            )            }             )           :|
-.k  |  ]]. ]].  ]]  o/    ]] ]]  }             o/    ]      |
-
-.h  | ]] ]] ]] ]]  ]] ]] ]] ]]] ]]]  ]] ]]] ]]] ]] ]]  ]] ]] ]] ]] |
-.s  | }            )                 }                 ].       ]] |
-.k  | ]     ]] ]]  o/    ]] ]]       o/         ]      o/    ]     |
-
-.k !verp
-
-D.S. al fine
-
-
-""".skoar;
-)
-nil.dump;
-x.play;
-(
-"""
-<0,3,5> => @detune
-""".skoar.play;
-)
-(x = """
-
-90 => )
-mp
-
-@default => @instrument
 
 !! zorp !!
- | < _a, c# >            |
- | < a, _e >             |
- | <0,3,5> => @detune c# |
+ | ~o Am    |
+ | F o~     |
+ | F        |
+ | G        |
 !!
 
-!! dorp !!
- | ]].      ]]. ]]     |
- | ]] ooo/ ^]] ]] ooo/ |
- | ]] ]]  ]  o/. ]]    |
- | ]].      ]]. ]]     |
- | ]] ]]  ]  o/. ]]    |
- | ]] ooo/ ^]] ]] ooo/ |
- | ]] ]]  ]  o/. ]]    |
- | ]] ooo/ ^]] ]] ooo/ |
- | ]] ]]  ]  o/. ]]    |
- | ]] ooo/ ^]] ]] ooo/ |
- | ]] ]]  ]  o/. ]]    |
- | ]] ooo/ ^]] ]] ooo/ |
- | mf ]] ] ]] fine     |
-!!
-
-,segno`
-
-0 => @detune
-
-| _a ] ]] oo/ _b !dorp c ] ] !zorp !dorp |
-
-D.S. al fine
-
-""".skoar;
-)
-x.play
-(
-y = """
-
-fff
-
-<<b,d#,f>,a,c,e>.choose )
-
-!! food !!
-a )
-!!
-
-g ) !food.next
-
-~o c ] ] o~
-
-D.C.
-
-""".skoar.play;
-
-
-)
-
-(
-y = """
-
-
-<a,c#,e>.choose )
-
-!! zerf !!
- g )
-~o c# ] e ] o~
-!!
-
-!zerf.choose o/ ] o/ ]
-
-<<b,d,f>,a,c,e>.choose ) o/
-
-D.C.
-
-""".skoar.play;
-
-
-)
-
-(
-y = """
-fff
-
-<Am,C,Em>.choose => @food
-
-_a ]] oo/
-
-@food )
-
-""".skoar.play;
-
-
-)
-1.flatten
-[].class.fib(10);
-Object
-(
-y = """
-fff
-
-a ) b )
-
-!! zerf !!
-~o ) o~ ] ]
-] ] }
-]] ]] oo/ ]]
-!!
-
-!zerf<d,e#,g>.line<2> o/ ] o/ ]
-
-<<b,d,f>,a,c,e>.choose )
-
-a )__ )__.
-
-""".skoar.play;
-
-
-)
-y.play;
-t = y.tree.next_toke;
-SkoarValueMsg(
-Integer
-    String
-(
-y = """
-ff
-70 => )
-
-!! zorp !!
- | o~ )          |
- | ] ~o   ]      |
- | ]] oo/ ]] oo/ |
- | ]] ]] ]] ]]   |
- | )             | } |
-!! <_a, c, e>.choose
-
-,segno` !zorp.choose D.S.
-
-""".skoar.play;
-
-)
-Array
-String.pop
-if (nil.isKindOf(Toke_MsgOp)) {} { "food".postln;};
-"killall scsynth".unixCmd;
-Class
-(
-
-x = """
-
-4/4 90 => )
-
+.d @default => @instrument
 .s  @snare => @instrument
-.k  @kick => @instrument
-.h  @hats => @instrument
+.k  @kick  => @instrument
+.h  @hats  => @instrument ppp
+
+.h  | }}}     |
+.s  | } ) } ) |
+.k  | ) } ) } |
+.d  | Am ) |
 
 ,segno`
 
-.h  |: ]] ]] ]] ]]  / ^]] ^]] ^]] ^]]  .]] .]] oo/ .]]       ]] ]] ]]      ]] :|
-.s  |: }            ^)                }                   ^]     ]]] ]]] ]]    |
-.k  |: )             o/.              ]]  oo/ ^]] ]] oo/   }                   |
-
-fine
-
-.h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
-.s  |  }            )            }             )           :|
-.k  |  ]]. ]].  ]]  o/    ]] ]]  }             o/    ]      |
-
-.h  | ]] ]] ]] ]]  ]] ]] ]] ]]] ]]]  ]] ]]] ]]] ]] ]]  ]] ]] ]] ]] |
-.s  | }            )                 }                 ].       ]] |
-.k  | ]     ]] ]]  o/    ]] ]]       o/         ]      o/    ]     |
+.h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :| !hatz :|
+.s  | !derp |
+.k  | !foo  |
+.d  | !derp |
 
 D.S. al fine
-
 
 """.skoar;
 )
 x.play;
+
+
+"killall scsynth".unixCmd;

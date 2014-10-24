@@ -1,6 +1,6 @@
 from collections import UserDict
-from Skoarcery.pymp import toke_inspector, skoarmantics
-from Skoarcery.pymp.lex import Toke_Whitespace, Toke_EOF, SkoarToke
+from Skoarcery.SkoarPyon import toke_inspector, skoarmantics
+from Skoarcery.SkoarPyon.lex import Toke_Whitespace, Toke_EOF, SkoarToke
 
 
 class Toker:
@@ -197,7 +197,7 @@ class SkoarIterator:
 class Skoar:
 
     def __init__(self, skoarse):
-        from ..pymp import rdpp
+        from ..SkoarPyon import rdpp
         self.skoarse = skoarse
         self.tree = None
         self.toker = Toker(self.skoarse)
@@ -297,7 +297,7 @@ class Skoar:
         self.markers.append(marker_noad)
 
     def jmp_colon(self, noad):
-        from Skoarcery.pymp.lex import Toke_Bars
+        from Skoarcery.SkoarPyon.lex import Toke_Bars
         toke = noad.toke
 
         if toke.unspent:

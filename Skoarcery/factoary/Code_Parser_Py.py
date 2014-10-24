@@ -17,7 +17,7 @@ class Code_Parser_Py(unittest.TestCase):
         from Skoarcery.dragonsets import FIRST, FOLLOW
         from Skoarcery.terminals import Empty
 
-        fd = open("../pymp/rdpp.py", "w")
+        fd = open("../SkoarPyon/rdpp.py", "w")
         PY = emissions.PY
         PY.fd = fd
 
