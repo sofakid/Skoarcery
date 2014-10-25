@@ -260,7 +260,7 @@ Arrays and arraylike things can be iterated like skoarpions.
     !food.last )   <? plays: c ?>
     !food.choose ) <? at random ?>
 
-That is, the `!xxx` notation starts an interator that sticks around.
+That is, the `!xxx` notation starts an iterator that sticks around.
 
 # messages
 
