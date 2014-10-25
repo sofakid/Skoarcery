@@ -240,7 +240,7 @@ They can be used as a block of code with `.block`:
     !!
 
     .a !alice.block
-    .b !bob<a,e>.block
+    .b !bob<<a,e>>.block
 
     ...
 

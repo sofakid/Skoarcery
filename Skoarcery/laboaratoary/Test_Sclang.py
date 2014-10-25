@@ -9,6 +9,8 @@ class Test_Sclang(unittest.TestCase):
     home = "/Applications/SuperCollider/SuperCollider.app/Contents/Resources/"
     sclang = home + "sclang"
 
+    testing_home = "/Users/lucas/PycharmProjects/Skoar/SuperCollider/testing/runtests.scd"
+
     def print(self, msg):
         print("sclang: " + msg, end="")
 
@@ -59,4 +61,4 @@ class Test_Sclang(unittest.TestCase):
         self.assertTrue(class_lib_inited, "Class libarary did initialize.")
 
     def test_sanity(self):
-        self.exec("TestSkoar.scd")
+        self.exec(Test_Sclang.testing_home)
