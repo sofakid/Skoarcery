@@ -22,6 +22,8 @@ Skoarpion {
         var kids = noad.children;
         var m = kids.size;
 
+    "kids: ".post; kids.dump;
+
         // 0 - sep
         // 1 - label
         name = kids[1].toke.lexeme.asSymbol;
