@@ -62,6 +62,7 @@ Toker {
         | want |
 
         var toke = i_saw;
+        var msg;
 
         if (toke == nil) {
             toke = this.see(want);
@@ -74,7 +75,13 @@ Toker {
             ^toke;
         };
 
-        SkoarError("Burned wrong toke").throw;
+        msg = "Tried to burn " ++ want.asString ++ ", but saw " ++ toke.asString;
+
+        "Toker Fail.".postln;
+        msg.postln;
+        this.dump;
+
+        SkoarParseException(msg).throw;
     }
 
     eof {

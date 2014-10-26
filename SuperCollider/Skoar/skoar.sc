@@ -45,14 +45,15 @@ Skoar {
 
     parse {
         tree = parser.skoar(nil);
-        //"huzzzzzzah?".postln;
-        //try {
+
+        try {
             toker.eof;
-        //} {
-        //    | e |
-        //    e.postln;
-        //    toker.dump;
-        //}
+        } {
+            | e |
+            e.postln;
+            toker.dump;
+            e.throw;
+        }
     }
 
     skoarboard_defaults {
@@ -169,7 +170,7 @@ Skoar {
 
 +String {
 	skoar {
-    	var r = Skoar.new(this);
+    	var r = Skoar.new(this++"\n");
     	">>> Parsing skoar...".postln;
         r.parse;
         "<<< parsed.".postln;

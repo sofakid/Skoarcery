@@ -46,7 +46,7 @@ class Verify_LL_1(unittest.TestCase):
 
                         if X:
                             print("")
-                            print("        ####  Grammar is not LL(1). Fuck. ####-----------------------")
+                            print("        ####  Grammar is not LL(1). Whoopsiedaisies. ####-----------------------")
                             print("")
                             print("        M[{}, {}]:".format(A.name, a.name))
                             print("            " + str(X))
@@ -69,7 +69,7 @@ class Verify_LL_1(unittest.TestCase):
                             if X:
 
                                 print("")
-                                print("            ####  Grammar is not LL(1). Fuck. ####-----------------------")
+                                print("            ####  Grammar is not LL(1). Whoopsiedaisies. ####-----------------------")
                                 print("")
                                 print("            M[{}, {}]:".format(A.name, b.name))
                                 print("                " + str(X))

@@ -22,7 +22,11 @@ Skoarpion {
         var kids = noad.children;
         var m = kids.size;
 
-    "kids: ".post; kids.dump;
+    "kids: ".post; kids.do {
+        | x |
+        "   ".post; x.name.postln;
+
+    };
 
         // 0 - sep
         // 1 - label
