@@ -15,20 +15,17 @@ src = """
 skoar              : branches
 +branches          : branch branches | <e>
 branch*            : optional_voice phrases Newline
-
-
 +optional_voice    : Voice | <e>
 
 +phrases           : phrasey phrases | <e>
 +phrasey           : Comment | marker | Meter | stmt | dal_goto | beat
 
-skoarpion          : SkoarpionStart anon_sig SkoarpionSep optional_voice phrases stingers SkoarpionEnd
-+anon_sig          : args | skoarpion_sig | <e>
-+skoarpion_sig     : SymbolName optional_args
-#+skoarpion_lines   : skoarpion_line skoarpion_lines | <e>
-#skoarpion_line*    : line_meat
-stingers           : skoarpion_stingers stingers | <e>
-+skoarpion_stingers: SkoarpionSep branches
+skoarpion          : SkoarpionStart skrp_sig SkoarpionSep skrp_suffix
++skrp_sig          : args | SymbolName optional_args |<e>
++skrp_suffix       : skrp_lines SkoarpionEnd
++skrp_lines        : optional_voice phrases skrp_moar_lines
++skrp_moar_lines   : skrp_sep_or_nl skrp_lines | <e>
+skrp_sep_or_nl     : Newline | SkoarpionSep
 
 +optional_args     : args | <e>
 args*              : ListS args_suffix
