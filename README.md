@@ -205,15 +205,17 @@ source of chaos.
 
 
 Each time you call the skoarpion, `head` runs, then the `body`; the `stinger` runs before every
-beat _in the body_, (the stinger won't sting the head).
+beat.
 
-Let's make a function:
+Example:
 
     !! zorp<derp> !!
-     | )         }             |
-     | )         ]] oo/ ]      |
-     | ]    ]    ]] ]]  ]      |
-     | ]    ]    ]] ]]  oo/ ]] |
+     | )         )          |
+     | )         ]    ]     |
+     | ] ]  ]] ]] ]         |
+     | )  }                 |
+     | )    ]] oo/ ]        |
+     | ] ]  ]] ]] oo/ ]]    |
     !! @derp.choose
 
     <? - this calls !zorp.choose, setting @derp to <_a, c#, e>
@@ -223,46 +225,26 @@ Let's make a function:
 
 They can be used as a block of code with `.block`:
 
-    {! alice !!
+    !! alice !!
     ~o mp
     @acid => @instrument
     <0,5,7> => @detune
     <c#, e, _a, g#> => @favorites
-    !}
+    !!
 
-    {! bob<x> !!
+    !! bob<x> !!
     o~~
     forte
-    !x => @favorites
+    @x.value => @favorites
     @bass => @instrument
-    !}
-
-    {! <x> !! <0, 4, !x> => @detune !} => @charlie
-
+    !!
 
     .a !alice.block
     .b !bob<<a,e>>.block
-    .c !charlie<<5,7,9, ^^(;,;)^^>.choose>
+
     ...
 
 You can cycle the lines in order with `.next` or backwards with `.last`
-
-# wait, I want to nest skoarpions.
-_(unimplemented)_
-
-Me too, I also want anonymous skoarpions. Let's see how `{!` and `!}` work
-
-    {!
-     body lines
-     ...
-    !! stinger_one
-    !! stinger_two
-    !}
-
-    {! <x> !! head
-    !! body
-    !! stinger !}
-
 
 # other sequences
 

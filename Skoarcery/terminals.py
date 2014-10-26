@@ -8,16 +8,16 @@ src = """
 #   -  be sure an inspector for TokeName exists
 #
 
-<e>:            unused
-EOF:            unused
-Whitespace:     [ \\t]*
-Newline:        [\\n\\r\\f]+
+<e>:         unused
+EOF:         unused
+Whitespace:  [ \\t]*
+Newline:     [\\n\\r\\f]+
 
 Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
-CurNoat:        [$]
+CurNoat:         [$]
 Portamento:     port\\.?
 Slur:           [+][+]
 
@@ -40,8 +40,8 @@ Tuplet*:        /\\d+(:\\d+)?|(du|tri|quadru)plets?|(quin|sex|sep|oc)tuplets?
 Crotchets*:     [}]+\\.?
 Quavers*:       o+/\\.?
 
-Quarters*:      \\.?[)]+(?:__)?\\.?
-Eighths*:       \\.?\\]+(?:__)?\\.?
+Quarters*:       \\.?[)]+(?:__)?\\.?
+Eighths*:        \\.?\\]+(?:__)?\\.?
 
 Caesura:        //
 Slash:          /(?!/)
@@ -56,10 +56,10 @@ Slash:          /(?!/)
 #  default velocity:
 #    ppp (16), pp (32), p (48), mp (64), mf (80), f (96), ff (112), fff (127)
 
-DynPiano*:        (mp|p+)(iano)?
-DynForte*:        mf(orte)?|f+orte|ff+
-DynSFZ:           sfz
-DynFP:            fp
+DynPiano*:       (mp|p+)(iano)?
+DynForte*:       mf(orte)?|f+orte|ff+
+DynSFZ:          sfz
+DynFP:           fp
 
 AssOp:            =>|[+]>|->
 MsgOp:            \\.(?![)\\]])
@@ -77,17 +77,15 @@ MsgNameWithArgs*: [a-zA-Z_][a-zA-Z0-9_]*<
 
 Symbol*:          [\\\\@][a-zA-Z_][a-zA-Z0-9_]*
 SymbolName*:      [a-zA-Z_][a-zA-Z0-9_]*
-SkoarpionStart:   [{]!
-SkoarpionEnd:     ![}]
 SkoarpionSep:     !!
-SeqRef:           !(?![!}])
+SeqRef:           !(?!!)
 
 Nosey:            ,
 
 DaCapo:           D\\.C\\.|Da Capo
 DalSegno:         D\\.S\\.|Dal Segno
 Fine:             fine
-Segno*:           ,segno`(?:_[a-zA-Z_][a-zA-Z0-9_]*`)*
+Segno*:           ,([$]|segno)`(?:_[a-zA-Z_][a-zA-Z0-9_]*`)*
 Coda:             \\([+]\\)
 Rep*:             %+
 AlCoda:           al(la)? coda

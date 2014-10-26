@@ -14,40 +14,38 @@ src = """
 
 skoar              : branches
 +branches          : branch branches | <e>
-branch*            : optional_voice phrases Newline
 
-
+branch*            : optional_voice phrases Newline | skoarpion Newline
 +optional_voice    : Voice | <e>
 
 +phrases           : phrasey phrases | <e>
 +phrasey           : Comment | marker | Meter | stmt | dal_goto | beat
 
-skoarpion          : SkoarpionStart anon_sig SkoarpionSep optional_voice phrases stingers SkoarpionEnd
-+anon_sig          : args | skoarpion_sig | <e>
-+skoarpion_sig     : SymbolName optional_args
-#+skoarpion_lines   : skoarpion_line skoarpion_lines | <e>
-#skoarpion_line*    : line_meat
-stingers           : skoarpion_stingers stingers | <e>
-+skoarpion_stingers: SkoarpionSep branches
+marker*            : Segno | Fine | coda | Volta | Bars
 
-+optional_args     : args | <e>
-args*              : ListS args_suffix
+coda*              : Coda optional_al_coda
+optional_al_coda   : AlCoda | <e>
+
+dal_goto*          : DaCapo al_x | DalSegno al_x
+al_x*              : AlCoda | AlSegno | AlFine | <e>
+
+beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
+
+skoarpion*         : SkoarpionSep SymbolName args SkoarpionSep skoarpion_lines SkoarpionSep stinger
++skoarpion_lines   : skoarpion_line skoarpion_lines | <e>
+skoarpion_line*    : phrases Newline
+stinger            : phrases
+
+args*              : ListS args_suffix | <e>
 +args_suffix       : args_entries ListE
 +args_entries      : SymbolName moar_args_entries
 +moar_args_entries : ListSep args_entries | <e>
+
 
 listy*             : ListS listy_suffix
 +listy_suffix      : listy_entries ListE | ListE
 +listy_entries     : skoaroid moar_listy_entries
 +moar_listy_entries: ListSep listy_entries | Newline | <e>
-
-marker*            : Segno | Fine | coda | Volta | Bars
-coda*              : Coda optional_al_coda
-optional_al_coda   : AlCoda | <e>
-dal_goto*          : DaCapo al_x | DalSegno al_x
-al_x*              : AlCoda | AlSegno | AlFine | <e>
-
-beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
 
 musical_keyword      : dynamic | ottavas | pedally | musical_keyword_misc
 musical_keyword_misc*: Rep | Portamento | Carrot
@@ -55,7 +53,7 @@ pedally*             : PedalDown | PedalUp
 ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
-nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy | seq_ref | skoarpion
+nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy | seq_ref
 +nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | Choard | NamedNoat | Symbol | CurNoat
 
 seq_ref*         : SeqRef seq_ref_prime
