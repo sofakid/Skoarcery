@@ -18,7 +18,7 @@ class Code_Parser_Sc(unittest.TestCase):
         from Skoarcery.terminals import Empty
 
         fd = open("../../SuperCollider/Skoar/rdpp.sc", "w")
-        SC = emissions.SC
+        ____SC = SC = emissions.SC
         SC.fd = fd
 
         # Header
@@ -91,6 +91,11 @@ class Code_Parser_Sc(unittest.TestCase):
             SC.var("desires", SC.null)
             SC.nl()
 
+            SC.stmt("deep = deep + 1")
+            SC.if_("deep > 100")
+            ____SC.stmt("this.fail_too_deep")
+            SC.end_if()
+
             # each production
             for P in R:
 
@@ -106,26 +111,32 @@ class Code_Parser_Sc(unittest.TestCase):
 
                 SC.if_("toker.sees(desires) != " + SC.null)
 
-                #SC.print(str(P))
+                # debugging
+                SC.print(str(P))
 
                 for x in alpha:
                     if isinstance(x, Terminal):
                         SC.stmt('noad.add_toke(' + SC.v_str(x.toker_name) + ', toker.burn(' + x.toker_name + '))')
 
-                        #SC.print("burning: " + x.name)
+                        # debugging
+                        SC.print("burning: " + x.name)
                     else:
                         if x.intermediate:
                             SC.stmt(SC.this + "." + x.name + "(noad)")
                         else:
                             SC.stmt("noad.add_noad(this." + x.name + "(noad))")
                 else:
+                    SC.stmt("deep = deep - 1")
                     SC.return_("noad")
 
                 SC.end_if()
 
             if A.derives_empty:
                 SC.cmt("<e>")
-                #SC.print("burning empty")
+
+                # debugging
+                SC.print("burning empty")
+
                 SC.return_("noad")
 
             else:
@@ -148,7 +159,7 @@ SkoarParseException : Exception {
 
 SkoarParser {
 
-    var <runtime, <toker, <tab, desirables;
+    var <runtime, <toker, <deep, desirables;
 
     *new {
         | runtime |
@@ -160,7 +171,7 @@ SkoarParser {
 
         runtime = runtime;
         toker = runtime.toker;
-        tab = 0;
+        deep = 0;
         desirables = IdentityDictionary();
         this.init_desirables();
     }
@@ -169,6 +180,13 @@ SkoarParser {
         toker.dump;
         SkoarParseException("Fail").throw;
     }
+
+    fail_too_deep {
+        "Parse tree too deep!".postln;
+        toker.dump;
+        SkoarParseException("Parse tree too deep").throw;
+    }
+
 
     //print {
     //    | line, end |
