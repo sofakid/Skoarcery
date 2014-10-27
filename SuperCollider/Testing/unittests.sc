@@ -1,5 +1,17 @@
 SkoarSanity : UnitTest {
 
+    var <>skoarse;
+
+    *new {
+        | skrs |
+        ^super.new.init(skrs)
+    }
+
+    init {
+        | skrs |
+        skoarse = skrs;
+    }
+
     setUp {
         // this will wait until the server is booted
       	//this.bootServer;
@@ -13,18 +25,7 @@ SkoarSanity : UnitTest {
      
     test_basic {
      
-        SkoarTests.food.do {
-            | x |
-
-            x.dump;
-
-            x.skoar;
-
-            // call assertions handlers
-
-            // start processing events
-        };
-
+        skoarse.skoar;
 
       	//this.assert( 6 == 6, "6 should equal 6");
       	//this.assertEquals( 9, 9, "9 should equal 9");
@@ -41,17 +42,17 @@ SkoarSanity : UnitTest {
 
 SkoarTests {
 
-    *food {^["""
-a ) )) ))) )))) ))))) )))))) )))))))
-""","""
-b ] ]] ]]] ]]]] ]]]]] ]]]]]] ]]]]]]]
-""","""
-c .] .]]. .]]]__. ]]]]__ ]]]]] ]]]]]] ]]]]]]]
-""","""
-} }} }}} }}}}
-""","""
-o/ oo/ ooo/ oooo/ ooooo/
-"""
-     ]}
+    *sanity_simple {^[
+    "a ) )) ))) )))) ))))) )))))) )))))))",
+    "b ] ]] ]]] ]]]] ]]]]] ]]]]]] ]]]]]]]",
+    "c .] .]]. .]]]__. ]]]]__ ]]]]] ]]]]]] ]]]]]]]",
+    "} }} }}} }}}} ",
+    "o/ oo/ ooo/ oooo/ ooooo/",
+    "_a _b _c# _d _e _f _g a b c d e f g",
+    "^o/ {! <x> !! !x !}",
+    "1 2.18 @foo @foo.postln",
+    "@foo !foo.postln",
+    "<'mic check',1,2>"
+    ]}
 }
 

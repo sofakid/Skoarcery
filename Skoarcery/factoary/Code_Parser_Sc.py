@@ -112,14 +112,14 @@ class Code_Parser_Sc(unittest.TestCase):
                 SC.if_("toker.sees(desires) != " + SC.null)
 
                 # debugging
-                SC.print(str(P))
+                #SC.print(str(P))
 
                 for x in alpha:
                     if isinstance(x, Terminal):
                         SC.stmt('noad.add_toke(' + SC.v_str(x.toker_name) + ', toker.burn(' + x.toker_name + '))')
 
                         # debugging
-                        SC.print("burning: " + x.name)
+                        #SC.print("burning: " + x.name)
                     else:
                         if x.intermediate:
                             SC.stmt(SC.this + "." + x.name + "(noad)")
@@ -135,7 +135,7 @@ class Code_Parser_Sc(unittest.TestCase):
                 SC.cmt("<e>")
 
                 # debugging
-                SC.print("burning empty")
+                #SC.print("burning empty")
                 SC.stmt("deep = deep - 1")
                 SC.return_("noad")
 

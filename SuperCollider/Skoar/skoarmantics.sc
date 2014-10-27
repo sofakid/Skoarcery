@@ -32,6 +32,8 @@ Skoarmantics {
                 if (k != nil) {
                     skoar.skoarpions[k] = x;
                 };
+
+                noad.skoarpuscle = SkoarpuscleSkoarpion(x);
             },
 
             \skoarpion_line -> {
@@ -60,15 +62,8 @@ Skoarmantics {
 
                 noad.branch = noad;
 
-                if (x.isKindOf(SkoarNoad)) {
-                    if (x.name == \skoarpion) {
-                        noad.children = [];
-                        noad.n = 0;
-                    };
-                } {
-                    if (x.isKindOf(Toke_Voice)) {
-                        noad.voice = skoar.get_voice(x.val);
-                    };
+                if (x.isKindOf(Toke_Voice)) {
+                    noad.voice = skoar.get_voice(x.val);
                 };
 
             },
@@ -270,7 +265,7 @@ Skoarmantics {
                     noad.n = 0;
                 };
 
-                msg_name = noad.children[1].toke.val;
+                msg_name = noad.children[1].val;
 
                 if (noad.children.size > 2) {
                     args = SkoarpuscleArgs(noad.children[2].collect_skoarpuscles);

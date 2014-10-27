@@ -25,6 +25,8 @@ class Test_Sclang(unittest.TestCase):
         if scd_code_file:
             a_cmd.append(scd_code_file)
 
+        print(str(a_cmd))
+
         proc = Popen(a_cmd, stdout=PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
             b = proc.stdout.readline()
@@ -59,6 +61,7 @@ class Test_Sclang(unittest.TestCase):
         self.assertFalse(error_seen, "Errors compiling class library.")
         self.assertTrue(class_lib_compiled, "Class library didn't compile.")
         self.assertTrue(class_lib_inited, "Class libarary did initialize.")
+
 
     def test_sanity(self):
         self.exec(Test_Sclang.testing_home)

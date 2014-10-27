@@ -133,7 +133,7 @@ SkoarNoad {
     depth_visit {
         | f_noad, f_toke=nil |
 
-        ">>> depth_visit: ".post; name.postln;
+        //">>> depth_visit: ".post; name.postln;
 
         children.do {
             | y |
@@ -147,18 +147,18 @@ SkoarNoad {
             };
         };
 
-        "--- depth_visit: ".post; name.postln;
+        //"--- depth_visit: ".post; name.postln;
 
         // note: leaves first
         f_noad.(this);
 
-        "<<< depth_visit: ".post; name.postln;
+        //"<<< depth_visit: ".post; name.postln;
     }
 
     inorder {
         | f_noad, f_toke=nil, stinger=nil |
 
-        ">>> inorder: ".post; name.postln;
+        //">>> inorder: ".post; name.postln;
 
         if (stinger != nil && skoarpuscle.isKindOf(SkoarpuscleBeat)) {
 
@@ -166,21 +166,21 @@ SkoarNoad {
             stinger.inorder(f_noad, f_toke);
         };
 
-        "--- inorder: ".post; name.postln;
+        //"--- inorder: ".post; name.postln;
         f_noad.(this);
 
-        "=== inorder: ".post; name.postln;
         children.do {
             | y |
             if (y.isKindOf(SkoarNoad)) {
                 y.inorder(f_noad, f_toke, stinger);
             } {
                 if (f_toke != nil) {
+                    //"=== inorder: ".post; y.postln;
                     f_toke.(y, this);
                 };
             };
         };
-        "<<< inorder: ".post; name.postln;
+        //"<<< inorder: ".post; name.postln;
 
     }
 
@@ -275,7 +275,7 @@ SkoarNoad {
             | x |
 
             if (x.skoarpuscle != nil) {
-                results.add(x.val);
+                results.add(x.skoarpuscle);
             };
         });
 

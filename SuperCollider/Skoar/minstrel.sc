@@ -147,18 +147,18 @@ SkoarMinstrel {
             msg_arr = [\choose];
         };
 
-        // first line
-        skrp.head.inorder(f, nil, skrp.stinger);
-
+debug("zerp");
         iter = skrp_iters[label];
         if (iter == nil) {
             iter = skrp.iter;
             skrp_iters[label] = iter;
         };
-
+debug("twerp: " ++ msg_arr.asString);
         // current line
         z = iter.performMsg(msg_arr);
+debug("qwerp");
         z.inorder(f, nil, skrp.stinger);
+debug("swerp");
     }
 
     nextEvent {

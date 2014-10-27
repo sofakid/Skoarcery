@@ -3,7 +3,7 @@
 
 
 (
-"""
+"
 mf 90 => )
 
 !! foo !!
@@ -53,7 +53,7 @@ mf 90 => )
 
 D.S. ^^(;,;)^^
 
-""".skoar.play;
+".skoar.play;
 )
 
 
@@ -65,7 +65,7 @@ D.S. ^^(;,;)^^
 
 
 (
-"""
+"
 mf a ]] ]]
 
 !! zorp !! 'foo'
@@ -76,12 +76,12 @@ mf a ]] ]]
 
 ,segno` !zorp.next D.S.
 
-""".skoar.play;
+".skoar.play;
 )
 
 
 (
-"""
+"
 mf
 
 5.rand
@@ -90,7 +90,7 @@ mf
 
 D.C.
 
-""".skoar.play;
+".skoar.play;
 )
 
 

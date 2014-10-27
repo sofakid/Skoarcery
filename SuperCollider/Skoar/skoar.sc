@@ -186,22 +186,7 @@ Skoar {
 
             r.skoarpions.keysValuesDo {
                 | k, v |
-                ("---< Skoarpion " ++ k ++ " >---").postln;
-
-                v.head.postln;
-                "head:".postln;
-                v.head.draw_tree.post;
-
-                "body:".postln;
-                v.body.do {|x| x.draw_tree.post;};
-
-                if (v.stinger != nil) {
-                    "stinger: ".postln;
-                    v.stinger.draw_tree.post;
-                };
-
-                "".postln;
-
+                v.post_tree.postln;
             };
 
             "Skoar parsed.".postln;

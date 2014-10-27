@@ -4,13 +4,10 @@ Skoarpion {
     var <name;
     var <n;
 
-    var <head;
     var <body;
     var <stinger;
 
     var <args;
-
-    var <body_noad;
 
     *new {
         | noad |
@@ -24,19 +21,8 @@ Skoarpion {
         var sig, suffix;
         var i = 0;
         var line = List[];
-        var section = List[];
+        var section = SkoarNoad("xient:section:", nil);
         var sections = List[];
-
-        "kids: ".post; kids.do {
-            | x |
-            "   ".post;
-            if (x.isKindOf(SkoarNoad)) {
-                x.name.post; " ".post;
-            };
-
-            x.asString.postln;
-
-        };
 
         // 0 - start
         // 1 - sig
@@ -45,18 +31,40 @@ Skoarpion {
         // 3 - suffix
         suffix = kids[3];
 
+        sig.children.do {
+            | x |
+            "sig.do".postln;
+            x.dump;
+            case {x.isKindOf(Toke_SymbolName)} {
+                name = x.val;
+            } {x.name == \args} {
+                args = x;
+            };
+        };
+
         suffix.children.do {
             | x |
 
             case {x.isKindOf(Toke_SkoarpionSep)} {
-                section.add(line.asArray);
-                sections.add(section.asArray);
-                section = List[];
+                section.children = line.asArray;
+                section.n = line.size;
+
+                sections.add(section);
+
+                section = SkoarNoad("xient:section:", nil);
                 line = List[];
 
-            } {x.isKindOf(Toke_Newline) || x.isKindOf(Toke_SkoarpionEnd)} {
-                section.add(line.asArray);
+            } {x.isKindOf(Toke_Newline)} {
+                section.children = line.asArray;
+                section.n = line.size;
+
                 line = List[];
+
+            } {x.isKindOf(Toke_SkoarpionEnd)} {
+                section.children = line.asArray;
+                section.n = section.children.size;
+
+                sections.add(section);
 
             } {
                 line.add(x);
@@ -64,11 +72,6 @@ Skoarpion {
 
         };
 
-        sig.dump;
-        suffix.dump;
-
-        "---------------- barglesnaz".postln;
-        sections.dump;
         sections.do {
             | sec |
             sec.do {
@@ -77,22 +80,39 @@ Skoarpion {
             };
         };
 
-
-        //if (stinger.n == 0) {
+        if (sections.size == 1) {
+            body = sections[0];
             stinger = nil;
-        //};
+        } {
+            body = sections[0];
+            stinger = SkoarNoad("xient:stinger:" ++ name, nil);
+            stinger.children = sections[1..];
+            stinger.n = stinger.children.size;
+        };
 
         n = body.size;
 
-        body_noad = SkoarNoad("xient:body_noad:" ++ name, nil);
-        body_noad.children = body;
-        body_noad.n = n;
     }
 
     iter {
         ^SkoarpionIter(this);
     }
 
+    post_tree {
+        ("---< Skoarpion " ++ name.asString ++ " >---").postln;
+
+        if (body != nil) {
+            "body:".postln;
+            body.draw_tree.post;
+        };
+
+        if (stinger != nil) {
+            "stinger: ".postln;
+            stinger.draw_tree.post;
+        };
+
+        "".postln;
+    }
 }
 
 SkoarpionIter {
@@ -101,7 +121,6 @@ SkoarpionIter {
     var <>i;
     var <>n;
     var body;
-    var body_noad;
 
     *new {
         | skrp |
@@ -111,7 +130,6 @@ SkoarpionIter {
     init {
         | skrp |
         body = skrp.body;
-        body_noad = skrp.body_noad;
         name = skrp.name;
         n = skrp.n;
         i = -1;
@@ -120,7 +138,8 @@ SkoarpionIter {
     selector {
         | f |
         i = f.value % n;
-        ^body[i];
+        "selector:".post; body.asString.postln;
+        ^body.children[i];
     }
 
     at {
@@ -148,7 +167,7 @@ SkoarpionIter {
     }
 
     block {
-        ^body_noad;
+        ^body;
     }
 
 }
@@ -156,6 +175,11 @@ SkoarpionIter {
 // ------------
 // Skoarpuscles
 // ------------
+SkoarpuscleSkoarpion : Skoarpuscle {
+
+}
+
+
 SkoarpuscleSeqRef : Skoarpuscle {
 
     var msg_arr;
