@@ -203,11 +203,11 @@ SkoarNoad {
     // find next skoarpuscle
     next_skoarpuscle {
         var x;
-
+"ferg".postln;
         if (skoarpuscle != nil) {
             ^skoarpuscle;
         };
-
+"fruuj".postln;
         x = children[0];
         if (x.isKindOf(SkoarNoad)) {
             ^x.next_skoarpuscle;

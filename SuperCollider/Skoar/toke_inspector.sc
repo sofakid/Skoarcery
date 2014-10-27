@@ -149,6 +149,12 @@ SkoarTokeInspector {
 
             \Toke_Symbol -> {
                 | noad, toke |
+                "JARV".postln;
+                "JARV".postln;
+                "JARV".postln;
+                "JARV".postln;
+                "JARV JARV".postln;
+
                 noad.skoarpuscle = SkoarpuscleSymbol(toke.lexeme[1..].asSymbol);
             },
 

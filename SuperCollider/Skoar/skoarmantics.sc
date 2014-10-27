@@ -6,12 +6,9 @@
 
 This code is applied during the decoration stage of compiling the skoar tree.
 
-For stuff to happen during performing the tree, we set handlers here.
+For stuff to happen during performance of the tree, we set handlers here.
 
 We also shrink the tree, drop some punctuation noads.
-
-absorb_toke assumes the only child is a toke, puts it in 
-   noad.toke and removes the child. (and returns the toke)
 
 We went depth first and run the code on the way back,
    so children are processed first.
@@ -361,7 +358,7 @@ Skoarmantics {
 
                         };
 
-                        "result: ".post; result.skoarpuscle.postln;
+                        "result: ".post; result.postln;
                         result
                     } {
                         var x = noad.next_skoarpuscle;
@@ -386,10 +383,7 @@ Skoarmantics {
                 var y = nil;
 
                 op = noad.children[0].lexeme;
-                y = noad.children[1];
-                y.skoarpuscle = y.next_skoarpuscle;
-"freep".postln;
-                y = y.skoarpuscle;
+                y = noad.next_skoarpuscle;
                 // we prepare the destination here (noad.f), we'll setup the write in skoaroid
 
                 noad.setter = switch (op)
