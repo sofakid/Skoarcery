@@ -26,17 +26,15 @@ Skoarmantics {
             "skoarpion" -> {
                 | skoar, noad |
                 var x, k;
-"conjuring skoarpion".postln;
                 x = Skoarpion(noad);
-"skoarpion conjured".postln;
 
                 // we save it here, the skoarpion will be removed from the tree by branch.
                 //
                 // this comment may be outdated
-                //skoar.skoarpions[x.name] = x;
-"skoarpion saved".postln;
-
-
+                k = x.name;
+                if (k != nil) {
+                    skoar.skoarpions[k] = x;
+                };
             },
 
             "skoarpion_line" -> {
@@ -213,52 +211,40 @@ Skoarmantics {
             "marker" -> {
                 | skoar, noad |
 
-                var toke = noad.toke;
+                var toke = noad.children[0];
 
-                if (toke != nil) {
-
-                    if (toke.isKindOf(Toke_Bars)) {
-
-                        if (toke.pre_repeat) {
-                            noad.performer = {
-                                | m, nav |
-
-                                if (m.colons_burned.falseAt(noad)) {
-                                    m.colons_burned[noad] = true;
-                                    nav.(\nav_jump);
-                                };
-
-                                if (toke.post_repeat) {
-                                    m.colon_seen = noad;
-                                };
-
-                            };
-                        } {
-                            if (toke.post_repeat) {
-                                noad.performer = {
-                                    | m |
-                                    m.colon_seen = noad;
-                                };
-                            };
-                        };
-
-                    };
-
-                    if (toke.isKindOf(Toke_Segno)) {
-                        noad.performer = {
-                            | m |
-                            m.segno_seen = noad;
-                        };
-                    };
-
-                    if (toke.isKindOf(Toke_Fine)) {
-                        noad.performer = {
+                noad.performer = case {toke.isKindOf(Toke_Bars)} {
+                    case {toke.pre_repeat == true} {{
                             | m, nav |
-                            if (m.al_fine) {
-                                nav.(\nav_fine);
+
+                            if (m.colons_burned.falseAt(noad)) {
+                                m.colons_burned[noad] = true;
+                                nav.(\nav_jump);
                             };
-                        };
+
+                            if (toke.post_repeat) {
+                                m.colon_seen = noad;
+                            };
+
+                    }} {toke.post_repeat == true} {{
+                        | m, nav |
+                        m.colon_seen = noad;
+                    }} {
+"food".postln;
+                        nil
+                    }
+
+                } {toke.isKindOf(Toke_Segno)} {{
+                    | m |
+                    m.segno_seen = noad;
+
+                }} {toke.isKindOf(Toke_Fine)} {{
+                    | m, nav |
+                    if (m.al_fine) {
+                        nav.(\nav_fine);
                     };
+                }} {
+                    nil
                 };
             },
 
