@@ -83,16 +83,15 @@ Skoar {
 
             if (f.isKindOf(Function)) {
                 f.(this, noad);
-                debug("WEEEEEE","decorate");
             };
         };
 
         var f_toke = {
-            | toke, noad |
+            | noad, toke |
+            var f = inspector[toke.class.asSymbol];
 
-            if (toke.class.inspectable) {
-                // run the function x.name, pass the noad
-                inspector[toke.class].(noad);
+            if (f.isKindOf(Function)) {
+                f.(noad, toke);
             };
         };
 
@@ -172,40 +171,48 @@ Skoar {
 
 +String {
 	skoar {
-    	var r = Skoar.new(this++"\n");
-    	">>> Parsing skoar...".postln;
-        r.parse;
-        "<<< parsed.".postln;
-        "---< Undecorated Skoar Tree >---".postln;
-        r.tree.draw_tree.postln;
+        try {
+            var r = Skoar.new(this++"\n");
+            ">>> Parsing skoar...".postln;
+            r.parse;
+            "<<< parsed.".postln;
+            "---< Undecorated Skoar Tree >---".postln;
+            r.tree.draw_tree.postln;
 
-        r.decorate;
+            r.decorate;
 
-        "---< Skoar Tree >---".postln;
-        r.tree.draw_tree.postln;
+            "---< Skoar Tree >---".postln;
+            r.tree.draw_tree.postln;
 
-        r.skoarpions.keysValuesDo {
-            | k, v |
-            ("---< Skoarpion " ++ k ++ " >---").postln;
+            r.skoarpions.keysValuesDo {
+                | k, v |
+                ("---< Skoarpion " ++ k ++ " >---").postln;
 
-            v.head.postln;
-            "head:".postln;
-            v.head.draw_tree.post;
+                v.head.postln;
+                "head:".postln;
+                v.head.draw_tree.post;
 
-            "body:".postln;
-            v.body.do {|x| x.draw_tree.post;};
+                "body:".postln;
+                v.body.do {|x| x.draw_tree.post;};
 
-            if (v.stinger != nil) {
-                "stinger: ".postln;
-                v.stinger.draw_tree.post;
+                if (v.stinger != nil) {
+                    "stinger: ".postln;
+                    v.stinger.draw_tree.post;
+                };
+
+                "".postln;
+
             };
 
-            "".postln;
+            "Skoar parsed.".postln;
+            ^r;
 
-        };
+        } {
+            | e |
+            e.postln;
+            e.throw;
+        }
 
-        "Skoar parsed.".postln;
-        ^r;
     }
 
     pskoar {

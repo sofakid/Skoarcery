@@ -157,10 +157,3 @@ def typical_token(token):
     _____.end()
     _.end()
 
-
-def tokeInspector(token):
-
-    _.function(token.toker_name, "toke")
-
-
-    _.end()

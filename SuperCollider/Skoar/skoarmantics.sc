@@ -70,7 +70,6 @@ Skoarmantics {
                     };
                 } {
                     if (x.isKindOf(Toke_Voice)) {
-                        noad.toke = x;
                         noad.voice = skoar.get_voice(x.val);
                     };
                 };
@@ -115,40 +114,26 @@ Skoarmantics {
 
                 toke = noad.next_toke;
 
-                if (toke.isKindOf(Toke_OctaveShift)) {
-                    noad.performer = {
-                        | m, nav |
-                        m.voice.octave_shift(toke.val);
-                    };
-                };
+                noad.performer = case {toke.isKindOf(Toke_OctaveShift)} {{
+                    | m, nav |
+                    m.voice.octave_shift(toke.val);
 
-                if (toke.isKindOf(Toke_OttavaA)) {
-                    noad.performer = {
-                        | m, nav |
-                        m.voice.octave_shift(1);
-                    };
-                };
+                }} {toke.isKindOf(Toke_OttavaA)} {{
+                    | m, nav |
+                    m.voice.octave_shift(1);
 
-                if (toke.isKindOf(Toke_OttavaB)) {
-                    noad.performer = {
-                        | m, nav |
-                        m.voice.octave_shift(-1);
-                    };
-                };
+                }} {toke.isKindOf(Toke_OttavaB)} {{
+                    | m, nav |
+                    m.voice.octave_shift(-1);
 
-                if (toke.isKindOf(Toke_QuindicesimaA)) {
-                    noad.performer = {
-                        | m, nav |
-                        m.voice.octave_shift(2);
-                    };
-                };
+                }} {toke.isKindOf(Toke_QuindicesimaA)} {{
+                    | m, nav |
+                    m.voice.octave_shift(2);
 
-                if (toke.isKindOf(Toke_QuindicesimaB)) {
-                    noad.performer = {
-                        | m, nav |
-                        m.voice.octave_shift(-2);
-                    };
-                };
+                }} {toke.isKindOf(Toke_QuindicesimaB)} {{
+                    | m, nav |
+                    m.voice.octave_shift(-2);
+                }};
 
             },
 
@@ -178,30 +163,25 @@ Skoarmantics {
                     al_fine = true;
                 };
 
-                if (toke.isKindOf(Toke_DaCapo)) {
-                    noad.performer = {
-                        | m, nav |
+                noad.performer = case {toke.isKindOf(Toke_DaCapo)} {{
+                    | m, nav |
 
-                        if (al_fine) {
-                            m.al_fine = true;
-                        };
-
-                        nav.(\nav_da_capo);
+                    if (al_fine) {
+                        m.al_fine = true;
                     };
-                };
 
-                if (toke.isKindOf(Toke_DalSegno)) {
-                    noad.performer = {
-                        | m, nav |
+                    nav.(\nav_da_capo);
 
-                        if (al_fine) {
-                            m.al_fine = true;
-                        };
+                }} {toke.isKindOf(Toke_DalSegno)} {{
+                    | m, nav |
 
-                        m.reset_colons;
-                        nav.(\nav_segno);
+                    if (al_fine) {
+                        m.al_fine = true;
                     };
-                };
+
+                    m.reset_colons;
+                    nav.(\nav_segno);
+                }};
 
             },
 
@@ -227,7 +207,6 @@ Skoarmantics {
                         | m, nav |
                         m.colon_seen = noad;
                     }} {
-"food".postln;
                         nil
                     }
 
@@ -251,8 +230,8 @@ Skoarmantics {
                 var toke = noad.next_toke;
 
                 noad.performer = case {toke.isKindOf(Toke_PedalUp)} {{
-                        | m, nav |
-                        m.voice.pedal_up;
+                    | m, nav |
+                    m.voice.pedal_up;
 
                 }} {toke.isKindOf(Toke_PedalDown)} {{
                     | m, nav |
@@ -295,14 +274,12 @@ Skoarmantics {
                 };
 
                 msg_name = noad.children[1].toke.val;
-msg_name.postln;
+
                 if (noad.children.size > 2) {
-"mizzle".postln;
                     args = SkoarpuscleArgs(noad.children[2].collect_skoarpuscles);
                 };
-"hizzle ".post; msg_name.dump; args.dump;
+
                 noad.skoarpuscle = SkoarpuscleSeqRef(msg_name, args);
-"dizzle".postln;
                 clean.();
 
             },
@@ -335,7 +312,7 @@ msg_name.postln;
                 | skoar, noad |
                 var skoaroid = noad.children[0];
                 var y = noad.children[1];
-                
+
                 noad.performer = case {y.isKindOf(SkoarNoad)} {
                     if (y.name == \assignment) {{
                         | m, nav |
@@ -407,13 +384,12 @@ msg_name.postln;
 
                 // the settable
                 var y = nil;
-                var y_toke = nil;
 
-                op = noad.children[0].toke.lexeme;
+                op = noad.children[0].lexeme;
                 y = noad.children[1];
                 y.skoarpuscle = y.next_skoarpuscle;
+"freep".postln;
                 y = y.skoarpuscle;
-
                 // we prepare the destination here (noad.f), we'll setup the write in skoaroid
 
                 noad.setter = switch (op)

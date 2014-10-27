@@ -142,7 +142,7 @@ SkoarNoad {
             } {
                 "dvtoke: ".post; y.asString.postln;
                 if (f_toke != nil) {
-                    f_toke.(y, this);
+                    f_toke.(this, y);
                 };
             };
         };
@@ -214,6 +214,10 @@ SkoarNoad {
         };
 
         ^nil;
+    }
+
+    next_toke {
+        ^children[0];
     }
 
     // -------------------
