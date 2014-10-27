@@ -45,7 +45,7 @@ class Code_Parser_Py(unittest.TestCase):
             if A.intermediate:
                 PY.stmt("noad = parent")
             else:
-                PY.stmt("noad = SkoarNoad('" + A.name + "', None, parent)")
+                PY.stmt("noad = SkoarNoad('" + A.name + "', parent)")
 
             PY.nl()
 

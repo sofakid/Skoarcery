@@ -84,7 +84,7 @@ Skoarpion {
 
         n = body.size;
 
-        body_noad = SkoarNoad("xient:body_noad:" ++ name, nil, nil);
+        body_noad = SkoarNoad("xient:body_noad:" ++ name, nil);
         body_noad.children = body;
         body_noad.n = n;
     }

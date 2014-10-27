@@ -21,9 +21,9 @@ Skoarmantics {
 
     *new {
 
-        var dict = Dictionary[
+        var dict = IdentityDictionary[
 
-            "skoarpion" -> {
+            \skoarpion -> {
                 | skoar, noad |
                 var x, k;
                 x = Skoarpion(noad);
@@ -37,7 +37,7 @@ Skoarmantics {
                 };
             },
 
-            "skoarpion_line" -> {
+            \skoarpion_line -> {
                 | skoar, noad |
 
                 var n = 0;
@@ -52,7 +52,7 @@ Skoarmantics {
 
             },
 
-            "branch" -> {
+            \branch -> {
                 | skoar, noad |
 
                 var n = 0;
@@ -64,7 +64,7 @@ Skoarmantics {
                 noad.branch = noad;
 
                 if (x.isKindOf(SkoarNoad)) {
-                    if (x.name == "skoarpion") {
+                    if (x.name == \skoarpion) {
                         noad.children = [];
                         noad.n = 0;
                     };
@@ -77,32 +77,30 @@ Skoarmantics {
 
             },
 
-            "beat" -> {
+            \beat -> {
                 | skoar, noad |
                 noad.skoarpuscle = noad.next_skoarpuscle;
                 noad.children = [];
                 noad.n = 0;
-                noad.toke = nil;
                 noad.performer = {
                     | m, nav |
                     noad.skoarpuscle.performer(m, nav);
                 };
             },
 
-            "listy" -> {
+            \listy -> {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleArray(noad.collect_skoarpuscles);
 
                 noad.n = 0;
                 noad.children = [];
-                noad.toke = nil;
 
             },
 
-            "musical_keyword_misc" -> {
+            \musical_keyword_misc -> {
                 | skoar, noad |
 
-                var toke = noad.toke;
+                var toke = noad.next_toke;
 
                 if (toke.isKindOf(Toke_Carrot)) {
                     noad.one_shots = {"TODO stress noat".postln;};
@@ -110,12 +108,12 @@ Skoarmantics {
 
             },
 
-            "ottavas" -> {
+            \ottavas -> {
                 | skoar, noad |
 
                 var toke;
 
-                toke = noad.toke;
+                toke = noad.next_toke;
 
                 if (toke.isKindOf(Toke_OctaveShift)) {
                     noad.performer = {
@@ -154,15 +152,14 @@ Skoarmantics {
 
             },
 
-            "cthulhu" -> {
+            \cthulhu -> {
                 | skoar, noad |
-                noad.name = "^^(;,;)^^";
                 noad.performer = {skoar.cthulhu(noad);};
             },
         
-            "dynamic" -> {
+            \dynamic -> {
                 | skoar, noad |
-                var toke = noad.toke;
+                var toke = noad.next_toke;
 
                 noad.performer = {
                     | m |
@@ -170,7 +167,7 @@ Skoarmantics {
                 };
             },
 
-            "dal_goto" -> {
+            \dal_goto -> {
                 | skoar, noad |
 
                 var toke = noad.children[0];
@@ -208,7 +205,7 @@ Skoarmantics {
 
             },
 
-            "marker" -> {
+            \marker -> {
                 | skoar, noad |
 
                 var toke = noad.children[0];
@@ -249,32 +246,28 @@ Skoarmantics {
             },
 
 
-            "pedally" -> {
+            \pedally -> {
                 | skoar, noad |
+                var toke = noad.next_toke;
 
-                if (noad.toke.isKindOf(Toke_PedalUp)) {
-                    noad.performer = {
+                noad.performer = case {toke.isKindOf(Toke_PedalUp)} {{
                         | m, nav |
                         m.voice.pedal_up;
-                    };
-                };
 
-                if (noad.toke.isKindOf(Toke_PedalDown)) {
-                    noad.performer = {
-                        | m, nav |
-                        m.voice.pedal_down;
-                    };
-                };
+                }} {toke.isKindOf(Toke_PedalDown)} {{
+                    | m, nav |
+                    m.voice.pedal_down;
+
+                }};
 
             },
 
 
-            "nouny" -> {
+            \nouny -> {
                 | skoar, noad |
 
                 var x = nil;
                 var clean = {
-                    noad.toke = nil;
                     noad.children = [];
                     noad.n = 0;
                 };
@@ -289,7 +282,7 @@ Skoarmantics {
 
             // seq_ref*         : SeqRef MsgNameWithArgs listy_suffix
             //                  | SeqRef MsgName
-            "seq_ref" -> {
+            \seq_ref -> {
                 | skoar, noad |
 
                 var x;
@@ -297,7 +290,6 @@ Skoarmantics {
                 var msg_name;
 
                 var clean = {
-                    noad.toke = nil;
                     noad.children = [];
                     noad.n = 0;
                 };
@@ -315,86 +307,52 @@ msg_name.postln;
 
             },
 
-            "args" -> {
+            \args -> {
                 | skoar, noad |
 
-                var clean = {
-                    noad.toke = nil;
-                    noad.children = [];
-                    noad.n = 0;
-                };
-
                 noad.skoarpuscle = SkoarpuscleArgs(noad.collect_skoarpuscles);
-                clean.();
-
+                noad.children = [];
+                noad.n = 0;
             },
 
-            "msg" -> {
+            \msg -> {
                 | skoar, noad |
 
                 var x = nil;
                 var args = nil;
 
-                var clean = {
-                    noad.toke = nil;
-                    noad.children = [];
-                    noad.n = 0;
-                };
 
-                x = noad.children[0].toke.val;
+                x = noad.children[0].val;
                 args = SkoarpuscleArray(noad.collect_skoarpuscles);
                 noad.skoarpuscle = SkoarpuscleMsg(x, args);
 
-                clean.();
+                noad.children = [];
+                noad.n = 0;
 
             },
 
-            "stmt" -> {
+            \stmt -> {
                 | skoar, noad |
-                var x = nil;
-                var y = nil;
-
-
-                y = noad.children[1];
-
-                // assignment
-                if (y != nil) {
-                    if (y.name == "assignment") {
-
-                        noad.performer = {
-                            | m, nav |
-                            var res;
-
-                            x = noad.children[0];
-
-"fee".postln;
-                            res = x.evaluate.(m);
-
-"foh".post; res.dump;
-                            y.setter.(res, m.voice);
-
-"fum".postln;
-                        };
-
-                    };
-
-                } { // just a skoaroid
-                    noad.performer = {
+                var skoaroid = noad.children[0];
+                var y = noad.children[1];
+                
+                noad.performer = case {y.isKindOf(SkoarNoad)} {
+                    if (y.name == \assignment) {{
                         | m, nav |
+                        var res = skoaroid.evaluate.(m);
+                        y.setter.(res, m.voice);
+                    }}
 
-                        x = noad.children[0];
- "FEE".postln;
-                        x = x.evaluate.(m);
- "FAI FOH ".post; x.postln;
+                } {{
+                    | m, nav |
+                    skoaroid = skoaroid.evaluate.(m);
+                    skoaroid.performer(m, nav);
 
-                        x.performer(m, nav);
- "FUM".postln;
-                    };
-                };
+                }};
 
             },
 
-            "skoaroid" -> {
+            \skoaroid -> {
                 | skoar, noad |
 
                 var kids = List[];
@@ -402,7 +360,7 @@ msg_name.postln;
                 // strip out the operators
                 noad.children.do {
                     | x |
-                    if (x.toke.isKindOf(Toke_MsgOp) == false) {
+                    if (x.isKindOf(Toke_MsgOp) == false) {
                         kids.add(x);
                     };
                 };
@@ -442,7 +400,7 @@ msg_name.postln;
 
             },
 
-            "assignment" -> {
+            \assignment -> {
                 | skoar, noad |
 
                 var op = nil;
@@ -476,11 +434,11 @@ msg_name.postln;
 
             },
 
-            "boolean" -> {
+            \boolean -> {
                 | skoar, noad |
             },
 
-            "coda" -> {
+            \coda -> {
                 | skoar, noad |
             }
 

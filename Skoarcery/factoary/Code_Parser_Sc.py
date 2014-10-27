@@ -86,7 +86,7 @@ class Code_Parser_Sc(unittest.TestCase):
             if A.intermediate:
                 SC.var("noad", "parent")
             else:
-                SC.var("noad", SC.v_new("SkoarNoad", SC.v_str(A.name), SC.null, "parent"))
+                SC.var("noad", SC.v_new("SkoarNoad", SC.v_str(A.name), "parent"))
 
             SC.var("desires", SC.null)
             SC.nl()

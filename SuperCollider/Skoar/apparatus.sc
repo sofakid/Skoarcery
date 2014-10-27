@@ -7,7 +7,6 @@ SkoarNoad {
     var <>parent;          // the parent noad
     var <>i;               // position in parent
     var <>n;               // number of children
-    var <>toke;            // a toke, if this noad absorbed a toke
     var <>children;        // a list of child noads
 
     var <>evaluate;       // pass functions between skoarmantic levels here
@@ -15,7 +14,7 @@ SkoarNoad {
 
     var <>name;            // name of the nonterminal
     var <>label;
-    var <>skoarpuscle;     // skoarpuscleue types go here
+    var <>skoarpuscle;     // skoarpuscle types go here
 
     var <>performer;       // function to set when defining semantics.
     var <>one_shots;       // function to set for stuff that applies for one beat.
@@ -26,27 +25,26 @@ SkoarNoad {
     var <>branch;          // what branch are we on, along the trunk (what line)
 
     *new {
-        | name, toke, parent, i=0 |
-        ^super.new.init(name, toke, parent, i);
+        | name, parent, i=0 |
+        ^super.new.init(name, parent, i);
     }
 
     init {
-        | nameArg, tokeArg, parentArg, i=0 |
+        | nameArg, parentArg, i=0 |
 
         parent = parentArg;
 
         i = i;
         n = 0;
 
-        name = nameArg;
-        toke = tokeArg;
+        name = nameArg.asSymbol;
 
         children = List[];
 
     }
 
     asString {
-        ^name;
+        ^name.asString;
     }
 
     // -------------------
@@ -90,7 +88,6 @@ SkoarNoad {
 
     add_toke {
         | name, t |
-        toke = t;
         children.add(t);
         n = n + 1;
     }
@@ -203,7 +200,7 @@ SkoarNoad {
         ^parent.children[i-1];
     }
 
-    // find next skoarpuscleue
+    // find next skoarpuscle
     next_skoarpuscle {
         var x;
 
@@ -244,16 +241,8 @@ SkoarNoad {
         desires.do {
             | item |
 
-            if (item.isKindOf(String)) {
-                if (item == name) {
-                    writer.(this);
-                };
-
-            } {
-                if (toke.isKindOf(item)) {
-                    writer.(this);
-                };
-
+            if (item == name) {
+                writer.(this);
             };
         };
     }
