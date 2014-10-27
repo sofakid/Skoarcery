@@ -20,7 +20,7 @@ Skoarpion {
         var m = kids.size;
         var sig, suffix;
         var i = 0;
-        var line = List[];
+        var line = SkoarNoad("xient:section:line", nil);
         var section = SkoarNoad("xient:section:", nil);
         var sections = List[];
 
@@ -46,28 +46,22 @@ Skoarpion {
             | x |
 
             case {x.isKindOf(Toke_SkoarpionSep)} {
-                section.children = line.asArray;
-                section.n = line.size;
-
+                section.add_noad(line);
                 sections.add(section);
 
                 section = SkoarNoad("xient:section:", nil);
-                line = List[];
+                line = SkoarNoad("xient:section:line:", nil);
 
             } {x.isKindOf(Toke_Newline)} {
-                section.children = line.asArray;
-                section.n = line.size;
-
-                line = List[];
+                section.add_noad(line);
+                line = SkoarNoad("xient:section:line:", nil);
 
             } {x.isKindOf(Toke_SkoarpionEnd)} {
-                section.children = line.asArray;
-                section.n = section.children.size;
-
+                section.add_noad(line);
                 sections.add(section);
 
             } {
-                line.add(x);
+                line.add_noad(x);
             };
 
         };
@@ -100,6 +94,10 @@ Skoarpion {
 
     post_tree {
         ("---< Skoarpion " ++ name.asString ++ " >---").postln;
+
+        if (args != nil) {
+            "args: ".post; args.skoarpuscle.val.dump;
+        };
 
         if (body != nil) {
             "body:".postln;

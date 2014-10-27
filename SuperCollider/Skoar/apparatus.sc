@@ -140,7 +140,6 @@ SkoarNoad {
             if (y.isKindOf(SkoarNoad)) {
                 y.depth_visit(f_noad, f_toke);
             } {
-                "dvtoke: ".post; y.asString.postln;
                 if (f_toke != nil) {
                     f_toke.(this, y);
                 };
@@ -203,11 +202,11 @@ SkoarNoad {
     // find next skoarpuscle
     next_skoarpuscle {
         var x;
-"ferg".postln;
+
         if (skoarpuscle != nil) {
             ^skoarpuscle;
         };
-"fruuj".postln;
+
         x = children[0];
         if (x.isKindOf(SkoarNoad)) {
             ^x.next_skoarpuscle;
