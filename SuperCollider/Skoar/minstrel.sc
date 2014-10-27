@@ -148,7 +148,7 @@ SkoarMinstrel {
         };
 
         // first line
-        skrp.head.inorder(f, skrp.stinger);
+        skrp.head.inorder(f, nil, skrp.stinger);
 
         iter = skrp_iters[label];
         if (iter == nil) {
@@ -158,7 +158,7 @@ SkoarMinstrel {
 
         // current line
         z = iter.performMsg(msg_arr);
-        z.inorder(f, skrp.stinger);
+        z.inorder(f, nil, skrp.stinger);
     }
 
     nextEvent {

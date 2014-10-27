@@ -21,7 +21,7 @@ branch*            : optional_voice phrases Newline
 +phrasey           : Comment | marker | Meter | stmt | dal_goto | beat
 
 skoarpion          : SkoarpionStart skrp_sig SkoarpionSep skrp_suffix
-skrp_sig           : args | SymbolName optional_args |<e>
+skrp_sig           : args | SymbolName optional_args | <e>
 skrp_suffix        : skrp_lines SkoarpionEnd
 +skrp_lines        : optional_voice phrases skrp_moar_lines
 +skrp_moar_lines   : skrp_sep_or_nl skrp_lines | <e>
@@ -42,7 +42,7 @@ marker*            : Segno | Fine | coda | Volta | Bars
 coda*              : Coda optional_al_coda
 optional_al_coda   : AlCoda | <e>
 dal_goto*          : DaCapo al_x | DalSegno al_x
-al_x*              : AlCoda | AlSegno | AlFine | <e>
+al_x               : AlCoda | AlSegno | AlFine | <e>
 
 beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
 

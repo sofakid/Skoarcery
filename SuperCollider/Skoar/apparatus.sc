@@ -15,16 +15,13 @@ SkoarNoad {
 
     var <>name;            // name of the nonterminal
     var <>label;
-    var <>val;             // value types go here
+    var <>skoarpuscle;     // skoarpuscleue types go here
 
     var <>performer;       // function to set when defining semantics.
     var <>one_shots;       // function to set for stuff that applies for one beat.
 
     var  <next_jmp;        // if this is set, we will jump to this noad instead of the next noad
 
-    var <>noat;
-
-    var  <inspectable;     // this toke carries information that must be inspected and processed.
     var <>voice;           // what voice to use
     var <>branch;          // what branch are we on, along the trunk (what line)
 
@@ -46,13 +43,10 @@ SkoarNoad {
 
         children = List[];
 
-        if (toke.isKindOf(SkoarToke)) {
-            inspectable = toke.class.inspectable;
-        } {
-            inspectable = false;
-        };
+    }
 
-
+    asString {
+        ^name;
     }
 
     // -------------------
@@ -77,7 +71,7 @@ SkoarNoad {
 
         children.do {
             | y |
-            if (y != nil) {
+            if (y.isKindOf(SkoarNoad)) {
                 y.assign_voices(v,b);
             };
         };
@@ -95,29 +89,10 @@ SkoarNoad {
     }
 
     add_toke {
-        | name, toke |
-
-        children.add(SkoarNoad(name, toke, this, n));
+        | name, t |
+        toke = t;
+        children.add(t);
         n = n + 1;
-    }
-
-    // i'm unhappy with this
-    absorb_toke {
-        var x;
-
-        if (n == 1) {
-
-            x = children.pop;
-            n = 0;
-
-            if (x != nil && x.isKindOf(SkoarNoad) && x.toke != nil) {
-                toke = x.toke;
-            } {
-                toke = x;
-            };
-        };
-
-        ^toke;
     }
 
     // ----------------
@@ -126,27 +101,27 @@ SkoarNoad {
     draw_tree {
         | tab = 1 |
 
-        var s;
-
-        if (voice != nil) {
-            s = voice.name ++ ":";
+        var s = if (voice != nil) {
+            voice.name ++ ":"
         } {
-            s = ""
+            ""
         };
 
         s = s ++ " ".padLeft(tab + 1) ++ name;
 
-        if (val != nil) {
-            s = s ++ ": " ++ val.val;
+        if (skoarpuscle != nil) {
+            s = s ++ ": " ++ skoarpuscle.val;
         };
 
         s = s ++ "\n";
         //s.post;
         children.do {
             | x |
-            if (x != nil) {
+            if (x.isKindOf(SkoarNoad)) {
                 s = s ++ x.draw_tree(tab + 1);
                 //x.draw_tree(tab + 1);
+            } {
+                s = s ++ " ".padLeft(tab + 1) ++ x.class.asString ++ "\n";
             };
         };
 
@@ -159,48 +134,56 @@ SkoarNoad {
 
     // depth-first, find the leaves, run handler, working towards trunk
     depth_visit {
-        | f |
+        | f_noad, f_toke=nil |
 
         ">>> depth_visit: ".post; name.postln;
 
         children.do {
             | y |
-            if (y != nil) {
-                y.depth_visit(f);
+            if (y.isKindOf(SkoarNoad)) {
+                y.depth_visit(f_noad, f_toke);
+            } {
+                "dvtoke: ".post; y.asString.postln;
+                if (f_toke != nil) {
+                    f_toke.(y, this);
+                };
             };
         };
 
         "--- depth_visit: ".post; name.postln;
 
         // note: leaves first
-        f.(this);
+        f_noad.(this);
 
         "<<< depth_visit: ".post; name.postln;
     }
 
     inorder {
-        | f, stinger=nil |
+        | f_noad, f_toke=nil, stinger=nil |
 
         ">>> inorder: ".post; name.postln;
 
-        if (stinger != nil && val.isKindOf(SkoarpuscleBeat)) {
+        if (stinger != nil && skoarpuscle.isKindOf(SkoarpuscleBeat)) {
 
             "!!! stinger: ".post; stinger.postln;
-            stinger.inorder(f);
+            stinger.inorder(f_noad, f_toke);
         };
 
         "--- inorder: ".post; name.postln;
-        f.(this);
+        f_noad.(this);
 
         "=== inorder: ".post; name.postln;
         children.do {
             | y |
-            if (y != nil) {
-                y.inorder(f, stinger);
+            if (y.isKindOf(SkoarNoad)) {
+                y.inorder(f_noad, f_toke, stinger);
+            } {
+                if (f_toke != nil) {
+                    f_toke.(y, this);
+                };
             };
         };
         "<<< inorder: ".post; name.postln;
-
 
     }
 
@@ -220,27 +203,17 @@ SkoarNoad {
         ^parent.children[i-1];
     }
 
-    // find next (first) toke, depthfirst
-    next_toke {
-        var x = children[0];
-        if (x.toke != nil) {
-            ^x.toke;
-        };
-
-        ^x.next_toke;
-    }
-
-    // find next value
-    next_val {
+    // find next skoarpuscleue
+    next_skoarpuscle {
         var x;
 
-        if (val != nil) {
-            ^val;
+        if (skoarpuscle != nil) {
+            ^skoarpuscle;
         };
 
         x = children[0];
-        if (x != nil) {
-            ^x.next_val;
+        if (x.isKindOf(SkoarNoad)) {
+            ^x.next_skoarpuscle;
         };
 
         ^nil;
@@ -292,7 +265,6 @@ SkoarNoad {
 
         this.depth_visit({
             | x |
-
             x.match(desires, {
                 | y |
                 results.add(y);
@@ -302,14 +274,14 @@ SkoarNoad {
         ^results.asArray;
     }
 
-    collect_values {
+    collect_skoarpuscles {
 
         var results = List.new;
 
         this.inorder({
             | x |
 
-            if (x.val != nil) {
+            if (x.skoarpuscle != nil) {
                 results.add(x.val);
             };
         });

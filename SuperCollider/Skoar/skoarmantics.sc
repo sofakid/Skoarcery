@@ -25,12 +25,17 @@ Skoarmantics {
 
             "skoarpion" -> {
                 | skoar, noad |
-                var x;
+                var x, k;
 "conjuring skoarpion".postln;
                 x = Skoarpion(noad);
-x.dump;
+"skoarpion conjured".postln;
+
                 // we save it here, the skoarpion will be removed from the tree by branch.
-                skoar.skoarpions[x.name] = x;
+                //
+                // this comment may be outdated
+                //skoar.skoarpions[x.name] = x;
+"skoarpion saved".postln;
+
 
             },
 
@@ -60,37 +65,35 @@ x.dump;
 
                 noad.branch = noad;
 
-                if (x.name == "skoarpion") {
-                    noad.children = [];
-                    noad.n = 0;
+                if (x.isKindOf(SkoarNoad)) {
+                    if (x.name == "skoarpion") {
+                        noad.children = [];
+                        noad.n = 0;
+                    };
                 } {
-                    x = x.toke;
                     if (x.isKindOf(Toke_Voice)) {
                         noad.toke = x;
                         noad.voice = skoar.get_voice(x.val);
                     };
-                    // drop the newline
-                    noad.children.pop;
-                    noad.n = n - 1;
                 };
 
             },
 
             "beat" -> {
                 | skoar, noad |
-                noad.val = noad.next_val;
+                noad.skoarpuscle = noad.next_skoarpuscle;
                 noad.children = [];
                 noad.n = 0;
                 noad.toke = nil;
                 noad.performer = {
                     | m, nav |
-                    noad.val.performer(m, nav);
+                    noad.skoarpuscle.performer(m, nav);
                 };
             },
 
             "listy" -> {
                 | skoar, noad |
-                noad.val = SkoarpuscleArray(noad.collect_values);
+                noad.skoarpuscle = SkoarpuscleArray(noad.collect_skoarpuscles);
 
                 noad.n = 0;
                 noad.children = [];
@@ -101,7 +104,7 @@ x.dump;
             "musical_keyword_misc" -> {
                 | skoar, noad |
 
-                var toke = noad.absorb_toke;
+                var toke = noad.toke;
 
                 if (toke.isKindOf(Toke_Carrot)) {
                     noad.one_shots = {"TODO stress noat".postln;};
@@ -114,7 +117,7 @@ x.dump;
 
                 var toke;
 
-                toke = noad.absorb_toke;
+                toke = noad.toke;
 
                 if (toke.isKindOf(Toke_OctaveShift)) {
                     noad.performer = {
@@ -161,7 +164,7 @@ x.dump;
         
             "dynamic" -> {
                 | skoar, noad |
-                var toke = noad.absorb_toke;
+                var toke = noad.toke;
 
                 noad.performer = {
                     | m |
@@ -172,8 +175,8 @@ x.dump;
             "dal_goto" -> {
                 | skoar, noad |
 
-                var toke = noad.children[0].toke;
-                var al_x = noad.children[1].toke;
+                var toke = noad.children[0];
+                var al_x = noad.children[1];
                 var al_fine = false;
 
                 if (al_x != nil && al_x.isKindOf(Toke_AlFine)) {
@@ -207,16 +210,10 @@ x.dump;
 
             },
 
-            "al_x" -> {
-                | skoar, noad |
-
-                noad.absorb_toke;
-            },
-
             "marker" -> {
                 | skoar, noad |
 
-                var toke = noad.absorb_toke;
+                var toke = noad.toke;
 
                 if (toke != nil) {
 
@@ -296,9 +293,9 @@ x.dump;
                     noad.n = 0;
                 };
 
-                x = noad.next_val;
+                x = noad.next_skoarpuscle;
                 if (x != nil) {
-                    noad.val = x;
+                    noad.skoarpuscle = x;
                     clean.();
                 };
 
@@ -323,10 +320,10 @@ x.dump;
 msg_name.postln;
                 if (noad.children.size > 2) {
 "mizzle".postln;
-                    args = SkoarpuscleArgs(noad.children[2].collect_values);
+                    args = SkoarpuscleArgs(noad.children[2].collect_skoarpuscles);
                 };
 "hizzle ".post; msg_name.dump; args.dump;
-                noad.val = SkoarpuscleSeqRef(msg_name, args);
+                noad.skoarpuscle = SkoarpuscleSeqRef(msg_name, args);
 "dizzle".postln;
                 clean.();
 
@@ -341,7 +338,7 @@ msg_name.postln;
                     noad.n = 0;
                 };
 
-                noad.val = SkoarpuscleArgs(noad.collect_values);
+                noad.skoarpuscle = SkoarpuscleArgs(noad.collect_skoarpuscles);
                 clean.();
 
             },
@@ -359,8 +356,8 @@ msg_name.postln;
                 };
 
                 x = noad.children[0].toke.val;
-                args = SkoarpuscleArray(noad.collect_values);
-                noad.val = SkoarpuscleMsg(x, args);
+                args = SkoarpuscleArray(noad.collect_skoarpuscles);
+                noad.skoarpuscle = SkoarpuscleMsg(x, args);
 
                 clean.();
 
@@ -431,22 +428,22 @@ msg_name.postln;
                 // evaluate messages, returning the result
                 noad.evaluate = {
                     | minstrel |
-                    var result = kids[0].next_val;
+                    var result = kids[0].next_skoarpuscle;
 
                     if (result != nil) {
                         kids.do {
                             | y |
-                            var x = y.val;
+                            var x = y.skoarpuscle;
                             if (x.isKindOf(SkoarpuscleMsg)) {
                                 result = result.skoar_msg(x, minstrel);
                             };
 
                         };
 
-                        "result: ".post; result.val.postln;
+                        "result: ".post; result.skoarpuscle.postln;
                         result
                     } {
-                        var x = noad.next_val;
+                        var x = noad.next_skoarpuscle;
 
                         if (x != nil) {
                             x
@@ -470,8 +467,8 @@ msg_name.postln;
 
                 op = noad.children[0].toke.lexeme;
                 y = noad.children[1];
-                y.val = y.next_val;
-                y = y.val;
+                y.skoarpuscle = y.next_skoarpuscle;
+                y = y.skoarpuscle;
 
                 // we prepare the destination here (noad.f), we'll setup the write in skoaroid
 

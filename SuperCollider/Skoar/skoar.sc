@@ -77,25 +77,27 @@ Skoar {
 
     decorate {
 
-        var f = {
-            | x |
+        var f_noad = {
+            | noad |
+            var f = skoarmantics[noad.name];
 
-//"inspecting ".post; x.dump;
+            if (f.isKindOf(Function)) {
+                f.(this, noad);
+                debug("WEEEEEE","decorate");
+            };
+        };
 
-            // tokens*
-            if (x.toke != nil) {
+        var f_toke = {
+            | toke, noad |
+
+            if (toke.class.inspectable) {
                 // run the function x.name, pass the noad
-                inspector[x.name].(x);
-
-            // nonterminals*
-            } {
-                // run the function, pass the noad (not the nonterminal)
-                skoarmantics[x.name].(this, x);
+                inspector[toke.class].(noad);
             };
         };
 
 ">>> decorating...".postln;
-        tree.depth_visit(f);
+        tree.depth_visit(f_noad,f_toke);
 "<<< decorated.".postln;
 
         this.decorate_voices;

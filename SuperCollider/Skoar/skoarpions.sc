@@ -21,29 +21,66 @@ Skoarpion {
         | noad |
         var kids = noad.children;
         var m = kids.size;
+        var sig, suffix;
+        var i = 0;
+        var line = List[];
+        var section = List[];
+        var sections = List[];
 
-    "kids: ".post; kids.do {
-        | x |
-        "   ".post; x.name.postln;
+        "kids: ".post; kids.do {
+            | x |
+            "   ".post;
+            if (x.isKindOf(SkoarNoad)) {
+                x.name.post; " ".post;
+            };
 
-    };
+            x.asString.postln;
 
-        // 0 - sep
-        // 1 - label
-        name = kids[1].toke.lexeme.asSymbol;
-        // 2 - args
-        args = kids[2].next_val;
-        // 3 - sep
-        // 4 - head
-        head = kids[4];
-        body = kids[5..m-3];
-        // n-2: sep
-        // n-1: stinger
-        stinger = kids[m-1];
-
-        if (stinger.n == 0) {
-            stinger = nil;
         };
+
+        // 0 - start
+        // 1 - sig
+        sig = kids[1];
+        // 2 - sep
+        // 3 - suffix
+        suffix = kids[3];
+
+        suffix.children.do {
+            | x |
+
+            case {x.isKindOf(Toke_SkoarpionSep)} {
+                section.add(line.asArray);
+                sections.add(section.asArray);
+                section = List[];
+                line = List[];
+
+            } {x.isKindOf(Toke_Newline) || x.isKindOf(Toke_SkoarpionEnd)} {
+                section.add(line.asArray);
+                line = List[];
+
+            } {
+                line.add(x);
+            };
+
+        };
+
+        sig.dump;
+        suffix.dump;
+
+        "---------------- barglesnaz".postln;
+        sections.dump;
+        sections.do {
+            | sec |
+            sec.do {
+                | x |
+                "(*) ".post; x.asString.postln;
+            };
+        };
+
+
+        //if (stinger.n == 0) {
+            stinger = nil;
+        //};
 
         n = body.size;
 
@@ -116,9 +153,9 @@ SkoarpionIter {
 
 }
 
-// ---------------------
-// Sequency Skoarpuscles
-// ---------------------
+// ------------
+// Skoarpuscles
+// ------------
 SkoarpuscleSeqRef : Skoarpuscle {
 
     var msg_arr;
@@ -150,3 +187,4 @@ SkoarpuscleSeqRef : Skoarpuscle {
     }
 
 }
+
