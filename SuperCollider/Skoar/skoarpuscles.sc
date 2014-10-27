@@ -88,6 +88,12 @@ SkoarpuscleString : Skoarpuscle {
     as_noat { | m | ^nil; }
 }
 
+SkoarpuscleSymbolName : Skoarpuscle {
+
+    performer {
+    }
+}
+
 SkoarpuscleSymbol : Skoarpuscle {
 
     lookup {

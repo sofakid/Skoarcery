@@ -25,30 +25,12 @@ Skoarmantics {
                 var x, k;
                 x = Skoarpion(noad);
 
-                // we save it here, the skoarpion will be removed from the tree by branch.
-                //
-                // this comment may be outdated
                 k = x.name;
                 if (k != nil) {
                     skoar.skoarpions[k] = x;
                 };
 
                 noad.skoarpuscle = SkoarpuscleSkoarpion(x);
-            },
-
-            \skoarpion_line -> {
-                | skoar, noad |
-
-                var n = 0;
-                var x = nil;
-
-                n = noad.n;
-                x = noad.children[0];
-
-                // drop the newline
-                noad.children.pop;
-                noad.n = n - 1;
-
             },
 
             \branch -> {

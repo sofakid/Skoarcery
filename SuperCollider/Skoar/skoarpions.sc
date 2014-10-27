@@ -33,12 +33,10 @@ Skoarpion {
 
         sig.children.do {
             | x |
-            "sig.do".postln;
-            x.dump;
             case {x.isKindOf(Toke_SymbolName)} {
-                name = x.val;
+                name = sig.skoarpuscle.val;
             } {x.name == \args} {
-                args = x;
+                args = x.skoarpuscle;
             };
         };
 
@@ -96,7 +94,7 @@ Skoarpion {
         ("---< Skoarpion " ++ name.asString ++ " >---").postln;
 
         if (args != nil) {
-            "args: ".post; args.skoarpuscle.val.dump;
+            "args: ".post; args.val.dump;
         };
 
         if (body != nil) {

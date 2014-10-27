@@ -90,10 +90,6 @@ SkoarTokeInspector {
                 toke.val = toke.lexeme.strip("[.]").asInteger;
             },
             
-            \Toke_SymbolName -> {
-                | noad, toke |
-                toke.val = toke.lexeme.asSymbol;
-            },
 
             \Toke_Voice -> {
                 | noad, toke |
@@ -144,12 +140,17 @@ SkoarTokeInspector {
 
             \Toke_String -> {
                 | noad, toke |
-                noad.skoarpuscle = SkoarpuscleSymbol(toke.lexeme.asString);
+                noad.skoarpuscle = SkoarpuscleString(toke.lexeme.asString);
             },
 
             \Toke_Symbol -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleSymbol(toke.lexeme[1..].asSymbol);
+            },
+
+            \Toke_SymbolName -> {
+                | noad, toke |
+                noad.skoarpuscle = SkoarpuscleSymbolName(toke.lexeme.asSymbol)
             },
 
             // rests
