@@ -228,9 +228,9 @@ Skoarmantics {
 
             },
 
-            // seq_ref*         : SeqRef MsgNameWithArgs listy_suffix
-            //                  | SeqRef MsgName
-            \seq_ref -> {
+            // deref*         : Deref MsgNameWithArgs listy_suffix
+            //                | Deref MsgName
+            \deref -> {
                 | skoar, noad |
 
                 var x;
@@ -248,10 +248,10 @@ Skoarmantics {
 
                 if (noad.children.size > 2) {
                     args = SkoarpuscleArgs(noad.collect_skoarpuscles(2));
-                    "\\seq_ref -> ... args:".post; args.val.postln;
+                    "\\deref -> ... args:".post; args.val.postln;
                 };
 
-                noad.skoarpuscle = SkoarpuscleSeqRef(msg_name, args);
+                noad.skoarpuscle = SkoarpuscleDeref(msg_name, args);
                 clean.();
 
             },
@@ -359,27 +359,27 @@ Skoarmantics {
 
                 var op = nil;
 
-                // the settable
-                var y = nil;
+                var settable = nil;
 
                 op = noad.children[0].toke.lexeme;
-                y = noad.next_skoarpuscle;
+                settable = noad.children[1].next_skoarpuscle;
+
                 // we prepare the destination here (noad.f), we'll setup the write in skoaroid
 
                 noad.setter = switch (op)
                     {"+>"} {{
                         | x, voice |
-                        voice.assign_incr(x, y);
+                        voice.assign_incr(x, settable);
                     }}
 
                     {"->"} {{
                         | x, voice |
-                        voice.assign_decr(x, y);
+                        voice.assign_decr(x, settable);
                     }}
 
                     {"=>"} {{
                         | x, voice |
-                        voice.assign_set(x, y);
+                        voice.assign_set(x, settable);
                     }};
 
             },

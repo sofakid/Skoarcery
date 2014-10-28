@@ -175,19 +175,15 @@ SkoarpuscleSkoarpion : Skoarpuscle {
 
     performer {
         | m, nav |
-debug("o hai");
         if (val.name != nil) {
-debug("hai hai: "); val.name.postln;
-            m.voice.put(val.name, val);
-debug("wai?");
-            m.voice.stack.dump;
+            m.voice.put(val.name, this);
         };
-
     }
+
 }
 
 
-SkoarpuscleSeqRef : Skoarpuscle {
+SkoarpuscleDeref : Skoarpuscle {
 
     var msg_arr;
     var args;
@@ -203,15 +199,64 @@ SkoarpuscleSeqRef : Skoarpuscle {
         args = a;
     }
 
-    skoar_msg {
-        | msg, minstrel |
-        msg_arr = msg.get_msg_arr;
-        ^this;
+
+    lookup {
+        | m |
+        ^m.voice[val];
+    }
+
+    as_noat {
+        | m |
+        ^this.lookup(m).as_noat(m);
     }
 
     performer {
         | m, nav |
-        m.gosub(val, nav, msg_arr, args);
+        var x = this.lookup(m);
+
+        "deref: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.dump;
+
+        if (x.isKindOf(SkoarpuscleSkoarpion)) {
+            m.gosub(x.val, nav, msg_arr, args);
+        } {
+            if (x.isKindOf(Skoarpuscle)) {
+                x.performer(m, nav);
+            };
+        };
+
+    }
+
+    /*skoar_msg {
+        | msg, minstrel |
+        msg_arr = msg.get_msg_arr;
+        ^this;
+    }*/
+
+    skoar_msg {
+        | msg, minstrel |
+        var ret = val;
+        var x = this.lookup(minstrel);
+
+        "deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.dump;
+        msg_arr = msg.get_msg_arr;
+"deref:skoar_msg:".post; x.dump;
+
+        if (x.isKindOf(SkoarpuscleSkoarpion)) {
+"stuff".postln;
+            ^this;
+        };
+
+        if (x == nil) {
+            x = val.asClass;
+        };
+
+        ret = if (x != nil) {
+            x.performMsg(msg_arr)
+        } {
+            val.performMsg(msg_arr)
+        };
+
+        ^Skoarpuscle.wrap(ret);
     }
 
 }

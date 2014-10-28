@@ -80,7 +80,7 @@ SymbolName*:      [a-zA-Z_][a-zA-Z0-9_]*
 SkoarpionStart:   [{]!
 SkoarpionEnd:     ![}]
 SkoarpionSep:     !!
-SeqRef:           !(?![!}])
+Deref:            !(?![!}])
 
 Nosey:            ,
 

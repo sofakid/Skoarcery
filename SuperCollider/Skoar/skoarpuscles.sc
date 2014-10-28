@@ -27,6 +27,10 @@ Skoarpuscle {
             "already wrapped".postln;
             ^x;
 
+        } {x.isKindOf(Skoarpion)} {
+            "x skoarpion".postln;
+            ^SkoarpuscleSkoarpion(x);
+
         } {x.isKindOf(Integer)} {
             "x int".postln;
             ^SkoarpuscleInt(x);
@@ -52,6 +56,7 @@ Skoarpuscle {
             };
 
             ^SkoarpuscleArray(a);
+
         } {
             "x unknown: ".post; x.dump;
             ^SkoarpuscleUnknown(x);
@@ -87,27 +92,7 @@ SkoarpuscleSymbolName : Skoarpuscle {
 
 SkoarpuscleSymbol : Skoarpuscle {
 
-    lookup {
-        | m |
-        var x = m.voice.at(val);
-        x.dump;
-        ^x
-    }
-
-    as_noat {
-        | m |
-        ^this.lookup(m).as_noat(m);
-    }
-
     performer {
-        | m, nav |
-        var v = this.lookup(m);
-
-        "SYMBOL LOOKEDUP : ".post; val.post; " ".post; v.dump;
-
-        if (v.isKindOf(Skoarpuscle)) {
-            v.performer(m, nav);
-        };
     }
 
     skoar_msg {

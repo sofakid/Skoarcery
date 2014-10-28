@@ -52,7 +52,12 @@ SkoarTests {
     "^o/ {! <x> !! !x !}",
     "1 2.18 @foo @foo.postln",
     "@foo !foo.postln",
-    "<'mic check',1,2>"
+    "<'mic check',1,2>",
+    "{! f<x,y,z> !! @x ] ] @y ] @z ] !} !f<_a,c,e>.next",
+    "{! f<x,y,z> !! @x ] ] @y ] @z ] !} !f<_a,c,e,g>.next",
+    "{! f<x,y,z> !! @x ] ] @y ] @z ] !} !f<_a,c>.next",
+    "{! f<x,y,z> !! @x ] ] @y ] @z ] !} !f.next",
+    "^^(;,;)^^"
     ]}
 }
 

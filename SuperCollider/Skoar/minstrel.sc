@@ -122,9 +122,8 @@ SkoarMinstrel {
     gosub {
         // skrp_args is the args to the skoarpion
         // msg_arr is an array like [\msg, arg1, arg2, arg3 ...]
-        | label, nav, msg_arr, skrp_args |
+        | skoarpion, nav, msg_arr, skrp_args |
 
-        var skrp = voice[label];
         var iter;
         var z;
 
@@ -133,15 +132,8 @@ SkoarMinstrel {
             x.perform(this, nav);
         };
 
-        "STACK: ".post;
-        voice.stack.dump;
-
-        if (skrp.isKindOf(SkoarpuscleSkoarpion)) {
-            skrp = skrp.val;
-        };
-
-        if (skrp.isKindOf(Skoarpion) == false) {
-            "This isn't a skoarpion: ".post; skrp.postln;
+        if (skoarpion.isKindOf(Skoarpion) == false) {
+            "This isn't a skoarpion: ".post; skoarpion.postln;
             ^nil;
         };
 
@@ -154,25 +146,23 @@ SkoarMinstrel {
         msg_arr.dump;
         skrp_args.val.postln;
 
-        label.postln;
-
         // start a new one if we haven't seen it
-        iter = skrp_iters[label];
+        iter = skrp_iters[skoarpion.name];
         debug("fee");
         if (iter == nil) {
         debug("fai");
-            iter = skrp.iter;
-            skrp_iters[label] = iter;
+            iter = skoarpion.iter;
+            skrp_iters[skoarpion.name] = iter;
         debug("fo");
         };
 
         // current line
-        voice.push_args(skrp.args, skrp_args);
+        voice.push_args(skoarpion.args, skrp_args);
 
         debug("fum");
         z = iter.performMsg(msg_arr);
         debug("i smell");
-        z.inorder(f, skrp.stinger);
+        z.inorder(f, skoarpion.stinger);
         debug("the blood");
         voice.pop_args;
         debug("of an englishman");

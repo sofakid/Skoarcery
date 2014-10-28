@@ -52,11 +52,11 @@ pedally*             : PedalDown | PedalUp
 ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
-nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy | seq_ref | skoarpion
+nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy | deref | skoarpion
 +nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | Choard | NamedNoat | Symbol | CurNoat
 
-seq_ref*         : SeqRef seq_ref_prime
-+seq_ref_prime   : MsgNameWithArgs listy_suffix | MsgName
+deref*         : Deref deref_prime
++deref_prime   : MsgNameWithArgs listy_suffix | MsgName
 
 stmt*            : skoaroid stmt_prime
 +stmt_prime      : assignment stmt_prime | <e>
