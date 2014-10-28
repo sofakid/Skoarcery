@@ -251,6 +251,7 @@ Skoarmantics {
 
                 if (noad.children.size > 2) {
                     args = SkoarpuscleArgs(noad.children[2].collect_skoarpuscles);
+                    "\\seq_ref -> ... args:".post; args.val.postln;
                 };
 
                 noad.skoarpuscle = SkoarpuscleSeqRef(msg_name, args);

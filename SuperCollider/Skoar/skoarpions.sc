@@ -134,7 +134,6 @@ SkoarpionIter {
     selector {
         | f |
         i = f.value % n;
-        "selector:".post; body.asString.postln;
         ^body.children[i];
     }
 
@@ -188,8 +187,6 @@ SkoarpuscleSeqRef : Skoarpuscle {
 
     init {
         | v, a |
-
-        "dorp.post; ".post; v.dump; a.dump;
         val = v;
         args = a;
     }
@@ -202,7 +199,6 @@ SkoarpuscleSeqRef : Skoarpuscle {
 
     performer {
         | m, nav |
-        "flerp".postln; msg_arr.dump; args.dump;
         m.gosub(val, nav, msg_arr, args);
     }
 

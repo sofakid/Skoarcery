@@ -15,20 +15,17 @@ SkoarMinstrel {
     var <>al_fine;
 
     var   skrp_iters;
-    var   skrp_stack;
 
     var   event_stream;
 
     *new {
         | nom, v, skr |
-
         "new SkoarMinstrel: ".post; nom.postln;
         ^super.new.init(nom, v, skr);
     }
 
     init {
         | nom, v, skr |
-
         var i = 0;
         var f;
 
@@ -47,7 +44,6 @@ SkoarMinstrel {
         // collect minstrel's lines and conductoar's lines (branches on the trunk)
         skoar.tree.children.do {
             | line |
-
             var vi = line.voice;
 
             if ((vi == voice) || (vi == conductoar)) {
@@ -130,13 +126,8 @@ SkoarMinstrel {
         | label, nav, msg_arr, skrp_args |
 
         var skrp = skoar.skoarpions[label];
-        var sub;
         var iter;
-
         var z;
-
-        // TODO scope this!
-        //skrp_args.dump;
 
         var f = {
             | x |
@@ -144,21 +135,25 @@ SkoarMinstrel {
         };
 
         if (msg_arr == nil) {
-            msg_arr = [\choose];
+            msg_arr = [\block];
         };
 
-debug("zerp");
+        "gosub:msg_arr: ".postln;
+        msg_arr.dump;
+        skrp_args.val.postln;
+
+
         iter = skrp_iters[label];
         if (iter == nil) {
             iter = skrp.iter;
             skrp_iters[label] = iter;
         };
-debug("twerp: " ++ msg_arr.asString);
+
         // current line
+        voice.push_args(skrp.args, skrp_args);
         z = iter.performMsg(msg_arr);
-debug("qwerp");
         z.inorder(f, nil, skrp.stinger);
-debug("swerp");
+        voice.pop_args;
     }
 
     nextEvent {
@@ -174,8 +169,6 @@ debug("swerp");
     }
 
 }
-
-
 
 // ----------------------------------
 // Skoarchestra - A band of minstrels

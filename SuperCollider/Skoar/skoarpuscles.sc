@@ -64,25 +64,16 @@ SkoarpuscleUnknown : Skoarpuscle {
 }
 
 SkoarpuscleInt : Skoarpuscle {
-
     flatten {
         ^val.asInteger;
     }
-
 }
 
-
 SkoarpuscleFloat : Skoarpuscle {
-
     flatten {
         ^val.asFloat;
     }
-
 }
-
-
-
-
 
 SkoarpuscleString : Skoarpuscle {
     as_noat { | m | ^nil; }
@@ -98,7 +89,9 @@ SkoarpuscleSymbol : Skoarpuscle {
 
     lookup {
         | m |
-        ^m.voice.skoarboard[val];
+        var x = m.voice.at(val);
+        x.dump;
+        ^x
     }
 
     as_noat {
