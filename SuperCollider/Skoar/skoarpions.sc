@@ -176,7 +176,7 @@ SkoarpuscleSkoarpion : Skoarpuscle {
     performer {
         | m, nav |
         if (val.name != nil) {
-            m.voice.put(val.name, this);
+            m.voice[val.name] = this;
         };
     }
 
