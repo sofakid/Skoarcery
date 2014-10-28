@@ -32,7 +32,7 @@ Skoarmantics {
                 var x = nil;
 
                 n = noad.n;
-                x = noad.children[0];
+                x = noad.next_toke;
 
                 noad.branch = noad;
 
@@ -125,8 +125,10 @@ Skoarmantics {
                 var al_x = noad.children[1];
                 var al_fine = false;
 
-                if (al_x != nil && al_x.isKindOf(Toke_AlFine)) {
-                    al_fine = true;
+                if (al_x != nil) {
+                    if (al_x.toke.isKindOf(Toke_AlFine)) {
+                        al_fine = true;
+                    };
                 };
 
                 noad.performer = case {toke.isKindOf(Toke_DaCapo)} {{
@@ -165,7 +167,7 @@ Skoarmantics {
                                 nav.(\nav_jump);
                             };
 
-                            if (toke.post_repeat) {
+                            if (toke.post_repeat == true) {
                                 m.colon_seen = noad;
                             };
 
@@ -185,6 +187,7 @@ Skoarmantics {
                     if (m.al_fine) {
                         nav.(\nav_fine);
                     };
+
                 }} {
                     nil
                 };
@@ -270,7 +273,7 @@ Skoarmantics {
                 var args = nil;
 
 
-                x = noad.children[0].toke.val;
+                x = noad.next_toke.val;
                 args = SkoarpuscleArray(noad.collect_skoarpuscles);
                 noad.skoarpuscle = SkoarpuscleMsg(x, args);
 
@@ -284,7 +287,7 @@ Skoarmantics {
                 var skoaroid = noad.children[0];
                 var y = noad.children[1];
 
-                noad.performer = if (y != nil ) {
+                noad.performer = if (y != nil) {
 
                     if (y.name == \assignment) {{
                         | m, nav |
@@ -359,7 +362,7 @@ Skoarmantics {
                 // the settable
                 var y = nil;
 
-                op = noad.children[0].lexeme;
+                op = noad.children[0].toke.lexeme;
                 y = noad.next_skoarpuscle;
                 // we prepare the destination here (noad.f), we'll setup the write in skoaroid
 
