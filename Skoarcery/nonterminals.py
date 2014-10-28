@@ -29,7 +29,7 @@ skrp_suffix        : skrp_lines SkoarpionEnd
 
 +optional_args     : args | <e>
 args*              : ListS args_suffix
-+args_suffix       : args_entries ListE
+args_suffix        : args_entries ListE
 +args_entries      : SymbolName moar_args_entries
 +moar_args_entries : ListSep args_entries | <e>
 

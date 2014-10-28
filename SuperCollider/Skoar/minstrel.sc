@@ -80,7 +80,6 @@ SkoarMinstrel {
                             } {
                                 x.perform(this, nav);
                             };
-
                         });
                     });
 
@@ -125,7 +124,7 @@ SkoarMinstrel {
         // msg_arr is an array like [\msg, arg1, arg2, arg3 ...]
         | label, nav, msg_arr, skrp_args |
 
-        var skrp = skoar.skoarpions[label];
+        var skrp = voice[label];
         var iter;
         var z;
 
@@ -133,6 +132,19 @@ SkoarMinstrel {
             | x |
             x.perform(this, nav);
         };
+
+        "STACK: ".post;
+        voice.stack.dump;
+
+        if (skrp.isKindOf(SkoarpuscleSkoarpion)) {
+            skrp = skrp.val;
+        };
+
+        if (skrp.isKindOf(Skoarpion) == false) {
+            "This isn't a skoarpion: ".post; skrp.postln;
+            ^nil;
+        };
+
 
         if (msg_arr == nil) {
             msg_arr = [\block];
@@ -142,18 +154,28 @@ SkoarMinstrel {
         msg_arr.dump;
         skrp_args.val.postln;
 
+        label.postln;
 
+        // start a new one if we haven't seen it
         iter = skrp_iters[label];
+        debug("fee");
         if (iter == nil) {
+        debug("fai");
             iter = skrp.iter;
             skrp_iters[label] = iter;
+        debug("fo");
         };
 
         // current line
         voice.push_args(skrp.args, skrp_args);
+
+        debug("fum");
         z = iter.performMsg(msg_arr);
-        z.inorder(f, nil, skrp.stinger);
+        debug("i smell");
+        z.inorder(f, skrp.stinger);
+        debug("the blood");
         voice.pop_args;
+        debug("of an englishman");
     }
 
     nextEvent {

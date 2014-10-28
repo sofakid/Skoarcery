@@ -2,7 +2,7 @@
 SkoarVoice {
     var   skoar;        // global skoar
     var  <skoarboard;   //
-    var   stack;
+    var   <stack;
 
     var  <name;         // name of voice as Symbol
 
@@ -51,12 +51,18 @@ SkoarVoice {
         stack.pop;
 
         if (stack.size == 0) {
+            "Stack underflow. This means trouble. What are you doing?".postln;
             stack.add(skoarboard);
         };
     }
 
     top_args {
-        ^stack[stack.size];
+        var x;
+        "top_args: ".post;
+        x = stack[stack.size - 1];
+        x.postln;
+        ^x
+
     }
 
     put {

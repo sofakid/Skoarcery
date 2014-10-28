@@ -33,28 +33,30 @@ Skoarpion {
 
         sig.children.do {
             | x |
-            case {x.isKindOf(Toke_SymbolName)} {
-                name = sig.skoarpuscle.val;
+            case {x.skoarpuscle.isKindOf(SkoarpuscleSymbolName)} {
+                name = x.skoarpuscle.val;
             } {x.name == \args} {
                 args = x.skoarpuscle;
             };
         };
 
+        "SIG: ".post; name.post; args.postln;
+
         suffix.children.do {
             | x |
 
-            case {x.isKindOf(Toke_SkoarpionSep)} {
+            case {x.toke.isKindOf(Toke_SkoarpionSep)} {
                 section.add_noad(line);
                 sections.add(section);
 
                 section = SkoarNoad("xient:section:", nil);
                 line = SkoarNoad("xient:section:line:", nil);
 
-            } {x.isKindOf(Toke_Newline)} {
+            } {x.toke.isKindOf(Toke_Newline)} {
                 section.add_noad(line);
                 line = SkoarNoad("xient:section:line:", nil);
 
-            } {x.isKindOf(Toke_SkoarpionEnd)} {
+            } {x.toke.isKindOf(Toke_SkoarpionEnd)} {
                 section.add_noad(line);
                 sections.add(section);
 
@@ -113,7 +115,6 @@ Skoarpion {
 
 SkoarpionIter {
 
-    var name;
     var <>i;
     var <>n;
     var body;
@@ -125,8 +126,8 @@ SkoarpionIter {
 
     init {
         | skrp |
+"here:skrp:".post; skrp.postln;
         body = skrp.body;
-        name = skrp.name;
         n = skrp.n;
         i = -1;
     }
@@ -172,6 +173,17 @@ SkoarpionIter {
 // ------------
 SkoarpuscleSkoarpion : Skoarpuscle {
 
+    performer {
+        | m, nav |
+debug("o hai");
+        if (val.name != nil) {
+debug("hai hai: "); val.name.postln;
+            m.voice.put(val.name, val);
+debug("wai?");
+            m.voice.stack.dump;
+        };
+
+    }
 }
 
 

@@ -121,36 +121,43 @@ SkoarTokeInspector {
             \Toke_Int -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleInt(toke.lexeme.asInteger);
+                noad.toke = nil;
             },
 
             \Toke_Float -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleFloat(toke.lexeme.asFloat);
+                noad.toke = nil;
             },
 
             \Toke_NamedNoat -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleNoat(toke.lexeme);
+                noad.toke = nil;
             },
 
             \Toke_Choard -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleChoard(toke.lexeme);
+                noad.toke = nil;
             },
 
             \Toke_String -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleString(toke.lexeme.asString);
+                noad.toke = nil;
             },
 
             \Toke_Symbol -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleSymbol(toke.lexeme[1..].asSymbol);
+                noad.toke = nil;
             },
 
             \Toke_SymbolName -> {
                 | noad, toke |
-                noad.skoarpuscle = SkoarpuscleSymbolName(toke.lexeme.asSymbol)
+                noad.skoarpuscle = SkoarpuscleSymbolName(toke.lexeme.asSymbol);
+                noad.toke = nil;
             },
 
             // rests
@@ -158,23 +165,27 @@ SkoarTokeInspector {
             \Toke_Crotchets -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleRest(toke);
+                noad.toke = nil;
             },
 
             // o/ oo/ ooo/
             \Toke_Quavers -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleRest(toke);
+                noad.toke = nil;
             },
 
             // unrests
             \Toke_Quarters -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleBeat(toke);
+                noad.toke = nil;
             },
 
             \Toke_Eighths -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleBeat(toke);
+                noad.toke = nil;
             }
 
         ];

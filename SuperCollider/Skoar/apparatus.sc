@@ -9,12 +9,13 @@ SkoarNoad {
     var <>n;               // number of children
     var <>children;        // a list of child noads
 
-    var <>evaluate;       // pass functions between skoarmantic levels here
+    var <>evaluate;        // pass functions between skoarmantic levels here
     var <>setter;          // pass functions between skoarmantic levels here
 
     var <>name;            // name of the nonterminal
     var <>label;
     var <>skoarpuscle;     // skoarpuscle types go here
+    var <>toke;
 
     var <>performer;       // function to set when defining semantics.
     var <>one_shots;       // function to set for stuff that applies for one beat.
@@ -88,7 +89,9 @@ SkoarNoad {
 
     add_toke {
         | name, t |
-        children.add(t);
+        var x = SkoarNoad(t.class.name, this, n);
+        x.toke = t;
+        children.add(x);
         n = n + 1;
     }
 
@@ -104,7 +107,7 @@ SkoarNoad {
             ""
         };
 
-        s = s ++ " ".padLeft(tab + 1) ++ name;
+        s = s ++ " ".padLeft(tab) ++ name;
 
         if (skoarpuscle != nil) {
             s = s ++ ": " ++ skoarpuscle.val;
@@ -131,56 +134,41 @@ SkoarNoad {
 
     // depth-first, find the leaves, run handler, working towards trunk
     depth_visit {
-        | f_noad, f_toke=nil |
+        | f |
 
         //">>> depth_visit: ".post; name.postln;
 
         children.do {
             | y |
-            if (y.isKindOf(SkoarNoad)) {
-                y.depth_visit(f_noad, f_toke);
-            } {
-                if (f_toke != nil) {
-                    f_toke.(this, y);
-                };
-            };
+            y.depth_visit(f);
         };
 
-        //"--- depth_visit: ".post; name.postln;
+        "--- depth_visit: ".post; name.postln;
 
         // note: leaves first
-        f_noad.(this);
+        f.(this);
 
         //"<<< depth_visit: ".post; name.postln;
     }
 
     inorder {
-        | f_noad, f_toke=nil, stinger=nil |
+        | f, stinger=nil |
 
         //">>> inorder: ".post; name.postln;
-
         if (stinger != nil && skoarpuscle.isKindOf(SkoarpuscleBeat)) {
-
             "!!! stinger: ".post; stinger.postln;
-            stinger.inorder(f_noad, f_toke);
+            stinger.inorder(f);
         };
 
-        //"--- inorder: ".post; name.postln;
-        f_noad.(this);
+        "--- inorder: ".post; name.postln;
+        f.(this);
 
         children.do {
             | y |
-            if (y.isKindOf(SkoarNoad)) {
-                y.inorder(f_noad, f_toke, stinger);
-            } {
-                if (f_toke != nil) {
-                    //"=== inorder: ".post; y.postln;
-                    f_toke.(y, this);
-                };
-            };
+            y.inorder(f, stinger);
         };
-        //"<<< inorder: ".post; name.postln;
 
+        //"<<< inorder: ".post; name.postln;
     }
 
     // this finds the preceding noad
@@ -199,7 +187,7 @@ SkoarNoad {
         ^parent.children[i-1];
     }
 
-    // find next skoarpuscle
+    // expect skoarpuscle
     next_skoarpuscle {
         var x;
 
@@ -208,7 +196,7 @@ SkoarNoad {
         };
 
         x = children[0];
-        if (x.isKindOf(SkoarNoad)) {
+        if (x != nil) {
             ^x.next_skoarpuscle;
         };
 
@@ -216,7 +204,18 @@ SkoarNoad {
     }
 
     next_toke {
-        ^children[0];
+        var x;
+
+        if (toke != nil) {
+            ^toke;
+        };
+
+        x = children[0];
+        if (x != nil) {
+            ^x.next_toke;
+        };
+
+        ^nil;
     }
 
     // -------------------
@@ -267,17 +266,21 @@ SkoarNoad {
     }
 
     collect_skoarpuscles {
+        | j=0 |
 
         var results = List.new;
 
-        this.inorder({
-            | x |
+        while {j < children.size} {
 
-            if (x.skoarpuscle != nil) {
-                results.add(x.skoarpuscle);
-            };
-        });
+            children[j].inorder({
+                | x |
+                if (x.skoarpuscle != nil) {
+                    results.add(x.skoarpuscle);
+                };
+            });
 
+            j = j + 1;
+        };
         ^results.asArray;
 
     }

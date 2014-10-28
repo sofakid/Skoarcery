@@ -77,26 +77,27 @@ Skoar {
 
     decorate {
 
-        var f_noad = {
+        var f = {
             | noad |
-            var f = skoarmantics[noad.name];
+            var t = noad.toke;
 
-            if (f.isKindOf(Function)) {
-                f.(this, noad);
-            };
-        };
+            if (t != nil) {
+                var g = inspector[t.class.asSymbol];
 
-        var f_toke = {
-            | noad, toke |
-            var f = inspector[toke.class.asSymbol];
+                if (g.isKindOf(Function)) {
+                    g.(noad, t);
+                };
+            } {
+                var g = skoarmantics[noad.name];
 
-            if (f.isKindOf(Function)) {
-                f.(noad, toke);
+                if (g.isKindOf(Function)) {
+                    g.(this, noad);
+                };
             };
         };
 
 ">>> decorating...".postln;
-        tree.depth_visit(f_noad,f_toke);
+        tree.depth_visit(f);
 "<<< decorated.".postln;
 
         this.decorate_voices;
@@ -113,7 +114,7 @@ Skoar {
         tree.voice = conductoar;
 
         ">>> assigning voices...".postln;
-        tree.assign_voices(conductoar,nil);
+        tree.assign_voices(conductoar, nil);
         "<<< all the children have voices.".postln;
 
     }
@@ -143,7 +144,6 @@ Skoar {
         | noad |
 
         // TODO more
-
         "^^(;,;)^^".postln;
 
         this.dump;

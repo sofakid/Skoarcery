@@ -22,15 +22,7 @@ Skoarmantics {
 
             \skoarpion -> {
                 | skoar, noad |
-                var x, k;
-                x = Skoarpion(noad);
-
-                k = x.name;
-                if (k != nil) {
-                    skoar.skoarpions[k] = x;
-                };
-
-                noad.skoarpuscle = SkoarpuscleSkoarpion(x);
+                noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion(noad));
             },
 
             \branch -> {
@@ -162,7 +154,7 @@ Skoarmantics {
             \marker -> {
                 | skoar, noad |
 
-                var toke = noad.children[0];
+                var toke = noad.next_toke;
 
                 noad.performer = case {toke.isKindOf(Toke_Bars)} {
                     case {toke.pre_repeat == true} {{
@@ -247,10 +239,12 @@ Skoarmantics {
                     noad.n = 0;
                 };
 
-                msg_name = noad.children[1].val;
+                msg_name = noad.children[1].toke.val;
+                "msg_name: ".post;
+                msg_name.dump;
 
                 if (noad.children.size > 2) {
-                    args = SkoarpuscleArgs(noad.children[2].collect_skoarpuscles);
+                    args = SkoarpuscleArgs(noad.collect_skoarpuscles(2));
                     "\\seq_ref -> ... args:".post; args.val.postln;
                 };
 
@@ -263,6 +257,8 @@ Skoarmantics {
                 | skoar, noad |
 
                 noad.skoarpuscle = SkoarpuscleArgs(noad.collect_skoarpuscles);
+                "\\args -> noad.skoarpuscle.val: ".post; noad.skoarpuscle.val.postln;
+
                 noad.children = [];
                 noad.n = 0;
             },
@@ -274,7 +270,7 @@ Skoarmantics {
                 var args = nil;
 
 
-                x = noad.children[0].val;
+                x = noad.children[0].toke.val;
                 args = SkoarpuscleArray(noad.collect_skoarpuscles);
                 noad.skoarpuscle = SkoarpuscleMsg(x, args);
 
@@ -288,16 +284,20 @@ Skoarmantics {
                 var skoaroid = noad.children[0];
                 var y = noad.children[1];
 
-                noad.performer = case {y.isKindOf(SkoarNoad)} {
+                noad.performer = if (y != nil ) {
+
                     if (y.name == \assignment) {{
                         | m, nav |
                         var res = skoaroid.evaluate.(m);
                         y.setter.(res, m.voice);
+
                     }}
 
                 } {{
                     | m, nav |
+                    //"evaluating...".postln;
                     skoaroid = skoaroid.evaluate.(m);
+                    //"performing result".postln;
                     skoaroid.performer(m, nav);
 
                 }};
@@ -312,7 +312,7 @@ Skoarmantics {
                 // strip out the operators
                 noad.children.do {
                     | x |
-                    if (x.isKindOf(Toke_MsgOp) == false) {
+                    if (x.toke.isKindOf(Toke_MsgOp) == false) {
                         kids.add(x);
                     };
                 };
@@ -333,7 +333,6 @@ Skoarmantics {
                             if (x.isKindOf(SkoarpuscleMsg)) {
                                 result = result.skoar_msg(x, minstrel);
                             };
-
                         };
 
                         "result: ".post; result.postln;

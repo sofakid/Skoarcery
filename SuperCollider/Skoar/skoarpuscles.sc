@@ -103,7 +103,7 @@ SkoarpuscleSymbol : Skoarpuscle {
         | m, nav |
         var v = this.lookup(m);
 
-        "SYMBOL LOOKEDUP : ".post; v.dump;
+        "SYMBOL LOOKEDUP : ".post; val.post; " ".post; v.dump;
 
         if (v.isKindOf(Skoarpuscle)) {
             v.performer(m, nav);
