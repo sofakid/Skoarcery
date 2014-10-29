@@ -142,19 +142,21 @@ SkoarMinstrel {
             msg_arr = [\block];
         };
 
-        "gosub:msg_arr: ".postln;
-        msg_arr.dump;
-        skrp_args.val.postln;
-
-        // start a new one if we haven't seen it
-        iter = skrp_iters[skoarpion.name];
-        debug("fee");
-        if (iter == nil) {
-        debug("fai");
+        if (skoarpion.name != nil) {
+            // start a new one if we haven't seen it
+            iter = skrp_iters[skoarpion.name];
+            debug("fee");
+            if (iter == nil) {
+            debug("fai");
+                iter = skoarpion.iter;
+                skrp_iters[skoarpion.name] = iter;
+            debug("fo");
+            };
+        } {
+            debug("feefifofum");
             iter = skoarpion.iter;
-            skrp_iters[skoarpion.name] = iter;
-        debug("fo");
         };
+
 
         // current line
         voice.push_args(skoarpion.args, skrp_args);

@@ -34,14 +34,14 @@ SkoarVoice {
         var skrb = IdentityDictionary.new;
         var i = 0;
 
-        "push_args".postln;
-        args_def.dump;
-        args_def.val.do {
-            | k |
-            k = k.val;
-            "k:".post; k.postln;
-            skrb[k] = args.val[i];
-            i = i + 1;
+        if (args_def.isKindOf(SkoarpuscleArgs)) {
+            args_def.val.do {
+                | k |
+                k = k.val;
+                "k:".post; k.postln;
+                skrb[k] = args.val[i];
+                i = i + 1;
+            };
         };
 
         stack.add(skrb);

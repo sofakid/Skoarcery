@@ -89,7 +89,6 @@ SkoarTokeInspector {
                 | noad, toke |
                 toke.val = toke.lexeme.strip("[.]").asInteger;
             },
-            
 
             \Toke_Voice -> {
                 | noad, toke |
@@ -103,11 +102,6 @@ SkoarTokeInspector {
 
             },
 
-            \Toke_Bars -> {
-                | noad, toke |
-                toke.pre_repeat = toke.lexeme.beginsWith(":");
-                toke.post_repeat = toke.lexeme.endsWith(":");
-            },
 
             \Toke_Rep -> {
                 | noad, toke |
@@ -185,6 +179,13 @@ SkoarTokeInspector {
             \Toke_Eighths -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleBeat(toke);
+                noad.toke = nil;
+            },
+
+            \Toke_Bars -> {
+                | noad, toke |
+                toke.dump;
+                noad.skoarpuscle = SkoarpuscleBars(noad, toke);
                 noad.toke = nil;
             }
 

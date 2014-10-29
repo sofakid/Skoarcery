@@ -113,10 +113,103 @@ SkoarpuscleSymbol : Skoarpuscle {
 
         ^Skoarpuscle.wrap(ret);
     }
+}
 
 
+SkoarpuscleDeref : Skoarpuscle {
+
+    var msg_arr;
+    var args;
+
+    *new {
+        | v, a |
+        ^super.new.init(v, a);
+    }
+
+    init {
+        | v, a |
+        val = v;
+        args = a;
+    }
+
+    lookup {
+        | m |
+        ^m.voice[val];
+    }
+
+    as_noat {
+        | m |
+        ^this.lookup(m).as_noat(m);
+    }
+
+    performer {
+        | m, nav |
+        var x = this.lookup(m);
+
+        "deref: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.dump;
+
+        if (x.isKindOf(SkoarpuscleSkoarpion)) {
+            m.gosub(x.val, nav, msg_arr, args);
+        } {
+            if (x.isKindOf(Skoarpuscle)) {
+                x.performer(m, nav);
+            };
+        };
+
+    }
+
+    skoar_msg {
+        | msg, minstrel |
+        var ret = val;
+        var x = this.lookup(minstrel);
+
+        "deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.dump;
+        msg_arr = msg.get_msg_arr;
+
+        if (x.isKindOf(SkoarpuscleSkoarpion)) {
+            ^this;
+        };
+
+        // we don't recognise that name, did they mean a SuperCollider class?
+        if (x == nil) {
+            x = val.asClass;
+        };
+
+        ret = if (x != nil) {
+                 x.performMsg(msg_arr)
+              } {
+                 val.performMsg(msg_arr)
+              };
+
+        ^Skoarpuscle.wrap(ret);
+    }
 
 }
+
+
+SkoarpuscleSkoarpion : Skoarpuscle {
+
+    var msg_arr;
+
+    skoar_msg {
+        | msg, minstrel |
+        msg_arr = msg.get_msg_arr;
+        ^this;
+    }
+
+    performer {
+        | m, nav |
+        if (val.name != nil) {
+            m.voice[val.name] = this;
+        };
+
+        if (msg_arr != nil) {
+            m.gosub(val, nav, msg_arr, nil);
+        };
+    }
+
+}
+
 
 SkoarpuscleArray : Skoarpuscle {
 
@@ -175,6 +268,49 @@ SkoarpuscleMsg : Skoarpuscle {
             x.add(y);
         };
         ^x;
+    }
+
+}
+
+
+// -----------------------------
+// musical keywords skoarpuscles
+// -----------------------------
+
+SkoarpuscleBars : Skoarpuscle {
+
+    var <noad;
+    var <pre_repeat;
+    var <post_repeat;
+
+    *new {
+        | nod, toke |
+        toke.dump;
+        ^super.new.init_two(nod, toke);
+    }
+
+    init_two {
+        | nod, toke |
+
+        val = toke.lexeme;
+        noad = nod;
+        pre_repeat = val.beginsWith(":");
+        post_repeat = val.endsWith(":");
+    }
+
+    performer {
+        | m, nav |
+
+        if (pre_repeat == true) {
+            if (m.colons_burned.falseAt(noad)) {
+                m.colons_burned[noad] = true;
+                nav.(\nav_jump);
+            };
+        };
+
+        if (post_repeat == true) {
+            m.colon_seen = noad;
+        };
     }
 
 }

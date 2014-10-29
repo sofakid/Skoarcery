@@ -157,29 +157,14 @@ Skoarmantics {
                 | skoar, noad |
 
                 var toke = noad.next_toke;
+                var skoarpuscle = noad.next_skoarpuscle;
 
-                noad.performer = case {toke.isKindOf(Toke_Bars)} {
-                    case {toke.pre_repeat == true} {{
-                            | m, nav |
+                noad.performer = case {skoarpuscle.isKindOf(SkoarpuscleBars)} {{
+                    | m, nav |
+                    skoarpuscle.performer(m, nav);
 
-                            if (m.colons_burned.falseAt(noad)) {
-                                m.colons_burned[noad] = true;
-                                nav.(\nav_jump);
-                            };
-
-                            if (toke.post_repeat == true) {
-                                m.colon_seen = noad;
-                            };
-
-                    }} {toke.post_repeat == true} {{
-                        | m, nav |
-                        m.colon_seen = noad;
-                    }} {
-                        nil
-                    }
-
-                } {toke.isKindOf(Toke_Segno)} {{
-                    | m |
+                }} {toke.isKindOf(Toke_Segno)} {{
+                    | m, nav |
                     m.segno_seen = noad;
 
                 }} {toke.isKindOf(Toke_Fine)} {{

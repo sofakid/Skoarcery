@@ -10,8 +10,6 @@ SkoarToke_ = "SkoarToke"
 lexeme_ = "lexeme"
 regex_ = "regex"
 val_ = "val"
-pre_repeat_ = "pre_repeat"
-post_repeat_ = "post_repeat"
 inspectable_ = "inspectable"
 burn_ = "burn"
 match_ = "match"
@@ -42,11 +40,7 @@ def skoarToke():
     _.abstract_class(SkoarToke_)
 
     _____.attrvar("<", lexeme_)
-
-    # these should be in Skoarpuscles
     _____.attrvar("<>", val_)
-    _____.attrvar("<>", pre_repeat_)
-    _____.attrvar("<>", post_repeat_)
 
     _____.classvar("<", regex_, _.null)
     _____.classvar("<", inspectable_, _.false)
