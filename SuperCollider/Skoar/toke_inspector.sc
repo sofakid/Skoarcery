@@ -13,65 +13,45 @@ SkoarTokeInspector {
         
             \Toke_Meter -> {
                 | noad, toke |
-                var a = toke.lexeme.split;
-                toke.val = [a[0].asInteger, a[1].asInteger];
+                noad.skoarpuscle = SkoarpuscleMeter(toke);
+                noad.toke = nil;
             },
 
             \Toke_Carrots -> {
                 | noad, toke |
-                toke.val = toke.lexeme.size;
+                noad.skoarpuscle = SkoarpuscleCarrots(toke);
+                noad.toke = nil;
             },
             
             \Toke_Tuplet -> {
                 | noad, toke |
-                toke.val = 0;
+                noad.skoarpuscle = SkoarpuscleTuplet(toke);
+                noad.toke = nil;
             },
 
             \Toke_DynPiano -> {
                 | noad, toke |
-                var s = toke.lexeme;
-                toke.val = switch (s)
-                    {"ppp"}     {16}
-                    {"pppiano"} {16}
-                    {"pp"}      {33}
-                    {"ppiano"}  {33}
-                    {"p"}       {49}
-                    {"piano"}   {49}
-                    {"mp"}      {64}
-                    {"mpiano"}  {64};
-
+                noad.skoarpuscle = SkoarpuscleDynamic(toke);
+                noad.toke = nil;
             },
 
             \Toke_DynForte -> {
                 | noad, toke |
-                var s = toke.lexeme;
-                toke.val = switch(s)
-                    {"mf"}      {80}
-                    {"mforte"}  {80}
-                    {"forte"}   {96}
-                    {"ff"}      {112}
-                    {"fforte"}  {112}
-                    {"fff"}     {127}
-                    {"ffforte"} {127};
+                noad.skoarpuscle = SkoarpuscleDynamic(toke);
+                noad.toke = nil;
             },
 
             \Toke_OctaveShift -> {
                 | noad, toke |
 
-                var s = toke.lexeme;
-                var n = s.size - 1;
-
-                if (s.beginsWith("o")) {
-                    n =  n * -1;
-                };
-
-                toke.val = n;
-
+                noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
+                noad.toke = nil;
             },
 
             \Toke_BooleanOp -> {
                 | noad, toke |
-                toke.val = toke.lexeme;
+                noad.skoarpuscle = SkoarpuscleBooleanOp(toke);
+                noad.toke = nil;
             },
 
             \Toke_MsgName -> {
@@ -85,27 +65,23 @@ SkoarTokeInspector {
                 toke.val = s[0..s.size-2].asSymbol;
             },
             
-            \Toke_Volta -> {
-                | noad, toke |
-                toke.val = toke.lexeme.strip("[.]").asInteger;
-            },
-
             \Toke_Voice -> {
                 | noad, toke |
-                var s = toke.lexeme;
-                var n = s.size - 1;
-                toke.val = s[1..n].asSymbol;
+                noad.skoarpuscle = SkoarpuscleVoice(toke);
+                noad.toke = nil;
             },
 
             \Toke_Segno -> {
                 | noad, toke |
-
+                noad.skoarpuscle = SkoarpuscleSegno(noad, toke);
+                noad.toke = nil;
             },
 
 
             \Toke_Rep -> {
                 | noad, toke |
-                toke.val = toke.lexeme.size;
+                noad.skoarpuscle = SkoarpuscleRep(toke);
+                noad.toke = nil;
             },
 
 
@@ -187,7 +163,15 @@ SkoarTokeInspector {
                 toke.dump;
                 noad.skoarpuscle = SkoarpuscleBars(noad, toke);
                 noad.toke = nil;
-            }
+            },
+
+            \Toke_Volta -> {
+                | noad, toke |
+                noad.skoarpuscle = SkoarpuscleVolta(noad, toke);
+                noad.toke = nil;
+            },
+
+
 
         ];
         ^dict;

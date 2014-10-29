@@ -314,3 +314,166 @@ SkoarpuscleBars : Skoarpuscle {
     }
 
 }
+
+SkoarpuscleVolta : Skoarpuscle {
+
+    var <noad;
+
+    *new {
+        | nod, toke |
+        ^super.new.init_two(nod, toke);
+    }
+
+    init_two {
+        | nod, toke |
+        val = toke.lexeme.strip("[.]").asInteger;
+        noad = nod;
+    }
+
+    performer {
+        | m, nav |
+    }
+
+}
+
+SkoarpuscleMeter : Skoarpuscle {
+
+    init {
+        | toke |
+        var a = toke.lexeme.split;
+        val = [a[0].asInteger, a[1].asInteger];
+    }
+}
+
+SkoarpuscleCarrots : Skoarpuscle {
+
+    init {
+        | toke |
+        val = toke.lexeme.size;
+    }
+}
+
+SkoarpuscleTuplet : Skoarpuscle {
+
+    init {
+        | toke |
+        val = toke.lexeme.size;
+    }
+}
+
+SkoarpuscleDynamic : Skoarpuscle {
+
+    init {
+        | toke |
+        var s = toke.lexeme;
+
+        val = switch (s)
+            {"ppp"}     {1}
+            {"pppiano"} {1}
+            {"pp"}      {2}
+            {"ppiano"}  {2}
+            {"p"}       {3}
+            {"piano"}   {3}
+            {"mp"}      {4}
+            {"mpiano"}  {4}
+            {"mf"}      {5}
+            {"mforte"}  {5}
+            {"forte"}   {6}
+            {"ff"}      {7}
+            {"fforte"}  {7}
+            {"fff"}     {8}
+            {"ffforte"} {8};
+    }
+
+    amp {
+        ^val/8;
+    }
+
+}
+
+SkoarpuscleOctaveShift : Skoarpuscle {
+
+    init {
+        | toke |
+        var f = {
+            var s = toke.lexeme;
+            var n = s.size - 1;
+
+            if (s.beginsWith("o")) {
+                n =  n * -1;
+            };
+            ^n;
+        };
+
+        val = case {toke.isKindOf(Toke_OctaveShift)} {f.()}
+                   {toke.isKindOf(Toke_OttavaA)}       { 1}
+                   {toke.isKindOf(Toke_OttavaB)}       {-1}
+                   {toke.isKindOf(Toke_QuindicesimaA)} { 2}
+                   {toke.isKindOf(Toke_QuindicesimaB)} {-2};
+    }
+
+    performer {
+        | m, nav |
+        m.voice.octave_shift(val);
+    }
+
+}
+
+SkoarpuscleBooleanOp : Skoarpuscle {
+
+    init {
+        | toke |
+        val = toke.lexeme;
+    }
+
+}
+
+SkoarpuscleVoice : Skoarpuscle {
+
+    init {
+        | toke |
+        var s = toke.lexeme;
+        var n = s.size - 1;
+        val = s[1..n].asSymbol;
+    }
+
+}
+
+SkoarpuscleSegno : Skoarpuscle {
+
+    var <noad;
+
+    *new {
+        | nod, toke |
+        ^super.new.init_two(nod, toke);
+    }
+
+    init_two {
+        | nod, toke |
+        var s = toke.lexeme;
+        var n = s.size;
+
+        // ,segno`label`
+        if (n > 8) {
+            s[6..n-2].asSymbol;
+        } {
+            \segno
+        };
+        val = s[1..n].asSymbol;
+    }
+
+    performer {
+        | m, nav |
+        m.segno_seen = noad;
+    }
+
+}
+
+SkoarpuscleRep : Skoarpuscle {
+
+    init {
+        | toke |
+        val = toke.lexeme.size;
+    }
+
+}

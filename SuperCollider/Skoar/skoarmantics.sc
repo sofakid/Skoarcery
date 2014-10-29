@@ -32,11 +32,11 @@ Skoarmantics {
                 var x = nil;
 
                 n = noad.n;
-                x = noad.next_toke;
+                x = noad.next_skoarpuscle;
 
                 noad.branch = noad;
 
-                if (x.isKindOf(Toke_Voice)) {
+                if (x.isKindOf(SkoarpuscleVoice)) {
                     noad.voice = skoar.get_voice(x.val);
                 };
 
@@ -65,9 +65,9 @@ Skoarmantics {
             \musical_keyword_misc -> {
                 | skoar, noad |
 
-                var toke = noad.next_toke;
+                var x = noad.next_skoarpuscle;
 
-                if (toke.isKindOf(Toke_Carrot)) {
+                if (x.isKindOf(SkoarpuscleCarrot)) {
                     noad.one_shots = {"TODO stress noat".postln;};
                 };
 
@@ -76,30 +76,14 @@ Skoarmantics {
             \ottavas -> {
                 | skoar, noad |
 
-                var toke;
+                var skoarpuscle;
 
-                toke = noad.next_toke;
+                skoarpuscle = noad.next_skoarpuscle;
 
-                noad.performer = case {toke.isKindOf(Toke_OctaveShift)} {{
+                noad.performer = {
                     | m, nav |
-                    m.voice.octave_shift(toke.val);
-
-                }} {toke.isKindOf(Toke_OttavaA)} {{
-                    | m, nav |
-                    m.voice.octave_shift(1);
-
-                }} {toke.isKindOf(Toke_OttavaB)} {{
-                    | m, nav |
-                    m.voice.octave_shift(-1);
-
-                }} {toke.isKindOf(Toke_QuindicesimaA)} {{
-                    | m, nav |
-                    m.voice.octave_shift(2);
-
-                }} {toke.isKindOf(Toke_QuindicesimaB)} {{
-                    | m, nav |
-                    m.voice.octave_shift(-2);
-                }};
+                    skoarpuscle.performer(m, nav);
+                };
 
             },
 
@@ -110,11 +94,11 @@ Skoarmantics {
         
             \dynamic -> {
                 | skoar, noad |
-                var toke = noad.next_toke;
+                var skoarpuscle = noad.next_skoarpuscle;
 
                 noad.performer = {
-                    | m |
-                    m.voice.dynamic(toke);
+                    | m, nav |
+                    skoarpuscle.performer(m, nav);
                 };
             },
 
@@ -159,13 +143,9 @@ Skoarmantics {
                 var toke = noad.next_toke;
                 var skoarpuscle = noad.next_skoarpuscle;
 
-                noad.performer = case {skoarpuscle.isKindOf(SkoarpuscleBars)} {{
+                noad.performer = case {skoarpuscle.isKindOf(Skoarpuscle)} {{
                     | m, nav |
                     skoarpuscle.performer(m, nav);
-
-                }} {toke.isKindOf(Toke_Segno)} {{
-                    | m, nav |
-                    m.segno_seen = noad;
 
                 }} {toke.isKindOf(Toke_Fine)} {{
                     | m, nav |

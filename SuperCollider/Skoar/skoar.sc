@@ -1,6 +1,6 @@
-// ====================================
-// We all knew there'd be a god object.
-// ====================================
+// =====
+// Skoar
+// =====
 Skoar {
 
     var   skoarse;      // the skoarse code

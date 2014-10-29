@@ -123,11 +123,8 @@ SkoarVoice {
     assign_set {
         | x, y |
 
-        "assign_set.".post; x.post; y.postln;
         if (y.isKindOf(SkoarpuscleSymbol)) {
-            "bloop".postln;
             this.assign_symbol(x, y);
-            "bloosp".postln;
         };
 
         if (y.isKindOf(SkoarpuscleBeat)) {
@@ -136,7 +133,7 @@ SkoarVoice {
 
     }
 
-     // x => y
+    // x +> y
     incr_symbol {
         | x, y |
         var k = y.val;
@@ -148,6 +145,7 @@ SkoarVoice {
         this[k] = v;
     }
 
+    // x -> y
     decr_symbol {
         | x, y |
         var k = y.val;
@@ -159,15 +157,15 @@ SkoarVoice {
         this[k] = v;
     }
 
+    // x => y
     assign_symbol {
         | x, y |
         var k = y.val;
         var v = x.flatten;
 
-        ("@" ++ k ++ " <= ").post; x.postln; v.dump;
-        this.put(k,v);
+        //("@" ++ k ++ " <= ").post; x.postln; v.dump;
+        this[k] = v;
     }
-
 
     incr_tempo {
         | bpm, beat |
@@ -193,11 +191,9 @@ SkoarVoice {
     }
 
     dynamic {
-        | toke |
+        | skoarpuscle |
 
-        if (toke.isKindOf(Toke_DynPiano) || toke.isKindOf(Toke_DynForte)) {
-            this[\amp] = toke.val / 127;
-        };
+        this[\amp] = skoarpuscle.amp;
     }
 
     noat_go {
