@@ -36,7 +36,6 @@ This was played over MIDI to my Korg SV1.
 
 # Drumming example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/beets)
 
-
     <? 4/4 time, 70 beats per min. No voice label on this line, all voices will read it ?>
 
     4/4 70 => )
@@ -96,7 +95,8 @@ This was played over MIDI to my Korg SV1.
 Skoar
 =====
 
-Skoar is a language for coding music.
+Skoar is a language for coding music, combining a grand-staff-like notation
+with a flexible programming notation.
 
 # beats and rests
 
@@ -143,7 +143,7 @@ Choards need work, but this is the intention:
 
 Or use lists of noats:
 
-    <a,c,e> )  <a,c#,e> )
+    <_a,c,e> )  <_a,c#,e> )
 
 # octaving
 
@@ -183,86 +183,77 @@ Infinite repeats:
     <? from the segno ?>
     | _a] c] e] o/ | ,segno` _f] f] _f] o/ Dal Segno |
 
+Voltas:
 
-# data
+    |: c )) ) | [1.] _a] c] a]] e]] :| [2.]  ]] ]] _c) ||
+
+# variables
 
 We can set and get values from a dictionary local to the voice. Anything set here
 will be copied into the resulting event every beat; which we can use to configure the voice.
 
+    <? names of things start with @ ?>
     @smooth => @instrument
-
     <0,3,5> => @detune
+
+    <? to lookup the values, we use ! in place of @.... more on ! below.. ?>
+    a# => @foo
+    !foo )
 
 # Skoarpions
 
-The __Skoarpion__ is a flexible device; we can use it as a function, a sequence, a block, or a
-source of chaos.
+The __Skoarpion__ is a flexible device; we can use it as a function or a sequence.
 
-    !! name<args> !! head
+    {! name<args> !!
       body
       ...
-    !! stinger
+    !! stinger !}
 
 
-Each time you call the skoarpion, `head` runs, then the `body`; the `stinger` runs before every
-beat _in the body_, (the stinger won't sting the head).
+Each time you call the skoarpion the `body`; the `stinger` runs before every
+beat in the body.
 
 Let's make a function:
 
-    !! zorp<derp> !!
+    {! zorp<derp> !!
      | )         }             |
      | )         ]] oo/ ]      |
      | ]    ]    ]] ]]  ]      |
      | ]    ]    ]] ]]  oo/ ]] |
-    !! @derp.choose
+    !! !derp.choose !}
 
     <? - this calls !zorp.choose, setting @derp to <_a, c#, e>
        - @derp.choose in the stinger, means it will pick one noat from @derp each beat.
        - the !zorp.choose will choose one line at random ?>
     !zorp<<_a, c#, e>>.choose
 
-They can be used as a block of code with `.block`:
+You can cycle the lines in order with `.next` or backwards with `.last`
 
-    {! alice !!
-    ~o mp
-    @acid => @instrument
-    <0,5,7> => @detune
-    <c#, e, _a, g#> => @favorites
+    <_a, c#, e> => @A
+
+    !zorp<!A>.next   <? plays | ) }        | ?>
+    !zorp<!A>.next   <? plays | ) ]] oo/ ] | ?>
+    !zorp<!A>.last   <? plays | ) }        | ?>
+
+Skoarpions normally have scope, but they can be inlined with `.inline`, which can be convenient:
+
+    {! alice !! ~o mp
+      <c#, e, _a, g#> => @favorites
+              <0,5,7> => @detune
+                @acid => @instrument
     !}
 
-    {! bob<x> !!
-    o~~
-    forte
-    !x => @favorites
-    @bass => @instrument
+    {! bob<x> !! o~~ forte
+      @bass => @instrument
+         !x => @favorites
     !}
 
     {! <x> !! <0, 4, !x> => @detune !} => @charlie
 
-
-    .a !alice.block
-    .b !bob<<a,e>>.block
-    .c !charlie<<5,7,9, ^^(;,;)^^>.choose>
+    .a !alice.inline
+    .b !bob<<a,e>>.inline
+    .c !charlie<<5,7,9>.choose>
     ...
-
-You can cycle the lines in order with `.next` or backwards with `.last`
-
-# wait, I want to nest skoarpions.
-_(unimplemented)_
-
-Me too, I also want anonymous skoarpions. Let's see how `{!` and `!}` work
-
-    {!
-     body lines
-     ...
-    !! stinger_one
-    !! stinger_two
-    !}
-
-    {! <x> !! head
-    !! body
-    !! stinger !}
-
 
 # other sequences
 
@@ -270,15 +261,10 @@ Arrays and arraylike things can be iterated like skoarpions.
 
     <c, e, g> => @food
 
-    <? this sends .next to the array, does nothing useful. ?>
-    @food.next )
-
     !food.next )   <? plays: c ?>
     !food.next )   <? plays: e ?>
     !food.last )   <? plays: c ?>
     !food.choose ) <? at random ?>
-
-That is, the `!xxx` notation starts an iterator that sticks around.
 
 # messages
 
@@ -293,13 +279,13 @@ With messages you can work with the underlying objects (i.e. the SuperCollider o
     <? choose a random note and post it to the screen ?>
     <c,d,e,f,g,a,b>.choose.postln
 
-Static methods can be called on underlying classes, just write them as symbols:
+Static methods can be called on underlying classes, dereference with `!` and send the message:
 
-    @Array.fib<20,27,3> => @food
+    !Array.fib<20,27,3> => @food
 
-    @MyRediculousClass.new<'srsly', 2.1828> => @zagwaggler
+    !MyRediculousClass.new<'srsly', 2.1828> => @zagwaggler
 
-    @zagwaggler.bringTheWub<'wub'>.wub.wub.wub.wub
+    !zagwaggler.bringTheWub<'wub'>.wub.wub.wub.wub
 
 # Cthulhu
 
@@ -311,8 +297,11 @@ Cthulhu can also make assertions.
 
     ^^(;@octave == 5;)^^
 
+
 Install
 =======
+
+You just need to point SuperCollider at the Skoar folder (that you git cloned) and you're set.
 
 In SuperCollider's interpreter options, __include__ the folder `~/.../Skoar/SuperCollider/Skoar` and
 restart the interpreter
