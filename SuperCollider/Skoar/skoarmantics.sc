@@ -56,7 +56,6 @@ Skoarmantics {
             \listy -> {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleArray(noad.collect_skoarpuscles);
-
                 noad.n = 0;
                 noad.children = [];
 
@@ -64,7 +63,6 @@ Skoarmantics {
 
             \musical_keyword_misc -> {
                 | skoar, noad |
-
                 var x = noad.next_skoarpuscle;
 
                 if (x.isKindOf(SkoarpuscleCarrot)) {
@@ -75,10 +73,7 @@ Skoarmantics {
 
             \ottavas -> {
                 | skoar, noad |
-
-                var skoarpuscle;
-
-                skoarpuscle = noad.next_skoarpuscle;
+                var skoarpuscle = noad.next_skoarpuscle;
 
                 noad.performer = {
                     | m, nav |
@@ -105,36 +100,11 @@ Skoarmantics {
             \dal_goto -> {
                 | skoar, noad |
 
-                var toke = noad.children[0];
-                var al_x = noad.children[1];
-                var al_fine = false;
-
-                if (al_x != nil) {
-                    if (al_x.toke.isKindOf(Toke_AlFine)) {
-                        al_fine = true;
-                    };
+                noad.skoarpuscle = SkoarpuscleGoto(noad);
+                noad.performer = {
+                    | m, nav |
+                    noad.skoarpuscle.performer(m, nav);
                 };
-
-                noad.performer = case {toke.isKindOf(Toke_DaCapo)} {{
-                    | m, nav |
-
-                    if (al_fine) {
-                        m.al_fine = true;
-                    };
-
-                    nav.(\nav_da_capo);
-
-                }} {toke.isKindOf(Toke_DalSegno)} {{
-                    | m, nav |
-
-                    if (al_fine) {
-                        m.al_fine = true;
-                    };
-
-                    m.reset_colons;
-                    nav.(\nav_segno);
-                }};
-
             },
 
             \marker -> {
@@ -263,10 +233,11 @@ Skoarmantics {
 
                 } {{
                     | m, nav |
+                    var skrd; // don't overwrite skoaroid
                     //"evaluating...".postln;
-                    skoaroid = skoaroid.evaluate.(m);
+                    skrd = skoaroid.evaluate.(m);
                     //"performing result".postln;
-                    skoaroid.performer(m, nav);
+                    skrd.performer(m, nav);
 
                 }};
 

@@ -315,6 +315,41 @@ SkoarpuscleBars : Skoarpuscle {
 
 }
 
+SkoarpuscleGoto : Skoarpuscle {
+
+    var dst;
+    var al_fine;
+
+    init {
+        | noad |
+
+        var toke = noad.children[0].next_toke;
+        var al_x = noad.children[1];
+
+        dst = case {toke.isKindOf(Toke_DaCapo)} {\nav_da_capo}
+                   {toke.isKindOf(Toke_DalSegno)} {\nav_segno};
+
+        al_fine = false;
+        if (al_x != nil) {
+            if (al_x.toke.isKindOf(Toke_AlFine)) {
+                al_fine = true;
+            };
+        };
+    }
+
+    performer {
+        | m, nav |
+
+        if (al_fine) {
+            m.al_fine = true;
+        };
+
+        m.reset_colons;
+        nav.(dst);
+    }
+
+}
+
 SkoarpuscleVolta : Skoarpuscle {
 
     var <noad;

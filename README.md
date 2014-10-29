@@ -252,7 +252,7 @@ Skoarpions normally have scope, but they can be inlined with `.inline`, which ca
 
     .a !alice.inline
     .b !bob<<a,e>>.inline
-    .c !charlie<<5,7,9>.choose>
+    .c !charlie<<5,7,9>.choose>.inline
     ...
 
 # other sequences
@@ -293,9 +293,10 @@ You can wake Cthulhu, crashing the skoar.
 
     ^^(;,;)^^
 
+
 Cthulhu can also make assertions.
 
-    ^^(;@octave == 5;)^^
+    ^^(;!octave == 5;)^^
 
 
 Install
@@ -311,6 +312,8 @@ They are built and written to `.../SuperCollider/Skoar`.
 
 Currently the built code is checked in, you don't need to get Skoarcery working unless you want to
 work on the language.
+
+
 
 Skoarcery
 =========

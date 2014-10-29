@@ -160,7 +160,6 @@ SkoarTokeInspector {
 
             \Toke_Bars -> {
                 | noad, toke |
-                toke.dump;
                 noad.skoarpuscle = SkoarpuscleBars(noad, toke);
                 noad.toke = nil;
             },

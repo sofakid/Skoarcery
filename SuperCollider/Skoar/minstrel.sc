@@ -68,12 +68,15 @@ SkoarMinstrel {
                     for ( j, n, {
                         | i |
 
+("derf:i" ++ i ++ ":n:" ++ n).postln;
                         parts[i].inorder({
                             | x |
                             if (dst != nil) {
 
                                 if (x == dst) {
                                     dst = nil;
+                                    "w00t".postln;
+                                    x.postln;
                                     x.perform(this, nav);
                                 };
 
@@ -93,6 +96,7 @@ SkoarMinstrel {
                     {\nav_coda} { j = 0; }
 
                     {\nav_da_capo} {
+                        "food".postln;
                         dst = parts[0].children[0];
                         j = 0;
                     }
