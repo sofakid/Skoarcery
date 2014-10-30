@@ -4,15 +4,11 @@
 Skoar {
 
     var   skoarse;      // the skoarse code
-    var  <tree;         // root node of the tree (our start symbol, skoar)
-    var  <toker;        // friendly neighbourhood toker
-    var   parser;       // recursive descent predictive parser
-    var   inspector;    // toke inspector for decorating
-    var   skoarmantics; // semantic actions
-    var  <skoarboard;   // copied into event
-    var  <voices;       // dictionary of voices
-    var  <conductoar;   // default voice
-    var  <skoarpions;   // collection of skoarpions
+    var   parser;       // the parser
+    var  <tree;         // root of tree
+    var  <toker;        // toker
+    var  <voices;       // all the voices
+    var  <conductoar;
 
     *new {
         | code |
@@ -22,24 +18,14 @@ Skoar {
     init {
         | code |
 
-        var v = nil;
-
         skoarse = code;
         tree = nil;
         toker = Toker(skoarse);
         parser = SkoarParser.new(this);
 
-        inspector = SkoarTokeInspector.new;
-        skoarmantics = Skoarmantics.new;
-        skoarboard = IdentityDictionary.new;
-
         voices = IdentityDictionary.new;
         conductoar = SkoarKoar.new(this, \conductoar);
         voices[\conductoar] = conductoar;
-
-        skoarpions = IdentityDictionary.new;
-
-        this.skoarboard_defaults;
 
     }
 
@@ -56,26 +42,10 @@ Skoar {
         }
     }
 
-    skoarboard_defaults {
-
-        // 60 bpm
-        skoarboard[\tempo] = 1;
-
-        // mp
-        skoarboard[\amp] = 0.5;
-    }
-
-    put {
-        | k, v |
-        skoarboard[k] = v;
-    }
-
-    at {
-        | k |
-        ^skoarboard[k];
-    }
-
     decorate {
+
+        var inspector = SkoarTokeInspector.new;
+        var skoarmantics = Skoarmantics.new;
 
         var f = {
             | noad |
@@ -109,6 +79,7 @@ Skoar {
     decorate_voices {
 
         tree.voice = conductoar;
+        tree.skoap = tree;
 
         ">>> assigning voices...".postln;
         tree.assign_voices(conductoar, nil);
@@ -119,7 +90,6 @@ Skoar {
     // ----
     // misc
     // ----
-
     get_voice {
         | k |
 
@@ -163,6 +133,22 @@ Skoar {
 
         ^SkoarMinstrel.new(this.tree, voices[voice_name], this).pfunk;
     }
+
+    draw_skoarpions {
+        tree.collect([\nouny]).do {
+            | x |
+
+            x = x.skoarpuscle;
+            if (x.isKindOf(SkoarpuscleSkoarpion)) {
+                x.val.post_tree;
+            };
+        };
+    }
+
+    draw_tree {
+        "---< Skoar Tree >---".postln;
+        tree.draw_tree.postln;
+    }
 }
 
 
@@ -178,18 +164,16 @@ Skoar {
 
             r.decorate;
 
-            "---< Skoar Tree >---".postln;
-            r.tree.draw_tree.postln;
-
+            r.draw_tree;
+            r.draw_skoarpions;
             "Skoar parsed.".postln;
-            ^r;
 
+            ^r;
         } {
             | e |
             e.postln;
             e.throw;
         }
-
     }
 
     pskoar {

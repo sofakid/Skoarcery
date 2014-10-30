@@ -292,11 +292,13 @@ SkoarKoar {
         var nav_result = nil;
         var z;
         var iter;
+        var f;
 
         var state = IdentityDictionary.new;
         var parts = List[];
         var parts_index = Dictionary.new;
         var skoarpion_iters = IdentityDictionary.new;
+
 
         state_stack.add(state);
 
@@ -338,10 +340,9 @@ SkoarKoar {
         };
 
         // get the lines we care about.
-        z = iter.performMsg(msg_arr);
 
-        // collect our lines and conductoar's lines
-        z.children.do {
+
+        f = {
             | line |
             var vi = line.voice;
 "-----------------------------------".postln;
@@ -352,6 +353,16 @@ SkoarKoar {
                 parts.add(line);
                 i = i + 1;
             };
+        };
+
+        z = iter.performMsg(msg_arr);
+        case {z.name == \section} {
+            // collect our lines and conductoar's lines
+            z.children.do(f);
+        } {z.name == \line} {
+            z.do(f);
+        } {
+            z.children.do(f);
         };
 
         n = parts.size - 1;
@@ -409,7 +420,7 @@ SkoarKoar {
                         up_nav.(\nav_segno);
                     };
 
-                    j = parts_index[dst.branch];
+                    j = parts_index[dst.skoap];
                 }
 
                 {\nav_jump} {
@@ -423,7 +434,7 @@ SkoarKoar {
                     };
 
                     "weep3".postln;
-                    j = parts_index[dst.branch];
+                    j = parts_index[dst.skoap];
                     "weep4".postln;
 
                     j.postln;

@@ -146,10 +146,10 @@ SkoarpuscleDeref : Skoarpuscle {
         | m, nav |
         var x = this.lookup(m);
 
-        "deref: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.dump;
+        "deref:performer: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
-            m.gosub(x.val, nav, msg_arr, args);
+            m.koar.do_skoarpion(x.val, m, nav, msg_arr, args)
         } {
             if (x.isKindOf(Skoarpuscle)) {
                 x.performer(m, nav);
@@ -163,7 +163,7 @@ SkoarpuscleDeref : Skoarpuscle {
         var ret = val;
         var x = this.lookup(minstrel);
 
-        "deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.dump;
+        "deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
         msg_arr = msg.get_msg_arr;
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
@@ -204,7 +204,7 @@ SkoarpuscleSkoarpion : Skoarpuscle {
         };
 
         if (msg_arr != nil) {
-            m.gosub(val, nav, msg_arr, nil);
+            m.koar.do_skoarpion(val, m, nav, msg_arr, nil)
         };
     }
 

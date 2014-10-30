@@ -35,6 +35,9 @@ Skoarpion {
         var section = SkoarNoad(\section, nil);
         var sections = List[];
 
+        line.skoap = this;
+        section.skoap = this;
+
         // 0 - start
         // 1 - sig
         sig = kids[1];
@@ -61,11 +64,15 @@ Skoarpion {
                 sections.add(section);
 
                 section = SkoarNoad(\section, nil);
+                section.skoap = this;
                 line = SkoarNoad(\line, nil);
+                line.skoap = this;
+
 
             } {x.toke.isKindOf(Toke_Newline)} {
                 section.add_noad(line);
                 line = SkoarNoad(\line, nil);
+                line.skoap = this;
 
             } {x.toke.isKindOf(Toke_SkoarpionEnd)} {
                 section.add_noad(line);
@@ -107,7 +114,7 @@ Skoarpion {
         ("---< Skoarpion " ++ name.asString ++ " >---").postln;
 
         if (args != nil) {
-            "args: ".post; args.val.dump;
+            "args: ".post; args.val.postln;
         };
 
         if (body != nil) {
@@ -137,7 +144,6 @@ SkoarpionIter {
 
     init {
         | skrp |
-"here:skrp:".post; skrp.postln;
         body = skrp.body;
         n = skrp.n;
         i = -1;

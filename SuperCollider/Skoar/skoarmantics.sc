@@ -23,6 +23,7 @@ Skoarmantics {
             \skoarpion -> {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion(noad));
+                noad.skoap = noad;
             },
 
             \branch -> {
@@ -34,7 +35,7 @@ Skoarmantics {
                 n = noad.n;
                 x = noad.next_skoarpuscle;
 
-                noad.branch = noad;
+                noad.skoap = noad;
 
                 if (x.isKindOf(SkoarpuscleVoice)) {
                     noad.voice = skoar.get_voice(x.val);

@@ -20,7 +20,7 @@ SkoarNoad {
     var <>one_shots;       // function to set for stuff that applies for one beat.
 
     var <>voice;           // what voice to use
-    var <>branch;          // what branch are we on, along the trunk (what line)
+    var <>skoap;           // what skoap are we in
 
     *new {
         | name, parent, i=0 |
@@ -48,8 +48,10 @@ SkoarNoad {
     // -------------------
     // decorating the tree
     // -------------------
+
+    // this is the second pass.
     assign_voices {
-        | v, b |
+        | v, s |
 
         if (voice == nil) {
             voice = v;
@@ -58,17 +60,17 @@ SkoarNoad {
             v = voice;
         };
 
-        if (branch == nil) {
-            branch = b;
+        if (skoap == nil) {
+            skoap = s;
         } {
-            // the branch has changed, this is what the children get
-            b = branch;
+            // the skoap has changed, this is what the children get
+            s = skoap;
         };
 
         children.do {
             | y |
             if (y.isKindOf(SkoarNoad)) {
-                y.assign_voices(v,b);
+                y.assign_voices(v, s);
             };
         };
 
@@ -232,7 +234,7 @@ SkoarNoad {
     // searching the tree
     // ------------------
 
-    // desires - array of names of noads as string, or SkoarToke implementation classes
+    // desires - array of names of noads as symbol, or SkoarToke implementation classes
     // writer - a function that will do something with the matches
     match {
         | desires, writer |
