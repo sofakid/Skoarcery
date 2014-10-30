@@ -54,7 +54,7 @@ D.S. ^^(;,;)^^
 )
 
 
-
+ArrayedCollection
 
 
 
@@ -120,8 +120,8 @@ D.S. ^^(;,;)^^
 (
 "
 mf a ]] ]]
-
-{! zorp !! 'foo'
+{! <x> !! f f f !! d !! e !}
+{! zorp !!
 )    )
 )    ] ]
 ] ]  ]] ]] ]
@@ -131,7 +131,7 @@ mf a ]] ]]
 ".skoar.play;
 )
 
-
+nil.foo;
 (
 "
 mf
@@ -141,16 +141,26 @@ mf
 
 <_a, c#, e>.choose ] o/ ]] ]] o/
 
+|: g ]] ]] :|
+
 D.C.
 
 ".skoar.play;
 )
-
-
+(
+try {
+    nil.foo;
+} {
+    | e |
+    e.postln;
+    e.throw;
+};
+)
+Array
 [0,1,2].add(7)
 
-
-
+a = "w".findRegexp("\\d", 0);
+a.dump
 
 (
 "

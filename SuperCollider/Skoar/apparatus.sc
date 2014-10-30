@@ -4,6 +4,7 @@
 // ==========================
 SkoarNoad {
 
+    var <>address;         // a list code to find the noad quickly
     var <>parent;          // the parent noad
     var <>i;               // position in parent
     var <>n;               // number of children
@@ -23,21 +24,22 @@ SkoarNoad {
     var <>skoap;           // what skoap are we in
 
     *new {
-        | name, parent, i=0 |
-        ^super.new.init(name, parent, i);
+        | name, parent, i_p=0 |
+        ^super.new.init(name, parent, i_p);
     }
 
     init {
-        | nameArg, parentArg, i=0 |
+        | nameArg, parentArg, i_p=0 |
 
         parent = parentArg;
 
-        i = i;
+        i = i_p;
         n = 0;
 
         name = nameArg;
 
         children = List[];
+        address = List[];
 
     }
 
@@ -49,9 +51,8 @@ SkoarNoad {
     // decorating the tree
     // -------------------
 
-    // this is the second pass.
-    assign_voices {
-        | v, s |
+    decorate_pass_two {
+        | v, s, parent_address |
 
         if (voice == nil) {
             voice = v;
@@ -60,17 +61,27 @@ SkoarNoad {
             v = voice;
         };
 
+        if (i == nil) {
+            "nil i? ".post; name.postln;
+        };
+        address = [i] ++ parent_address;
+        "p#: ".post; parent_address.post; ", ".post; i.postln;
+        "##: ".post; address.postln;
+
         if (skoap == nil) {
             skoap = s;
         } {
             // the skoap has changed, this is what the children get
             s = skoap;
+            address = List[i];
+            "!#: ".post; address.postln;
         };
+
 
         children.do {
             | y |
             if (y.isKindOf(SkoarNoad)) {
-                y.assign_voices(v, s);
+                y.decorate_pass_two(v, s, address);
             };
         };
 
@@ -168,6 +179,28 @@ SkoarNoad {
         };
 
         //"<<< inorder: ".post; name.postln;
+    }
+
+    inorder_from {
+        | here, f, stinger=nil |
+        var j = here.pop;
+        var n = children.size - 1;
+
+        if (here.size == 0) {
+            f.(this);
+        };
+
+"j: ".post; j.post; " <- here.pop: ".post; here.postln;
+
+        if (j == nil) {
+            this.inorder(f, stinger);
+        } {
+            for (j, n, {
+                | k |
+                children[k].inorder_from(here, f, stinger);
+            });
+        };
+
     }
 
     // this finds the preceding noad

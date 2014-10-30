@@ -66,13 +66,10 @@ Skoarpion {
                 section = SkoarNoad(\section, nil);
                 section.skoap = this;
                 line = SkoarNoad(\line, nil);
-                line.skoap = this;
-
 
             } {x.toke.isKindOf(Toke_Newline)} {
                 section.add_noad(line);
                 line = SkoarNoad(\line, nil);
-                line.skoap = this;
 
             } {x.toke.isKindOf(Toke_SkoarpionEnd)} {
                 section.add_noad(line);

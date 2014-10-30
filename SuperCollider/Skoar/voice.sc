@@ -339,33 +339,10 @@ SkoarKoar {
             msg_arr = [\block];
         };
 
-        // get the lines we care about.
-
-
-        f = {
-            | line |
-            var vi = line.voice;
-"-----------------------------------".postln;
-"LINE: ".post; line.dump;
-
-            if ((vi == this) || (vi == minstrel.conductoar)) {
-                parts_index[line] = i;
-                parts.add(line);
-                i = i + 1;
-            };
-        };
-
         z = iter.performMsg(msg_arr);
-        case {z.name == \section} {
-            // collect our lines and conductoar's lines
-            z.children.do(f);
-        } {z.name == \line} {
-            z.do(f);
-        } {
-            z.children.do(f);
-        };
 
-        n = parts.size - 1;
+        dst = z;
+"dst.address: ".post; dst.address.postln;
 
         // -----------------
         // alright let's go!
@@ -375,27 +352,11 @@ SkoarKoar {
             nav_result = block {
                 | nav |
 
-                for ( j, n, {
-                    | i |
+                z.inorder_from(dst.address, {
+                    | x |
+                    x.perform(minstrel, nav);
 
-    ("derf:i" ++ i ++ ":n:" ++ n).postln;
-                    parts[i].inorder({
-                        | x |
-                        if (dst != nil) {
-
-                            if (x == dst) {
-                                dst = nil;
-                                "w00t".postln;
-                                x.postln;
-                                x.perform(minstrel, nav);
-                            };
-
-                        } {
-                            x.perform(minstrel, nav);
-                        };
-
-                    }, skoarpion.stinger);
-                });
+                }, skoarpion.stinger);
 
                 running = false;
             };

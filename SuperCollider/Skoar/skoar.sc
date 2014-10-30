@@ -67,24 +67,13 @@ Skoar {
         };
 
         tree.depth_visit(f);
-        this.decorate_voices;
-    }
 
-
-    // --------------------------
-    // the voices of the children
-    // --------------------------
-
-    // we don't know the voices until the end of decorating, so we make a second pass.
-    decorate_voices {
-
+        ">>> second pass...".postln;
         tree.voice = conductoar;
         tree.skoap = tree;
 
-        ">>> assigning voices...".postln;
-        tree.assign_voices(conductoar, nil);
-        "<<< voices assigned.".postln;
-
+        tree.decorate_pass_two(conductoar, nil, List[0]);
+        "<<< second pass done.".postln;
     }
 
     // ----
