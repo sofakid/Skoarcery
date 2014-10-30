@@ -125,7 +125,7 @@ SkoarpuscleNoat : Skoarpuscle {
 
     performer {
         | m, nav |
-        m.voice.noat_go(this);
+        m.koar.noat_go(this);
     }
 
 }
@@ -137,7 +137,7 @@ SkoarpuscleChoard : Skoarpuscle {
 
     performer {
         | m, nav |
-        m.voice.choard_go(val);
+        m.koar.choard_go(val);
     }
 
 }

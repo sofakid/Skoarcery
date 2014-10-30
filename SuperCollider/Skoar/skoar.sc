@@ -34,7 +34,7 @@ Skoar {
         skoarboard = IdentityDictionary.new;
 
         voices = IdentityDictionary.new;
-        conductoar = SkoarVoice.new(this, \conductoar);
+        conductoar = SkoarKoar.new(this, \conductoar);
         voices[\conductoar] = conductoar;
 
         skoarpions = IdentityDictionary.new;
@@ -131,7 +131,7 @@ Skoar {
         if (voices.includesKey(k)) {
             voice = voices[k];
         } {
-            voice = SkoarVoice(this,k);
+            voice = SkoarKoar(this, k);
             voices[k] = voice;
         };
 

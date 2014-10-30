@@ -48,6 +48,34 @@ SkoarTokeInspector {
                 noad.toke = nil;
             },
 
+            \Toke_OttavaA -> {
+                | noad, toke |
+
+                noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
+                noad.toke = nil;
+            },
+
+            \Toke_OttavaB  -> {
+                | noad, toke |
+
+                noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
+                noad.toke = nil;
+            },
+
+            \Toke_QuindicesimaA -> {
+                | noad, toke |
+
+                noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
+                noad.toke = nil;
+            },
+
+            \Toke_QuindicesimaB -> {
+                | noad, toke |
+
+                noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
+                noad.toke = nil;
+            },
+
             \Toke_BooleanOp -> {
                 | noad, toke |
                 noad.skoarpuscle = SkoarpuscleBooleanOp(toke);

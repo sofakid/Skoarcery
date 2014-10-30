@@ -143,7 +143,7 @@ SkoarNoad {
             y.depth_visit(f);
         };
 
-        "--- depth_visit: ".post; name.postln;
+        //"--- depth_visit: ".post; name.postln;
 
         // note: leaves first
         f.(this);

@@ -1,13 +1,25 @@
 
-SkoarVoice {
+SkoarKoar {
     var   skoar;        // global skoar
     var  <skoarboard;   //
-    var   <stack;
+    var   <stack;        // stack of vars visible to the skoar code
+    var   <state_stack; // stack of vars invisible to the skoar code
 
     var  <name;         // name of voice as Symbol
 
     var <>cur_noat;
     var   hand;
+
+
+    // array of branches, and an inverse map: branch -> index
+    var   parts;
+    var   parts_index;
+
+    var  <colons_burned;
+    var <>colon_seen;
+    var <>segno_seen;
+    var <>al_fine;
+
 
 
     *new {
@@ -22,78 +34,19 @@ SkoarVoice {
         name = nom;
 
         stack = List[];
+        state_stack = List[];
         skoarboard = IdentityDictionary.new;
         stack.add(skoarboard);
 
         hand = Hand.new;
         cur_noat = nil;
-    }
 
-    push_args {
-        | args_def, args |
-        var skrb = IdentityDictionary.new;
-        var i = 0;
+        parts = List[];
+        parts_index = Dictionary.new;
+        colons_burned = Dictionary.new;
 
-        if (args_def.isKindOf(SkoarpuscleArgs)) {
-            args_def.val.do {
-                | k |
-                k = k.val;
-                "k:".post; k.postln;
-                skrb[k] = args.val[i];
-                i = i + 1;
-            };
-        };
-
-        stack.add(skrb);
-    }
-
-    pop_args {
-        stack.pop;
-
-        if (stack.size == 0) {
-            "Stack underflow. This means trouble. What are you doing?".postln;
-            stack.add(skoarboard);
-        };
-    }
-
-    top_args {
-        var x;
-        "top_args: ".post;
-        x = stack[stack.size - 1];
-        x.postln;
-        ^x
-
-    }
-
-    put {
-        | k, v |
-        this.top_args[k] = v;
-    }
-
-    at {
-        | k |
-        var out = nil;
-
-        stack.do {
-            | skrb |
-            out = skrb[k];
-            if (out != nil) {
-                ^out;
-            };
-        };
-
-        ^out;
-    }
-
-    event {
-        var e = (type: \note);
-
-        stack.do {
-            | skrb |
-            e = skrb.transformEvent(e);
-        }
-
-        ^e
+        // when set true, we will halt at a Toke_Fine
+        al_fine = false;
     }
 
     assign_incr {
@@ -243,5 +196,235 @@ SkoarVoice {
         hand.octave = hand.octave + x;
     }
 
+    // ---------------------
+    // State and scope stuff
+    // ---------------------
+    put {
+        | k, v |
+        this.top_args[k] = v;
+    }
+
+    at {
+        | k |
+        var out = nil;
+
+        stack.reverseDo {
+            | skrb |
+            out = skrb[k];
+            if (out != nil) {
+                ^out;
+            };
+        };
+
+        ^out;
+    }
+
+    state_put {
+        | k, v |
+        var x = state_stack[state_stack.size - 1];
+        x[k] = v;
+    }
+
+    state_at {
+        | k |
+        var out = nil;
+
+        state_stack.reverseDo {
+            | skrb |
+            out = skrb[k];
+            if (out != nil) {
+                ^out;
+            };
+        };
+
+        ^out;
+    }
+
+    event {
+        var e = (type: \note);
+
+        stack.do {
+            | skrb |
+            e = skrb.transformEvent(e);
+        }
+
+        ^e
+    }
+
+    push_args {
+        | args_def, args |
+        var skrb = IdentityDictionary.new;
+        var i = 0;
+
+        if (args_def.isKindOf(SkoarpuscleArgs)) {
+            args_def.val.do {
+                | k |
+                k = k.val;
+                "k:".post; k.postln;
+                skrb[k] = args.val[i];
+                i = i + 1;
+            };
+        };
+
+        stack.add(skrb);
+    }
+
+    pop_args {
+        stack.pop;
+
+        if (stack.size == 0) {
+            "Stack underflow. This means trouble. What are you doing?".postln;
+            stack.add(skoarboard);
+        };
+    }
+
+    top_args {
+        ^stack[stack.size - 1];
+    }
+
+    do_skoarpion {
+        | skoarpion, minstrel, up_nav, msg_arr, skrp_args |
+
+        var i = 0;
+        var n = 0;
+        var j = 0;
+        var dst = nil;
+        var running = true;
+        var nav_result = nil;
+        var z;
+        var iter;
+
+        var state = IdentityDictionary.new;
+        var parts = List[];
+        var parts_index = Dictionary.new;
+        var skoarpion_iters = IdentityDictionary.new;
+
+        state_stack.add(state);
+
+        state[\parts] = parts;
+        state[\parts_index] = parts_index;
+        state[\colons_burned] = Dictionary.new;
+        state[\al_fine] = false;
+        state[\skoarpion_iters] = skoarpion_iters;
+
+        if (skoarpion.isKindOf(Skoarpion) == false) {
+            "This isn't a skoarpion: ".post; skoarpion.postln;
+            ^nil;
+        };
+
+        this.push_args(skoarpion.args, skrp_args);
+
+        if (skoarpion.name != nil) {
+
+            // start a new one if we haven't seen it
+            iter = this.state_at(\skoarpion_iters)[skoarpion.name];
+            debug("fee");
+
+            if (iter == nil) {
+            debug("fai");
+
+                iter = skoarpion.iter;
+                skoarpion_iters[skoarpion.name] = iter;
+
+            debug("fo");
+            };
+        } {
+            debug("feefifofum");
+            iter = skoarpion.iter;
+        };
+
+        // default behaviour (when unmessaged)
+        if (msg_arr == nil) {
+            msg_arr = [\block];
+        };
+
+        // get the lines we care about.
+        z = iter.performMsg(msg_arr);
+
+        // collect our lines and conductoar's lines
+        z.do {
+            | line |
+            var vi = line.voice;
+
+            if ((vi == this) || (vi == minstrel.conductoar)) {
+                parts_index[line] = i;
+                parts.add(line);
+                i = i + 1;
+            };
+        };
+
+        n = parts.size - 1;
+
+        // -----------------
+        // alright let's go!
+        // -----------------
+        while {running} {
+
+            nav_result = block {
+                | nav |
+
+                for ( j, n, {
+                    | i |
+
+    ("derf:i" ++ i ++ ":n:" ++ n).postln;
+                    parts[i].inorder({
+                        | x |
+                        if (dst != nil) {
+
+                            if (x == dst) {
+                                dst = nil;
+                                "w00t".postln;
+                                x.postln;
+                                x.perform(minstrel, nav);
+                            };
+
+                        } {
+                            x.perform(minstrel, nav);
+                        };
+
+                    }, skoarpion.stinger);
+                });
+
+                running = false;
+            };
+
+            switch (nav_result)
+
+                {\nav_fine} {
+                    up_nav.(\nav_fine);
+                }
+
+                {\nav_coda} { j = 0; }
+
+                {\nav_da_capo} {
+                    "bubble Da Capo time.".postln;
+                    up_nav.(\nav_da_capo);
+                }
+
+                {\nav_segno} {
+                    dst = state[\segno_seen];
+
+                    if (dst == nil) {
+                        up_nav.(\nav_segno);
+                    };
+
+                    j = parts_index[dst.branch];
+                }
+
+                {\nav_jump} {
+                    dst = state[\colon_seen];
+
+                    if (dst == nil) {
+                        up_nav.(\nav_jump);
+                    };
+
+                    j = this.parts_index[dst.branch];
+                };
+
+        };
+
+        this.pop_args;
+        state_stack.pop;
+    }
 }
 

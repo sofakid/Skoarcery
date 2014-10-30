@@ -14,6 +14,17 @@ Skoarpion {
         ^super.new.init(noad);
     }
 
+    *new_from_skoar {
+        | skoar |
+        ^super.new.init_from_skoar(skoar);
+    }
+
+    init_from_skoar {
+        | skoar |
+        body = skoar.tree;
+        n = body.size;
+    }
+
     init {
         | noad |
         var kids = noad.children;

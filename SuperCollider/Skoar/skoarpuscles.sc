@@ -134,7 +134,7 @@ SkoarpuscleDeref : Skoarpuscle {
 
     lookup {
         | m |
-        ^m.voice[val];
+        ^m.koar[val];
     }
 
     as_noat {
@@ -200,7 +200,7 @@ SkoarpuscleSkoarpion : Skoarpuscle {
     performer {
         | m, nav |
         if (val.name != nil) {
-            m.voice[val.name] = this;
+            m.koar[val.name] = this;
         };
 
         if (msg_arr != nil) {
@@ -226,7 +226,7 @@ SkoarpuscleArray : Skoarpuscle {
 
     performer {
         | m, nav |
-        m.voice.choard_listy(val);
+        m.koar.choard_listy(val);
     }
 
 }
@@ -285,7 +285,6 @@ SkoarpuscleBars : Skoarpuscle {
 
     *new {
         | nod, toke |
-        toke.dump;
         ^super.new.init_two(nod, toke);
     }
 
@@ -339,12 +338,15 @@ SkoarpuscleGoto : Skoarpuscle {
 
     performer {
         | m, nav |
-
-        if (al_fine) {
-            m.al_fine = true;
+        "zorp?".postln;
+        if (al_fine == true) {
+        "bloop".postln;
+            m.koar.state_put(\al_fine, true);
+        "bloop2".postln;
         };
 
         m.reset_colons;
+        "bloop3".postln;
         nav.(dst);
     }
 
@@ -437,7 +439,7 @@ SkoarpuscleOctaveShift : Skoarpuscle {
             if (s.beginsWith("o")) {
                 n =  n * -1;
             };
-            ^n;
+            n
         };
 
         val = case {toke.isKindOf(Toke_OctaveShift)} {f.()}
@@ -449,7 +451,7 @@ SkoarpuscleOctaveShift : Skoarpuscle {
 
     performer {
         | m, nav |
-        m.voice.octave_shift(val);
+        m.koar.octave_shift(val);
     }
 
 }

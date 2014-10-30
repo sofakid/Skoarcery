@@ -99,11 +99,13 @@ Skoarmantics {
 
             \dal_goto -> {
                 | skoar, noad |
+                var s = SkoarpuscleGoto(noad);
 
-                noad.skoarpuscle = SkoarpuscleGoto(noad);
                 noad.performer = {
                     | m, nav |
-                    noad.skoarpuscle.performer(m, nav);
+                    "blerg?".postln;
+                    s.performer(m, nav);
+
                 };
             },
 
@@ -135,11 +137,11 @@ Skoarmantics {
 
                 noad.performer = case {toke.isKindOf(Toke_PedalUp)} {{
                     | m, nav |
-                    m.voice.pedal_up;
+                    m.koar.pedal_up;
 
                 }} {toke.isKindOf(Toke_PedalDown)} {{
                     | m, nav |
-                    m.voice.pedal_down;
+                    m.koar.pedal_down;
 
                 }};
 
@@ -227,7 +229,7 @@ Skoarmantics {
                     if (y.name == \assignment) {{
                         | m, nav |
                         var res = skoaroid.evaluate.(m);
-                        y.setter.(res, m.voice);
+                        y.setter.(res, m.koar);
 
                     }}
 
@@ -292,9 +294,7 @@ Skoarmantics {
 
             \assignment -> {
                 | skoar, noad |
-
                 var op = nil;
-
                 var settable = nil;
 
                 op = noad.children[0].toke.lexeme;
