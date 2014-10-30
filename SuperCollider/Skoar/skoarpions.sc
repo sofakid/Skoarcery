@@ -31,8 +31,8 @@ Skoarpion {
         var m = kids.size;
         var sig, suffix;
         var i = 0;
-        var line = SkoarNoad("xient:section:line", nil);
-        var section = SkoarNoad("xient:section:", nil);
+        var line = SkoarNoad(\line, nil);
+        var section = SkoarNoad(\section, nil);
         var sections = List[];
 
         // 0 - start
@@ -60,12 +60,12 @@ Skoarpion {
                 section.add_noad(line);
                 sections.add(section);
 
-                section = SkoarNoad("xient:section:", nil);
-                line = SkoarNoad("xient:section:line:", nil);
+                section = SkoarNoad(\section, nil);
+                line = SkoarNoad(\line, nil);
 
             } {x.toke.isKindOf(Toke_Newline)} {
                 section.add_noad(line);
-                line = SkoarNoad("xient:section:line:", nil);
+                line = SkoarNoad(\line, nil);
 
             } {x.toke.isKindOf(Toke_SkoarpionEnd)} {
                 section.add_noad(line);
@@ -90,7 +90,7 @@ Skoarpion {
             stinger = nil;
         } {
             body = sections[0];
-            stinger = SkoarNoad("xient:stinger:" ++ name, nil);
+            stinger = SkoarNoad(\stinger, nil);
             stinger.children = sections[1..];
             stinger.n = stinger.children.size;
         };
@@ -143,6 +143,7 @@ SkoarpionIter {
         i = -1;
     }
 
+    // this is returning noads
     selector {
         | f |
         i = f.value % n;

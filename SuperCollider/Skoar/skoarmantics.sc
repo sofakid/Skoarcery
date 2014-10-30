@@ -112,22 +112,16 @@ Skoarmantics {
             \marker -> {
                 | skoar, noad |
 
-                var toke = noad.next_toke;
                 var skoarpuscle = noad.next_skoarpuscle;
 
-                noad.performer = case {skoarpuscle.isKindOf(Skoarpuscle)} {{
-                    | m, nav |
-                    skoarpuscle.performer(m, nav);
-
-                }} {toke.isKindOf(Toke_Fine)} {{
-                    | m, nav |
-                    if (m.al_fine) {
-                        nav.(\nav_fine);
+                if (skoarpuscle != nil) {
+                    noad.performer = {
+                        | m, nav |
+                        "zerp?".postln;
+                        skoarpuscle.performer(m, nav);
                     };
-
-                }} {
-                    nil
                 };
+
             },
 
 
@@ -180,12 +174,9 @@ Skoarmantics {
                 };
 
                 msg_name = noad.children[1].toke.val;
-                "msg_name: ".post;
-                msg_name.dump;
 
                 if (noad.children.size > 2) {
                     args = SkoarpuscleArgs(noad.collect_skoarpuscles(2));
-                    "\\deref -> ... args:".post; args.val.postln;
                 };
 
                 noad.skoarpuscle = SkoarpuscleDeref(msg_name, args);
@@ -197,8 +188,6 @@ Skoarmantics {
                 | skoar, noad |
 
                 noad.skoarpuscle = SkoarpuscleArgs(noad.collect_skoarpuscles);
-                "\\args -> noad.skoarpuscle.val: ".post; noad.skoarpuscle.val.postln;
-
                 noad.children = [];
                 noad.n = 0;
             },
@@ -208,7 +197,6 @@ Skoarmantics {
 
                 var x = nil;
                 var args = nil;
-
 
                 x = noad.next_toke.val;
                 args = SkoarpuscleArray(noad.collect_skoarpuscles);

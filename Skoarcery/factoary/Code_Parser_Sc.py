@@ -86,7 +86,7 @@ class Code_Parser_Sc(unittest.TestCase):
             if A.intermediate:
                 SC.var("noad", "parent")
             else:
-                SC.var("noad", SC.v_new("SkoarNoad", SC.v_str(A.name), "parent"))
+                SC.var("noad", SC.v_new("SkoarNoad", SC.v_sym(A.name), "parent"))
 
             SC.var("desires", SC.null)
             SC.nl()
@@ -116,7 +116,7 @@ class Code_Parser_Sc(unittest.TestCase):
 
                 for x in alpha:
                     if isinstance(x, Terminal):
-                        SC.stmt('noad.add_toke(' + SC.v_str(x.toker_name) + ', toker.burn(' + x.toker_name + '))')
+                        SC.stmt('noad.add_toke(' + SC.v_sym(x.toker_name) + ', toker.burn(' + x.toker_name + '))')
 
                         # debugging
                         #SC.print("burning: " + x.name)

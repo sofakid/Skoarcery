@@ -96,10 +96,7 @@ Skoar {
             };
         };
 
-">>> decorating...".postln;
         tree.depth_visit(f);
-"<<< decorated.".postln;
-
         this.decorate_voices;
     }
 
@@ -115,7 +112,7 @@ Skoar {
 
         ">>> assigning voices...".postln;
         tree.assign_voices(conductoar, nil);
-        "<<< all the children have voices.".postln;
+        "<<< voices assigned.".postln;
 
     }
 
@@ -173,21 +170,16 @@ Skoar {
 	skoar {
         try {
             var r = Skoar.new(this++"\n");
-            ">>> Parsing skoar...".postln;
+            ">>> parsing skoar...".postln;
             r.parse;
-            "<<< parsed.".postln;
-            "---< Undecorated Skoar Tree >---".postln;
-            r.tree.draw_tree.postln;
+            "<<< tree created, now decorating...".postln;
+            //"---< Undecorated Skoar Tree >---".postln;
+            //r.tree.draw_tree.postln;
 
             r.decorate;
 
             "---< Skoar Tree >---".postln;
             r.tree.draw_tree.postln;
-
-            r.skoarpions.keysValuesDo {
-                | k, v |
-                v.post_tree.postln;
-            };
 
             "Skoar parsed.".postln;
             ^r;

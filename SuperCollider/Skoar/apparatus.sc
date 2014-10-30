@@ -13,14 +13,11 @@ SkoarNoad {
     var <>setter;          // pass functions between skoarmantic levels here
 
     var <>name;            // name of the nonterminal
-    var <>label;
     var <>skoarpuscle;     // skoarpuscle types go here
     var <>toke;
 
     var <>performer;       // function to set when defining semantics.
     var <>one_shots;       // function to set for stuff that applies for one beat.
-
-    var  <next_jmp;        // if this is set, we will jump to this noad instead of the next noad
 
     var <>voice;           // what voice to use
     var <>branch;          // what branch are we on, along the trunk (what line)
@@ -38,7 +35,7 @@ SkoarNoad {
         i = i;
         n = 0;
 
-        name = nameArg.asSymbol;
+        name = nameArg;
 
         children = List[];
 

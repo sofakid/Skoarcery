@@ -301,17 +301,31 @@ SkoarpuscleBars : Skoarpuscle {
         | m, nav |
 
         if (pre_repeat == true) {
-            if (m.colons_burned.falseAt(noad)) {
-                m.colons_burned[noad] = true;
+            var burned = m.koar.state_at(\colons_burned);
+
+            if (burned.falseAt(noad)) {
+                burned[noad] = true;
                 nav.(\nav_jump);
             };
+
         };
 
         if (post_repeat == true) {
-            m.colon_seen = noad;
+            m.koar.state_put(\colon_seen, noad);
+            "just put ".post; m.koar.state_at(\colon_seen).postln;
         };
     }
 
+}
+
+SkoarpuscleFine : Skoarpuscle {
+
+    performer {
+        | m, nav |
+        if (m.koar.state_at(\al_fine) == true) {
+            nav.(\nav_fine);
+        };
+    }
 }
 
 SkoarpuscleGoto : Skoarpuscle {

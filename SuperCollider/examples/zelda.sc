@@ -1,13 +1,13 @@
 (
 
-MIDIClient.init;
-MIDIClient.destinations;
+//MIDIClient.init;
+//MIDIClient.destinations;
 
 b = "
 <? Zelda Wind Waker Theme - inspired by piano arrangement by Shinobu Amayake ?>
 
 <? Let's play the skoar on a midi device ?>
-@MIDIOut.new<0> => @midiout
+!MIDIOut.new<0> => @midiout
 @midi => @type
 
 

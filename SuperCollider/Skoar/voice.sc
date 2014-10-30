@@ -221,8 +221,7 @@ SkoarKoar {
 
     state_put {
         | k, v |
-        var x = state_stack[state_stack.size - 1];
-        x[k] = v;
+        state_stack[state_stack.size - 1].put(k, v);
     }
 
     state_at {
@@ -342,9 +341,11 @@ SkoarKoar {
         z = iter.performMsg(msg_arr);
 
         // collect our lines and conductoar's lines
-        z.do {
+        z.children.do {
             | line |
             var vi = line.voice;
+"-----------------------------------".postln;
+"LINE: ".post; line.dump;
 
             if ((vi == this) || (vi == minstrel.conductoar)) {
                 parts_index[line] = i;
@@ -402,7 +403,7 @@ SkoarKoar {
                 }
 
                 {\nav_segno} {
-                    dst = state[\segno_seen];
+                    dst = this.state_at(\segno_seen);
 
                     if (dst == nil) {
                         up_nav.(\nav_segno);
@@ -412,13 +413,22 @@ SkoarKoar {
                 }
 
                 {\nav_jump} {
-                    dst = state[\colon_seen];
+                    "weep0".postln;
+                    dst = this.state_at(\colon_seen);
+                    "weep1".postln;
 
                     if (dst == nil) {
+                    "weep2".postln;
                         up_nav.(\nav_jump);
                     };
 
-                    j = this.parts_index[dst.branch];
+                    "weep3".postln;
+                    j = parts_index[dst.branch];
+                    "weep4".postln;
+
+                    j.postln;
+
+
                 };
 
         };

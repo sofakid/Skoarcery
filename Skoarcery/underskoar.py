@@ -43,7 +43,6 @@ def skoarToke():
     _____.attrvar("<>", val_)
 
     _____.classvar("<", regex_, _.null)
-    _____.classvar("<", inspectable_, _.false)
     _____.nl()
 
     _____.constructor(s_)
@@ -69,8 +68,12 @@ def skoarToke():
 
     is_sc = isinstance(_, emissions.ScTongue)
     if is_sc:
+        _________.if_(match_ + ".size == 0")
+        _____________.return_(_.null)
+        _________.end_if()
+
         _________.if_(match_ + "[0][0] == " + offs_)
-    _________________.return_(_.v_new(toke_class_, _.v_regex_group_zero(match_)))
+    _____________________.return_(_.v_new(toke_class_, _.v_regex_group_zero(match_)))
     if is_sc:
         _________.end_if()
 
@@ -140,11 +143,11 @@ def EOF_token():
 
 def typical_token(token):
 
-    inspectable = _.true if token.name in terminals.inspectables else _.false
+    #inspectable = _.true if token.name in terminals.inspectables else _.false
 
     _.class_(token.toker_name, SkoarToke_)
     _____.classvar("<", regex_, _.v_def_regex(token.regex))
-    _____.classvar("<", inspectable_, inspectable)
+    #_____.classvar("<", inspectable_, inspectable)
     _____.nl()
     _____.static_method(match_, buf_, offs_)
     _________.return_(SkoarToke_ + "." + match_toke_ + "(" + buf_ + ", " + offs_ + ", " + token.toker_name + ")")

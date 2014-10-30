@@ -220,6 +220,9 @@ class Tongue:
     def v_str(self, s):
         return '"' + s + '"'
 
+    def v_sym(self, s):
+        return "'" + s + "'"
+
     def raw(self, code):
         self._emit(code, end="")
 
