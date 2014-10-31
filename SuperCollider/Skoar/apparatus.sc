@@ -185,10 +185,7 @@ SkoarNoad {
         | here, f, stinger=nil |
         var j = here.pop;
         var n = children.size - 1;
-
-
-
-"j: ".post; j.post; " <- here.pop: ".post; here.postln;
+//"j: ".post; j.post; " <- here.pop: ".post; here.postln;
 
         if (j == nil) {
             this.inorder(f, stinger);

@@ -46,22 +46,22 @@ SkoarpuscleBeat : Skoarpuscle {
         s = toke.lexeme;
         n = s.size;
 
-        if (s.beginsWith(".")) {
-            n = n - 1;
-            is_staccato = true;
-        } {
-            is_staccato = false;
-        };
+        is_staccato = if (s.beginsWith(".")) {
+                          n = n - 1;
+                          true
+                      } {
+                          false
+                      };
 
         if (s.contains("__")) {
             has_tie = true;
             n = n - 2;
         };
 
-        if (toke.isKindOf(Toke_Eighths)) {
-            val = SkoarpuscleBeat.beat_short(s, n);
+        val = if (toke.isKindOf(Toke_Eighths)) {
+            SkoarpuscleBeat.beat_short(s, n);
         } {
-            val = SkoarpuscleBeat.beat_long(s, n);
+            SkoarpuscleBeat.beat_long(s, n);
         };
 
     }
@@ -97,11 +97,11 @@ SkoarpuscleRest : SkoarpuscleBeat {
         s = toke.lexeme;
         n = s.size;
 
-        if (toke.isKindOf(Toke_Quavers)) {
+        val = if (toke.isKindOf(Toke_Quavers)) {
             // size -1 for the / (we just count the o's)
-            val = SkoarpuscleBeat.beat_short(s, n - 1);
+            SkoarpuscleBeat.beat_short(s, n - 1)
         } {
-            val = SkoarpuscleBeat.beat_long(s, n);
+            SkoarpuscleBeat.beat_long(s, n)
         };
 
     }

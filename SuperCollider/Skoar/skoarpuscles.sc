@@ -328,9 +328,41 @@ SkoarpuscleFine : Skoarpuscle {
     }
 }
 
+SkoarpuscleSegno : Skoarpuscle {
+
+    var <noad;
+
+    *new {
+        | nod, toke |
+        ^super.new.init_two(nod, toke);
+    }
+
+    init_two {
+        | nod, toke |
+        var s = toke.lexeme;
+        var n = s.size;
+
+        noad = nod;
+
+        // ,segno`label`
+        if (n > 8) {
+            s[6..n-2].asSymbol;
+        } {
+            \segno
+        };
+        val = s[1..n].asSymbol;
+    }
+
+    performer {
+        | m, nav |
+        m.koar.state_put(\segno_seen, noad);
+    }
+
+}
+
 SkoarpuscleGoto : Skoarpuscle {
 
-    var dst;
+    var nav_cmd;
     var al_fine;
 
     init {
@@ -339,12 +371,14 @@ SkoarpuscleGoto : Skoarpuscle {
         var toke = noad.children[0].next_toke;
         var al_x = noad.children[1];
 
-        dst = case {toke.isKindOf(Toke_DaCapo)} {\nav_da_capo}
-                   {toke.isKindOf(Toke_DalSegno)} {\nav_segno};
+        nav_cmd = case {toke.isKindOf(Toke_DaCapo)} {\nav_da_capo}
+                       {toke.isKindOf(Toke_DalSegno)} {\nav_segno};
 
         al_fine = false;
+        "al_x".post; al_x.dump;
         if (al_x != nil) {
-            if (al_x.toke.isKindOf(Toke_AlFine)) {
+            if (al_x.next_toke.isKindOf(Toke_AlFine)) {
+            "dorp".postln;
                 al_fine = true;
             };
         };
@@ -352,16 +386,14 @@ SkoarpuscleGoto : Skoarpuscle {
 
     performer {
         | m, nav |
-        "zorp?".postln;
         if (al_fine == true) {
-        "bloop".postln;
+            "al fine seen.".postln;
             m.koar.state_put(\al_fine, true);
-        "bloop2".postln;
         };
 
         m.reset_colons;
-        "bloop3".postln;
-        nav.(dst);
+        "goto:".post; nav_cmd.postln;
+        nav.(nav_cmd);
     }
 
 }
@@ -486,36 +518,6 @@ SkoarpuscleVoice : Skoarpuscle {
         var s = toke.lexeme;
         var n = s.size - 1;
         val = s[1..n].asSymbol;
-    }
-
-}
-
-SkoarpuscleSegno : Skoarpuscle {
-
-    var <noad;
-
-    *new {
-        | nod, toke |
-        ^super.new.init_two(nod, toke);
-    }
-
-    init_two {
-        | nod, toke |
-        var s = toke.lexeme;
-        var n = s.size;
-
-        // ,segno`label`
-        if (n > 8) {
-            s[6..n-2].asSymbol;
-        } {
-            \segno
-        };
-        val = s[1..n].asSymbol;
-    }
-
-    performer {
-        | m, nav |
-        m.segno_seen = noad;
     }
 
 }

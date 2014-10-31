@@ -376,6 +376,7 @@ SkoarKoar {
 
                 {\nav_segno} {
                     dst = this.state_at(\segno_seen);
+                    "segno_seen:".post; dst.postln;
 
                     if (dst == nil) {
                         up_nav.(\nav_segno);
