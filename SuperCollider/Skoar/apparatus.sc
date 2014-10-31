@@ -4,10 +4,8 @@
 // ==========================
 SkoarNoad {
 
-    var <>address;         // a list code to find the noad quickly
+    var  address;         // a list code to find the noad quickly
     var <>parent;          // the parent noad
-    var <>i;               // position in parent
-    var <>n;               // number of children
     var <>children;        // a list of child noads
 
     var <>evaluate;        // pass functions between skoarmantic levels here
@@ -24,22 +22,18 @@ SkoarNoad {
     var <>skoap;           // what skoap are we in
 
     *new {
-        | name, parent, i_p=0 |
-        ^super.new.init(name, parent, i_p);
+        | name, parent |
+        ^super.new.init(name, parent);
     }
 
     init {
-        | nameArg, parentArg, i_p=0 |
+        | nameArg, parentArg |
 
         parent = parentArg;
-
-        i = i_p;
-        n = 0;
-
         name = nameArg;
 
         children = List[];
-        address = List[];
+        address = [];
 
     }
 
@@ -47,12 +41,17 @@ SkoarNoad {
         ^name.asString;
     }
 
+    // here we return a copy, as whomever uses it is likely going to start
+    // popping numbers off of it.
+    address {
+        ^Array.newFrom(address);
+    }
+
     // -------------------
     // decorating the tree
     // -------------------
-
     decorate_pass_two {
-        | v, s, parent_address |
+        | v, s, parent_address, i=0 |
 
         if (voice == nil) {
             voice = v;
@@ -61,30 +60,34 @@ SkoarNoad {
             v = voice;
         };
 
-        if (i == nil) {
-            "nil i? ".post; name.postln;
-        };
         address = [i] ++ parent_address;
-        "p#: ".post; parent_address.post; ", ".post; i.postln;
-        "##: ".post; address.postln;
+        "____: ".post; address.post; name.postln;
+
+        //"p#: ".post; parent_address.post; ", ".post; i.postln;
 
         if (skoap == nil) {
             skoap = s;
         } {
             // the skoap has changed, this is what the children get
             s = skoap;
-            address = List[i];
-            "!#: ".post; address.postln;
+            address = [];
+            "!!!!: ".post; address.postln;
         };
 
-
+        i = 0;
         children.do {
             | y |
             if (y.isKindOf(SkoarNoad)) {
-                y.decorate_pass_two(v, s, address);
+                y.decorate_pass_two(v, s, address, i);
             };
+            i = i + 1;
         };
 
+        // we remove the skoarpions from the tree
+        // (they are in this.skoarpuscle)
+        if (name == \skoarpion) {
+            children = [];
+        };
     }
 
     // ----------------
@@ -93,16 +96,13 @@ SkoarNoad {
     add_noad {
         | noad |
         children.add(noad);
-        noad.i = n;
-        n = n + 1;
     }
 
     add_toke {
         | name, t |
-        var x = SkoarNoad(t.class.name, this, n);
+        var x = SkoarNoad(t.class.name, this);
         x.toke = t;
         children.add(x);
-        n = n + 1;
     }
 
     // ----------------
@@ -110,11 +110,11 @@ SkoarNoad {
     // ----------------
     draw_tree {
         | tab = 1 |
+        var n = 40 - address.asString.size;
+        var s = " ".padLeft(n) ++ address.asString ++ ": ";
 
-        var s = if (voice != nil) {
-            voice.name ++ ":"
-        } {
-            ""
+        if (voice != nil) {
+            s = s ++ voice.name ++ ":"
         };
 
         s = s ++ " ".padLeft(tab) ++ name;
@@ -131,7 +131,7 @@ SkoarNoad {
                 s = s ++ x.draw_tree(tab + 1);
                 //x.draw_tree(tab + 1);
             } {
-                s = s ++ " ".padLeft(tab + 1) ++ x.class.asString ++ "\n";
+                s = s ++ " ".padLeft(tab + 1) ++ x.class.asString ++"\n";
             };
         };
 
@@ -170,7 +170,7 @@ SkoarNoad {
             stinger.inorder(f);
         };
 
-        "--- inorder: ".post; name.postln;
+        //"--- inorder: ".post; name.postln;
         f.(this);
 
         children.do {
@@ -186,15 +186,14 @@ SkoarNoad {
         var j = here.pop;
         var n = children.size - 1;
 
-        if (here.size == 0) {
-            f.(this);
-        };
+
 
 "j: ".post; j.post; " <- here.pop: ".post; here.postln;
 
         if (j == nil) {
             this.inorder(f, stinger);
         } {
+
             for (j, n, {
                 | k |
                 children[k].inorder_from(here, f, stinger);
@@ -205,6 +204,7 @@ SkoarNoad {
 
     // this finds the preceding noad
     prev_noad {
+        var i = address[address.size-1];
 
         // are we leftmost sibling?
         if (i == 0) {

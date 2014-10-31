@@ -352,7 +352,7 @@ SkoarKoar {
             nav_result = block {
                 | nav |
 
-                z.inorder_from(dst.address, {
+                dst.skoap.inorder_from(dst.address, {
                     | x |
                     x.perform(minstrel, nav);
 
@@ -381,25 +381,17 @@ SkoarKoar {
                         up_nav.(\nav_segno);
                     };
 
-                    j = parts_index[dst.skoap];
                 }
 
                 {\nav_jump} {
                     "weep0".postln;
                     dst = this.state_at(\colon_seen);
-                    "weep1".postln;
+                    "weep1:dst:".post; dst.dump;
 
                     if (dst == nil) {
                     "weep2".postln;
                         up_nav.(\nav_jump);
                     };
-
-                    "weep3".postln;
-                    j = parts_index[dst.skoap];
-                    "weep4".postln;
-
-                    j.postln;
-
 
                 };
 

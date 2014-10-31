@@ -28,14 +28,7 @@ Skoarmantics {
 
             \branch -> {
                 | skoar, noad |
-
-                var n = 0;
-                var x = nil;
-
-                n = noad.n;
-                x = noad.next_skoarpuscle;
-
-                noad.skoap = noad;
+                var x = noad.next_skoarpuscle;
 
                 if (x.isKindOf(SkoarpuscleVoice)) {
                     noad.voice = skoar.get_voice(x.val);
@@ -45,28 +38,27 @@ Skoarmantics {
 
             \beat -> {
                 | skoar, noad |
-                noad.skoarpuscle = noad.next_skoarpuscle;
-                noad.children = [];
-                noad.n = 0;
+                var x = noad.next_skoarpuscle;
+                noad.skoarpuscle = x;
                 noad.performer = {
                     | m, nav |
-                    noad.skoarpuscle.performer(m, nav);
+                    x.performer(m, nav);
                 };
+                noad.children = [];
             },
 
             \listy -> {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleArray(noad.collect_skoarpuscles);
-                noad.n = 0;
                 noad.children = [];
 
             },
 
             \musical_keyword_misc -> {
                 | skoar, noad |
-                var x = noad.next_skoarpuscle;
+                var skoarpuscle = noad.next_skoarpuscle;
 
-                if (x.isKindOf(SkoarpuscleCarrot)) {
+                if (skoarpuscle.isKindOf(SkoarpuscleCarrot)) {
                     noad.one_shots = {"TODO stress noat".postln;};
                 };
 
@@ -74,11 +66,11 @@ Skoarmantics {
 
             \ottavas -> {
                 | skoar, noad |
-                var skoarpuscle = noad.next_skoarpuscle;
+                var x = noad.next_skoarpuscle;
 
                 noad.performer = {
                     | m, nav |
-                    skoarpuscle.performer(m, nav);
+                    x.performer(m, nav);
                 };
 
             },
@@ -90,22 +82,21 @@ Skoarmantics {
         
             \dynamic -> {
                 | skoar, noad |
-                var skoarpuscle = noad.next_skoarpuscle;
+                var x = noad.next_skoarpuscle;
 
                 noad.performer = {
                     | m, nav |
-                    skoarpuscle.performer(m, nav);
+                    x.performer(m, nav);
                 };
             },
 
             \dal_goto -> {
                 | skoar, noad |
-                var s = SkoarpuscleGoto(noad);
+                var x = SkoarpuscleGoto(noad);
 
                 noad.performer = {
                     | m, nav |
-                    "blerg?".postln;
-                    s.performer(m, nav);
+                    x.performer(m, nav);
 
                 };
             },
@@ -113,18 +104,16 @@ Skoarmantics {
             \marker -> {
                 | skoar, noad |
 
-                var skoarpuscle = noad.next_skoarpuscle;
+                var x = noad.next_skoarpuscle;
 
-                if (skoarpuscle != nil) {
+                if (x != nil) {
                     noad.performer = {
                         | m, nav |
-                        "zerp?".postln;
-                        skoarpuscle.performer(m, nav);
+                        x.performer(m, nav);
                     };
                 };
 
             },
-
 
             \pedally -> {
                 | skoar, noad |
@@ -149,13 +138,11 @@ Skoarmantics {
                 var x = nil;
                 var clean = {
                     noad.children = [];
-                    noad.n = 0;
                 };
 
                 x = noad.next_skoarpuscle;
                 if (x != nil) {
                     noad.skoarpuscle = x;
-                    clean.();
                 };
 
             },
@@ -169,11 +156,6 @@ Skoarmantics {
                 var args;
                 var msg_name;
 
-                var clean = {
-                    noad.children = [];
-                    noad.n = 0;
-                };
-
                 msg_name = noad.children[1].toke.val;
 
                 if (noad.children.size > 2) {
@@ -181,7 +163,7 @@ Skoarmantics {
                 };
 
                 noad.skoarpuscle = SkoarpuscleDeref(msg_name, args);
-                clean.();
+                noad.children = [];
 
             },
 
@@ -190,12 +172,10 @@ Skoarmantics {
 
                 noad.skoarpuscle = SkoarpuscleArgs(noad.collect_skoarpuscles);
                 noad.children = [];
-                noad.n = 0;
             },
 
             \msg -> {
                 | skoar, noad |
-
                 var x = nil;
                 var args = nil;
 
@@ -204,7 +184,6 @@ Skoarmantics {
                 noad.skoarpuscle = SkoarpuscleMsg(x, args);
 
                 noad.children = [];
-                noad.n = 0;
 
             },
 
@@ -236,7 +215,6 @@ Skoarmantics {
 
             \skoaroid -> {
                 | skoar, noad |
-
                 var kids = List[];
 
                 // strip out the operators
@@ -249,7 +227,6 @@ Skoarmantics {
 
                 noad.children = kids.asArray;
                 kids = noad.children;
-                noad.n = kids.size;
 
                 // evaluate messages, returning the result
                 noad.evaluate = {

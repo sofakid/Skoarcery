@@ -1,6 +1,7 @@
 // The Skoarpion is our general purpose control structure.
 Skoarpion {
 
+    var skoap;
     var <name;
     var <n;
 
@@ -23,6 +24,7 @@ Skoarpion {
         | skoar |
         body = skoar.tree;
         n = body.size;
+        skoap = body;
     }
 
     init {
@@ -35,8 +37,9 @@ Skoarpion {
         var section = SkoarNoad(\section, nil);
         var sections = List[];
 
-        line.skoap = this;
-        section.skoap = this;
+        skoap = noad;
+        line.skoap = skoap;
+        section.skoap = skoap;
 
         // 0 - start
         // 1 - sig
@@ -64,7 +67,7 @@ Skoarpion {
                 sections.add(section);
 
                 section = SkoarNoad(\section, nil);
-                section.skoap = this;
+                section.skoap = skoap;
                 line = SkoarNoad(\line, nil);
 
             } {x.toke.isKindOf(Toke_Newline)} {
@@ -160,7 +163,6 @@ SkoarpionIter {
 
     choose {
         ^this.selector({n.rand});
-
     }
 
     wchoose {

@@ -72,7 +72,7 @@ Skoar {
         tree.voice = conductoar;
         tree.skoap = tree;
 
-        tree.decorate_pass_two(conductoar, nil, List[0]);
+        tree.decorate_pass_two(conductoar, nil, [0]);
         "<<< second pass done.".postln;
     }
 
