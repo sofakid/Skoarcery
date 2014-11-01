@@ -135,14 +135,11 @@ Skoarmantics {
             \nouny -> {
                 | skoar, noad |
 
-                var x = nil;
-                var clean = {
-                    noad.children = [];
-                };
+                var x = noad.next_skoarpuscle;
 
-                x = noad.next_skoarpuscle;
                 if (x != nil) {
                     noad.skoarpuscle = x;
+                    noad.descend = false;
                 };
 
             },

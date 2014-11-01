@@ -149,7 +149,15 @@ SkoarpuscleDeref : Skoarpuscle {
         "deref:performer: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
-            m.koar.do_skoarpion(x.val, m, nav, msg_arr, args)
+            "blerg:".postln;
+            x.val.postln;
+            m.postln;
+            nav.postln;
+            msg_arr.postln;
+            args.postln;
+
+            m.koar.do_skoarpion(x.val, m, nav, msg_arr, args);
+            "blorg".postln;
         } {
             if (x.isKindOf(Skoarpuscle)) {
                 x.performer(m, nav);
@@ -175,11 +183,11 @@ SkoarpuscleDeref : Skoarpuscle {
             x = val.asClass;
         };
 
-        ret = if (x != nil) {
-                 x.performMsg(msg_arr)
-              } {
-                 val.performMsg(msg_arr)
-              };
+        if (x != nil) {
+            "derb".postln;
+            ret = x.performMsg(msg_arr);
+            "derb2".postln;
+        };
 
         ^Skoarpuscle.wrap(ret);
     }

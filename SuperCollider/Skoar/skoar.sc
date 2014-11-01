@@ -24,8 +24,8 @@ Skoar {
         parser = SkoarParser.new(this);
 
         voices = IdentityDictionary.new;
-        conductoar = SkoarKoar.new(this, \conductoar);
-        voices[\conductoar] = conductoar;
+        conductoar = SkoarKoar.new(this, \all);
+        voices[\all] = conductoar;
 
     }
 

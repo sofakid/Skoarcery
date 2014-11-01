@@ -11,6 +11,8 @@ SkoarNoad {
     var <>evaluate;        // pass functions between skoarmantic levels here
     var <>setter;          // pass functions between skoarmantic levels here
 
+    var <>descend;         // while performing, do we descend or are we done with this
+
     var <>name;            // name of the nonterminal
     var <>skoarpuscle;     // skoarpuscle types go here
     var <>toke;
@@ -34,6 +36,7 @@ SkoarNoad {
 
         children = List[];
         address = [];
+        descend = true;
 
     }
 
@@ -61,9 +64,6 @@ SkoarNoad {
         };
 
         address = [i] ++ parent_address;
-        "____: ".post; address.post; name.postln;
-
-        //"p#: ".post; parent_address.post; ", ".post; i.postln;
 
         if (skoap == nil) {
             skoap = s;
@@ -71,22 +71,28 @@ SkoarNoad {
             // the skoap has changed, this is what the children get
             s = skoap;
             address = [];
-            "!!!!: ".post; address.postln;
         };
 
         i = 0;
         children.do {
             | y |
-            if (y.isKindOf(SkoarNoad)) {
-                y.decorate_pass_two(v, s, address, i);
-            };
+            y.decorate_pass_two(v, s, address, i);
             i = i + 1;
         };
 
-        // we remove the skoarpions from the tree
-        // (they are in this.skoarpuscle)
         if (name == \skoarpion) {
-            children = [];
+            var b = skoarpuscle.val.body;
+
+            // section and lines need voices
+            b.voice = v;
+            b.children.do {
+                | x |
+                x.voice = v;
+            };
+
+            // we remove the skoarpions from the tree
+            // (they are in parent.skoarpuscle)
+            //children = [];
         };
     }
 
@@ -110,12 +116,14 @@ SkoarNoad {
     // ----------------
     draw_tree {
         | tab = 1 |
-        var n = 40 - address.asString.size;
-        var s = " ".padLeft(n) ++ address.asString ++ ": ";
+        var n = 16;
+        var s = "";
 
-        if (voice != nil) {
-            s = s ++ voice.name ++ ":"
-        };
+        s = if (voice != nil) {
+                voice.name.asString.padLeft(n) ++ ":"
+            } {
+                ":".padLeft(n+1)
+            };
 
         s = s ++ " ".padLeft(tab) ++ name;
 
@@ -124,15 +132,13 @@ SkoarNoad {
         };
 
         s = s ++ "\n";
-        //s.post;
         children.do {
             | x |
-            if (x.isKindOf(SkoarNoad)) {
-                s = s ++ x.draw_tree(tab + 1);
-                //x.draw_tree(tab + 1);
-            } {
-                s = s ++ " ".padLeft(tab + 1) ++ x.class.asString ++"\n";
-            };
+            s = if (x.isKindOf(SkoarNoad)) {
+                    s ++ x.draw_tree(tab + 1)
+                } {
+                    s ++ " ".padLeft(tab + 1) ++ x.class.asString ++ "\n"
+                };
         };
 
         ^s;
@@ -166,7 +172,7 @@ SkoarNoad {
 
         //">>> inorder: ".post; name.postln;
         if (stinger != nil && skoarpuscle.isKindOf(SkoarpuscleBeat)) {
-            "!!! stinger: ".post; stinger.postln;
+            debug("!!! stinger: " ++ stinger.asString);
             stinger.inorder(f);
         };
 
@@ -199,27 +205,30 @@ SkoarNoad {
 
     }
 
+    // these ones filter by voice
     inorder_with_voice {
-        | v, f, stinger=nil |
+        | v, f, stinger |
         var s = voice.name;
 
-        if ((s == v.name) || (s == \conductoar)) {
-            //">>> inorder_with_voice: ".post; v.name.post; ":".post; name.postln;
+        if ((s == v.name) || (s == \all)) {
+            //debug(">>> inorder_with_voice: " ++ v.name.post ++ ":" ++ name);
 
             if (stinger != nil && skoarpuscle.isKindOf(SkoarpuscleBeat)) {
-                "!!! stinger: ".post; stinger.postln;
+                //debug("!!! stinger: " ++ stinger.asString);
                 stinger.inorder_with_voice(v, f);
             };
 
-            //"--- inorder_with_voice: ".post; v.name.post; ":".post; name.postln;
+            //debug("--- inorder_with_voice: " ++ v.name.post ++ ":" ++ name ++ " d:" ++ descend);
             f.(this);
 
-            children.do {
-                | y |
-                y.inorder_with_voice(v, f, stinger);
+            if (descend != false) {
+                children.do {
+                    | y |
+                    y.inorder_with_voice(v, f, stinger);
+                };
             };
 
-            //"<<< inorder_with_voice: ".post; v.name.post; ":".post; name.postln;
+            //debug("<<< inorder_with_voice: " ++ v.name.post ++ ":" ++ name);
         };
     }
 
@@ -228,16 +237,21 @@ SkoarNoad {
         var j = here.pop;
         var n = children.size - 1;
 
-//        debug("inorder_from_here_with_voice");
+        debug("inorder_from_here_with_voice" ++ j ++ " " ++ v.asString ++ " " ++ name);
 
         if (j == nil) {
             this.inorder_with_voice(v, f, stinger);
         } {
 
-            for (j, n, {
-                | k |
-                children[k].inorder_from_here_with_voice(here, v, f, stinger);
-            });
+            children[j].inorder_from_here_with_voice(here, v, f, stinger);
+
+            j = j + 1;
+            if (j <= n) {
+                for (j, n, {
+                    | k |
+                    children[k].inorder_with_voice(v, f, stinger);
+                });
+            };
         };
 
     }

@@ -90,7 +90,7 @@ Skoarchestra {
         minstrels = List.new;
 
         if (skoar.voices.size == 1) {
-            minstrels.add(SkoarMinstrel.new(\conductoar, skoar.conductoar, skoar));
+            minstrels.add(SkoarMinstrel.new(\all, skoar.conductoar, skoar));
         } {
             skoar.voices.do {
                 | v |

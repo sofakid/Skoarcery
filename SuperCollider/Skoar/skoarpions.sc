@@ -30,7 +30,6 @@ Skoarpion {
     init {
         | noad |
         var kids = noad.children;
-        var m = kids.size;
         var sig, suffix;
         var i = 0;
         var line = SkoarNoad(\line, nil);
@@ -67,7 +66,6 @@ Skoarpion {
                 sections.add(section);
 
                 section = SkoarNoad(\section, nil);
-                section.skoap = skoap;
                 line = SkoarNoad(\line, nil);
 
             } {x.toke.isKindOf(Toke_Newline)} {
@@ -99,7 +97,6 @@ Skoarpion {
             body = sections[0];
             stinger = SkoarNoad(\stinger, nil);
             stinger.children = sections[1..];
-            stinger.n = stinger.children.size;
         };
 
         n = body.size;
