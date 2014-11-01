@@ -242,7 +242,7 @@ Skoarmantics {
                             };
                         };
 
-                        "result: ".post; result.postln;
+                        //"result: ".post; result.postln;
                         result
                     } {
                         var x = noad.next_skoarpuscle;

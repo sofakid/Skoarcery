@@ -136,6 +136,7 @@ SkoarpionIter {
     var <>i;
     var <>n;
     var body;
+    var parts;
 
     *new {
         | skrp |

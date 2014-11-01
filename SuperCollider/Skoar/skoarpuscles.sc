@@ -312,7 +312,6 @@ SkoarpuscleBars : Skoarpuscle {
 
         if (post_repeat == true) {
             m.koar.state_put(\colon_seen, noad);
-            "just put ".post; m.koar.state_at(\colon_seen).postln;
         };
     }
 
@@ -387,12 +386,11 @@ SkoarpuscleGoto : Skoarpuscle {
     performer {
         | m, nav |
         if (al_fine == true) {
-            "al fine seen.".postln;
             m.koar.state_put(\al_fine, true);
         };
 
         m.reset_colons;
-        "goto:".post; nav_cmd.postln;
+        //"goto:".post; nav_cmd.postln;
         nav.(nav_cmd);
     }
 

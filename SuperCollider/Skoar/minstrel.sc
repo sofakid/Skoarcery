@@ -15,8 +15,6 @@ SkoarMinstrel {
 
     init {
         | nom, k, skr |
-        var i = 0;
-        var f;
         var skoarpion;
 
         skoar = skr;
@@ -33,7 +31,6 @@ SkoarMinstrel {
 
                 nav_result = block {
                     | nav |
-                    "Starting skoarpion.".postln;
                     koar.do_skoarpion(skoarpion, this, nav, nil, nil);
                     running = false;
                 };
@@ -90,7 +87,6 @@ Skoarchestra {
 
     init {
         | skoar |
-
         minstrels = List.new;
 
         if (skoar.voices.size == 1) {

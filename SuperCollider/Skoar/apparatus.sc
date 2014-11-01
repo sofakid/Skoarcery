@@ -199,6 +199,49 @@ SkoarNoad {
 
     }
 
+    inorder_with_voice {
+        | v, f, stinger=nil |
+        var s = voice.name;
+
+        if ((s == v.name) || (s == \conductoar)) {
+            //">>> inorder_with_voice: ".post; v.name.post; ":".post; name.postln;
+
+            if (stinger != nil && skoarpuscle.isKindOf(SkoarpuscleBeat)) {
+                "!!! stinger: ".post; stinger.postln;
+                stinger.inorder_with_voice(v, f);
+            };
+
+            //"--- inorder_with_voice: ".post; v.name.post; ":".post; name.postln;
+            f.(this);
+
+            children.do {
+                | y |
+                y.inorder_with_voice(v, f, stinger);
+            };
+
+            //"<<< inorder_with_voice: ".post; v.name.post; ":".post; name.postln;
+        };
+    }
+
+    inorder_from_here_with_voice {
+        | here, v, f, stinger=nil |
+        var j = here.pop;
+        var n = children.size - 1;
+
+//        debug("inorder_from_here_with_voice");
+
+        if (j == nil) {
+            this.inorder_with_voice(v, f, stinger);
+        } {
+
+            for (j, n, {
+                | k |
+                children[k].inorder_from_here_with_voice(here, v, f, stinger);
+            });
+        };
+
+    }
+
     // this finds the preceding noad
     prev_noad {
         var i = address[address.size-1];

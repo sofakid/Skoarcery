@@ -2,25 +2,13 @@
 SkoarKoar {
     var   skoar;        // global skoar
     var  <skoarboard;   //
-    var   <stack;        // stack of vars visible to the skoar code
-    var   <state_stack; // stack of vars invisible to the skoar code
+    var  <stack;        // stack of vars visible to the skoar code
+    var  <state_stack;  // stack of vars invisible to the skoar code
 
     var  <name;         // name of voice as Symbol
 
     var <>cur_noat;
     var   hand;
-
-
-    // array of branches, and an inverse map: branch -> index
-    var   parts;
-    var   parts_index;
-
-    var  <colons_burned;
-    var <>colon_seen;
-    var <>segno_seen;
-    var <>al_fine;
-
-
 
     *new {
         | skr, nom |
@@ -41,12 +29,6 @@ SkoarKoar {
         hand = Hand.new;
         cur_noat = nil;
 
-        parts = List[];
-        parts_index = Dictionary.new;
-        colons_burned = Dictionary.new;
-
-        // when set true, we will halt at a Toke_Fine
-        al_fine = false;
     }
 
     assign_incr {
@@ -259,7 +241,6 @@ SkoarKoar {
             args_def.val.do {
                 | k |
                 k = k.val;
-                "k:".post; k.postln;
                 skrb[k] = args.val[i];
                 i = i + 1;
             };
@@ -284,26 +265,16 @@ SkoarKoar {
     do_skoarpion {
         | skoarpion, minstrel, up_nav, msg_arr, skrp_args |
 
-        var i = 0;
-        var n = 0;
-        var j = 0;
-        var dst = nil;
-        var running = true;
-        var nav_result = nil;
-        var z;
+        var dst;
+        var nav_result;
         var iter;
-        var f;
+        var running = true;
 
         var state = IdentityDictionary.new;
-        var parts = List[];
-        var parts_index = Dictionary.new;
         var skoarpion_iters = IdentityDictionary.new;
-
 
         state_stack.add(state);
 
-        state[\parts] = parts;
-        state[\parts_index] = parts_index;
         state[\colons_burned] = Dictionary.new;
         state[\al_fine] = false;
         state[\skoarpion_iters] = skoarpion_iters;
@@ -317,20 +288,14 @@ SkoarKoar {
 
         if (skoarpion.name != nil) {
 
-            // start a new one if we haven't seen it
             iter = this.state_at(\skoarpion_iters)[skoarpion.name];
-            debug("fee");
 
+            // start a new one if we haven't seen it
             if (iter == nil) {
-            debug("fai");
-
                 iter = skoarpion.iter;
                 skoarpion_iters[skoarpion.name] = iter;
-
-            debug("fo");
             };
         } {
-            debug("feefifofum");
             iter = skoarpion.iter;
         };
 
@@ -339,10 +304,7 @@ SkoarKoar {
             msg_arr = [\block];
         };
 
-        z = iter.performMsg(msg_arr);
-
-        dst = z;
-"dst.address: ".post; dst.address.postln;
+        dst = iter.performMsg(msg_arr);
 
         // -----------------
         // alright let's go!
@@ -351,12 +313,12 @@ SkoarKoar {
 
             nav_result = block {
                 | nav |
-
-                dst.skoap.inorder_from(dst.address, {
-                    | x |
-                    x.perform(minstrel, nav);
-
-                }, skoarpion.stinger);
+                dst.skoap.inorder_from_here_with_voice(
+                    dst.address,
+                    minstrel.koar,
+                    {   | x |
+                        x.perform(minstrel, nav); },
+                    skoarpion.stinger);
 
                 running = false;
             };
@@ -367,16 +329,14 @@ SkoarKoar {
                     up_nav.(\nav_fine);
                 }
 
-                {\nav_coda} { j = 0; }
+                {\nav_coda} {}
 
                 {\nav_da_capo} {
-                    "bubble Da Capo time.".postln;
                     up_nav.(\nav_da_capo);
                 }
 
                 {\nav_segno} {
                     dst = this.state_at(\segno_seen);
-                    "segno_seen:".post; dst.postln;
 
                     if (dst == nil) {
                         up_nav.(\nav_segno);
@@ -385,12 +345,9 @@ SkoarKoar {
                 }
 
                 {\nav_jump} {
-                    "weep0".postln;
                     dst = this.state_at(\colon_seen);
-                    "weep1:dst:".post; dst.dump;
 
                     if (dst == nil) {
-                    "weep2".postln;
                         up_nav.(\nav_jump);
                     };
 
