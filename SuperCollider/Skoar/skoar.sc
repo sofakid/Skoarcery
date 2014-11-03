@@ -19,7 +19,7 @@ Skoar {
     init {
         | code |
 
-        skoarse = code;
+        skoarse = code ++ "\n";
         tree = nil;
         toker = Toker(skoarse);
         parser = SkoarParser.new(this);
@@ -30,9 +30,7 @@ Skoar {
 
         skoarpions = List[];
 
-    }
-
-    parse {
+        ">>> parsing skoar...".postln;
         tree = parser.skoar(nil);
 
         try {
@@ -42,7 +40,15 @@ Skoar {
             e.postln;
             toker.dump;
             e.throw;
-        }
+        };
+        //"---< Undecorated Skoar Tree >---".postln;
+        //r.tree.draw_tree.postln;
+
+        "<<< tree created, now decorating...".postln;
+        this.decorate;
+        this.draw_skoarpions;
+        "Skoar parsed.".postln;
+
     }
 
     decorate {
@@ -93,7 +99,6 @@ Skoar {
 
     }
 
-
     cthulhu {
         | noad |
 
@@ -127,36 +132,12 @@ Skoar {
             x.post_tree;
         };
     }
-
-    draw_tree {
-        "---< Skoar Tree >---".postln;
-        tree.draw_tree.postln;
-    }
 }
 
 
 +String {
 	skoar {
-        try {
-            var r = Skoar.new(this++"\n");
-            ">>> parsing skoar...".postln;
-            r.parse;
-            "<<< tree created, now decorating...".postln;
-            //"---< Undecorated Skoar Tree >---".postln;
-            //r.tree.draw_tree.postln;
-
-            r.decorate;
-
-            r.draw_tree;
-            r.draw_skoarpions;
-            "Skoar parsed.".postln;
-
-            ^r;
-        } {
-            | e |
-            e.postln;
-            e.throw;
-        }
+        ^Skoar(this);
     }
 
     pskoar {

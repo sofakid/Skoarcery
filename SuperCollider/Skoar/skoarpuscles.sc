@@ -201,7 +201,7 @@ SkoarpuscleSkoarpion : Skoarpuscle {
         };
 
         if (msg_arr != nil) {
-            m.koar.do_skoarpion(val, m, nav, msg_arr, nil)
+            m.koar.do_skoarpion(val, m, nav, msg_arr, nil);
         };
     }
 

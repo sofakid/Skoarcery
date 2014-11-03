@@ -308,7 +308,7 @@ SkoarKoar {
         // -----------------
         // alright let's go!
         // -----------------
-        while {running} {
+        while {running == true} {
 
             nav_result = block {
                 | nav |
@@ -318,11 +318,14 @@ SkoarKoar {
                     {   | x |
                         x.perform(minstrel, nav); },
                     skoarpion.stinger);
-
-                running = false;
+                nav.(\nav_done);
             };
 
             switch (nav_result)
+
+                {\nav_done} {
+                    running = false;
+                }
 
                 {\nav_fine} {
                     up_nav.(\nav_fine);
@@ -353,9 +356,9 @@ SkoarKoar {
                 };
 
         };
-
         this.pop_args;
         state_stack.pop;
+"blerg3".postln;
     }
 }
 

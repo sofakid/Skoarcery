@@ -27,15 +27,19 @@ SkoarMinstrel {
             var running = true;
             var nav_result = nil;
 
-            while {running} {
+            while {running == true} {
 
                 nav_result = block {
                     | nav |
                     koar.do_skoarpion(skoarpion, this, nav, nil, nil);
-                    running = false;
+                    nav.(\nav_done);
                 };
 
                 switch (nav_result)
+
+                    {\nav_done} {
+                        running = false;
+                    }
 
                     {\nav_fine} { running = false; }
 

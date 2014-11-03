@@ -172,46 +172,27 @@ SkoarNoad {
     }
 
     inorder {
-        | f |
+        | f, stinger=nil |
 
         //debug(">>> inorder: " ++ name);
+        if ((stinger != nil) && skoarpuscle.isKindOf(SkoarpuscleBeat)) {
+            //debug("!!! stinger: " ++ stinger.asString);
+            stinger.inorder(f);
+        };
+debug("flerb");
         f.(this);
-
+debug("florb");
         children.do {
             | y |
-            y.inorder(f);
+            "dorf".post; y.postln;
+            y.inorder(f, stinger);
         };
 
         //debug("<<< inorder: " ++ name);
     }
 
-    // these ones filter by voice
-    inorder_with_voice {
-        | v, f, stinger |
-        var s = voice.name;
-
-        if ((s == v.name) || (s == \all)) {
-            //debug(">>> inorder_with_voice: " ++ v.name.post ++ ":" ++ name);
-
-            if (stinger != nil && skoarpuscle.isKindOf(SkoarpuscleBeat)) {
-                //debug("!!! stinger: " ++ stinger.asString);
-                stinger.inorder_with_voice(v, f);
-            };
-
-            //debug("--- inorder_with_voice: " ++ v.name.post ++ ":" ++ name);
-            f.(this);
-
-            children.do {
-                | y |
-                y.inorder_with_voice(v, f, stinger);
-            };
-
-            //debug("<<< inorder_with_voice: " ++ v.name.post ++ ":" ++ name);
-        };
-    }
-
     go_from_here {
-        | here, v, f, stinger=nil |
+        | here, f, stinger=nil |
 
         // _here_ was from the perspective of the skoap.
         var p = here.size;
@@ -228,28 +209,31 @@ SkoarNoad {
         here = here.keep(p - q);
         debug("here_" ++ here);
 
-        this.inorder_from_here_with_voice(here, v, f, stinger);
+        this.inorder_from_here(here, f, stinger);
 
+        "werf?".postln;
     }
 
-    inorder_from_here_with_voice {
+    inorder_from_here {
         | here, v, f, stinger=nil |
         var j = here.pop;
         var n = children.size - 1;
 
-        debug("inorder_from_here_with_voice" ++ j ++ " " ++ v.asString ++ " " ++ name);
+        debug("inorder_from_here" ++ j ++ " " ++ name);
 
         if (j == nil) {
-            this.inorder_with_voice(v, f, stinger);
+            this.inorder(f, stinger);
         } {
-
-            children[j].inorder_from_here_with_voice(here, v, f, stinger);
+"derf".postln;
+            children[j].inorder_from_here(here, f, stinger);
+"derfniss".postln;
 
             j = j + 1;
             if (j <= n) {
                 for (j, n, {
                     | k |
-                    children[k].inorder_with_voice(v, f, stinger);
+                    debug("fooood" ++ k);
+                    children[k].inorder(f, stinger);
                 });
             };
         };
