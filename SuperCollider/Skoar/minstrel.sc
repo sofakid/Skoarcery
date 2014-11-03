@@ -3,7 +3,7 @@ SkoarMinstrel {
 
     var   skoar;
     var  <koar;
-    var  <conductoar;
+    var  <all_voice;
 
     var   event_stream;
 
@@ -19,9 +19,9 @@ SkoarMinstrel {
 
         skoar = skr;
         koar = k;
-        conductoar = skr.conductoar;
+        all_voice = skr.all_voice;
 
-        skoarpion = Skoarpion.new_from_skoar(skoar);
+        skoarpion = skoar.tree.next_skoarpuscle.val;
 
         event_stream = Routine({
             var running = true;
@@ -90,11 +90,11 @@ Skoarchestra {
         minstrels = List.new;
 
         if (skoar.voices.size == 1) {
-            minstrels.add(SkoarMinstrel.new(\all, skoar.conductoar, skoar));
+            minstrels.add(SkoarMinstrel.new(\all, skoar.all_voice, skoar));
         } {
             skoar.voices.do {
                 | v |
-                if (v != skoar.conductoar) {
+                if (v != skoar.all_voice) {
                     minstrels.add(SkoarMinstrel.new(v.name, v, skoar));
                 };
             };

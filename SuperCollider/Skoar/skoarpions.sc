@@ -1,7 +1,7 @@
 // The Skoarpion is our general purpose control structure.
 Skoarpion {
 
-    var skoap;
+    var skoar;
     var <name;
     var <n;
 
@@ -11,34 +11,52 @@ Skoarpion {
     var <args;
 
     *new {
-        | noad |
-        ^super.new.init(noad);
+        | skr, noad |
+        ^super.new.init(skr, noad);
     }
 
     *new_from_skoar {
-        | skoar |
-        ^super.new.init_from_skoar(skoar);
+        | skr |
+        ^super.new.init_from_skoar(skr);
     }
 
     init_from_skoar {
-        | skoar |
-        body = skoar.tree;
+        | skr |
+        name = \skoar;
+        body = SkoarNoad(\section);
+
+        skoar = skr;
+        skoar.skoarpions.add(this);
+
+        skoar.tree.children.do {
+            | line |
+            var i = 0;
+            var v = line.next_skoarpuscle;
+
+            if (v.isKindOf(SkoarpuscleVoice)) {
+                line.voice = skoar.get_voice(v.val);
+            };
+
+            if (line.children.size != 0) {
+                body.add_noad(line);
+            };
+        };
+
+        body.decorate_zero(skoar.all_voice, body, [], 0);
         n = body.size;
-        skoap = body;
     }
 
     init {
-        | noad |
+        | skr, noad |
         var kids = noad.children;
         var sig, suffix;
         var i = 0;
-        var line = SkoarNoad(\line, nil);
-        var section = SkoarNoad(\section, nil);
+        var line = SkoarNoad(\line);
+        var section = SkoarNoad(\section);
         var sections = List[];
 
-        skoap = noad;
-        line.skoap = skoap;
-        section.skoap = skoap;
+        skoar = skr;
+        skoar.skoarpions.add(this);
 
         // 0 - start
         // 1 - sig
@@ -60,22 +78,37 @@ Skoarpion {
 
         suffix.children.do {
             | x |
+            var process_line = {
+                var v = line.next_skoarpuscle;
+
+                if (v.isKindOf(SkoarpuscleVoice)) {
+                    line.voice = skoar.get_voice(v.val);
+                };
+
+                if (line.children.size != 0) {
+                    section.add_noad(line);
+                };
+
+            };
 
             case {x.toke.isKindOf(Toke_SkoarpionSep)} {
-                section.add_noad(line);
+
+                process_line.();
+
                 sections.add(section);
 
-                section = SkoarNoad(\section, nil);
-                line = SkoarNoad(\line, nil);
+                section = SkoarNoad(\section);
+                line = SkoarNoad(\line);
 
             } {x.toke.isKindOf(Toke_Newline)} {
-                section.add_noad(line);
-                line = SkoarNoad(\line, nil);
+
+                process_line.();
+                line = SkoarNoad(\line);
 
             } {x.toke.isKindOf(Toke_SkoarpionEnd)} {
-                section.add_noad(line);
-                sections.add(section);
 
+                process_line.();
+                sections.add(section);
             } {
                 line.add_noad(x);
             };
@@ -84,18 +117,16 @@ Skoarpion {
 
         sections.do {
             | sec |
-            sec.do {
-                | x |
-                "(*) ".post; x.asString.postln;
-            };
+            var i = 0;
+
+            sec.decorate_zero(skoar.all_voice, sec, [], i);
         };
 
+        body = sections[0];
         if (sections.size == 1) {
-            body = sections[0];
             stinger = nil;
         } {
-            body = sections[0];
-            stinger = SkoarNoad(\stinger, nil);
+            stinger = SkoarNoad(\stinger);
             stinger.children = sections[1..];
         };
 
@@ -108,10 +139,22 @@ Skoarpion {
     }
 
     post_tree {
-        ("---< Skoarpion " ++ name.asString ++ " >---").postln;
+        var s = if (name == nil) {
+                    "anonymous"
+                } {
+                    name
+                };
+
+        debug("---< Skoarpion " ++ s ++ " >---");
 
         if (args != nil) {
-            "args: ".post; args.val.postln;
+            "args: ".post;
+
+            args.val.do {
+                | x |
+                x.val.post; " ".post;
+            };
+            "".postln;
         };
 
         if (body != nil) {
@@ -133,7 +176,7 @@ SkoarpionIter {
     var <>i;
     var <>n;
     var body;
-    var parts;
+    var projection;
 
     *new {
         | skrp |
@@ -141,17 +184,32 @@ SkoarpionIter {
     }
 
     init {
-        | skrp |
-        body = skrp.body;
-        n = skrp.n;
+        | skrp, koar_name |
         i = -1;
+
+        projection = SkoarNoad(\projection);
+
+        skrp.body.children.do {
+            | x |
+            var s = x.voice.name;
+            if (s == koar_name || s == \all) {
+                // don't use add_noad, it corrupts noad.
+                projection.children.add(x);
+            };
+        };
+
+        n = projection.children.size;
+    }
+
+    block {
+        ^projection;
     }
 
     // this is returning noads
     selector {
         | f |
         i = f.value % n;
-        ^body.children[i];
+        ^projection.children[i];
     }
 
     at {
@@ -175,10 +233,6 @@ SkoarpionIter {
 
     last {
         ^this.selector({i - 1});
-    }
-
-    block {
-        ^body;
     }
 
 }

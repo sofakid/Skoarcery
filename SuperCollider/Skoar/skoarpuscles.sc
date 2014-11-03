@@ -98,18 +98,7 @@ SkoarpuscleSymbol : Skoarpuscle {
     skoar_msg {
         | msg, minstrel |
         var o = msg.get_msg_arr;
-        var ret = val;
-        var x = this.lookup(minstrel);
-
-        if (x == nil) {
-            x = val.asClass;
-        };
-
-        if (x != nil) {
-            ret = x.performMsg(o);
-        } {
-            ret = val.performMsg(o);
-        };
+        var ret = val.performMsg(o);
 
         ^Skoarpuscle.wrap(ret);
     }

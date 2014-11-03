@@ -20,20 +20,16 @@ Skoarmantics {
 
         var dict = IdentityDictionary[
 
-            \skoarpion -> {
+            \skoar -> {
                 | skoar, noad |
-                noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion(noad));
-                noad.skoap = noad;
+                noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion.new_from_skoar(skoar));
+                noad.children = [];
             },
 
-            \branch -> {
+            \skoarpion -> {
                 | skoar, noad |
-                var x = noad.next_skoarpuscle;
-
-                if (x.isKindOf(SkoarpuscleVoice)) {
-                    noad.voice = skoar.get_voice(x.val);
-                };
-
+                noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion(skoar, noad));
+                noad.children = [];
             },
 
             \beat -> {
@@ -61,7 +57,6 @@ Skoarmantics {
                 if (skoarpuscle.isKindOf(SkoarpuscleCarrot)) {
                     noad.one_shots = {"TODO stress noat".postln;};
                 };
-
             },
 
             \ottavas -> {
@@ -72,7 +67,6 @@ Skoarmantics {
                     | m, nav |
                     x.performer(m, nav);
                 };
-
             },
 
             \cthulhu -> {
@@ -97,7 +91,6 @@ Skoarmantics {
                 noad.performer = {
                     | m, nav |
                     x.performer(m, nav);
-
                 };
             },
 
@@ -112,7 +105,6 @@ Skoarmantics {
                         x.performer(m, nav);
                     };
                 };
-
             },
 
             \pedally -> {
@@ -128,7 +120,6 @@ Skoarmantics {
                     m.koar.pedal_down;
 
                 }};
-
             },
 
 
@@ -139,9 +130,7 @@ Skoarmantics {
 
                 if (x != nil) {
                     noad.skoarpuscle = x;
-                    noad.descend = false;
                 };
-
             },
 
             // deref*         : Deref MsgNameWithArgs listy_suffix
@@ -161,7 +150,6 @@ Skoarmantics {
 
                 noad.skoarpuscle = SkoarpuscleDeref(msg_name, args);
                 noad.children = [];
-
             },
 
             \args -> {
@@ -181,7 +169,6 @@ Skoarmantics {
                 noad.skoarpuscle = SkoarpuscleMsg(x, args);
 
                 noad.children = [];
-
             },
 
             \stmt -> {
@@ -207,7 +194,6 @@ Skoarmantics {
                     skrd.performer(m, nav);
 
                 }};
-
             },
 
             \skoaroid -> {
@@ -252,7 +238,6 @@ Skoarmantics {
                         }
                     }
                 };
-
             },
 
             \assignment -> {
@@ -280,7 +265,6 @@ Skoarmantics {
                         | x, voice |
                         voice.assign_set(x, settable);
                     }};
-
             },
 
             \boolean -> {

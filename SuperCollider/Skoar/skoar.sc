@@ -8,7 +8,8 @@ Skoar {
     var  <tree;         // root of tree
     var  <toker;        // toker
     var  <voices;       // all the voices
-    var  <conductoar;
+    var  <all_voice;    // the all voice
+    var  <skoarpions;   // all the skoarpions
 
     *new {
         | code |
@@ -24,8 +25,10 @@ Skoar {
         parser = SkoarParser.new(this);
 
         voices = IdentityDictionary.new;
-        conductoar = SkoarKoar.new(this, \all);
-        voices[\all] = conductoar;
+        all_voice = SkoarKoar.new(this, \all);
+        voices[\all] = all_voice;
+
+        skoarpions = List[];
 
     }
 
@@ -55,7 +58,7 @@ Skoar {
                 var g = inspector[t.class.asSymbol];
 
                 if (g.isKindOf(Function)) {
-                    g.(noad, t);
+                    g.(this, noad, t);
                 };
             } {
                 var g = skoarmantics[noad.name];
@@ -67,18 +70,13 @@ Skoar {
         };
 
         tree.depth_visit(f);
-
-        ">>> second pass...".postln;
-        tree.voice = conductoar;
-        tree.skoap = tree;
-
-        tree.decorate_pass_two(conductoar, nil, [0]);
-        "<<< second pass done.".postln;
     }
 
     // ----
     // misc
     // ----
+
+    // creates a new one if needed
     get_voice {
         | k |
 
@@ -124,13 +122,9 @@ Skoar {
     }
 
     draw_skoarpions {
-        tree.collect([\nouny]).do {
+        skoarpions.do {
             | x |
-
-            x = x.skoarpuscle;
-            if (x.isKindOf(SkoarpuscleSkoarpion)) {
-                x.val.post_tree;
-            };
+            x.post_tree;
         };
     }
 

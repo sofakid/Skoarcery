@@ -28,7 +28,6 @@ SkoarKoar {
 
         hand = Hand.new;
         cur_noat = nil;
-
     }
 
     assign_incr {
@@ -313,7 +312,7 @@ SkoarKoar {
 
             nav_result = block {
                 | nav |
-                dst.skoap.inorder_from_here_with_voice(
+                dst.go_from_here(
                     dst.address,
                     minstrel.koar,
                     {   | x |

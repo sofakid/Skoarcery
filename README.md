@@ -223,7 +223,7 @@ Let's make a function:
     !! !derp.choose !}
 
     <? - this calls !zorp.choose, setting @derp to <_a, c#, e>
-       - @derp.choose in the stinger, means it will pick one noat from @derp each beat.
+       - !derp.choose in the stinger, means it will pick one noat from @derp each beat.
        - the !zorp.choose will choose one line at random ?>
     !zorp<<_a, c#, e>>.choose
 
@@ -377,7 +377,7 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 
 - [skoar.sc] - The skoar object you get from compiling your skoar. From here you get a pattern object and play it.
 - [apparatus.sc] - The parse tree code. Noads, searching, iteration, etc.
-- [voice.sc] - Voice object - each voice is performed by a minstrel.
+- [koar.sc] - Each voice is performed on a koar by a minstrel.
 - [minstrel.sc] - Minstrels are agents who read and perform their own voice of a skoar piece.
 - [skoarpions.sc] - Implements the Skoarpion, our general purpose control-flow construct.
 - [beaty.sc] - The code for beats and rests.
@@ -419,7 +419,7 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 [beaty.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/beaty.sc
 [pitchy.sc]:       https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/pitchy.sc
 [skoarpions.sc]:   https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/skoarpions.sc
-[voice.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/voice.sc
+[koar.sc]:         https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/koar.sc
 [skoarpuscles.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/skoarpuscles.sc
 [toker.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/toker.sc
 
