@@ -202,15 +202,15 @@ SkoarNoad {
                ++ "#here=" ++ here.asString ++ " #address" ++ address.asString);
         };
 
-        debug(">>>go_from_here from skoap's perspective: " ++ here);
-        debug("address " ++ address);
+        //debug(">>>go_from_here from skoap's perspective: " ++ here);
+        //debug("address " ++ address);
 
         here = here.keep(p - q);
-        debug("dst: " ++ here);
+        //debug("dst: " ++ here);
 
         this.inorder_from_here(here, f, stinger);
 
-        debug("<<<go_from_here");
+        //debug("<<<go_from_here");
     }
 
     inorder_from_here {
@@ -218,7 +218,7 @@ SkoarNoad {
         var j = here.pop;
         var n = children.size - 1;
 
-        debug("inorder_from_here" ++ j ++ " " ++ name);
+        //debug("inorder_from_here" ++ j ++ " " ++ name);
 
         if (j == nil) {
             this.inorder(f, stinger);

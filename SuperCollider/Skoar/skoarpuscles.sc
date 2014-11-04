@@ -135,18 +135,17 @@ SkoarpuscleDeref : Skoarpuscle {
         | m, nav |
         var x = this.lookup(m);
 
-        "deref:performer: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+        //"deref:performer: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
-            "blerg:".postln;
+            /*"blerg:".postln;
             x.val.postln;
             m.postln;
             nav.postln;
             msg_arr.postln;
-            args.postln;
+            args.postln;*/
 
             m.koar.do_skoarpion(x.val, m, nav, msg_arr, args);
-            "blorg".postln;
         } {
             if (x.isKindOf(Skoarpuscle)) {
                 x.performer(m, nav);
@@ -160,7 +159,7 @@ SkoarpuscleDeref : Skoarpuscle {
         var ret = val;
         var x = this.lookup(minstrel);
 
-        "deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+        //"deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
         msg_arr = msg.get_msg_arr;
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
@@ -173,9 +172,7 @@ SkoarpuscleDeref : Skoarpuscle {
         };
 
         if (x != nil) {
-            "derb".postln;
             ret = x.performMsg(msg_arr);
-            "derb2".postln;
         };
 
         ^Skoarpuscle.wrap(ret);
@@ -371,10 +368,8 @@ SkoarpuscleGoto : Skoarpuscle {
                        {toke.isKindOf(Toke_DalSegno)} {\nav_segno};
 
         al_fine = false;
-        "al_x".post; al_x.dump;
         if (al_x != nil) {
             if (al_x.next_toke.isKindOf(Toke_AlFine)) {
-            "dorp".postln;
                 al_fine = true;
             };
         };

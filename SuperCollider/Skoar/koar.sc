@@ -358,7 +358,6 @@ SkoarKoar {
         };
         this.pop_args;
         state_stack.pop;
-"blerg3".postln;
     }
 }
 

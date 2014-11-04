@@ -44,11 +44,11 @@ mf 90 => )
 .c !zorp<!mine>.choose
 .d !zorp<!mine>.choose
 
-.h  |: ] ] ] ] ] ] ] ]  |
-.s  |: }   )   }   )   :| :| !foo.choose
-.k  |:  ))      ))     :| :| !derp.next
+.h  |: ] ] ] ] ] ] ] ] |
+.s  |: }   )   }   )   | | !foo.choose
+.k  |:  ))      ))     | | !derp.next
 
-D.S. ^^(;,;)^^
+D.C. ^^(;,;)^^
 
 ".skoar.play;
 )
@@ -56,6 +56,7 @@ D.S. ^^(;,;)^^
 
 ArrayedCollection
 
+Symbol
 
 
 
@@ -64,7 +65,7 @@ ArrayedCollection
 "
 
 mf 90 => )
-
+4/4
 .a       <_c#, _d, _e, _g#, _a, c#, d, e, g#, a> => @mine
 .b o~  forte               <_a, c#, d, e, g#, a> => @mine @bass => @instrument
 .c ~o  pp  <0,3,5> => @detune <_a, _a, c#, e, a> => @mine
@@ -94,14 +95,14 @@ mf 90 => )
  | )  }                 |
  | )    ]] oo/ ]        |
  | ] ]  ]] ]] oo/ ]]    |
-!! !x.choose !}
+!! !x.choose 'zoob'.postln !}
 
 ,segno`
 
-.a !zorp<!mine>.next
-.b !zorp<!mine>.choose
-.c !zorp<!mine>.choose
-.d !zorp<!mine>.choose
+.a !zorp<!mine>.next ]
+.b !zorp<!mine>.choose ]
+.c !zorp<!mine>.choose ]
+.d !zorp<!mine>.choose ]
 
 .h  |  ] ] ] ] ] ] ] ]  |
 .s  |: }   )   }   )   :| :| !foo.choose
@@ -113,25 +114,27 @@ D.S. ^^(;,;)^^
 ".skoar.play;
 )
 
-
-
-
+Array
+debug
 
 (
 "
-mf a ]] ]]
-{! <x> !! f f f !! d !! e !}
-{! zorp !!
-)    )
-)    ] ]
-] ]  ]] ]] ]
-!! <<_a,_c,e>, <a,c,e>, <_a,c#,_e,g>>.choose !}
- !zorp.next D.C.
+fff
+.d {! zorp<x> !!
+!x )
+.m |:c ] ] e ) :|
+!!
+'food'
+!}
+
+.m !zorp<_a> f ] !zorp<c>.next f ] !zorp<e>.next f ] !zorp<c>.next f ]
 
 ".skoar.play;
 )
 
+Array
 nil.foo;
+
 (
 "
 mf
@@ -139,9 +142,11 @@ mf
 5.rand
 @bass => @instrument
 
-<_a, c#, e>.choose ] o/ ]] ]] o/
 
-|: g ]] ]] :|
+.a |: _a ] _b ] c ] d] e] f] g] |
+.b |: _a ] _b ] c ] d] e] f]  |
+.c |: _a ] _b ] c ] d] e] |
+.d |: _a ] _b ] c ] |
 
 D.C.
 

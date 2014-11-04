@@ -7,8 +7,8 @@ b = "
 <? Zelda Wind Waker Theme - inspired by piano arrangement by Shinobu Amayake ?>
 
 <? Let's play the skoar on a midi device ?>
-!MIDIOut.new<0> => @midiout
-@midi => @type
+<?!MIDIOut.new<0> => @midiout
+@midi => @type?>
 
 
 <? key is Db, so i flat everything and sharp c & f ?>
@@ -18,18 +18,10 @@ b = "
 
 mf
 
-.bass ,segno` o~
-.bass |: <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ |
-.bass |: <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ |
-.bass |: <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ |
-.bass |: <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ |
-.bass |: <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ |
-.bass |: <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ |
-.bass |: <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ |
-.bass |: <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ |
-.bass |: <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ |
+.bass ,segno`
+.bass | <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ | D.S.
 
-.mel  |  }}} o/           | }}} o/    | }}} o/             |    }}} o/  |
+.mel  | ottava alta }}} o/  | }}} o/     | }}} o/              |    }}} o/   |
 
 .mel  | _a)   d] f#)   e] d)     c#] | d)  _b] _g)  c#] _a] d] _b]       |
 .mel  | c#)   _a] _g)   d] _b)    c#] | d)   e]] ]] f#] d] e] _a)   ] |

@@ -34,7 +34,6 @@ Skoarpion {
             var v = line.next_skoarpuscle;
 
             if (v.isKindOf(SkoarpuscleVoice)) {
-"** skoar **  VOICE: ".post; v.postln;
                 line.voice = skoar.get_voice(v.val);
             };
 
@@ -81,7 +80,6 @@ Skoarpion {
             | x |
             var process_line = {
                 var v = line.next_skoarpuscle;
-"********  VOICE: ".post; v.postln;
                 if (v.isKindOf(SkoarpuscleVoice)) {
                     line.voice = skoar.get_voice(v.val);
                 };
