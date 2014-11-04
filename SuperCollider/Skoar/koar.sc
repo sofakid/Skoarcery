@@ -291,7 +291,7 @@ SkoarKoar {
 
             // start a new one if we haven't seen it
             if (iter == nil) {
-                iter = skoarpion.iter;
+                iter = skoarpion.iter(name);
                 skoarpion_iters[skoarpion.name] = iter;
             };
         } {

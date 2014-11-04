@@ -130,6 +130,14 @@ Skoar {
         skoarpions.do {
             | x |
             x.post_tree;
+
+            "Projections: ".postln;
+            voices.keysDo {
+                | koar_name |
+                var iter = x.iter(koar_name);
+
+                iter.block.draw_tree.postln;
+            };
         };
     }
 }

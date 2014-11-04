@@ -34,6 +34,7 @@ Skoarpion {
             var v = line.next_skoarpuscle;
 
             if (v.isKindOf(SkoarpuscleVoice)) {
+"** skoar **  VOICE: ".post; v.postln;
                 line.voice = skoar.get_voice(v.val);
             };
 
@@ -80,7 +81,7 @@ Skoarpion {
             | x |
             var process_line = {
                 var v = line.next_skoarpuscle;
-
+"********  VOICE: ".post; v.postln;
                 if (v.isKindOf(SkoarpuscleVoice)) {
                     line.voice = skoar.get_voice(v.val);
                 };
@@ -135,7 +136,8 @@ Skoarpion {
     }
 
     iter {
-        ^SkoarpionIter(this);
+        | koar_name |
+        ^SkoarpionIter(this, koar_name);
     }
 
     post_tree {
@@ -179,20 +181,19 @@ SkoarpionIter {
     var projection;
 
     *new {
-        | skrp |
-        ^super.new.init(skrp);
+        | skrp, koar_name |
+        ^super.new.init(skrp, koar_name);
     }
 
     init {
         | skrp, koar_name |
         i = -1;
-
         projection = SkoarNoad(\projection);
 
         skrp.body.children.do {
             | x |
             var s = x.voice.name;
-            if (s == koar_name || s == \all) {
+            if ((s == koar_name) || (s == \all)) {
                 // don't use add_noad, it corrupts noad.
                 projection.children.add(x);
             };

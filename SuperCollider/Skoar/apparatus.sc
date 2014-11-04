@@ -179,12 +179,11 @@ SkoarNoad {
             //debug("!!! stinger: " ++ stinger.asString);
             stinger.inorder(f);
         };
-debug("flerb");
+
         f.(this);
-debug("florb");
+
         children.do {
             | y |
-            "dorf".post; y.postln;
             y.inorder(f, stinger);
         };
 
@@ -203,15 +202,15 @@ debug("florb");
                ++ "#here=" ++ here.asString ++ " #address" ++ address.asString);
         };
 
-        debug("here " ++ here);
+        debug(">>>go_from_here from skoap's perspective: " ++ here);
         debug("address " ++ address);
 
         here = here.keep(p - q);
-        debug("here_" ++ here);
+        debug("dst: " ++ here);
 
         this.inorder_from_here(here, f, stinger);
 
-        "werf?".postln;
+        debug("<<<go_from_here");
     }
 
     inorder_from_here {
@@ -224,15 +223,12 @@ debug("florb");
         if (j == nil) {
             this.inorder(f, stinger);
         } {
-"derf".postln;
             children[j].inorder_from_here(here, f, stinger);
-"derfniss".postln;
 
             j = j + 1;
             if (j <= n) {
                 for (j, n, {
                     | k |
-                    debug("fooood" ++ k);
                     children[k].inorder(f, stinger);
                 });
             };
