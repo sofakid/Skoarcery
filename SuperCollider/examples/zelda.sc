@@ -52,7 +52,7 @@ b.play;
 (x = "
 
 150 => )
-fff
+
 
 {! melody_a !!
 | _a# ) _f )__ _f]. _a# ]] ]] c ]] d ]] d# ]] f )) o/ ] <?triplets f ] f# ] g#]?> f ] f#]] g#]] a# )) |
@@ -81,7 +81,7 @@ c
 f
 !}
 
-{! dum<x> !! !x ] ] ] ] ] ] ] ] !! !}
+{! dum<x> !! !x ] ] ] ] ] ] ] ] !}
 
 {! bassline !! @bass => @instrument o~
 !dum<a#>

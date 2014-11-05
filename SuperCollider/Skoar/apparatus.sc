@@ -190,35 +190,12 @@ SkoarNoad {
         //debug("<<< inorder: " ++ name);
     }
 
-    go_from_here {
-        | here, skip_to, f, stinger |
-
-        var dst_subtree;
-
-        debug(">>>go_from_here from skoap's perspective: " ++ here);
-        debug("address " ++ address);
-
-        if (here.size > 0) {
-            var j = here.pop;
-            dst_subtree = children[skip_to[j]];
-        } {
-            dst_subtree = this;
-        };
-
-
-        debug("dst: " ++ dst_subtree);
-
-        dst_subtree.inorder_from_here(here, f, stinger);
-
-        debug("<<<go_from_here");
-    }
-
     inorder_from_here {
         | here, f, stinger |
         var j = here.pop;
         var n = children.size - 1;
 
-        debug("inorder_from_here: j:" ++ j ++ " " ++ name);
+        //debug("inorder_from_here: j:" ++ j ++ " " ++ name);
 
         if (j == nil) {
             this.inorder(f, stinger);
