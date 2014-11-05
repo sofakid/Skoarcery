@@ -134,9 +134,9 @@ Skoar {
             "Projections: ".postln;
             voices.keysDo {
                 | koar_name |
-                var iter = x.iter(koar_name);
+                var projection = x.projection(koar_name);
 
-                iter.block.draw_tree.postln;
+                projection.block.draw_tree.postln;
             };
         };
     }

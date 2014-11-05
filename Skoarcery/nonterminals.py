@@ -53,10 +53,10 @@ ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | Quindic
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
 nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy | deref | skoarpion
-+nouny_literal   : Tuplet | Caesura | Slur | Int | Float | String | Choard | NamedNoat | Symbol | CurNoat
++nouny_literal   : Tuplet | Caesura | Int | Float | String | Choard | NamedNoat | Symbol | CurNoat
 
-deref*         : Deref deref_prime
-+deref_prime   : MsgNameWithArgs listy_suffix | MsgName
+deref*           : Deref deref_prime
++deref_prime     : MsgNameWithArgs listy_suffix | MsgName
 
 stmt*            : skoaroid stmt_prime
 +stmt_prime      : assignment stmt_prime | <e>

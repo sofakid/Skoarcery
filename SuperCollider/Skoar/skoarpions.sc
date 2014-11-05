@@ -133,9 +133,9 @@ Skoarpion {
 
     }
 
-    iter {
+    projection {
         | koar_name |
-        ^SkoarpionIter(this, koar_name);
+        ^SkoarpionProjection(this, koar_name);
     }
 
     post_tree {
@@ -171,12 +171,13 @@ Skoarpion {
     }
 }
 
-SkoarpionIter {
+SkoarpionProjection {
 
     var <>i;
     var <>n;
     var body;
     var projection;
+    var <skip_to;
 
     *new {
         | skrp, koar_name |
@@ -185,19 +186,31 @@ SkoarpionIter {
 
     init {
         | skrp, koar_name |
+        var kids = skrp.body.children;
         i = -1;
         projection = SkoarNoad(\projection);
 
-        skrp.body.children.do {
+        skip_to = Array.newClear(kids.size);
+        kids.do {
             | x |
             var s = x.voice.name;
             if ((s == koar_name) || (s == \all)) {
+                var addr = x.address;
+                var m = addr.size;
+                i = i + 1;
+                if (m > 0) {
+                    var top = addr[m-1];
+                    debug("TOP:" ++ top);
+                    skip_to[top] = i;
+                };
+
                 // don't use add_noad, it corrupts noad.
                 projection.children.add(x);
             };
         };
 
         n = projection.children.size;
+        i = -1;
     }
 
     block {
@@ -232,6 +245,15 @@ SkoarpionIter {
 
     last {
         ^this.selector({i - 1});
+    }
+
+    map_dst {
+        | dst |
+        var j = dst.address.pop;
+        if (j == nil) {
+            ^dst;
+        };
+        ^projection.children[skip_to[j]];
     }
 
 }

@@ -83,6 +83,7 @@ SkoarpuscleBeat : Skoarpuscle {
             };
         };
 
+        e.asCompileString.postln;
         e.yield;
     }
 

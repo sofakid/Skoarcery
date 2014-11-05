@@ -54,7 +54,7 @@ Skoarmantics {
                 | skoar, noad |
                 var skoarpuscle = noad.next_skoarpuscle;
 
-                if (skoarpuscle.isKindOf(SkoarpuscleCarrot)) {
+                if (skoarpuscle.isKindOf(SkoarpuscleCarrots)) {
                     noad.one_shots = {"TODO stress noat".postln;};
                 };
             },
@@ -103,6 +103,11 @@ Skoarmantics {
                     noad.performer = {
                         | m, nav |
                         x.performer(m, nav);
+                    };
+
+                    if (x.isKindOf(SkoarpuscleBars)) {
+                        x.noad = noad;
+                        noad.children = [];
                     };
                 };
             },

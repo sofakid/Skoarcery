@@ -124,28 +124,48 @@ SynthDef(\tom,
 	tom_mix = Mix.new([drum_mode_mix, stick_env]) * 2 * amp;
 	Out.ar(out, [tom_mix, tom_mix]);
 }).store;
-
 )
+
+
 
 (
 x = "
 
-4/4 240 => )
+4/4 60 => )
 
 .s  @snare => @instrument
 .k  @kick  => @instrument
 .h  @hats  => @instrument ppp
 
-.h  | ] ] ] ] ] ] ] ] :|
-.s  | }   )   }   )   :|
-.k  | ))      ))      :|
+.h  |: ] ] ] ] ] ] ] ] :|
+.s  |: }   )   }   )   :|
+.k  |: ))      ))      :|
 
-".skoar;
+.a  c ) e ) g )
+
+".skoar.play;
 
 )
 
-x.pskoar.play;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Array
+x.play;
+Dictionary
 (
 x = "
 

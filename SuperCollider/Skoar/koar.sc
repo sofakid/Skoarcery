@@ -266,17 +266,17 @@ SkoarKoar {
 
         var dst;
         var nav_result;
-        var iter;
+        var projection;
         var running = true;
 
         var state = IdentityDictionary.new;
-        var skoarpion_iters = IdentityDictionary.new;
+        var projections = IdentityDictionary.new;
 
         state_stack.add(state);
 
         state[\colons_burned] = Dictionary.new;
         state[\al_fine] = false;
-        state[\skoarpion_iters] = skoarpion_iters;
+        state[\projections] = projections;
 
         if (skoarpion.isKindOf(Skoarpion) == false) {
             "This isn't a skoarpion: ".post; skoarpion.postln;
@@ -287,15 +287,15 @@ SkoarKoar {
 
         if (skoarpion.name != nil) {
 
-            iter = this.state_at(\skoarpion_iters)[skoarpion.name];
+            projection = this.state_at(\projections)[skoarpion.name];
 
             // start a new one if we haven't seen it
-            if (iter == nil) {
-                iter = skoarpion.iter(name);
-                skoarpion_iters[skoarpion.name] = iter;
+            if (projection == nil) {
+                projection = skoarpion.projection(name);
+                projections[skoarpion.name] = projection;
             };
         } {
-            iter = skoarpion.iter;
+            projection = skoarpion.projection;
         };
 
         // default behaviour (when unmessaged)
@@ -303,7 +303,7 @@ SkoarKoar {
             msg_arr = [\block];
         };
 
-        dst = iter.performMsg(msg_arr);
+        dst = projection.performMsg(msg_arr);
 
         // -----------------
         // alright let's go!
@@ -312,9 +312,13 @@ SkoarKoar {
 
             nav_result = block {
                 | nav |
-                dst.go_from_here(
-                    dst.address,
-                    minstrel.koar,
+                var y = projection.map_dst(dst);
+                var here = dst.address;
+                if (y != dst) {
+                    here.pop;
+                };
+                y.inorder_from_here(
+                    here,
                     {   | x |
                         x.perform(minstrel, nav); },
                     skoarpion.stinger);

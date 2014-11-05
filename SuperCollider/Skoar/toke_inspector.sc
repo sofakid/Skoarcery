@@ -9,7 +9,7 @@ SkoarTokeInspector {
 
     *new {
 
-        var dict = IdentityDictionary[
+        ^IdentityDictionary[
 
             \Toke_Int -> {
                 | skoar, noad, toke |
@@ -83,7 +83,7 @@ SkoarTokeInspector {
 
             \Toke_Bars -> {
                 | skoar, noad, toke |
-                noad.skoarpuscle = SkoarpuscleBars(noad, toke);
+                noad.skoarpuscle = SkoarpuscleBars(toke);
                 noad.toke = nil;
             },
 
@@ -200,7 +200,6 @@ SkoarTokeInspector {
             }
 
         ];
-        ^dict;
     }
 
 }

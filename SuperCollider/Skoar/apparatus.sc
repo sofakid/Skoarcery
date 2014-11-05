@@ -191,34 +191,34 @@ SkoarNoad {
     }
 
     go_from_here {
-        | here, f, stinger=nil |
+        | here, skip_to, f, stinger |
 
-        // _here_ was from the perspective of the skoap.
-        var p = here.size;
-        var q = address.size;
+        var dst_subtree;
 
-        if (p < q) {
-            debug("go_from_here trouble. asked for a destination not in this subtree. "
-               ++ "#here=" ++ here.asString ++ " #address" ++ address.asString);
+        debug(">>>go_from_here from skoap's perspective: " ++ here);
+        debug("address " ++ address);
+
+        if (here.size > 0) {
+            var j = here.pop;
+            dst_subtree = children[skip_to[j]];
+        } {
+            dst_subtree = this;
         };
 
-        //debug(">>>go_from_here from skoap's perspective: " ++ here);
-        //debug("address " ++ address);
 
-        here = here.keep(p - q);
-        //debug("dst: " ++ here);
+        debug("dst: " ++ dst_subtree);
 
-        this.inorder_from_here(here, f, stinger);
+        dst_subtree.inorder_from_here(here, f, stinger);
 
-        //debug("<<<go_from_here");
+        debug("<<<go_from_here");
     }
 
     inorder_from_here {
-        | here, v, f, stinger=nil |
+        | here, f, stinger |
         var j = here.pop;
         var n = children.size - 1;
 
-        //debug("inorder_from_here" ++ j ++ " " ++ name);
+        debug("inorder_from_here: j:" ++ j ++ " " ++ name);
 
         if (j == nil) {
             this.inorder(f, stinger);

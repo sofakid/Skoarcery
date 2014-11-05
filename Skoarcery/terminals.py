@@ -19,7 +19,6 @@ Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
 CurNoat:        [$]
 Portamento:     port\\.?
-Slur:           [+][+]
 
 # careful not to match ottavas with end in (ma,mb,va,vb), or steal from floats
 Int*:           (-)?(0|[1-9][0-9]*)(?![mv][ab]|\\.[0-9]|/)

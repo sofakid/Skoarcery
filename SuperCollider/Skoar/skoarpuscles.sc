@@ -273,20 +273,14 @@ SkoarpuscleMsg : Skoarpuscle {
 
 SkoarpuscleBars : Skoarpuscle {
 
-    var <noad;
+    var <>noad; // is set in \markers skoarmantics
     var <pre_repeat;
     var <post_repeat;
 
-    *new {
-        | nod, toke |
-        ^super.new.init_two(nod, toke);
-    }
-
-    init_two {
-        | nod, toke |
+    init {
+        | toke |
 
         val = toke.lexeme;
-        noad = nod;
         pre_repeat = val.beginsWith(":");
         post_repeat = val.endsWith(":");
     }

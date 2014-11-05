@@ -38,9 +38,84 @@ mf
 
 ".skoar;
 
+
+
+
+
+
 )
 (
 b.play;
 )
+
+
+(x = "
+
+150 => )
+fff
+
+{! melody_a !!
+| _a# ) _f )__ _f]. _a# ]] ]] c ]] d ]] d# ]] f )) o/ ] <?triplets f ] f# ] g#]?> f ] f#]] g#]] a# )) |
+| o/ a#] ]  g#]] f#]] g#]. f#]] f)) ) d# ] ]] f]] f#)) f] d#] c#] ]] d#]] f)) d#] c#] c] ]] d]] e)) g) f] _f ]] ]] ] ]] ]] ] ]] ]] ] ] | !}
+
+<? want just one octave up ?>
+.mel1 12 => @transpose @smooth => @instrument !melody_a D.C.
+.mel2 <0,-3,5> => @detune !melody_a D.C.
+
+.kick @kick => @instrument ) D.C.
+
+.hats @hats => @instrument
+.hats | ] ] ] ] ] ] ] ]] ]] | D.C.
+
+.snare @snare => @instrument
+.snare | } ) } ) | D.C.
+
+{! dorf !!
+a#
+g#
+f#
+c#
+b
+a#
+c
+f
+!}
+
+{! dum<x> !! !x ] ] ] ] ] ] ] ] !! !}
+
+{! bassline !! @bass => @instrument o~
+!dum<a#>
+!dum<g#>
+!dum<f#>
+!dum<c#>
+!dum<b#>
+!dum<a#>
+!dum<c>
+!dum<f>
+~o D.C. !}
+
+.args @bass => @instrument ppp
+.arps | _a# ]] d ]] f ]] a# ]] ]] f ]] d ]] _a# ]] | D.C.
+
+.bass !bassline
+
+
+".skoar;
+)
+
+x.play;
+
+(x =".arps | _a# ]] d ]] f ]] a# ]] ]] f ]] d ]] _a# ]] | _a# ]] d ]] f ]] a# ]] ]] f ]] d ]] _a# ]] |
+
+{! bassfun !! <a#, g#, f#, c#, b, a#, c, f> !}
+.
+".skoar;
+)
+(
+x.play;
+)
+
+
+Server.killAll;
 
 "killall scsynth".unixCmd
