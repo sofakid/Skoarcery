@@ -1,7 +1,7 @@
 // =====
 // Skoar
 // =====
-Skoar {
+Skoar : Object {
 
     var   skoarse;      // the skoarse code
     var   parser;       // the parser

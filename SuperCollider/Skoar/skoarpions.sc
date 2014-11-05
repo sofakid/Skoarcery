@@ -176,7 +176,7 @@ SkoarpionProjection {
     var <>i;
     var <>n;
     var body;
-    var projection;
+    var proj;
     var <skip_to;
 
     *new {
@@ -188,7 +188,7 @@ SkoarpionProjection {
         | skrp, koar_name |
         var kids = skrp.body.children;
         i = -1;
-        projection = SkoarNoad(\projection);
+        proj = SkoarNoad(\projection);
 
         skip_to = Array.newClear(kids.size);
         kids.do {
@@ -197,31 +197,30 @@ SkoarpionProjection {
             if ((s == koar_name) || (s == \all)) {
                 var addr = x.address;
                 var m = addr.size;
+
                 i = i + 1;
                 if (m > 0) {
-                    var top = addr[m-1];
-                    debug("TOP:" ++ top);
-                    skip_to[top] = i;
+                    skip_to[addr[m-1]] = i;
                 };
 
                 // don't use add_noad, it corrupts noad.
-                projection.children.add(x);
+                proj.children.add(x);
             };
         };
 
-        n = projection.children.size;
+        n = proj.children.size;
         i = -1;
     }
 
     block {
-        ^projection;
+        ^proj;
     }
 
     // this is returning noads
     selector {
         | f |
         i = f.value % n;
-        ^projection.children[i];
+        ^proj.children[i];
     }
 
     at {
@@ -253,7 +252,7 @@ SkoarpionProjection {
         if (j == nil) {
             ^dst;
         };
-        ^projection.children[skip_to[j]];
+        ^proj.children[skip_to[j]];
     }
 
 }

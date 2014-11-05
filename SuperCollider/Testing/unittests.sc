@@ -1,5 +1,18 @@
+SkoarTest : UnitTest {
 
-TestSkoarSanity : UnitTest {
+    *report {
+        super.report;
+        Post.nl;
+		if(failures.size > 0) {
+			"SKOAR FAIL".inform;
+        } {
+			"SKOAR PASS".inform;
+		};
+    }
+
+}
+
+TestSkoarSanity : SkoarTest {
 
     var <>skoarse;
 
@@ -13,26 +26,15 @@ TestSkoarSanity : UnitTest {
     tearDown {
         // this will be called after each test
     }
-     
-    test_basic {
-     
-        var a = SkoarTests.sanity_simple;
 
-        a.do {
-            | skoarse |
-            skoarse.skoar;
-        };
-
-      	//this.assert( 6 == 6, "6 should equal 6");
-      	//this.assertEquals( 9, 9, "9 should equal 9");
-      	//this.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0, 
-      	//	"floating point math should be close to equal");
-     
-      	// will wait until the condition is true
-      	// will be considered a failure after 10 seconds
-      	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
-     
-    }
+  	//this.assert( 6 == 6, "6 should equal 6");
+  	//this.assertEquals( 9, 9, "9 should equal 9");
+  	//this.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0, 
+  	//	"floating point math should be close to equal");
+ 
+  	// will wait until the condition is true
+  	// will be considered a failure after 10 seconds
+  	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
 
     test_expectations {
 
@@ -44,7 +46,10 @@ TestSkoarSanity : UnitTest {
 
             ("Test: " ++ test_name).postln;
             "Test input: ".post; s.postln;
-            "Expectations: ".post; a.dump;
+            "Expectations:".postln; a.do {
+                | x |
+                x.postln;
+            };
 
             Expectoar.test(s, a, this, msg);
 
@@ -52,11 +57,37 @@ TestSkoarSanity : UnitTest {
 
     }
 
+    test_multikoar {
+
+        SkoarTests.multikoar.keysValuesDo {
+            | test_name, test_meat |
+            var s = test_meat[0];
+            var a = test_meat[1];
+            var msg = test_name.asString;
+
+            ("Test: " ++ test_name).postln;
+            "Test input: ".post; s.postln;
+            "Expectations:".postln; a.do {
+                | x |
+                x.postln;
+            };
+
+            Expectoar.test(s, a, this, msg);
+
+        };
+
+    }
+
+
 }
 
 SkoarTests {
 
-*sanity {^IdentityDictionary[
+*sanity {
+    var qrt = (\dur:1);
+    var eth = (\dur:1/2);
+    
+    ^IdentityDictionary[
 
     \long_beats -> [
         ") ). )) )). ))) )))) .))))) )))))) )))))))",
@@ -72,13 +103,17 @@ SkoarTests {
 
     \long_rests -> [
         "} }} }}} }}}} }. }}.",
-        [(\dur:1),(\dur:2),(\dur:4),(\dur:8),(\dur:1.5),(\dur:3)]
+        [(\dur:1,\note:\rest),(\dur:2,\note:\rest),
+         (\dur:4,\note:\rest),(\dur:8,\note:\rest),
+         (\dur:1.5,\note:\rest),(\dur:3,\note:\rest)]
     ],
 
     \short_rests -> [
         "o/ oo/ ooo/ oooo/ ooooo/   o/. oo/. ooo/.",
-        [(\dur:1/2),(\dur:1/4),(\dur:1/8), (\dur:1/16),(\dur:1/32),
-         (\dur:3/4),(\dur:3/8),(\dur:3/16)]
+        [(\dur:1/2,\note:\rest),(\dur:1/4,\note:\rest),
+         (\dur:1/8,\note:\rest), (\dur:1/16,\note:\rest),
+         (\dur:1/32,\note:\rest),(\dur:3/4,\note:\rest),
+         (\dur:3/8,\note:\rest),(\dur:3/16,\note:\rest)]
     ],
 
     \fancy_beats -> [
@@ -89,14 +124,93 @@ SkoarTests {
     \fancy_beats -> [
         ".] .]]. ]. .)__ .)__. ]__.",
         [(\dur:1/2),(\dur:3/8),(\dur:3/4),(\dur:1),(\dur:1.5),(\dur:3/4)]
-    ]
+    ],
 
+/*    \numbers -> [
+        "-1 ) 0 ) 1 ) 2 ) 20 ] 0.1 ] 1.0 ]  ",
+        [(\degree:-1),(\degree:0),(\degree:1),(\degree:2),
+        (\degree:20),(\degree:0.1),(\degree:1.0)]
+    ],*/
 
+    \colons_simple -> [
+        "|: ) ) ) :| ] ] :|",
+        [
+        qrt,qrt,qrt,
+        qrt,qrt,qrt, eth,eth,
+        qrt,qrt,qrt, eth,eth
+        ]
+    ],
 
+    \colons_middle -> [
+        "|: ) ) ) |: ] ] :|",
+        [
+        qrt,qrt,qrt,
+        eth,eth,eth,eth
+        ]
+    ],
 
+    \colons_unbalanced -> [
+        "| ) ) ) :| ] ] :|",
+        [
+        qrt, qrt, qrt,
+        qrt, qrt, qrt, eth, eth,
+        qrt, qrt, qrt, eth, eth,
+        ]
+    ],
 
+    \da_capo_a -> [
+        ") ) ) fine ] ] D.C. al fine",
+        [
+        qrt, qrt, qrt, eth, eth,
+        qrt, qrt, qrt
+        ]
+    ],
 
+    \da_capo_b -> [
+        ") ) ) |: ] ] :| fine D.C. al fine",
+        [
+        qrt, qrt, qrt, eth, eth, eth, eth,
+        qrt, qrt, qrt, eth, eth, eth, eth
+        ]
+    ],
+
+    \dal_segno_a -> [
+        ",segno` ) ) ) |: ] ] :| fine D.S. al fine",
+        [
+        qrt, qrt, qrt, eth, eth, eth, eth,
+        qrt, qrt, qrt, eth, eth, eth, eth
+        ]
+    ],
+
+    \dal_segno_b -> [
+        ",segno` ) ,segno` ) ) |: ] ] :| fine Dal Segno al fine",
+        [
+        qrt, qrt, qrt, eth, eth, eth, eth,
+             qrt, qrt, eth, eth, eth, eth,
+        ]
+    ],
+
+    \skoarpion_a -> [
+        ") {! f !! ] !} !f",
+        [qrt, eth]
+    ],
+
+    \skoarpion_b -> [
+        ") {! f<x> !! !x ] !} !f<0>",
+        [qrt, eth]
+    ],
+
+    \skoarpion_c -> [
+        ") {! <x> !! ] !} => @f !f",
+        [qrt, eth]
+    ],
+
+    \skoarpion_d -> [
+        ") {! f !! ] !! 'food' !} !f",
+        [qrt, (\string: "food")]
+    ],
 ]}
+
 
     *sanity_simple {^[
     "a ) )) ))) )))) ))))) )))))) )))))))",
@@ -115,6 +229,41 @@ SkoarTests {
     "{! f<x,y,z> !! !x ] ] !y ] !z ] !} !f.next",
     "^^(;,;)^^"
     ]}
+
+*multikoar {
+    var qrt = (\dur:1);
+    var eth = (\dur:1/2);
+    var sxt = (\dur:1/4);
+
+
+    ^IdentityDictionary[
+
+    \one_voice_a -> [
+        ")
+         .a ]
+         )
+         .a ]
+        ",
+        [qrt, eth, qrt, eth]
+    ],
+
+    \one_voice_b -> [
+        ") )
+         .a ] ]
+        ",
+        [qrt, qrt, eth, eth]
+    ],
+
+    \two_voices_a -> [
+        ") )
+         .a ]     ] ]
+         .b ]] ]] )
+        ",
+        [[qrt,qrt], [qrt,qrt], [eth,sxt], sxt, [eth,qrt], eth]
+    ],
+
+]}
+
 }
 
 Expectoar {
@@ -123,6 +272,7 @@ Expectoar {
     var <expected;
     var testoar;
     var tag;
+    var end;
 
     *new {
         | skrs, exp, tstr, msg |
@@ -135,6 +285,7 @@ Expectoar {
         expected = exp;
         testoar = tstr;
         tag = msg ++ ": ";
+        end = (\dur: 0, \isRest: true, \delta: 0);
     }
 
     *test {
@@ -146,50 +297,88 @@ Expectoar {
 
     run {
         var pat = skoar.pskoar;
+        var result;
 
         expected.do {
             | ex |
 
-            "Expectation: ".post; ex.postln;
-
             case {ex.isKindOf(Array)} {
                 var n = ex.size;
-                var results = Array.new(n);
+                var results = Array.newClear(n);
 
+                for (0, n-1, {
+                    | i |
+                    results.put(i, pat.nextFunc.value);
+                });
+                "Expecting events:".postln;
                 ex.do {
-                    results.add(pat.next);
+                    | x |
+                    "   ".post; x.postln;
+                    testoar.assert(this.matches(x, results) == true, tag ++ "simulfail");
                 };
 
             } {ex.isKindOf(Event)} {
-                debug("attempting to match.");
-                this.match(ex, pat.nextFunc.value);
+                "Expecting event: ".post; ex.postln;
+                result = pat.nextFunc.value;
+                testoar.assert(result != nil, tag ++ "expect a result");
+
+                // that assert doesn't abort.
+                if (result != nil) {
+                    this.match(ex, result);
+                };
 
             } {ex.isKindOf(Function)} {
+                // note we don't consume anything here
                 ex.value(testoar, skoar);
 
             };
 
         };
+
+        result = pat.nextFunc.value;
+        if (result != nil) {
+            this.match(end, result);
+        };
+
     }
 
     match {
         | exp_event, seen_event |
 
-//"blurg;".postln;
         exp_event.keysValuesDo {
             | ekey, eval |
-
             var x, y;
 
             x = seen_event[ekey];
             testoar.assert(seen_event.isKindOf(Event), tag ++ "is x an event?");
 
-            testoar.assert(seen_event[ekey] == eval, tag ++
-                "seen_event[" ++ ekey ++ "] = " ++ x ++ " == " ++ eval ++ " expected"
-            );
+            if (seen_event != nil) {
+                testoar.assert(seen_event[ekey] == eval, tag ++
+                    "seen_event[" ++ ekey ++ "] = " ++ x ++ " == " ++ eval ++ " expected"
+                );
+            };
+        };
+    }
+
+    matches {
+        | exp_event, seen_events |
+        seen_events.do {
+            | seen_event |
+            var seen = true;
+
+            exp_event.keysValuesDo {
+                | ekey, eval |
+                if (seen_event != nil) {
+                    var x = seen_event[ekey];
+                    seen = seen && (x == eval);
+                };
+            };
+
+            if (seen == true) {
+                ^true;
+            };
         };
 
-//"blarg;".postln;
-
+        ^false;
     }
 }

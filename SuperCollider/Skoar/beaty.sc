@@ -83,7 +83,7 @@ SkoarpuscleBeat : Skoarpuscle {
             };
         };
 
-        e.asCompileString.postln;
+        //e.asCompileString.postln;
         e.yield;
     }
 
@@ -117,6 +117,7 @@ SkoarpuscleRest : SkoarpuscleBeat {
         e[\dur] = val;
         e[\note] = \rest;
 
+        //e.asCompileString.postln;
         e.yield;
     }
 

@@ -52,16 +52,34 @@ class Test_Sclang(unittest.TestCase):
             if line.startswith("Welcome to SuperCollider"):
                 break
 
+        self.assertFalse(error_seen, "Errors compiling class library.")
+        self.assertTrue(class_lib_compiled, "Class library didn't compile.")
+        self.assertTrue(class_lib_inited, "Class libarary did initialize.")
+
+        tests_passed = False
+        while proc.poll() is None:
+            b = proc.stdout.readline()
+            line = str(b, encoding="utf-8")
+            self.print(line)
+
+            #
+            # yay
+            if line.startswith("SKOAR PASS"):
+                tests_passed = True
+                break
+
+            #
+            # nay
+            if line.startswith("SKOAR FAIL"):
+                tests_passed = False
+                break
+
         try:
             proc.terminate()
         finally:
             proc.stdout.close()
 
-        # assert afterwards to see the whole output
-        self.assertFalse(error_seen, "Errors compiling class library.")
-        self.assertTrue(class_lib_compiled, "Class library didn't compile.")
-        self.assertTrue(class_lib_inited, "Class libarary did initialize.")
-
+        self.assertTrue(tests_passed, "scland unit tests failed.")
 
     def test_sanity(self):
         self.exec(Test_Sclang.testing_home)

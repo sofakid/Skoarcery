@@ -210,7 +210,6 @@ SkoarNoad {
                 });
             };
         };
-
     }
 
     // this finds the preceding noad
