@@ -221,7 +221,7 @@ SkoarKoar {
     }
 
     event {
-        var e = (type: \note);
+        var e = Event.new;
 
         stack.do {
             | skrb |

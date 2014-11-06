@@ -456,6 +456,11 @@ SkoarpuscleDynamic : Skoarpuscle {
         ^val/8;
     }
 
+    performer {
+        | m, nav |
+        m.koar[\amp] = this.amp;
+    }
+
 }
 
 SkoarpuscleOctaveShift : Skoarpuscle {

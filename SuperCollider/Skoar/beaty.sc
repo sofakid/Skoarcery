@@ -78,12 +78,13 @@ SkoarpuscleBeat : Skoarpuscle {
         if (m.koar.cur_noat != nil) {
             if (e[\type] == \instr) {
                 e[\note] = cur_noat;
+                e[\midinote] = cur_noat;
             } {
                 e[\midinote] = cur_noat;
             };
         };
 
-        //e.asCompileString.postln;
+        e.asCompileString.postln;
         e.yield;
     }
 
