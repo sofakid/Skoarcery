@@ -103,17 +103,17 @@ SkoarTests {
 
     \long_rests -> [
         "} }} }}} }}}} }. }}.",
-        [(\dur:1,\note:\rest),(\dur:2,\note:\rest),
-         (\dur:4,\note:\rest),(\dur:8,\note:\rest),
-         (\dur:1.5,\note:\rest),(\dur:3,\note:\rest)]
+        [(\dur:1,\isRest:true),(\dur:2,\isRest:true),
+         (\dur:4,\isRest:true),(\dur:8,\isRest:true),
+         (\dur:1.5,\isRest:true),(\dur:3,\isRest:true)]
     ],
 
     \short_rests -> [
         "o/ oo/ ooo/ oooo/ ooooo/   o/. oo/. ooo/.",
-        [(\dur:1/2,\note:\rest),(\dur:1/4,\note:\rest),
-         (\dur:1/8,\note:\rest), (\dur:1/16,\note:\rest),
-         (\dur:1/32,\note:\rest),(\dur:3/4,\note:\rest),
-         (\dur:3/8,\note:\rest),(\dur:3/16,\note:\rest)]
+        [(\dur:1/2,\isRest:true),(\dur:1/4,\isRest:true),
+         (\dur:1/8,\isRest:true), (\dur:1/16,\isRest:true),
+         (\dur:1/32,\isRest:true),(\dur:3/4,\isRest:true),
+         (\dur:3/8,\isRest:true),(\dur:3/16,\isRest:true)]
     ],
 
     \fancy_beats -> [

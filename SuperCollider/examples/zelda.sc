@@ -453,38 +453,3 @@ D.S.
 
 
 
-x.play
-
-(
-"
-<0,1,2>.choose )
-".skoar.play;
-)
-
-TestSkoarSanity.new.run
-
-IdentityBag
-(
-SynthDef(\marimba, {arg out=0, amp=1, t_trig=1, freq=100, rq=0.006;
-	var env, signal;
-	var rho, theta, b1, b2;
-	b1 = 1.987 * 0.9889999999 * cos(0.09);
-	b2 = 0.998057.neg;
-	signal = SOS.ar(K2A.ar(t_trig), 0.3, 0.0, 0.0, b1, b2);
-	signal = RHPF.ar(signal*0.8, freq, rq) + DelayC.ar(RHPF.ar(signal*0.9, freq*0.99999, rq*0.999), 0.02, 0.01223);
-	signal = Decay2.ar(signal, 0.4, 0.3, signal);
-	DetectSilence.ar(signal, 0.01, doneAction:2);
-	Out.ar(out, signal*(amp*0.4)!2);
-}).add;
-)
-
-(
-Pdef(\test, Pbind(\instrument, \marimba, \midinote, Prand([[1,5], 2, [3, 5], 7, 9, 3],
-    inf) + 48, \dur, 0.2)).play;
-
-)
-
-x = Pbind(\instrument, \marimba, \midinote, 48, \dur, 0.2)
-x.patternpairs.dump
-
-( 'instrument': 'marimba', 'dur': 1.0, \amp:1, 'midinote': 70.0 ).play
