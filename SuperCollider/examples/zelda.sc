@@ -164,12 +164,12 @@ x = "
 
 130 => )
 
-.alice  @default => @instrument mp <0,3,5> => @detune
-.bob    @default => @instrument mp <0,3,5> => @detune
-.bass  @sawpulse => @instrument mp o~~~~
-.hats      @hats => @instrument pp
-.snare    @snare => @instrument mf
-.kick      @kick => @instrument mf
+.alice     <0,3,5> => @detune mp
+.bob       <0,3,5> => @detune mp
+.bass    @sawpulse => @instrument mp o~~~~
+.hats        @hats => @instrument pp
+.snare      @snare => @instrument mf
+.kick        @kick => @instrument mf
 
 {! four_bars_rest !! }}}}} !}
 {! eight_bars_rest !! }}}}}} !}

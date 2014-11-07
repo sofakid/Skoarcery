@@ -16,18 +16,18 @@ Example
 
     130 => )
 
-    .alice  pp <0,3,5> => @detune
-    .bob    pp <0,3,5> => @detune
+    .alice     <0,3,5> => @detune pp
+    .bob       <0,3,5> => @detune pp
     .bass    @sawpulse => @instrument p o~~~~
     .hats        @hats => @instrument pp
     .snare      @snare => @instrument mp
     .kick        @kick => @instrument mp
 
-    {! four_bars_rest !! }}}}} !} {! eight_bars_rest !! }}}}}} !}
-    {! twelve_bars_rest !! !four_bars_rest !eight_bars_rest !}
+    {! four_bars_rest  !! }}}}}  !}
+    {! eight_bars_rest !! }}}}}} !}
 
     {! bass_fun<x>    !! !x ) ]] ]] ] ) ) !}
-    {! bass_end<x>    !! !x ) ) ) ] ] !}
+    {! bass_end<x>    !! !x ) ) ) ] ]     !}
     {! bass_climb     !! | _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } | !}
 
     {! bassline_a !!
