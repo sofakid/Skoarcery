@@ -208,11 +208,16 @@ SkoarpuscleSkoarpion : Skoarpuscle {
 SkoarpuscleArray : Skoarpuscle {
 
     flatten {
-        var out = Array.new(val.size);
+        var n = val.size;
+        var out = Array.newClear(n);
+        var i = -1;
 
         val.do {
             | x |
-            out.add(if (x.respondsTo(\flatten)) {x.flatten} {x});
+            var y = if (x.respondsTo(\flatten)) {x.flatten} {x};
+            debug("SkoarpuscleArray.flatten: x: " ++ x.asString ++ " y: " ++ y);
+            i = i + 1;
+            out[i] = y;
         };
 
         ^out;

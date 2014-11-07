@@ -72,8 +72,6 @@ x = "
 .bob    @default => @instrument fff
 .bass  @sawpulse => @instrument mp
 
-{! intro !!
-
 .bass o~~
 
 .alice | _a# ))        o/. ]]  ]] ]] ] | ]. _g#  ]] _a# )        o/.  ]]  ]] ]] ] |
@@ -82,16 +80,12 @@ x = "
 
 .alice | ]. _g# ]] _a# )       o/. ]] ]] ]] ] | ]   _f ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
 .bob   | _c# ]. ]]     )       o/. ]] ]] ]] ] | ] o~ a ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] | ~o
-.bass  |  f# )         ]] ]] ] )      ]] ]] ] |  f )          )        )      g ]   a ] |
+.bass  |  f# )         ]] ]] ] )      ]] ]] ] |  f )          )        )      g ]   a ] | ~~o
 
-.bass ~~o
+,segno`
 
-!}
-
-{! melody_a !!
-
-.alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
-.bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
+.alice |: _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
+.bob   |: _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
 
 .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
 .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
@@ -111,13 +105,8 @@ x = "
 .alice |  c ] ]]  d ]]  e ))                   g )     |
 .bob   | _e ] ]] _d ]] _e ] ]] _g ] ]] _a ]] _a# ] c ] |
 
-.alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] |
-.bob   | _a ] o~  a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] | ~o
-
-!}
-
-.alice !intro !melody_a
-.bob   !intro !melody_a
+.alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    :|
+.bob   | _a ] o~  a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o :|
 
 {! dum<x> !! !x ) ]] ]] ] ) ]] ]] ] !}
 {! bum<x> !! !x ) ) ) ] ] !}
@@ -126,13 +115,15 @@ x = "
 !dum<g#>
 !dum<f#>
 !dum<c#>
-!dum<b#>
+!dum<b>
 !dum<a#>
 !dum<c>
 !bum<f>
 ~~o !}
 
-.bass  !intro !bassline
+.bass |: !bassline :|
+
+D.S.
 
 ".skoar;
 

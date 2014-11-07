@@ -135,6 +135,7 @@ Skoarmantics {
 
                 if (x != nil) {
                     noad.skoarpuscle = x;
+                    noad.children = [];
                 };
             },
 

@@ -311,12 +311,13 @@ SkoarNoad {
         | j=0 |
 
         var results = List.new;
-
+"derf.postln;".postln;
         while {j < children.size} {
 
             children[j].inorder({
                 | x |
                 if (x.skoarpuscle != nil) {
+                    //debug("found skoarpuscle: " ++ x.skoarpuscle.asString);
                     results.add(x.skoarpuscle);
                 };
             });
