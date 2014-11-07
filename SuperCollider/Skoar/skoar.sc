@@ -41,8 +41,8 @@ Skoar : Object {
             toker.dump;
             e.throw;
         };
-        //"---< Undecorated Skoar Tree >---".postln;
-        //r.tree.draw_tree.postln;
+        "---< Undecorated Skoar Tree >---".postln;
+        tree.draw_tree.postln;
 
         "<<< tree created, now decorating...".postln;
         this.decorate;
@@ -131,13 +131,13 @@ Skoar : Object {
             | x |
             x.post_tree;
 
-            "Projections: ".postln;
+            /*"Projections: ".postln;
             voices.keysDo {
                 | koar_name |
                 var projection = x.projection(koar_name);
 
                 projection.block.draw_tree.postln;
-            };
+            };*/
         };
     }
 }
