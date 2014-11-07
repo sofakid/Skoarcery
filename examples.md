@@ -1,152 +1,87 @@
-Skoar and Skoarcery
-===================
+Skoar Examples
+==============
 
-__Skoar__ is a high-level language for coding music.
+# MIDI example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/windwaker-sv1)
 
-It runs on [SuperCollider], a free and fantastic audio programming environment.
+    <? Zelda Wind Waker Theme - inspired by piano arrangement by Shinobu Amayake ?>
 
-__Skoarcery__ is a set of tools to define, test, and build the Skoar language.
+    @midi => @type
+    -1 => @transpose
 
-Example
-=======
+    9/8 120 => ).
+    mp
 
-[listen on soundcloud](https://soundcloud.com/lucas-cornelisse/zelda-skoared)
+    | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | _a )). }. |
 
-    <? Zelda Theme - inspired by piano arrangement by Shinobu Amayake ?>
+    | _a)   d] f#)   e] d)     c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)   _a] _g)   d] _b)    c#] | d)   e]] ]] f#] d] e] _a)   ] |
+    | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).      _a)   ] |
+    | _a)  d]] e]] f#)  e] d)  c#] | e]] d].  _b] _g)  c#] _a] d] _b]  | c#)   _a] _g)   d] _b)    c#] | ]] d]] e]] ]] f#] d] e] _a) ] |
+    | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).       a)   ] |
 
-    130 => )
+    |: g] f#] e] f#)  d] c#] d] e] | a] d] ] g] d] ] f#)    ] | g] a] b] b] g] e] a)  a]   | g] f#] d] e] f#] e]] f#]] e)  ] |
+    |  d] c#] d] e)   e] a] g] c#] | g] d] ] f#)  ] e] c#] e] | d] b] d] g] a] b] f# d] g] | e).    ] f#] e] a)           ] :|
 
-    .alice  pp <0,3,5> => @detune
-    .bob    pp <0,3,5> => @detune
-    .bass    @sawpulse => @instrument p o~~~~
-    .hats        @hats => @instrument pp
-    .snare      @snare => @instrument mp
-    .kick        @kick => @instrument mp
+    | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | <_a,_f#> )). _a ) ] |
 
-    {! four_bars_rest !! }}}}} !} {! eight_bars_rest !! }}}}}} !}
-    {! twelve_bars_rest !! !four_bars_rest !eight_bars_rest !}
+This was played over MIDI to my Korg SV1.
 
-    {! bass_fun<x>    !! !x ) ]] ]] ] ) ) !}
-    {! bass_end<x>    !! !x ) ) ) ] ] !}
-    {! bass_climb     !! | _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } | !}
+# Drumming example - [listen on soundcloud](https://soundcloud.com/lucas-cornelisse/beets)
 
-    {! bassline_a !!
-      !bass_fun<a#>
-      !bass_fun<g#>
-      !bass_fun<f#>
-      !bass_fun<c#>
-      !bass_fun<b>
-      !bass_fun<a#>
-      !bass_fun<c>
+    <? 4/4 time, 70 beats per min. No voice label on this line, all voices will read it ?>
 
-      !bass_end<f>
-    !}
+    4/4 70 => )
 
-    {! bassline_b !!
-      !bass_fun<a#>
-      !bass_fun<g#>
-      !bass_fun<f#>
-      !bass_fun<f>
 
-      !bass_climb
-      !bass_climb
+    <? each line begins with a voice label, we are using three voices ?>
+    .h  @hats  => @instrument
+    .s  @snare => @instrument forte
+    .k  @kick  => @instrument
 
-      !bass_fun<b>
-      !bass_fun<a#>
-      !bass_fun<c>
+    .h  | }}}     |
+    .s  | } ) } ) |
+    .k  | ) } ) } |
 
-      !bass_end<f>
-    !}
 
-    {! intro !!
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            )            }             )           :|
+    .k  |: )            o/.      ]]  oo/ ]] ]] oo/ }           :|
 
-      .hats  !four_bars_rest
-      .snare !four_bars_rest
-      .kick  !four_bars_rest
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            )            }             )           :|
+    .k  |: ]]. ]].  ]]  o/    ]] ]]  }             o/    ]     :|
 
-      .alice | _a# ))        o/. ]]  ]] ]] ] |     ]. _g#  ]] _a# )        o/.  ]]  ]] ]] ] |
-      .bob   | _d  ))        o/. ]]  ]] ]] ] | _c  ].      ]]     )        o/.  ]]  ]] ]] ] |
-      .bass  |  a# ) ]] ]] ] )       ]] ]] ] |  g# )              ]] ]] ]  )        ]] ]] ] |
 
-      .alice |     ]. _g# ]] _a# )       o/. ]] ]] ]] ] |   ]    _f ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
-      .bob   | _c# ].     ]]     )       o/. ]] ]] ]] ] |   ] o~ _a ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
-      .bass  |  f# )             ]] ]] ] )      ]] ]] ] | f )              )        )      g ]   a ] |
-    !}
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]] ]]]  ]] ]]] ]]] ]] ]]  ]] ]] ]] ]] :|
+    .s  |: }            )                 }                 ].       ]] :|
+    .k  |: ]     ]] ]]  o/    ]] ]]       o/         ]      o/    ]     :|
 
-    {! melody_a !! .bass !bassline_a
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]]] ]]] ]]] ]]] :|
+    .s  |: }            )            }             ].            ]]      :|
+    .k  |: ].       ]]  oo/  ].      o/    ]       }                     :|
 
-      .alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
-      .bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
 
-      .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
-      .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            )            }             ]]. ]].  ]] :|
+    .k  |: ]]. ]].  ]]  }            ]]. ]].  ]]   }           :|
 
-      .alice |  a# ))                                  o/ a# ]  ]  g# ]]  f# ]] |
-      .bob   |  c# ]. _f# ]]  ]] _g# ]] _a# ]] c ]] c# ]. ]]    ]  c  ]] _a# ]] |
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            )            }             )           :|
+    .k  |: ]]. ]].  ]]  o/.      ]]  ]] o/    ]]   }           :|
 
-      .alice | g# ].  f# ]]  f ))                      )               |
-      .bob   | c# ]. _g# ]]    ]] ]] _f# ]  _g# ]. ]]  ]] _f# ]] _g# ] |
 
-      .alice |  d# ] ]]  f ]]  f# ))                   f ] d#  ] |
-      .bob   | _f# ] ]] _f ]] _f# ] ]] _g# ]]  _a# ) _g# ] _f# ] |
+    .h  |: ]] ]] ]] ]]  ]] ]] ]] ]]  ]] ]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }            ]]. ]].  ]]  }             ].       ]] :|
+    .k  |: )            }            ]     ]       }           :|
 
-      .alice |  c# ] ]]  d# ]]  f ))                 d# ]  c# ] |
-      .bob   | _f  ] ]] _d# ]] _f ] ]] _f# ]] _g# ) _f# ] _d# ] |
+    .h  |: ]]] ]]] ]]] ]]] ]] ]]   ]] ]] ]] ]]] ]]]   ]] ]]] ]]] ]] ]]   ]] ]] ]] ]] :|
+    .s  |: }                       )                  }                  )           :|
+    .k  |: ]               ]       }                  o/         ]       oo/ ].      :|
 
-      .alice |  c ] ]]  d ]]  e ))                   g )     |
-      .bob   | _e ] ]] _d ]] _e ] ]] _g ] ]] _a ]] _a# ] c ] |
 
-      .alice |  f ]     _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
-      .bob   | _a ] o~  _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
+    .h  | ))) |
+    .s  | ))) |
+    .k  | ))) |
 
-    !}
-
-    {! melody_b !! .bass !bassline_b
-
-      .alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
-      .bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
-
-      .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
-      .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
-
-      .alice | a# )). ~o c# ) | c  ) o~ a )) f  ) |  f# )).  a# ) | a )  f )) ) |
-      .bob   | c# )).    e  ) | d# )    c )) _a ) | _b  )).  c# ) | c ) _a )) ) |
-
-      .alice |  f# )). a# ) | a )  f )) d ) |  d# )).  f# ) |  f  )  c# )) _a# ) |
-      .bob   | _b  )). c# ) | c ) _a ))   ) | _f# )). _b  ) | _a# ) _f  )) _c# ) |
-
-      .alice |  c ] ]]  d ]]  e ))                        g  )     |
-      .bob   | _e ] ]] _d ]] _e ] ]] _f ]] _g ] ]] _a ]] _a# ] c ] |
-
-      .alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
-      .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
-
-    !}
-
-    {! fill !!
-      .alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
-      .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
-      .snare |    ]       ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
-      .hats  |    ]       ]      ] ]       ] ]       ]  ]    |
-      .kick  |    )              }         )         }       |
-      .bass !bass_end<f>
-    !}
-
-    {! drums !!
-      .hats  |: ] ] ] ] ] ] ] ]] ]] :| :| :| :| :| :| :| :| :| :| :|
-      .snare |: } ) } ) :| :| :| :| :| :| :| :| :| :| ] ]] ]]  ] ]] ]]  ] ]] ]]  ]  ] |
-      .kick  |: ) } ) } :| :| :| :| :| :| :| :| :| :| :|
-    !}
-
-    !intro !melody_a
-
-    .kick !eight_bars_rest
-    .hats !four_bars_rest }}} }}} }}} ] ] ] ] ] ] ] ]
-    .snare !eight_bars_rest
-
-    !fill !melody_b !drums !fill
-
-More examples: [examples.md]
 
 Skoar
 =====
@@ -193,11 +128,11 @@ nor are these __noats__ the nearly named __noads__, which are also totally thing
 
 # choards
 
-Choards don't work yet, this is the intention:
+Choards need work, but this is the intention:
 
     A Am A#m Asus2 Adim etc..
 
-But we can use lists of noats:
+Or use lists of noats:
 
     <_a,c,e> )  <_a,c#,e> )
 
@@ -480,4 +415,3 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 [toker.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/toker.sc
 
 [SuperCollider]: http://supercollider.sourceforge.net/
-[examples.md]:   https://github.com/sofakid/Skoarcery/blob/master/examples.md

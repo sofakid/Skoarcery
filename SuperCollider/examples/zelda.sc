@@ -164,8 +164,8 @@ x = "
 
 130 => )
 
-.alice  @default => @instrument mf <0,3,5> => @detune
-.bob    @default => @instrument mf <0,3,5> => @detune
+.alice  @default => @instrument mp <0,3,5> => @detune
+.bob    @default => @instrument mp <0,3,5> => @detune
 .bass  @sawpulse => @instrument mp o~~~~
 .hats      @hats => @instrument pp
 .snare    @snare => @instrument mf
@@ -303,7 +303,12 @@ x = "
 ".skoar;
 
 )
+
 x.play
+
+
+
+
 (x = "
 
 150 => )
