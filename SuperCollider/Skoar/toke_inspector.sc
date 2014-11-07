@@ -125,21 +125,18 @@ SkoarTokeInspector {
 
             \Toke_OctaveShift -> {
                 | skoar, noad, toke |
-
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },
 
             \Toke_OttavaA -> {
                 | skoar, noad, toke |
-
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },
 
             \Toke_OttavaB  -> {
                 | skoar, noad, toke |
-
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },
@@ -153,7 +150,6 @@ SkoarTokeInspector {
 
             \Toke_QuindicesimaB -> {
                 | skoar, noad, toke |
-
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },

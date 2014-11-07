@@ -19,6 +19,12 @@ SkoarMinstrel {
 
         skoar = skr;
         koar = k;
+
+        // some defaults
+        koar[\octave] = 5;
+        koar[\tempo] = 1;
+        koar[\amp] = 0.5;
+
         all_voice = skr.all_voice;
 
         skoarpion = skoar.tree.next_skoarpuscle.val;

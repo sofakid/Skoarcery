@@ -9,7 +9,7 @@ Skoarpuscle {
 
     as_noat { | m | ^val;}
 
-    performer {}
+    performer { | m, nav | }
 
     flatten {^val;}
 
@@ -72,11 +72,24 @@ SkoarpuscleInt : Skoarpuscle {
     flatten {
         ^val.asInteger;
     }
+
+    performer {
+        | m, nav |
+        var k = if (val > 30) {\freq} {\degree};
+        m.koar[k] = val;
+    }
+
 }
 
 SkoarpuscleFloat : Skoarpuscle {
     flatten {
         ^val.asFloat;
+    }
+
+    performer {
+        | m, nav |
+        var k = if (val > 30) {\freq} {\degree};
+        m.koar[k] = val;
     }
 }
 
@@ -223,9 +236,26 @@ SkoarpuscleArray : Skoarpuscle {
         ^out;
     }
 
+    skoar_msg {
+        | msg, minstrel |
+        var o = msg.get_msg_arr;
+        var name = msg.val;
+        var ret;
+
+        case {name == \next} {
+            ret = val.performMsg(o);
+        } {name == \last} {
+            ret = val.performMsg(o);
+        } {
+            ret = val.performMsg(o);
+        }
+
+        ^Skoarpuscle.wrap(ret);
+    }
+
     performer {
         | m, nav |
-        m.koar.choard_listy(val);
+        m.koar[\degree] = val.flatten;
     }
 
 }
@@ -315,6 +345,7 @@ SkoarpuscleFine : Skoarpuscle {
     performer {
         | m, nav |
         if (m.koar.state_at(\al_fine) == true) {
+            debug("fine");
             nav.(\nav_fine);
         };
     }
@@ -491,7 +522,8 @@ SkoarpuscleOctaveShift : Skoarpuscle {
 
     performer {
         | m, nav |
-        m.koar.octave_shift(val);
+        var octave = m.koar[\octave] ?? 5;
+        m.koar[\octave] = octave + val;
     }
 
 }

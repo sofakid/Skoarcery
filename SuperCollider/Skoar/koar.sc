@@ -7,9 +7,6 @@ SkoarKoar {
 
     var  <name;         // name of voice as Symbol
 
-    var <>cur_noat;
-    var   hand;
-
     *new {
         | skr, nom |
         ^super.new.init(skr, nom);
@@ -26,8 +23,6 @@ SkoarKoar {
         skoarboard = IdentityDictionary.new;
         stack.add(skoarboard);
 
-        hand = Hand.new;
-        cur_noat = nil;
     }
 
     assign_incr {
@@ -124,58 +119,6 @@ SkoarKoar {
         this[\tempo] = x;
     }
 
-    dynamic {
-        | skoarpuscle |
-
-        this[\amp] = skoarpuscle.amp;
-    }
-
-    noat_go {
-        | x |
-
-        hand.update(x);
-        cur_noat = hand.finger;
-    }
-
-    choard_go {
-        | x |
-
-        hand.choard(x);
-        cur_noat = hand.finger;
-    }
-
-    choard_listy {
-        | items |
-
-        cur_noat = Array.new(items.size);
-
-        items.do {
-            | o |
-
-            if (o.isKindOf(SkoarpuscleNoat)) {
-                hand.update(o);
-                cur_noat.add(hand.finger);
-            } {
-                o = o.as_noat;
-                if (o != nil) {
-                    cur_noat.add(o);
-                };
-            };
-
-        };
-
-    }
-
-    pedal_up {
-    }
-
-    pedal_down {
-    }
-
-    octave_shift {
-        | x |
-        hand.octave = hand.octave + x;
-    }
 
     // ---------------------
     // State and scope stuff

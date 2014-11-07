@@ -68,21 +68,10 @@ SkoarpuscleBeat : Skoarpuscle {
 
     performer {
         | m, nav |
-
         // create an event with everything we've collected up until now
         var e = m.koar.event;
-        var cur_noat = m.koar.cur_noat;
 
         e[\dur] = val;
-
-        if (m.koar.cur_noat != nil) {
-            if (e[\type] == \instr) {
-                e[\note] = cur_noat;
-                e[\midinote] = cur_noat;
-            } {
-                e[\midinote] = cur_noat;
-            };
-        };
 
         e.asCompileString.postln;
         e.yield;
@@ -110,13 +99,7 @@ SkoarpuscleRest : SkoarpuscleBeat {
 
     performer {
         | m, nav |
-
-        // create an event with everything we've collected up until now
-        var e = m.koar.event;
-        var cur_noat = m.koar.cur_noat;
-
-        e[\dur] = val;
-        e[\note] = \rest;
+        var e = (\dur: val, \isRest: true);
 
         //e.asCompileString.postln;
         e.yield;

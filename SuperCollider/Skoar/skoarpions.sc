@@ -171,10 +171,51 @@ Skoarpion {
     }
 }
 
-SkoarpionProjection {
-
+SkoarIteratoar {
+    var arr;
     var <>i;
     var <>n;
+
+    init_iter {
+        | a |
+        arr = a;
+        n = a.size;
+        i = -1;
+    }
+
+    // this is returning noads
+    selector {
+        | f |
+        i = f.value % n;
+        ^arr[i];
+    }
+
+    at {
+        | j |
+        ^this.selector({j});
+    }
+
+    choose {
+        ^this.selector({n.rand});
+    }
+
+    wchoose {
+        | weights |
+        ^this.selector({weights.val.windex});
+    }
+
+    next {
+        ^this.selector({1 + i});
+    }
+
+    last {
+        ^this.selector({i - 1});
+    }
+}
+
+SkoarpionProjection : SkoarIteratoar {
+
+
     var body;
     var proj;
     var <skip_to;
@@ -208,42 +249,11 @@ SkoarpionProjection {
             };
         };
 
-        n = proj.children.size;
-        i = -1;
+        this.init_iter(proj.children);
     }
 
     block {
         ^proj;
-    }
-
-    // this is returning noads
-    selector {
-        | f |
-        i = f.value % n;
-        ^proj.children[i];
-    }
-
-    at {
-        | j |
-        ^this.selector({j});
-    }
-
-    choose {
-        ^this.selector({n.rand});
-    }
-
-    wchoose {
-        | weights |
-        ^this.selector({weights.val.windex});
-
-    }
-
-    next {
-        ^this.selector({1 + i});
-    }
-
-    last {
-        ^this.selector({i - 1});
     }
 
     map_dst {

@@ -68,63 +68,111 @@ x = "
 
 130 => )
 
-.alice  @default => @instrument fff
-.bob    @default => @instrument fff
-.bass  @sawpulse => @instrument mp
+.alice  @default => @instrument ff <0,3,5> => @detune
+.bob    @default => @instrument ff
+.bass  @sawpulse => @instrument p o~~~~
 
-.bass o~~
+{! bass_fun<x> !! !x ) ]] ]] ] ) ) !}
+{! bass_end<x>    !! !x ) ) ) ] ] !}
+{! bass_climb     !! | _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } | !}
 
-.alice | _a# ))        o/. ]]  ]] ]] ] | ]. _g#  ]] _a# )        o/.  ]]  ]] ]] ] |
-.bob   | _d  ))        o/. ]]  ]] ]] ] | _c ].   ]]     )        o/.  ]]  ]] ]] ] |
-.bass  |  a# ) ]] ]] ] )       ]] ]] ] |  g# )          ]] ]] ]  )        ]] ]] ] |
+{! bassline_a !!
+  !bass_fun<a#>
+  !bass_fun<g#>
+  !bass_fun<f#>
+  !bass_fun<c#>
 
-.alice | ]. _g# ]] _a# )       o/. ]] ]] ]] ] | ]   _f ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
-.bob   | _c# ]. ]]     )       o/. ]] ]] ]] ] | ] o~ a ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] | ~o
-.bass  |  f# )         ]] ]] ] )      ]] ]] ] |  f )          )        )      g ]   a ] | ~~o
+  !bass_fun<b>
+  !bass_fun<a#>
+  !bass_fun<c>
+  !bass_end<f>
+!}
 
-,segno`
+{! bassline_b !!
+  !bass_fun<a#>
+  !bass_fun<g#>
+  !bass_fun<f#>
+  !bass_fun<f>
 
-.alice |: _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
-.bob   |: _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
+  !bass_climb
+  !bass_climb
 
-.alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
-.bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
+  !bass_fun<b>
+  !bass_fun<a#>
+  !bass_fun<c>
+  !bass_end<f>
 
-.alice |  a# ))                                  o/ a# ]  ]  g# ]]  f# ]] |
-.bob   |  c# ]. _f# ]]  ]] _g# ]] _a# ]] c ]] c# ]. ]]    ]  c  ]] _a# ]] |
+!}
 
-.alice | g# ].  f# ]]  f ))                      )               |
-.bob   | c# ]. _g# ]]    ]] ]] _f# ]  _g# ]. ]]  ]] _f# ]] _g# ] |
+{! intro !!
+  .alice | _a# ))        o/. ]]  ]] ]] ] |     ]. _g#  ]] _a# )        o/.  ]]  ]] ]] ] |
+  .bob   | _d  ))        o/. ]]  ]] ]] ] | _c  ].      ]]     )        o/.  ]]  ]] ]] ] |
+  .bass  |  a# ) ]] ]] ] )       ]] ]] ] |  g# )              ]] ]] ]  )        ]] ]] ] |
 
-.alice |  d# ] ]]  f ]]  f# ))                   f ] d#  ] |
-.bob   | _f# ] ]] _f ]] _f# ] ]] _g# ]]  _a# ) _g# ] _f# ] |
+  .alice |     ]. _g# ]] _a# )       o/. ]] ]] ]] ] |   ]    _f ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
+  .bob   | _c# ].     ]]     )       o/. ]] ]] ]] ] |   ] o~ _a ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
+  .bass  |  f# )             ]] ]] ] )      ]] ]] ] | f )              )        )      g ]   a ] |
+!}
 
-.alice |  c# ] ]]  d# ]]  f ))                 d# ]  c# ] |
-.bob   | _f  ] ]] _d# ]] _f ] ]] _f# ]] _g# ) _f# ] _d# ] |
+{! melody_a !! .bass !bassline_a
 
-.alice |  c ] ]]  d ]]  e ))                   g )     |
-.bob   | _e ] ]] _d ]] _e ] ]] _g ] ]] _a ]] _a# ] c ] |
+  .alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
+  .bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
 
-.alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    :|
-.bob   | _a ] o~  a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o :|
+  .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
+  .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
 
-{! dum<x> !! !x ) ]] ]] ] ) ]] ]] ] !}
-{! bum<x> !! !x ) ) ) ] ] !}
-{! bassline !! o~~
-!dum<a#>
-!dum<g#>
-!dum<f#>
-!dum<c#>
-!dum<b>
-!dum<a#>
-!dum<c>
-!bum<f>
-~~o !}
+  .alice |  a# ))                                  o/ a# ]  ]  g# ]]  f# ]] |
+  .bob   |  c# ]. _f# ]]  ]] _g# ]] _a# ]] c ]] c# ]. ]]    ]  c  ]] _a# ]] |
 
-.bass |: !bassline :|
+  .alice | g# ].  f# ]]  f ))                      )               |
+  .bob   | c# ]. _g# ]]    ]] ]] _f# ]  _g# ]. ]]  ]] _f# ]] _g# ] |
 
-D.S.
+  .alice |  d# ] ]]  f ]]  f# ))                   f ] d#  ] |
+  .bob   | _f# ] ]] _f ]] _f# ] ]] _g# ]]  _a# ) _g# ] _f# ] |
 
+  .alice |  c# ] ]]  d# ]]  f ))                 d# ]  c# ] |
+  .bob   | _f  ] ]] _d# ]] _f ] ]] _f# ]] _g# ) _f# ] _d# ] |
+
+  .alice |  c ] ]]  d ]]  e ))                   g )     |
+  .bob   | _e ] ]] _d ]] _e ] ]] _g ] ]] _a ]] _a# ] c ] |
+
+  .alice |  f ]     _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
+  .bob   | _a ] o~  _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
+
+!}
+
+{! melody_b !! .bass !bassline_b
+
+  .alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
+  .bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
+
+  .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
+  .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
+
+  .alice | a# )). ~o c# ) | c  ) o~ a )) f  ) |  f# )).  a# ) | a )  f )) ) |
+  .bob   | c# )).    e  ) | d# )    c )) _a ) | _b  )).  c# ) | c ) _a )) ) |
+
+  .alice |  f# )). a# ) | a )  f )) d ) |  d# )).  f# ) |  f  )  c# )) _a# ) |
+  .bob   | _b  )). c# ) | c ) _a ))   ) | _f# )). _b  ) | _a# ) _f  )) _c# ) |
+
+  .alice |  c ] ]]  d ]]  e ))                        g  )     |
+  .bob   | _e ] ]] _d ]] _e ] ]] _f ]] _g ] ]] _a ]] _a# ] c ] |
+
+  .alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
+  .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
+
+!}
+
+
+!intro
+
+!melody_a
+!melody_b
+
+  .alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
+  .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
+  .bass !bass_end<f>
 ".skoar;
 
 )
@@ -192,7 +240,7 @@ x.play;
 
 (
 "
-.arps forte @marimba => @instrument o~
+.arps mf @marimba => @instrument o~
 .arps ,segno` | _a# ]] d ]] f ]] a# ]] ]] f ]] d ]] _a# ]] | D.S.
 
 
@@ -201,16 +249,44 @@ x.play;
 Quarks.gui
 Instr
 
-(x =".arps | _a# ]] d ]] f ]] a# ]] ]] f ]] d ]] _a# ]] | _a# ]] d ]] f ]] a# ]] ]] f ]] d ]] _a# ]] |
+(x ="
+ff o~ @sawpulse => @instrument
+{! bass_climb     !! | _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } | !}
 
-{! bassfun !! <a#, g#, f#, c#, b, a#, c, f> !}
-.
+60 => )
+!bass_climb
+
+
+".skoar.play;
+)
+x.play
+y = "_bb".findRegexp("[a-g](#*|b*)$")
+
+s = y[1][1]
+
+
+
+
+(x ="
+  ff
+
+
+  .alice | a# )). ~o c# ) | c  ) o~ a )) f  ) |  f# )).  a# ) | a )  f )) ) |
+  .bob   | c# )).    e  ) | d# )    c )) _a ) | _b  )).  c# ) | c ) _a )) ) |
+
+  .alice |  f# )). a# ) | a )  f )) d ) |  d# )).  f# ) |  f  )  c# )) _a# ) |
+  .bob   | _b  )). c# ) | c ) _a ))   ) | _f# )). _b  ) | _a# ) _f  )) _c# ) |
+
+
+
 ".skoar;
 )
+
 (
 x.play;
 )
 Event
+Array
 UnitTest.gui;
 
 Server.killAll;
@@ -221,24 +297,42 @@ TestSkoarSanity.new.run
 
 (
 x = "
-<a#, g#, f#, c#, b, a#, c, f>.next
 
-{! dum<x> !! !x ] ] ] ] ] ] ] ] !}
-
-{! bassline !! ff @sawpulse => @instrument o~
-!dorf.next => @x !dum<!x>
-~o D.C. !}
+<a#, g#, f#, c#, b, a#, c, f>.wchoose<<0.4, 0.2, 0.2, 0.1, 0.025, 0.025, 0.025, 0.025>> ]
 
 
-
-.bass !bassline
 ".skoar.play;
 )
+
+
+(
+x = "
+mp
+,segno`
+
+]] ]] ]] ]]
+
+c )
+
+D.S.
+
+".skoar.play;
+)
+
+
 
 x.play
 
 (
+"
+<0,1,2>.choose )
+".skoar.play;
+)
 
+TestSkoarSanity.new.run
+
+IdentityBag
+(
 SynthDef(\marimba, {arg out=0, amp=1, t_trig=1, freq=100, rq=0.006;
 	var env, signal;
 	var rho, theta, b1, b2;
