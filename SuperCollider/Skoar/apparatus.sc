@@ -311,7 +311,6 @@ SkoarNoad {
         | j=0 |
 
         var results = List.new;
-"derf.postln;".postln;
         while {j < children.size} {
 
             children[j].inorder({

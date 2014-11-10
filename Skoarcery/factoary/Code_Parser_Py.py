@@ -32,25 +32,16 @@ class Code_Parser_Py(unittest.TestCase):
         PY.tab += 1
         N = nonterminals.nonterminals.values()
 
-        # write each nonterminal as a function
+        # precompute desirables
+        PY.method("init_desirables")
         for A in N:
 
             R = A.production_rules
 
-            #PY.cmt(str(A))
-            PY.stmt("def " + A.name + "(self, parent):")
-            PY.tab += 1
-            PY.stmt("self.tab += 1")
-
-            if A.intermediate:
-                PY.stmt("noad = parent")
-            else:
-                PY.stmt("noad = SkoarNoad('" + A.name + "', parent)")
-
             PY.nl()
+            PY.cmt(str(A))
 
-            #PY.code_line("print('" + A.name + "')")
-
+            # each production
             for P in R:
 
                 if P.derives_empty:
@@ -65,12 +56,10 @@ class Code_Parser_Py(unittest.TestCase):
                     desires.discard(Empty)
                     desires.update(FOLLOW(A))
 
-                PY.cmt(str(P))
-
                 i = 0
 
                 n = len(desires)
-                PY.stmt("desires = [", end="")
+                PY.dict_set("self.desirables", str(P), "[", end="")
                 for toke in desires:
                     PY.raw(toke.toker_name)
                     i += 1
@@ -83,6 +72,37 @@ class Code_Parser_Py(unittest.TestCase):
 
                 else:
                     PY.raw("]\n")
+
+        PY.end()
+
+        # write each nonterminal as a function
+        for A in N:
+
+            R = A.production_rules
+
+            #PY.cmt(str(A))
+            PY.stmt("def " + A.name + "(self, parent):")
+            PY.tab += 1
+            PY.stmt("self.tab += 1")
+
+            if A.intermediate:
+                PY.var("noad", "parent")
+            else:
+                PY.var("noad", PY.v_new("SkoarNoad", PY.v_sym(A.name), "parent"))
+
+            PY.nl()
+
+            #PY.code_line("print('" + A.name + "')")
+
+            for P in R:
+
+                if P.derives_empty:
+                    continue
+
+                # A -> alpha
+                alpha = P.production
+
+                PY.stmt("desires = " + PY.v_dict_get("self.desirables", str(P)))
 
                 PY.if_("self.toker.sees(desires)")
 
@@ -124,9 +144,9 @@ class Code_Parser_Py(unittest.TestCase):
 
         PY = emissions.PY
 
-        PY.file_header("rdpp.py", "PyRDPP - Create Recursive Descent Predictive Parser")
-        s = "from Skoarcery.pymp.apparatus import SkoarNoad\n"\
-            "from Skoarcery.pymp.lex import "
+        PY.file_header("rdpp", "PyRDPP - Create Recursive Descent Predictive Parser")
+        s = "from Skoarcery.SkoarPyon.apparatus import SkoarNoad\n"\
+            "from Skoarcery.SkoarPyon.lex import "
         T = terminals.tokens.values()
         n = len(T)
         i = 0
@@ -155,6 +175,8 @@ class SkoarParser:
         self.runtime = runtime
         self.toker = runtime.toker
         self.tab = 0
+        self.desirables = dict()
+        self.init_desirables()
 
     def fail(self):
         self.toker.dump()

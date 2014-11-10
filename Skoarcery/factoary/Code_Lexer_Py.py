@@ -45,7 +45,6 @@ class SkoarError(AssertionError):
         fd = open("../SkoarPyon/lex.py", mode="w")
 
         emissions.PY.fd = fd
-
         emissions.PY.file_header("lex", "Code_Py_Lexer")
 
         self.imports()

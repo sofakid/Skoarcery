@@ -11,17 +11,19 @@ class Toker:
         I.saw = None
 
     def see(I, want):
+
         if I.saw:
             if isinstance(I.saw, want):
                 return I.saw
         else:
-            I.am_here += Toke_Whitespace.burn(I.skoarse, I.am_here)
             I.saw = want.match(I.skoarse, I.am_here)
             return I.saw
 
         return None
 
     def sees(I, wants):
+
+        I.am_here += Toke_Whitespace.burn(I.skoarse, I.am_here)
 
         for want in wants:
             X = I.see(want)
@@ -64,22 +66,22 @@ class Toker:
 # --------------
 class SkoarNoad:
 
-    def __init__(self, name, toke, parent, i=0):
+    def __init__(self, name, parent, i=0):
         self.performer = lambda x: None
         self.j = 0
         self.parent = parent
         self.i = i  # position in parent
         self.n = 0  # number of children
         self.name = name
-        self.toke = toke
         self.children = []
         self.is_beat = False
         self.next_jmp = None
+        self.toke = None
 
-        if isinstance(toke, SkoarToke):
-            self.inspectable = toke.__class__.inspectable
-        else:
-            self.inspectable = False
+        # if isinstance(toke, SkoarToke):
+        #     self.inspectable = toke.__class__.inspectable
+        # else:
+        #     self.inspectable = False
 
     # ------------------
     # shrinking the tree
@@ -109,7 +111,9 @@ class SkoarNoad:
         self.n += 1
 
     def add_toke(self, name, toke):
-        self.children.append(SkoarNoad(name, toke, self, self.n))
+        noad = SkoarNoad(name, self, self.n)
+        noad.toke = toke
+        self.children.append(noad)
         self.n += 1
 
     def absorb_toke(self):
@@ -211,6 +215,7 @@ class Skoar:
 
     def parse(self):
         self.tree = self.parser.skoar(None)
+        self.tree.draw_tree()
         self.toker.eof()
 
     def decorate(self, loud=False):
@@ -335,6 +340,3 @@ def parse(src):
 
     return skoar
 
-
-class SymboalTable(UserDict):
-    pass

@@ -217,6 +217,18 @@ SkoarpuscleSkoarpion : Skoarpuscle {
 
 }
 
+SkoarpuscleEach : Skoarpuscle {
+
+    performer {
+        | m, nav |
+
+        val.do {
+            | x |
+
+
+        };
+    }
+}
 
 SkoarpuscleArray : Skoarpuscle {
 
@@ -299,6 +311,9 @@ SkoarpuscleMsg : Skoarpuscle {
         ^x;
     }
 
+}
+
+SkoarpuscleMsgName : Skoarpuscle {
 }
 
 

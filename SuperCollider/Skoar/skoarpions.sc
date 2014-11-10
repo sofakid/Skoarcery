@@ -215,7 +215,6 @@ SkoarIteratoar {
 
 SkoarpionProjection : SkoarIteratoar {
 
-
     var body;
     var proj;
     var <skip_to;

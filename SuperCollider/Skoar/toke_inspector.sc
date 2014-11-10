@@ -186,13 +186,15 @@ SkoarTokeInspector {
 
             \Toke_MsgName -> {
                 | skoar, noad, toke |
-                toke.val = toke.lexeme.asSymbol;
+                noad.skoarpuscle = SkoarpuscleMsgName(toke.lexeme.asSymbol);
+                noad.toke = nil;
             },
 
             \Toke_MsgNameWithArgs -> {
                 | skoar, noad, toke |
                 var s = toke.lexeme;
-                toke.val = s[0..s.size-2].asSymbol;
+                noad.skoarpuscle = SkoarpuscleMsgName(s[0..s.size-2].asSymbol);
+                noad.toke = nil;
             }
 
         ];

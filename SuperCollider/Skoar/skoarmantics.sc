@@ -112,22 +112,6 @@ Skoarmantics {
                 };
             },
 
-            \pedally -> {
-                | skoar, noad |
-                var toke = noad.next_toke;
-
-                noad.performer = case {toke.isKindOf(Toke_PedalUp)} {{
-                    | m, nav |
-                    m.koar.pedal_up;
-
-                }} {toke.isKindOf(Toke_PedalDown)} {{
-                    | m, nav |
-                    m.koar.pedal_down;
-
-                }};
-            },
-
-
             \nouny -> {
                 | skoar, noad |
 
@@ -170,9 +154,15 @@ Skoarmantics {
                 var x = nil;
                 var args = nil;
 
-                x = noad.next_toke.val;
-                args = SkoarpuscleArray(noad.collect_skoarpuscles);
-                noad.skoarpuscle = SkoarpuscleMsg(x, args);
+                x = noad.next_skoarpuscle;
+
+                case {x.isKindOf(SkoarpuscleArray)} {
+                    noad.skoarpuscle = SkoarpuscleEach(x);
+
+                } {x.isKindOf(SkoarpuscleMsgName)} {
+                    args = SkoarpuscleArray(noad.collect_skoarpuscles);
+                    noad.skoarpuscle = SkoarpuscleMsg(x, args);
+                };
 
                 noad.children = [];
             },

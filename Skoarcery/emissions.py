@@ -378,8 +378,8 @@ class PyTongue(Tongue):
     def if_regex_match_not_found(self, regex, buf, offs):
         self.if_(self.v_match_regex(regex, buf, offs) + " is None")
 
-    def print(self, s, end="\n"):
-        self.stmt("print(" + s + ", end='" + end + "'")
+    def print(self, s, end="\\n"):
+        self.stmt("print(\"" + s + "\", end='" + end + "')")
 
     def try_(self):
         self.stmt("try:")
@@ -422,13 +422,13 @@ class PyTongue(Tongue):
         return match
 
     def dict_new(self, name):
-        raise NIE
+        self.stmt(name + " = dict()", end="\n")
 
-    def dict_set(self, name, str_key, value, end):
-        raise NIE
+    def dict_set(self, name, str_key, value, end="\n"):
+        self.stmt(name + "['" + str_key + "'] = " + value, end=end)
 
     def v_dict_get(self, name, str_key):
-        raise NIE
+        return name + "['" + str_key + "']"
 
 
 # --------------------
@@ -603,7 +603,7 @@ class ScTongue(Tongue):
         return attr
 
     def v_def_regex(self, regex):
-        return '"' + regex.replace("\\", "\\\\") + '"'
+        return '"^' + regex.replace("\\", "\\\\") + '"'
 
     def v_match(self, match):
         return self.v_length(match) + " > 0"

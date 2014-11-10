@@ -38,7 +38,7 @@ class DragonSet:
         X = args[0]
 
         if not X:
-            print("THE FUH? " + repr(args))
+            print("EH? " + repr(args))
             raise AssertionError
 
         if isinstance(X, str):
