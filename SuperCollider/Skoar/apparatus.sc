@@ -153,22 +153,30 @@ SkoarNoad {
     // -----------------
 
     // depth-first, find the leaves, run handler, working towards trunk
+    //
+    // if it's crashing during the decorating stage, here's a good place to
+    // start debugging
     depth_visit {
         | f |
 
-        //debug(">>> depth_visit: " ++ name);
+        var s = if (toke != nil) {
+            toke.lexeme
+        } {
+            ""
+        };
+        debug(">>> depth_visit: " ++ name ++ " " ++ s);
 
         children.do {
             | y |
             y.depth_visit(f);
         };
 
-        //debug("--- depth_visit: " ++ name);
+        debug("--- depth_visit: " ++ name);
 
         // note: leaves first
         f.(this);
 
-        //debug("<<< depth_visit: " ++ name);
+        debug("<<< depth_visit: " ++ name);
     }
 
     inorder {

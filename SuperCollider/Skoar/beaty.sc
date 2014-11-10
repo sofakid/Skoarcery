@@ -4,6 +4,7 @@ SkoarpuscleBeat : Skoarpuscle {
     var <s;
     var <is_staccato;
     var <has_tie;
+    var <is_grace;
 
     *beat_short {
         | s, n |
@@ -53,9 +54,14 @@ SkoarpuscleBeat : Skoarpuscle {
                           false
                       };
 
-        if (s.contains("__")) {
+        case {s.contains("__")} {
             has_tie = true;
+            is_grace = false;
             n = n - 2;
+        } {s.contains("_")} {
+            is_grace = true;
+            has_tie = false;
+            n = n - 1;
         };
 
         val = if (toke.isKindOf(Toke_Eighths)) {

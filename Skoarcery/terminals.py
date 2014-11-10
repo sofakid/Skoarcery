@@ -144,7 +144,7 @@ def init():
             (token, v, regex) = token_line.partition(":")
 
             token = token.strip()
-            regex = "(?:" + regex.strip() + ")"
+            regex = "(" + regex.strip() + ")"
 
             if token.endswith("*"):
                 token = token.rstrip("*")

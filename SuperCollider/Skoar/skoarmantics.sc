@@ -132,7 +132,7 @@ Skoarmantics {
                 var args;
                 var msg_name;
 
-                msg_name = noad.children[1].toke.val;
+                msg_name = noad.children[1].skoarpuscle.val;
 
                 if (noad.children.size > 2) {
                     args = SkoarpuscleArgs(noad.collect_skoarpuscles(2));
@@ -156,12 +156,15 @@ Skoarmantics {
 
                 x = noad.next_skoarpuscle;
 
+
                 case {x.isKindOf(SkoarpuscleArray)} {
+                    // here they are sending an array as the message
+                    // this is the same as the \for message
                     noad.skoarpuscle = SkoarpuscleEach(x);
 
                 } {x.isKindOf(SkoarpuscleMsgName)} {
                     args = SkoarpuscleArray(noad.collect_skoarpuscles);
-                    noad.skoarpuscle = SkoarpuscleMsg(x, args);
+                    noad.skoarpuscle = SkoarpuscleMsg(x.val , args);
                 };
 
                 noad.children = [];
