@@ -148,18 +148,19 @@ SkoarpuscleDeref : Skoarpuscle {
         | m, nav |
         var x = this.lookup(m);
 
-        //"deref:performer: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+        "deref:performer: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
-            /*"blerg:".postln;
+            "blerg:".postln;
             x.val.postln;
             m.postln;
             nav.postln;
             msg_arr.postln;
-            args.postln;*/
+            args.postln;
 
             m.koar.do_skoarpion(x.val, m, nav, msg_arr, args);
         } {
+            "zorp".postln;
             if (x.isKindOf(Skoarpuscle)) {
                 x.performer(m, nav);
             };

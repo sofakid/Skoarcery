@@ -55,6 +55,7 @@ SkoarToke {
 
         var match;
         try {
+            match = buf.findAllRegexp(toke_class.regex, offs);
             match = buf.findRegexp(toke_class.regex, offs);
             if (match.size == 0) {
                 ^nil;

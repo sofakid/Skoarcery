@@ -160,6 +160,7 @@ Skoarmantics {
                 case {x.isKindOf(SkoarpuscleArray)} {
                     // here they are sending an array as the message
                     // this is the same as the \for message
+                    "blerg".postln;
                     noad.skoarpuscle = SkoarpuscleEach(x);
 
                 } {x.isKindOf(SkoarpuscleMsgName)} {
@@ -189,7 +190,7 @@ Skoarmantics {
                     var skrd; // don't overwrite skoaroid
                     //"evaluating...".postln;
                     skrd = skoaroid.evaluate.(m);
-                    //"performing result".postln;
+                    //"performing result".postln; skrd.asString.postln;
                     skrd.performer(m, nav);
 
                 }};

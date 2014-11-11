@@ -18,6 +18,9 @@ Skoar : Object {
 
     init {
         | code |
+        var start_time;
+        var parse_time;
+        var decorate_time;
 
         skoarse = code ++ "\n";
         tree = nil;
@@ -30,6 +33,8 @@ Skoar : Object {
 
         skoarpions = List[];
 
+        start_time = Process.elapsedTime;
+
         ">>> parsing skoar...".postln;
         tree = parser.skoar(nil);
 
@@ -41,13 +46,21 @@ Skoar : Object {
             toker.dump;
             e.throw;
         };
-        "---< Undecorated Skoar Tree >---".postln;
-        tree.draw_tree.postln;
+
+        parse_time = (Process.elapsedTime - start_time).round(0.01);
+
+        //"---< Undecorated Skoar Tree >---".postln;
+        //tree.draw_tree.postln;
 
         "<<< tree created, now decorating...".postln;
         this.decorate;
+        decorate_time = (Process.elapsedTime - start_time - parse_time).round(0.01);
+
         this.draw_skoarpions;
-        "Skoar parsed.".postln;
+
+        debug("Skoar parsed in " ++ parse_time ++ " seconds, decorated in  "
+            ++ decorate_time ++ ". Total: " ++ (parse_time + decorate_time) ++ " sec.");
+
 
     }
 

@@ -158,25 +158,20 @@ SkoarNoad {
     // start debugging
     depth_visit {
         | f |
-
-        var s = if (toke != nil) {
-            toke.lexeme
-        } {
-            ""
-        };
-        debug(">>> depth_visit: " ++ name ++ " " ++ s);
+        //var s = " " ++ if (toke != nil) {toke.lexeme} {""};
+        //debug(">>> depth_visit: " ++ name ++ s);
 
         children.do {
             | y |
             y.depth_visit(f);
         };
 
-        debug("--- depth_visit: " ++ name);
+        //debug("--- depth_visit: " ++ name ++ s);
 
         // note: leaves first
         f.(this);
 
-        debug("<<< depth_visit: " ++ name);
+        //debug("<<< depth_visit: " ++ name ++ s);
     }
 
     inorder {
@@ -198,6 +193,7 @@ SkoarNoad {
         //debug("<<< inorder: " ++ name);
     }
 
+    // debug here if it's crashing while performing the skoar
     inorder_from_here {
         | here, f, stinger |
         var j = here.pop;
