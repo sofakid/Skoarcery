@@ -141,7 +141,7 @@ x = "
 .s  |: }   )   }   )   :|
 .k  |: ))      ))      :|
 
-.a  c ) e ) g )
+.a  c ) e ) ,segno` g ) D.S.
 
 ".skoar.play;
 
@@ -153,7 +153,7 @@ x = "
 
 
 
-
+UnitTest.gui
 
 
 

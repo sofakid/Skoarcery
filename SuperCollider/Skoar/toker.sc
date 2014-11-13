@@ -28,7 +28,6 @@ Toker {
                 ^i_saw
             }
         } {
-
             i_saw = want.match(skoarse, i_am_here);
             ^i_saw;
         }
@@ -39,23 +38,17 @@ Toker {
     sees {
         | wants |
 
-        var x = block {
-            | break |
+        i_am_here = i_am_here + Toke_Whitespace.burn(skoarse, i_am_here);
 
-            i_am_here = i_am_here + Toke_Whitespace.burn(skoarse, i_am_here);
-
-            wants.do {
-                | want |
-
-                x = this.see(want);
-                if (x != nil) {
-                    break.(x);
-                };
+        wants.do {
+            | want |
+            var x = this.see(want);
+            if (x != nil) {
+                ^x;
             };
-
-            break.(nil);
         };
-        ^x;
+
+        ^nil;
     }
 
     burn {

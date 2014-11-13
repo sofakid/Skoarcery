@@ -151,7 +151,7 @@ class Code_Parser_Sc(unittest.TestCase):
 
     def code_start(self):
         SC = emissions.SC
-        SC.file_header("rdpp.sc", "Code_Parser_Sc - Create Recursive Descent Predictive Parser")
+        SC.file_header("rdpp", "Code_Parser_Sc - Create Recursive Descent Predictive Parser")
         SC.raw("""
 SkoarParseException : Exception {
 

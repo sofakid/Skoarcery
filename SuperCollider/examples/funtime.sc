@@ -7,9 +7,9 @@
 mf 90 => )
 
 .a       <_c#, _d, _e, _g#, _a, c#, d, e, g#, a> => @mine
-.b  o~ forte               <_a, c#, d, e, g#, a> => @mine @bass => @instrument
+.b  o~~ forte               <_a, c#, d, e, g#, a> => @mine
 .c ~o  pp  <0,3,5> => @detune <_a, _a, c#, e, a> => @mine
-.d ~o  ppp <0,5,7> => @detune    <c#, e, _a, g#> => @mine @acid => @instrument
+.d ~o  ppp <0,5,7> => @detune    <c#, e, _a, g#> => @mine
 .s          @snare => @instrument
 .k          @kick  => @instrument
 .h     ppp  @hats  => @instrument
@@ -118,35 +118,34 @@ Array
 debug
 
 (
-"
+var s = "
 fff
 .d {! zorp<x> !!
-!x )
-.m |:c ] ] e ) :|
+.d !x ) |: c ] ] e ) :|
+c )
 !!
 'food'
 !}
-
-.m !zorp<_a> f ] !zorp<c>.next f ] !zorp<e>.next f ] !zorp<c>.next f ]
-
+)
+.d !zorp<_a> f ] !zorp<c>.next f ] !zorp<e>.next f ] !zorp<c>.next f ]
+]]
 ".skoar.play;
 )
-
-Array
-nil.foo;
 
 (
 "
 mf
 
 5.rand
-@bass => @instrument
+@krgn_gen_varpulse => @instrument
 
+120 => )
 
-.a |: _a ] _b ] c ] d] e] f] g] |
-.b |: _a ] _b ] c ] d] e] f]  |
-.c |: _a ] _b ] c ] d] e] |
-.d |: _a ] _b ] c ] |
+.a |: _c ] _a ]  c ] e ] g ] ] a ] |
+.b |: _a ]  c ]  e ]               |
+.c |: _g ] _e ] _a ] c ]   ]       |
+.d |:   o/ _a ]                    |
+
 
 D.C.
 
@@ -161,7 +160,8 @@ try {
     e.throw;
 };
 )
-Array
+
+IdentityDictionary
 [0,1,2].add(7)
 
 a = "w".findRegexp("\\d", 0);
@@ -203,7 +203,7 @@ mf 90 => )
 .a <_c#, _d, _e, _g#, _a, c#, d, e, g#, a> => @mine
 .b o~ forte <_a, c#, d, e, g#, a> => @mine
 .c ~o pp <0,3,5> => @detune <_a, _a, c#, e, a> => @mine
-.d ~o ppp <0,5,7> => @detune <c#, e, _a, g#> => @mine @bass => @instrument
+.d ~o ppp <0,5,7> => @detune <c#, e, _a, g#> => @mine @krgn_gen_sbass => @instrument
 
 ,segno`
 
@@ -221,11 +221,13 @@ D.S. ^^(;,;)^^
 ".skoar.play;
 )
 
+f = ")".skoar.pskoar;
 
+f.nextFunc.value
 
+Event
 
-
-
+UnitTest.gui
 
 
 

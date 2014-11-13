@@ -250,4 +250,7 @@ x = "
 
 !fill
 
-".skoar;
+";
+
+for (0, 60, {x.skoar;});
+

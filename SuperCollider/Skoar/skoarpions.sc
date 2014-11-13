@@ -74,7 +74,7 @@ Skoarpion {
             };
         };
 
-        "SIG: ".post; name.post; args.postln;
+        //"SIG: ".post; name.post; args.postln;
 
         suffix.children.do {
             | x |

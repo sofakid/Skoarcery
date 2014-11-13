@@ -9,7 +9,7 @@ _ = _____ = _________ = _____________ = _________________ = ____________________
 SkoarToke_ = "SkoarToke"
 lexeme_ = "lexeme"
 regex_ = "regex"
-val_ = "val"
+size_ = "size"
 inspectable_ = "inspectable"
 burn_ = "burn"
 match_ = "match"
@@ -18,6 +18,7 @@ offs_ = "offs"
 toke_class_ = "toke_class"
 match_toke_ = "match_toke"
 s_ = "s"
+n_ = "n"
 SkoarError_ = "SkoarError"
 SubclassResponsibilityError_ = "SubclassResponsibilityError"
 
@@ -40,18 +41,19 @@ def skoarToke():
     _.abstract_class(SkoarToke_)
 
     _____.attrvar("<", lexeme_)
-    _____.attrvar("<>", val_)
+    _____.attrvar("", size_)
 
     _____.classvar("<", regex_, _.null)
     _____.nl()
 
-    _____.constructor(s_)
+    _____.constructor(s_, n_)
     _________.stmt(_.v_ass(_.v_attr(lexeme_), s_))
+    _________.stmt(_.v_ass(_.v_attr(size_), n_))
     _____.end()
 
     _____.cmt("how many characters to burn from the buffer")
     _____.method(burn_)
-    _________.return_(_.v_length(_.v_attr(lexeme_)))
+    _________.return_(size_)
     _____.end()
 
     _____.cmt("override and return " + _.null + " for no match, new toke otherwise")
@@ -63,25 +65,27 @@ def skoarToke():
     _____.static_method(match_toke_, buf_, offs_, toke_class_)
     _________.var(match_)
 
-    _________.try_()
-    _____________.find_regex(match_, regex, buf_, offs_)
+    if isinstance(_, emissions.ScTongue):
+        _________.find_regex(match_, regex, buf_, offs_)
 
-    is_sc = isinstance(_, emissions.ScTongue)
-    if is_sc:
-        _________.if_(match_ + ".size == 0")
+        _________.if_(match_ + " == nil")
         _____________.return_(_.null)
         _________.end_if()
 
-        _________.if_(match_ + "[0][0] == " + offs_)
-    _____________________.return_(_.v_new(toke_class_, _.v_regex_group_zero(match_)))
-    if is_sc:
-        _________.end_if()
+        _________.return_(_.v_new(toke_class_, "match[0]", "match[1]"))
 
-    _________.except_any()
-    _____________.nop()
-    _________.end()
+    else:
+        _____.try_()
+        _________.find_regex(match_, regex, buf_, offs_)
 
-    _________.return_(_.null)
+        _________.return_(_.v_new(toke_class_, _.v_regex_group_zero(match_)))
+
+        _____.except_any()
+        _________.nop()
+        _____.end()
+
+        _____.return_(_.null)
+
     _____.end()
     _.end()
 
@@ -98,19 +102,19 @@ def whitespace_token():
     _____.static_method(burn_, buf_, offs_)
     _________.var(match_)
 
-    _________.try_()
-    _____________.find_regex(match_, Whitespace.toker_name + "." + regex_, buf_, offs_)
-
-    is_sc = isinstance(_, emissions.ScTongue)
-    if is_sc:
-        _________.if_(match_ + "[0][0] == " + offs_)
-    _________________.return_(_.v_length(_.v_regex_group_zero(match_)))
-    if is_sc:
+    if isinstance(_, emissions.ScTongue):
+        _________.find_regex(match_, Whitespace.toker_name + "." + regex_, buf_, offs_)
+        _________.if_(match_ + " != " + _.null)
+        _____________.return_("match[1]")
         _________.end_if()
 
-    _________.except_any()
-    _____________.nop()
-    _________.end()
+    else:
+        _____.try_()
+        _________.find_regex(match_, Whitespace.toker_name + "." + regex_, buf_, offs_)
+        _________.return_(_.v_length(_.v_regex_group_zero(match_)))
+        _____.except_any()
+        _________.nop()
+        _____.end()
 
     _________.return_("0")
     _____.end()

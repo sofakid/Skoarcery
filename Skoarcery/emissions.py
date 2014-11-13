@@ -557,7 +557,7 @@ class ScTongue(Tongue):
         self.if_(self.v_match_regex(regex, buf, offs) + " == " + self.false)
 
     def find_regex(self, match, regex, buf, offs):
-        self.stmt(match + " = " + buf + ".findRegexp(" + regex + ", " + offs + ")")
+        self.stmt(match + " = " + buf + ".firstRegexp(" + regex + ", " + offs + ")")
 
     def try_(self):
         self.stmt("try {", end="\n")
@@ -603,7 +603,7 @@ class ScTongue(Tongue):
         return attr
 
     def v_def_regex(self, regex):
-        return '"^' + regex.replace("\\", "\\\\") + '"'
+        return '"' + regex.replace("\\", "\\\\") + '"'
 
     def v_match(self, match):
         return self.v_length(match) + " > 0"
