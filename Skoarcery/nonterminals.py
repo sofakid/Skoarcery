@@ -53,26 +53,33 @@ ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | Quindic
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
 nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy | deref | skoarpion
-+nouny_literal   : Tuplet | Caesura | Int | Float | String | Choard | NamedNoat | Symbol | CurNoat
++nouny_literal   : Tuplet | Caesura | Int | Float | String | Choard | NamedNoat | Symbol
 
 deref*           : Deref deref_prime
 +deref_prime     : MsgNameWithArgs listy_suffix | MsgName
 
 stmt*            : skoaroid stmt_prime
 +stmt_prime      : assignment stmt_prime | <e>
-optional_stmt    : stmt | Newline | <e>
 
 assignment*      : AssOp settable
-+settable        : Caesura | CurNoat | Symbol | listy | Quarters | Eighths
++settable        : Caesura | Symbol | listy | Quarters | Eighths
 
 skoaroid*        : nouny msg_chain_node
 +msg_chain_node  : MsgOp msg msg_chain_node | <e>
 msg*             : MsgNameWithArgs listy_suffix | MsgName | listy
 
 boolean*         : skoaroid BooleanOp skoaroid
-conditional      : CondS optional_stmt CondSep boolean CondSep optional_stmt CondE
-cthulhu*         : LWing CondSep cthulhu_prime
-+cthulhu_prime   : boolean CondSep RWing | Nosey CondSep RWing
+cthulhu*         : LWing Semicolon cthulhu_prime
++cthulhu_prime   : boolean Semicolon RWing | Nosey Semicolon RWing
+
+conditional      : CondS cond_ifs CondE
++cond_ifs        : cond_if cond_ifs_suffix
++cond_ifs_suffix : Newline cond_ifs | <e>
++cond_if         : optional_voice boolean CondIf if_body cond_else
++cond_else       : CondElse else_body | <e>
+
+if_body          : phrases
+else_body        : phrases
 
 """
 

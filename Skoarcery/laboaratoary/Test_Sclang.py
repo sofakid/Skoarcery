@@ -49,7 +49,7 @@ class Test_Sclang(unittest.TestCase):
 
             #
             # complete
-            if line.startswith("Welcome to SuperCollider"):
+            if line.find("Welcome to SuperCollider") != -1:
                 break
 
         self.assertFalse(error_seen, "Errors compiling class library.")

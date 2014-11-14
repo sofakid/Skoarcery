@@ -11,13 +11,12 @@ src = """
 <e>:            unused
 EOF:            unused
 Whitespace:     [ \\t]*
-Newline:        [\\n\\r\\f]+
+Newline:        [\\n\\r\\f][\\n\\r\\f \\t]*
 
 Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
-CurNoat:        [$]
 Portamento:     port\\.?
 
 # careful not to match ottavas with end in (ma,mb,va,vb), or steal from floats
@@ -67,8 +66,10 @@ NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
 BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor
 Choard*:          (D(?![a.])|[ABCEFG])([Mm0-9]|sus|dim)*
 CondS:            [{][?]
-CondSep:          ;
+CondIf:           [?][?](?![}])
+CondElse:         ::(?![|])
 CondE:            [?][}]
+Semicolon:        ;
 
 # we do this, because skoaroids can follow skoaroids.
 MsgName*:         [a-zA-Z_][a-zA-Z0-9_]*(?!<)
