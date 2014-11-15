@@ -7,9 +7,7 @@ Skoarpuscle {
     *new { | v | ^super.new.init(v); }
     init { | v | val = v; }
 
-    as_noat { | m | ^val;}
-
-    performer { | m, nav | }
+    performer { | m, nav, stinger=nil | }
 
     flatten {^val;}
 
@@ -32,7 +30,7 @@ Skoarpuscle {
             ^SkoarpuscleSkoarpion(x);
 
         } {x.isKindOf(Integer)} {
-            "x int".postln;
+            debug("x int: " ++ x.asString);
             ^SkoarpuscleInt(x);
 
         } {x.isKindOf(Number)} {
@@ -94,7 +92,6 @@ SkoarpuscleFloat : Skoarpuscle {
 }
 
 SkoarpuscleString : Skoarpuscle {
-    as_noat { | m | ^nil; }
 }
 
 SkoarpuscleSymbolName : Skoarpuscle {
@@ -139,11 +136,6 @@ SkoarpuscleDeref : Skoarpuscle {
         ^m.koar[val];
     }
 
-    as_noat {
-        | m |
-        ^this.lookup(m).as_noat(m);
-    }
-
     performer {
         | m, nav |
         var x = this.lookup(m);
@@ -181,11 +173,11 @@ SkoarpuscleDeref : Skoarpuscle {
         };
 
         // we don't recognise that name, did they mean a SuperCollider class?
-        if (x == nil) {
+        if (x.isNil) {
             x = val.asClass;
         };
 
-        if (x != nil) {
+        if (x.notNil) {
             ret = x.performMsg(msg_arr);
         };
 
@@ -194,6 +186,110 @@ SkoarpuscleDeref : Skoarpuscle {
 
 }
 
+SkoarpuscleBooleanOp : Skoarpuscle {
+
+    var f;
+
+    init {
+        | toke |
+        val = toke.lexeme;
+
+        // ==|!=|<=|>=|in|nin|and|or|xor
+        f = switch (val)
+            {"=="}  {{
+                | a, b |
+                a == b
+            }}
+            {"!="}  {{
+                | a, b |
+                a != b
+            }}
+            {"<="}  {{
+                | a, b |
+                a <= b
+            }}
+            {">="}  {{
+                | a, b |
+                a >= b
+            }}
+            {"and"} {{
+                | a, b |
+                a and: b
+            }}
+            {"or"}  {{
+                | a, b |
+                a or: b
+            }}
+            {"xor"} {{
+                | a, b |
+                a xor: b
+            }};
+
+    }
+
+    compare {
+        | a, b, m |
+        var x = a.evaluate.(m).flatten;
+        var y = b.evaluate.(m).flatten;
+
+        debug("{? " ++ x.asString ++ " " ++ val ++ " " ++ y.asString ++ " ?}");
+
+        x !? y !? {^f.(x, y)};
+
+        false
+    }
+
+}
+
+SkoarpuscleBoolean : Skoarpuscle {
+
+    var a, b, op;
+
+    init {
+        | noad |
+        // a and b are skoaroids
+        a = noad.children[0];
+        op = noad.children[1].next_skoarpuscle;
+        b = noad.children[2];
+
+        noad.children = [];
+    }
+
+    evaluate {
+        | m |
+        ^op.compare(a, b, m);
+    }
+
+}
+
+
+SkoarpuscleConditional : Skoarpuscle {
+
+    var condition;
+    var if_body;
+    var else_body;
+
+    init {
+        | noad |
+
+        condition = noad.children[1].next_skoarpuscle;
+        if_body   = noad.children[3];
+        else_body = noad.children[5];
+
+    }
+
+    performer {
+        | m, nav |
+
+        if (condition.evaluate(m) == true) {
+            if_body.draw_tree.postln;
+        } {
+            else_body.draw_tree.postln;
+        };
+
+    }
+
+}
 
 SkoarpuscleSkoarpion : Skoarpuscle {
 
@@ -207,11 +303,11 @@ SkoarpuscleSkoarpion : Skoarpuscle {
 
     performer {
         | m, nav |
-        if (val.name != nil) {
+        if (val.name.notNil) {
             m.koar[val.name] = this;
         };
 
-        if (msg_arr != nil) {
+        if (msg_arr.notNil) {
             m.koar.do_skoarpion(val, m, nav, msg_arr, nil);
         };
     }
@@ -414,7 +510,7 @@ SkoarpuscleGoto : Skoarpuscle {
                        {toke.isKindOf(Toke_DalSegno)} {\nav_segno};
 
         al_fine = false;
-        if (al_x != nil) {
+        if (al_x.notNil) {
             if (al_x.next_toke.isKindOf(Toke_AlFine)) {
                 al_fine = true;
             };
@@ -540,15 +636,6 @@ SkoarpuscleOctaveShift : Skoarpuscle {
         | m, nav |
         var octave = m.koar[\octave] ?? 5;
         m.koar[\octave] = octave + val;
-    }
-
-}
-
-SkoarpuscleBooleanOp : Skoarpuscle {
-
-    init {
-        | toke |
-        val = toke.lexeme;
     }
 
 }

@@ -52,7 +52,7 @@ SkoarNoad {
     decorate_zero {
         | v, s, parent_address, i=0 |
 
-        if (voice == nil) {
+        if (voice.isNil) {
             voice = v;
         } {
             // the voice has changed, this is what the children get
@@ -74,7 +74,7 @@ SkoarNoad {
     decorate {
         | v, s, parent_address, i=0 |
 
-        if (voice == nil) {
+        if (voice.isNil) {
             voice = v;
         } {
             // the voice has changed, this is what the children get
@@ -123,15 +123,15 @@ SkoarNoad {
             sa = sa ++ x.asString ++ ";";
         };
 
-        sv = if (voice != nil) {
+        sv = if (voice.notNil) {
                 voice.name.asString.padLeft(n) ++ ":"
-            } {
+             } {
                 ":".padLeft(n+1)
-            };
+             };
 
         s = sa.padRight(n) ++ sv ++ " ".padLeft(tab) ++ name;
 
-        if (skoarpuscle != nil) {
+        if (skoarpuscle.notNil) {
             s = s ++ ": " ++ skoarpuscle.val;
         };
 
@@ -158,7 +158,7 @@ SkoarNoad {
     // start debugging
     depth_visit {
         | f |
-        //var s = " " ++ if (toke != nil) {toke.lexeme} {""};
+        //var s = " " ++ if (toke.notNil) {toke.lexeme} {""};
         //debug(">>> depth_visit: " ++ name ++ s);
 
         children.do {
@@ -178,7 +178,7 @@ SkoarNoad {
         | f, stinger=nil |
 
         //debug(">>> inorder: " ++ name);
-        if ((stinger != nil) && skoarpuscle.isKindOf(SkoarpuscleBeat)) {
+        if (stinger.notNil and: skoarpuscle.isKindOf(SkoarpuscleBeat)) {
             //debug("!!! stinger: " ++ stinger.asString);
             stinger.inorder(f);
         };
@@ -201,7 +201,7 @@ SkoarNoad {
 
         //debug("inorder_from_here: j:" ++ j ++ " " ++ name);
 
-        if (j == nil) {
+        if (j.isNil) {
             this.inorder(f, stinger);
         } {
             children[j].inorder_from_here(here, f, stinger);
@@ -216,33 +216,17 @@ SkoarNoad {
         };
     }
 
-    // this finds the preceding noad
-    prev_noad {
-        var i = address[address.size-1];
-
-        // are we leftmost sibling?
-        if (i == 0) {
-            if (parent == nil) {
-                ^nil;
-            };
-
-            ^parent.prev_noad;
-        };
-
-        // return sibling to left
-        ^parent.children[i-1];
-    }
-
     // expect skoarpuscle
     next_skoarpuscle {
         var x;
 
-        if (skoarpuscle != nil) {
+        if (skoarpuscle.notNil) {
             ^skoarpuscle;
         };
 
         x = children[0];
-        if (x != nil) {
+
+        if (x.notNil) {
             ^x.next_skoarpuscle;
         };
 
@@ -252,12 +236,13 @@ SkoarNoad {
     next_toke {
         var x;
 
-        if (toke != nil) {
+        if (toke.notNil) {
             ^toke;
         };
 
         x = children[0];
-        if (x != nil) {
+
+        if (x.notNil) {
             ^x.next_toke;
         };
 
@@ -268,13 +253,11 @@ SkoarNoad {
     // performing the tree
     // -------------------
     perform {
-        | minstrel, nav |
+        | minstrel, nav, stinger=nil |
 
-        if (performer != nil) {
-            performer.(minstrel, nav);
-
+        if (performer.notNil) {
+            performer.(minstrel, nav, stinger);
         };
-
     }
 
     // ------------------
@@ -319,7 +302,7 @@ SkoarNoad {
 
             children[j].inorder({
                 | x |
-                if (x.skoarpuscle != nil) {
+                if (x.skoarpuscle.notNil) {
                     //debug("found skoarpuscle: " ++ x.skoarpuscle.asString);
                     results.add(x.skoarpuscle);
                 };
@@ -330,7 +313,6 @@ SkoarNoad {
         ^results.asArray;
 
     }
-
 
 }
 

@@ -32,6 +32,18 @@ Skoarmantics {
                 noad.children = [];
             },
 
+            \conditional -> {
+                | skoar, noad |
+                noad.skoarpuscle = SkoarpuscleConditional(noad);
+                noad.children = [];
+            },
+
+            \boolean -> {
+                | skoar, noad |
+                noad.skoarpuscle = SkoarpuscleBoolean(noad);
+                noad.children = [];
+            },
+
             \beat -> {
                 | skoar, noad |
                 var x = noad.next_skoarpuscle;
@@ -99,7 +111,7 @@ Skoarmantics {
 
                 var x = noad.next_skoarpuscle;
 
-                if (x != nil) {
+                if (x.notNil) {
                     noad.performer = {
                         | m, nav |
                         x.performer(m, nav);
@@ -117,7 +129,7 @@ Skoarmantics {
 
                 var x = noad.next_skoarpuscle;
 
-                if (x != nil) {
+                if (x.notNil) {
                     noad.skoarpuscle = x;
                     noad.children = [];
                 };
@@ -144,7 +156,6 @@ Skoarmantics {
 
             \args -> {
                 | skoar, noad |
-
                 noad.skoarpuscle = SkoarpuscleArgs(noad.collect_skoarpuscles);
                 noad.children = [];
             },
@@ -176,7 +187,7 @@ Skoarmantics {
                 var skoaroid = noad.children[0];
                 var y = noad.children[1];
 
-                noad.performer = if (y != nil) {
+                noad.performer = if (y.notNil) {
 
                     if (y.name == \assignment) {{
                         | m, nav |
@@ -216,7 +227,7 @@ Skoarmantics {
                     | minstrel |
                     var result = kids[0].next_skoarpuscle;
 
-                    if (result != nil) {
+                    if (result.notNil) {
                         kids.do {
                             | y |
                             var x = y.skoarpuscle;
@@ -230,7 +241,7 @@ Skoarmantics {
                     } {
                         var x = noad.next_skoarpuscle;
 
-                        if (x != nil) {
+                        if (x.notNil) {
                             x
                         } {
                             "no evaluation.".postln; noad.dump;
@@ -266,14 +277,6 @@ Skoarmantics {
                         voice.assign_set(x, settable);
                     }};
             },
-
-            \boolean -> {
-                | skoar, noad |
-            },
-
-            \coda -> {
-                | skoar, noad |
-            }
 
         ];
         ^dict;

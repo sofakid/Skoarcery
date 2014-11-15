@@ -139,7 +139,7 @@ Skoarpion {
     }
 
     post_tree {
-        var s = if (name == nil) {
+        var s = if (name.isNil) {
                     "anonymous"
                 } {
                     name
@@ -147,7 +147,7 @@ Skoarpion {
 
         debug("---< Skoarpion " ++ s ++ " >---");
 
-        if (args != nil) {
+        if (args.notNil) {
             "args: ".post;
 
             args.val.do {
@@ -157,12 +157,12 @@ Skoarpion {
             "".postln;
         };
 
-        if (body != nil) {
+        if (body.notNil) {
             "body:".postln;
             body.draw_tree.post;
         };
 
-        if (stinger != nil) {
+        if (stinger.notNil) {
             "stinger: ".postln;
             stinger.draw_tree.post;
         };
@@ -258,7 +258,7 @@ SkoarpionProjection : SkoarIteratoar {
     map_dst {
         | dst |
         var j = dst.address.pop;
-        if (j == nil) {
+        if (j.isNil) {
             ^dst;
         };
         ^proj.children[skip_to[j]];

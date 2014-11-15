@@ -96,6 +96,7 @@ SkoarKoar {
         this[k] = v;
     }
 
+    // these should be in tempo skoarpuscles
     incr_tempo {
         | bpm, beat |
 
@@ -135,7 +136,7 @@ SkoarKoar {
         stack.reverseDo {
             | skrb |
             out = skrb[k];
-            if (out != nil) {
+            if (out.notNil) {
                 ^out;
             };
         };
@@ -155,7 +156,7 @@ SkoarKoar {
         state_stack.reverseDo {
             | skrb |
             out = skrb[k];
-            if (out != nil) {
+            if (out.notNil) {
                 ^out;
             };
         };
@@ -228,12 +229,11 @@ SkoarKoar {
 
         this.push_args(skoarpion.args, skrp_args);
 
-        if (skoarpion.name != nil) {
-
+        if (skoarpion.name.notNil) {
             projection = this.state_at(\projections)[skoarpion.name];
 
             // start a new one if we haven't seen it
-            if (projection == nil) {
+            if (projection.isNil) {
                 projection = skoarpion.projection(name);
                 projections[skoarpion.name] = projection;
             };
@@ -242,7 +242,7 @@ SkoarKoar {
         };
 
         // default behaviour (when unmessaged)
-        if (msg_arr == nil) {
+        if (msg_arr.isNil) {
             msg_arr = [\block];
         };
 
@@ -257,14 +257,15 @@ SkoarKoar {
                 | nav |
                 var y = projection.map_dst(dst);
                 var here = dst.address;
+                var stinger = skoarpion.stinger;
                 if (y != dst) {
                     here.pop;
                 };
                 y.inorder_from_here(
                     here,
                     {   | x |
-                        x.perform(minstrel, nav); },
-                    skoarpion.stinger);
+                        x.perform(minstrel, nav, stinger); },
+                    stinger);
                 nav.(\nav_done);
             };
 
@@ -278,7 +279,9 @@ SkoarKoar {
                     up_nav.(\nav_fine);
                 }
 
-                {\nav_coda} {}
+                {\nav_coda} {
+
+                }
 
                 {\nav_da_capo} {
                     up_nav.(\nav_da_capo);
@@ -287,19 +290,17 @@ SkoarKoar {
                 {\nav_segno} {
                     dst = this.state_at(\segno_seen);
 
-                    if (dst == nil) {
+                    if (dst.isNil) {
                         up_nav.(\nav_segno);
                     };
-
                 }
 
                 {\nav_jump} {
                     dst = this.state_at(\colon_seen);
 
-                    if (dst == nil) {
+                    if (dst.isNil) {
                         up_nav.(\nav_jump);
                     };
-
                 };
 
         };

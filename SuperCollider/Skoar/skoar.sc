@@ -73,7 +73,7 @@ Skoar : Object {
             | noad |
             var t = noad.toke;
 
-            if (t != nil) {
+            if (t.notNil) {
                 var g = inspector[t.class.asSymbol];
 
                 if (g.isKindOf(Function)) {

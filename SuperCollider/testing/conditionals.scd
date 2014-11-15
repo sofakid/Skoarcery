@@ -1,10 +1,3 @@
-(
-"
-120 => )
-ooo/ ]]]
-<c,e,_a>.choose ] ]] ]] D.C.
-".skoar.play;
-)
 
 (
 "
@@ -14,15 +7,23 @@ ooo/ ]]]
 
 <? .a <_a, _c, c, _e, e, _a> {! ]]] ooo/ !} ?>
 
-.a {? 10.rand <= 5 ?? 0 ]] ]] :: 4 ] ?} D.C.
+.a {? 10.rand <= 5 ?? 0 ]] ]] :: 4 ] ?} ]
 
-<? if-else ?>
+
 .a {? 10.rand == 5 ?? ] ] ] ] ]] ] ]] :: ] ] }} ?}
 
-<? case ?>
 .a {? 10.rand >= 5 ?? ] ] ] ] ]] ] ]] :: }}
       10.rand <= 6 ?? ] ] ] ] ]] ] ]] :: } )
       11.rand <= 3 ?? ] ] }} ?}
 
 ".skoar.play;
 )
+
+
+(
+"
+{? 4.rand <= 6 ?? a :: c ?} ] D.C.
+".skoar.draw_skoarpions.play;
+)
+
+Exception.debug = false;

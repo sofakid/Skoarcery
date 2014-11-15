@@ -109,7 +109,7 @@ class Code_Parser_Sc(unittest.TestCase):
 
                 SC.cmt(str(P))
 
-                SC.if_("toker.sees(desires) != " + SC.null)
+                SC.if_("toker.sees(desires).notNil")
 
                 # debugging
                 #SC.print(str(P))

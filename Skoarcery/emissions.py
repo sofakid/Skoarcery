@@ -445,7 +445,7 @@ class ScTongue(Tongue):
 
     @property
     def language(self):
-        return "SuperCollider 3.6"
+        return "SuperCollider 3.7"
 
     @property
     def ext(self):

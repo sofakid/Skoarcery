@@ -68,7 +68,7 @@ def skoarToke():
     if isinstance(_, emissions.ScTongue):
         _________.find_regex(match_, regex, buf_, offs_)
 
-        _________.if_(match_ + " == nil")
+        _________.if_(match_ + ".isNil")
         _____________.return_(_.null)
         _________.end_if()
 

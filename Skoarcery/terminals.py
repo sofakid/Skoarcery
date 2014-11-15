@@ -17,8 +17,6 @@ Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
-Portamento:     port\\.?
-
 # careful not to match ottavas with end in (ma,mb,va,vb), or steal from floats
 Int*:           (-)?(0|[1-9][0-9]*)(?![mv][ab]|\\.[0-9]|/)
 Float*:         (-)?(0|[1-9][0-9]*)\\.[0-9]+
@@ -63,7 +61,7 @@ AssOp:            =>|[+]>|->
 MsgOp:            \\.(?![)\\]])
 
 NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
-BooleanOp*:       ==|!=|<=|>=|in|nin|and|or|xor
+BooleanOp*:       ==|!=|<=|>=|and|or|xor
 Choard*:          (D(?![a.])|[ABCEFG])([Mm0-9]|sus|dim)*
 CondS:            [{][?]
 CondIf:           [?][?](?![}])
@@ -102,6 +100,7 @@ OttavaB:          8vb|ottava (bassa|sotto)
 QuindicesimaA:    15ma|alla quindicesima
 QuindicesimaB:    15mb|alla quindicesimb
 
+Portamento:       port\\.?
 Loco:             loco
 Volta*:           \\[\\d+\\.\\]
 
@@ -110,8 +109,8 @@ String*:          \'[^']*\'
 
 Bars*:            :?\\|+:?
 
-PedalDown:        Ped
-PedalUp:          [*]
+PedalDown:        Ped\\.?
+PedalUp:          [*](?!>)
 
 """
 

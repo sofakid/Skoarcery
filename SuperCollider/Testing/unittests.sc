@@ -357,10 +357,10 @@ Expectoar {
             } {ex.isKindOf(Event)} {
                 "Expecting event: ".post; ex.postln;
                 result = pat.nextFunc.value;
-                testoar.assert(result != nil, tag ++ "expect a result");
+                testoar.assert(result.notNil, tag ++ "expect a result");
 
                 // that assert doesn't abort.
-                if (result != nil) {
+                if (result.notNil) {
                     this.match(ex, result);
                 };
 
@@ -373,7 +373,7 @@ Expectoar {
         };
 
         result = pat.nextFunc.value;
-        if (result != nil) {
+        if (result.notNil) {
             this.match(end, result);
         };
 
@@ -389,7 +389,7 @@ Expectoar {
             x = seen_event[ekey];
             testoar.assert(seen_event.isKindOf(Event), tag ++ "is x an event?");
 
-            if (seen_event != nil) {
+            if (seen_event.notNil) {
                 testoar.assert(seen_event[ekey] == eval, tag ++
                     "seen_event[" ++ ekey ++ "] = " ++ x ++ " == " ++ eval ++ " expected"
                 );
@@ -405,7 +405,7 @@ Expectoar {
 
             exp_event.keysValuesDo {
                 | ekey, eval |
-                if (seen_event != nil) {
+                if (seen_event.notNil) {
                     var x = seen_event[ekey];
                     seen = seen && (x == eval);
                 };

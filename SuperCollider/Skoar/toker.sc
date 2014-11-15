@@ -23,7 +23,7 @@ Toker {
     see {
         | want |
 
-        if (i_saw != nil) {
+        if (i_saw.notNil) {
             if (i_saw.isKindOf(want)) {
                 ^i_saw
             }
@@ -43,7 +43,8 @@ Toker {
         wants.do {
             | want |
             var x = this.see(want);
-            if (x != nil) {
+
+            if (x.notNil) {
                 ^x;
             };
         };
@@ -57,11 +58,11 @@ Toker {
         var toke = i_saw;
         var msg;
 
-        if (toke == nil) {
+        if (toke.isNil) {
             toke = this.see(want);
         };
 
-        if (toke.isKindOf(want)) {
+        toke.isKindOf(want) and: {
             i_saw = nil;
             i_am_here = i_am_here + toke.burn;
             i_am_here = i_am_here + Toke_Whitespace.burn(skoarse, i_am_here);
