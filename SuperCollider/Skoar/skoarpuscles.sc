@@ -416,6 +416,7 @@ SkoarpuscleMsg : Skoarpuscle {
 
     get_msg_arr {
         var x = Array.new(args.size + 1);
+
         x.add(val);
         args.flatten.do {
             | y |

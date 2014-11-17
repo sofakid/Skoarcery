@@ -68,7 +68,7 @@ SkoarKoar {
         var k = y.val;
         var v = x.flatten;
 
-        v = this[k] + v;
+        v = this[k].flatten + v;
 
         //("@" ++ k ++ " <= ").post; v.dump;
         this[k] = v;
@@ -80,7 +80,7 @@ SkoarKoar {
         var k = y.val;
         var v = x.flatten;
 
-        v = this[k] - v;
+        v = this[k].flatten - v;
 
         //("@" ++ k ++ " <= ").post; v.dump;
         this[k] = v;
@@ -175,29 +175,18 @@ SkoarKoar {
         ^e
     }
 
-    push_args {
+    set_args {
         | args_def, args |
-        var skrb = IdentityDictionary.new;
         var i = 0;
+        var vars = stack[stack.size - 1];
 
         if (args_def.isKindOf(SkoarpuscleArgs)) {
             args_def.val.do {
                 | k |
                 k = k.val;
-                skrb[k] = args.val[i];
+                vars[k] = args.val[i];
                 i = i + 1;
             };
-        };
-
-        stack.add(skrb);
-    }
-
-    pop_args {
-        stack.pop;
-
-        if (stack.size == 0) {
-            "Stack underflow. This means trouble. What are you doing?".postln;
-            stack.add(skoarboard);
         };
     }
 
@@ -208,7 +197,6 @@ SkoarKoar {
     push_state {
         var state = IdentityDictionary.new;
         var projections = IdentityDictionary.new;
-        var projection;
 
         state_stack.add(state);
 
@@ -216,10 +204,11 @@ SkoarKoar {
         state[\al_fine] = false;
         state[\projections] = projections;
 
+        stack.add(IdentityDictionary.new);
     }
 
     pop_state {
-        this.pop_args;
+        stack.pop;
         state_stack.pop;
     }
 
@@ -230,6 +219,7 @@ SkoarKoar {
         var projection;
         var projections;
         var msg_name;
+        var inlined;
 
         if (skoarpion.isKindOf(Skoarpion) == false) {
             "This isn't a skoarpion: ".post; skoarpion.postln;
@@ -243,10 +233,11 @@ SkoarKoar {
 
         msg_name = msg_arr[0];
 
-        if (msg_name != \inline) {
+        inlined = (msg_name == \inline);
+        if (inlined == false) {
             this.push_state;
-            this.push_args(skoarpion.args, skrp_args);
         };
+        this.set_args(skoarpion.args, skrp_args);
 
         projections = this.state_at(\projections);
         if (skoarpion.name.notNil) {
@@ -263,23 +254,15 @@ SkoarKoar {
 
         dst = projection.performMsg(msg_arr);
 
-        this.nav_loop(dst, projection, minstrel, up_nav, stinger);
+        this.nav_loop(dst, projection, minstrel, up_nav, stinger, inlined);
 
-        if (msg_name != \inline) {
+        if (inlined == false) {
             this.pop_state;
         };
     }
 
-    do_like_skoarpion {
-        | dst, minstrel, up_nav, stinger |
-        var name = this.state_at(\name);
-        var projection = this.state_at(\projections)[name];
-
-        this.nav_loop(dst, projection, minstrel, up_nav, stinger)
-    }
-
     nav_loop {
-        | dst, projection, minstrel, up_nav, stinger |
+        | dst, projection, minstrel, up_nav, stinger, inlined |
 
         var nav_result;
         var running = true;
@@ -287,6 +270,7 @@ SkoarKoar {
 
         while {running == true} {
 
+            // you can think of this like a try/catch for nav signals
             nav_result = block {
                 | nav |
                 var here = projection.map_dst(dst);
@@ -306,7 +290,7 @@ SkoarKoar {
                 }
 
                 {\nav_fine} {
-                    up_nav.(\nav_fine);
+                    this.bubble_up_nav(up_nav, \nav_fine, inlined);
                 }
 
                 {\nav_coda} {
@@ -314,14 +298,14 @@ SkoarKoar {
                 }
 
                 {\nav_da_capo} {
-                    up_nav.(\nav_da_capo);
+                    this.bubble_up_nav(up_nav, \nav_da_capo, inlined);
                 }
 
                 {\nav_segno} {
                     dst = this.state_at(\segno_seen);
 
                     if (dst.isNil) {
-                        up_nav.(\nav_segno);
+                        this.bubble_up_nav(up_nav, \nav_segno, inlined);
                     };
                 }
 
@@ -329,11 +313,21 @@ SkoarKoar {
                     dst = this.state_at(\colon_seen);
 
                     if (dst.isNil) {
-                        up_nav.(\nav_jump);
+                        this.bubble_up_nav(up_nav, \nav_jump, inlined);
                     };
                 };
 
         };
+    }
+
+    bubble_up_nav {
+        | nav, cmd, inlined |
+
+        if (inlined == false) {
+            this.pop_state;
+        };
+
+        nav.(cmd);
     }
 }
 

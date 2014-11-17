@@ -169,12 +169,12 @@ Skoarmantics {
                 case {x.isKindOf(SkoarpuscleArray)} {
                     // here they are sending an array as the message
                     // this is the same as the \for message
-                    "blerg".postln;
+                    "\\msg -> SkoarpuscleEach".postln;
                     noad.skoarpuscle = SkoarpuscleEach(x);
 
                 } {x.isKindOf(SkoarpuscleMsgName)} {
-                    args = SkoarpuscleArray(noad.collect_skoarpuscles);
-                    noad.skoarpuscle = SkoarpuscleMsg(x.val , args);
+                    args = SkoarpuscleArray(noad.collect_skoarpuscles(1));
+                    noad.skoarpuscle = SkoarpuscleMsg(x.val, args);
                 };
 
                 noad.children = [];
