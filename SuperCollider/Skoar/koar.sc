@@ -273,6 +273,8 @@ SkoarKoar {
             // you can think of this like a try/catch for nav signals
             nav_result = block {
                 | nav |
+
+                // map dst to an address relative to the projection
                 var here = projection.map_dst(dst);
 
                 subtree.inorder_from_here(
@@ -280,9 +282,14 @@ SkoarKoar {
                     {   | x |
                         x.perform(minstrel, nav, stinger); },
                     stinger);
+
+                // our metaphorical throws look like this,
+                // you'll also find them in the navigational
+                // skoarpuscles' performers. (segno, bars, etc..)
                 nav.(\nav_done);
             };
 
+            // here's our metaphorical catch
             switch (nav_result)
 
                 {\nav_done} {
@@ -323,10 +330,13 @@ SkoarKoar {
     bubble_up_nav {
         | nav, cmd, inlined |
 
+        // the nav command will abort do_skoarpion,
+        // we have to clean up here.
         if (inlined == false) {
             this.pop_state;
         };
 
+        // metaphorically rethrowing to a higher level
         nav.(cmd);
     }
 }
