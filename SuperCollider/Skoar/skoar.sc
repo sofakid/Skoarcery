@@ -49,14 +49,14 @@ Skoar : Object {
 
         parse_time = (Process.elapsedTime - start_time).round(0.01);
 
-        //"---< Undecorated Skoar Tree >---".postln;
-        //tree.draw_tree.postln;
+        "---< Undecorated Skoar Tree >---".postln;
+        tree.draw_tree.postln;
 
         "<<< tree created, now decorating...".postln;
         this.decorate;
         decorate_time = (Process.elapsedTime - start_time - parse_time).round(0.01);
 
-        //this.draw_skoarpions;
+        this.draw_skoarpions;
 
         debug("Skoar parsed in " ++ parse_time ++ " seconds, decorated in  "
             ++ decorate_time ++ ". Total: " ++ (parse_time + decorate_time) ++ " sec.");
@@ -135,7 +135,6 @@ Skoar : Object {
 
     pvoice {
         | voice_name |
-
         ^SkoarMinstrel.new(this.tree, voices[voice_name], this).pfunk;
     }
 
@@ -144,13 +143,13 @@ Skoar : Object {
             | x |
             x.post_tree;
 
-            /*"Projections: ".postln;
+            "Projections: ".postln;
             voices.keysDo {
                 | koar_name |
                 var projection = x.projection(koar_name);
 
                 projection.block.draw_tree.postln;
-            };*/
+            };
         };
     }
 }

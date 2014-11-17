@@ -75,7 +75,7 @@ cthulhu*         : LWing Semicolon cthulhu_prime
 conditional      : CondS cond_ifs CondE
 +cond_ifs        : cond_if cond_ifs_suffix
 +cond_ifs_suffix : Newline cond_ifs | <e>
-+cond_if         : optional_voice boolean CondIf if_body cond_else
+cond_if          : optional_voice boolean CondIf if_body cond_else
 +cond_else       : CondElse else_body | <e>
 
 if_body          : phrases

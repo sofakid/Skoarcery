@@ -59,7 +59,6 @@ Skoarmantics {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleArray(noad.collect_skoarpuscles);
                 noad.children = [];
-
             },
 
             \musical_keyword_misc -> {
@@ -166,7 +165,6 @@ Skoarmantics {
                 var args = nil;
 
                 x = noad.next_skoarpuscle;
-
 
                 case {x.isKindOf(SkoarpuscleArray)} {
                     // here they are sending an array as the message

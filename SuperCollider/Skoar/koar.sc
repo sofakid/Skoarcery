@@ -205,16 +205,12 @@ SkoarKoar {
         ^stack[stack.size - 1];
     }
 
-    do_skoarpion {
-        | skoarpion, minstrel, up_nav, msg_arr, skrp_args |
-
-        var dst;
-        var nav_result;
-        var projection;
-        var running = true;
+    push_state {
+        | skoarpion |
 
         var state = IdentityDictionary.new;
         var projections = IdentityDictionary.new;
+        var projection;
 
         state_stack.add(state);
 
@@ -227,10 +223,42 @@ SkoarKoar {
             ^nil;
         };
 
-        this.push_args(skoarpion.args, skrp_args);
 
+    }
+
+    pop_state {
+        this.pop_args;
+        state_stack.pop;
+    }
+
+    do_skoarpion {
+        | skoarpion, minstrel, up_nav, msg_arr, skrp_args, stinger |
+
+        var dst;
+        var projection;
+        var projections;
+        var msg_name;
+
+        if (skoarpion.isKindOf(Skoarpion) == false) {
+            "This isn't a skoarpion: ".post; skoarpion.postln;
+            ^nil;
+        };
+
+        // default behaviour (when unmessaged)
+        if (msg_arr.isNil) {
+            msg_arr = [\block];
+        };
+
+        msg_name = msg_arr[0];
+
+        if (msg_name != \inline) {
+            this.push_state(skoarpion);
+            this.push_args(skoarpion.args, skrp_args);
+        };
+
+        projections = this.state_at(\projections);
         if (skoarpion.name.notNil) {
-            projection = this.state_at(\projections)[skoarpion.name];
+            projection = projections[skoarpion.name];
 
             // start a new one if we haven't seen it
             if (projection.isNil) {
@@ -241,27 +269,42 @@ SkoarKoar {
             projection = skoarpion.projection;
         };
 
-        // default behaviour (when unmessaged)
-        if (msg_arr.isNil) {
-            msg_arr = [\block];
-        };
-
         dst = projection.performMsg(msg_arr);
 
-        // -----------------
-        // alright let's go!
-        // -----------------
+        this.nav_loop(dst, projection, minstrel, up_nav, stinger);
+
+        if (msg_name != \inline) {
+            this.pop_state;
+        };
+    }
+
+    do_like_skoarpion {
+        | dst, minstrel, up_nav, stinger |
+        var name = this.state_at(\name);
+        var projection = this.state_at(\projections)[name];
+
+        this.nav_loop(dst, projection, minstrel, up_nav, stinger)
+    }
+
+    nav_loop {
+        | dst, projection, minstrel, up_nav, stinger |
+
+        var nav_result;
+        var running = true;
+
         while {running == true} {
 
             nav_result = block {
                 | nav |
                 var y = projection.map_dst(dst);
                 var here = dst.address;
-                var stinger = skoarpion.stinger;
+
                 if (y != dst) {
-                    here.pop;
+                    debug("y != dst ,y: " ++ y.asString ++  ", dst:" ++ dst.asString ++ ", here:" ++ here.asString);
+                    //here.pop;
                 };
-                y.inorder_from_here(
+
+                projection.block.inorder_from_here(
                     here,
                     {   | x |
                         x.perform(minstrel, nav, stinger); },
@@ -304,8 +347,6 @@ SkoarKoar {
                 };
 
         };
-        this.pop_args;
-        state_stack.pop;
     }
 }
 

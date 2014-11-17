@@ -177,7 +177,7 @@ SkoarNoad {
     inorder {
         | f, stinger=nil |
 
-        //debug(">>> inorder: " ++ name);
+        debug(">>> inorder: " ++ name);
         if (stinger.notNil and: skoarpuscle.isKindOf(SkoarpuscleBeat)) {
             //debug("!!! stinger: " ++ stinger.asString);
             stinger.inorder(f);
@@ -190,7 +190,7 @@ SkoarNoad {
             y.inorder(f, stinger);
         };
 
-        //debug("<<< inorder: " ++ name);
+        debug("<<< inorder: " ++ name);
     }
 
     // debug here if it's crashing while performing the skoar
@@ -199,7 +199,7 @@ SkoarNoad {
         var j = here.pop;
         var n = children.size - 1;
 
-        //debug("inorder_from_here: j:" ++ j ++ " " ++ name);
+        debug("inorder_from_here: j:" ++ j ++ " " ++ name);
 
         if (j.isNil) {
             this.inorder(f, stinger);

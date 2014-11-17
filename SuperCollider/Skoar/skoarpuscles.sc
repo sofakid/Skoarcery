@@ -265,27 +265,43 @@ SkoarpuscleBoolean : Skoarpuscle {
 
 SkoarpuscleConditional : Skoarpuscle {
 
-    var condition;
-    var if_body;
-    var else_body;
+    var ifs;
 
     init {
         | noad |
 
-        condition = noad.children[1].next_skoarpuscle;
-        if_body   = noad.children[3];
-        else_body = noad.children[5];
+        //noad.draw_tree.postln;
+        ifs = [];
+
+        noad.collect(\cond_if).do {
+            | x |
+            var condition = x.children[0].next_skoarpuscle;
+            var if_body   = x.children[2];
+            var else_body = x.children[4];
+            ifs.add([condition, if_body, else_body]);
+        };
+
 
     }
 
     performer {
         | m, nav |
 
-        if (condition.evaluate(m) == true) {
-            if_body.draw_tree.postln;
-        } {
-            else_body.draw_tree.postln;
+        ifs.do {
+            | x |
+            var c = x[0];
+            var i = x[1];
+            var e = x[2];
+
+            debug("c" ++ c.asString ++ "i" ++ i.asString ++ " e" ++ e.asString);
+
+            m.do_like_skoarpion(
+                if (c.evaluate(m) == true) {i} {e}
+            );
+
         };
+
+        //if (condition.evaluate(m) == true)
 
     }
 
