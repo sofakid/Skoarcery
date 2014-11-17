@@ -230,6 +230,7 @@ SkoarpionProjection : SkoarIteratoar {
         i = -1;
         proj = SkoarNoad(\projection);
 
+        // map indexes in skoap to indexes in this projection
         skip_to = Array.newClear(kids.size);
         kids.do {
             | x |
@@ -252,6 +253,10 @@ SkoarpionProjection : SkoarIteratoar {
     }
 
     block {
+        ^proj;
+    }
+
+    inline {
         ^proj;
     }
 
