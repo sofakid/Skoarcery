@@ -257,11 +257,14 @@ SkoarpionProjection : SkoarIteratoar {
 
     map_dst {
         | dst |
-        var j = dst.address.pop;
+        var addr = dst.address.copyToEnd(0);
+        var j = addr.pop;
+
         if (j.isNil) {
-            ^dst;
+            ^addr;
         };
-        ^proj.children[skip_to[j]];
+
+        ^(addr ++ skip_to[j]);
     }
 
 }

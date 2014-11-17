@@ -206,8 +206,6 @@ SkoarKoar {
     }
 
     push_state {
-        | skoarpion |
-
         var state = IdentityDictionary.new;
         var projections = IdentityDictionary.new;
         var projection;
@@ -217,12 +215,6 @@ SkoarKoar {
         state[\colons_burned] = Dictionary.new;
         state[\al_fine] = false;
         state[\projections] = projections;
-
-        if (skoarpion.isKindOf(Skoarpion) == false) {
-            "This isn't a skoarpion: ".post; skoarpion.postln;
-            ^nil;
-        };
-
 
     }
 
@@ -252,7 +244,7 @@ SkoarKoar {
         msg_name = msg_arr[0];
 
         if (msg_name != \inline) {
-            this.push_state(skoarpion);
+            this.push_state;
             this.push_args(skoarpion.args, skrp_args);
         };
 
@@ -291,20 +283,15 @@ SkoarKoar {
 
         var nav_result;
         var running = true;
+        var subtree = dst;
 
         while {running == true} {
 
             nav_result = block {
                 | nav |
-                var y = projection.map_dst(dst);
-                var here = dst.address;
+                var here = projection.map_dst(dst);
 
-                if (y != dst) {
-                    debug("y != dst ,y: " ++ y.asString ++  ", dst:" ++ dst.asString ++ ", here:" ++ here.asString);
-                    //here.pop;
-                };
-
-                projection.block.inorder_from_here(
+                subtree.inorder_from_here(
                     here,
                     {   | x |
                         x.perform(minstrel, nav, stinger); },
