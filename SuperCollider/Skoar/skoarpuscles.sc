@@ -369,7 +369,12 @@ SkoarpuscleLoop : Skoarpuscle {
 
         while {continu == true} {
             m.koar.do_skoarpion(body, m, nav, [\inline], nil);
-            continu = condition.evaluate(m);
+
+            continu = if (condition.notNil) {
+                          condition.evaluate(m)
+                      } {
+                          false
+                      };
         };
     }
 }

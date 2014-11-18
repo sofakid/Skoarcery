@@ -311,7 +311,6 @@ SkoarKoar {
                 {\nav_segno} {
                     dst = this.state_at(\segno_seen);
 
-debug("dst.skoap: " ++ dst.skoap ++ " " ++ subtree.skoap);
                     if (dst.isNil || (dst.skoap != subtree.skoap)) {
                         this.bubble_up_nav(up_nav, \nav_segno, inlined);
                     };

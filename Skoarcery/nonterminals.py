@@ -52,7 +52,7 @@ pedally*             : PedalDown | PedalUp
 ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
-nouny*           : cthulhu | conditional | nouny_literal | musical_keyword | listy | deref | skoarpion
+nouny*           : cthulhu | conditional | loop | nouny_literal | musical_keyword | listy | deref | skoarpion
 +nouny_literal   : Tuplet | Caesura | Int | Float | String | Choard | NamedNoat | Symbol
 
 deref*           : Deref deref_prime
