@@ -115,7 +115,7 @@ SkoarNoad {
         | tab = 1 |
         var n = 16;
         var s;
-        var sa = ":";
+        var sa = skoap.asString ++ ":";
         var sv;
 
         address.reverseDo {

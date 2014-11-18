@@ -246,6 +246,7 @@ SkoarpionProjection : SkoarIteratoar {
 
                 // don't use add_noad, it corrupts noad.
                 proj.children.add(x);
+                proj.skoap = x.skoap;
             };
         };
 
