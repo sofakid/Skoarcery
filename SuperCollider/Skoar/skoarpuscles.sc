@@ -275,7 +275,6 @@ SkoarpuscleConditional : Skoarpuscle {
     init_two {
         | skoar, noad |
 
-        noad.draw_tree.postln;
         ifs = [];
 
         noad.collect(\cond_if).do {
@@ -337,15 +336,40 @@ SkoarpuscleSkoarpion : Skoarpuscle {
 
 }
 
-SkoarpuscleEach : Skoarpuscle {
+SkoarpuscleLoop : Skoarpuscle {
+
+    var <condition;
+    var <body;
+
+    *new {
+        | skoar, noad |
+        ^super.new.init_two(skoar, noad);
+    }
+
+    init_two {
+        | skoar, noad |
+
+        noad.collect(\loop_condition).do {
+            | x |
+            if (x.children.size != 0) {
+                condition = x.children[1].next_skoarpuscle;
+            };
+        };
+
+        noad.collect(\loop_body).do {
+            | x |
+            body = Skoarpion.new_from_subtree(skoar, x);
+        };
+
+    }
 
     performer {
         | m, nav |
+        var continu = true;
 
-        val.do {
-            | x |
-
-
+        while {continu == true} {
+            m.koar.do_skoarpion(body, m, nav, [\inline], nil);
+            continu = condition.evaluate(m);
         };
     }
 }
@@ -431,7 +455,6 @@ SkoarpuscleMsg : Skoarpuscle {
         };
         ^x;
     }
-
 }
 
 SkoarpuscleMsgName : Skoarpuscle {
@@ -473,7 +496,6 @@ SkoarpuscleBars : Skoarpuscle {
             m.koar.state_put(\colon_seen, noad);
         };
     }
-
 }
 
 SkoarpuscleFine : Skoarpuscle {

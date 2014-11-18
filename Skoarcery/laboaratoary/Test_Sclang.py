@@ -74,6 +74,12 @@ class Test_Sclang(unittest.TestCase):
                 tests_passed = False
                 break
 
+            #
+            # nay
+            if line.startswith("^^ The preceding error dump"):
+                tests_passed = False
+                break
+
         try:
             proc.terminate()
         finally:

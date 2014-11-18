@@ -66,7 +66,7 @@ assignment*      : AssOp settable
 
 skoaroid*        : nouny msg_chain_node
 +msg_chain_node  : MsgOp msg msg_chain_node | <e>
-msg*             : MsgNameWithArgs listy_suffix | MsgName | listy
+msg*             : MsgNameWithArgs listy_suffix | MsgName | listy | loop
 
 boolean*         : skoaroid BooleanOp skoaroid
 cthulhu*         : LWing Semicolon cthulhu_prime
@@ -76,10 +76,13 @@ conditional      : CondS cond_ifs CondE
 +cond_ifs        : cond_if cond_ifs_suffix
 +cond_ifs_suffix : Newline cond_ifs | <e>
 cond_if          : optional_voice boolean CondIf if_body cond_else
-+cond_else       : CondElse else_body | <e>
++cond_else       : CondIf if_body | <e>
 
 if_body          : phrases
-else_body        : phrases
+
+loop             : LoopS loop_body loop_condition LoopE
+loop_body        : phrases
+loop_condition   : LoopSep boolean | <e>
 
 """
 

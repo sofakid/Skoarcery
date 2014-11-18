@@ -63,11 +63,15 @@ MsgOp:            \\.(?![)\\]])
 NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
 BooleanOp*:       ==|!=|<=|>=|and|or|xor
 Choard*:          (D(?![a.])|[ABCEFG])([Mm0-9]|sus|dim)*
-CondS:            [{][?]
+CondS:            [{][?][\\n]*
 CondIf:           [?][?](?![}])
-CondElse:         ::(?![|])
 CondE:            [?][}]
 Semicolon:        ;
+
+LoopS:            [{]:[\\n]*
+LoopE:            :[}]
+LoopSep:          ::[\\n]*(?![|])
+
 
 # we do this, because skoaroids can follow skoaroids.
 MsgName*:         [a-zA-Z_][a-zA-Z0-9_]*(?!<)

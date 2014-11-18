@@ -61,6 +61,12 @@ Skoarmantics {
                 noad.children = [];
             },
 
+            \loop -> {
+                | skoar, noad |
+                noad.skoarpuscle = SkoarpuscleLoop(skoar, noad);
+                noad.children = [];
+            },
+
             \musical_keyword_misc -> {
                 | skoar, noad |
                 var skoarpuscle = noad.next_skoarpuscle;
