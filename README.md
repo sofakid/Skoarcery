@@ -26,36 +26,20 @@ Example
     {! four_bars_rest  !! }}}}}  !}
     {! eight_bars_rest !! }}}}}} !}
 
-    {! bass_fun<x>    !! !x ) ]] ]] ] ) ) !}
     {! bass_end<x>    !! !x ) ) ) ] ]     !}
     {! bass_climb     !! | _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } | !}
 
     {! bassline_a !!
-      !bass_fun<a#>
-      !bass_fun<g#>
-      !bass_fun<f#>
-      !bass_fun<c#>
-      !bass_fun<b>
-      !bass_fun<a#>
-      !bass_fun<c>
-
+      <a#, g#, f#, c#, b, a#, c>.{: ) ]] ]] ] ) ) :}
       !bass_end<f>
     !}
 
     {! bassline_b !!
-      !bass_fun<a#>
-      !bass_fun<g#>
-      !bass_fun<f#>
-      !bass_fun<f>
+      <a#, g#, f#, f>.{: ) ]] ]] ] ) ) :}
 
-      !bass_climb
-      !bass_climb
+      !bass_climb !bass_climb
 
-      !bass_fun<b>
-      !bass_fun<a#>
-      !bass_fun<c>
-
-      !bass_end<f>
+      <b, a#, c     >.{: ) ]] ]] ] ) ) :} !bass_end<f>
     !}
 
     {! intro !!
@@ -256,6 +240,30 @@ will be copied into the resulting event every beat; which we can use to configur
     a# => @foo
     !foo )
 
+# loops
+
+Very much like a do-while:
+
+    {: ]] oo/ ]] ]] :: !x <= !y :} 
+
+You can send a loop to an array as a message to implement a foreach loop:
+
+    <_a, _c, c, _e, e, _a>.{: ] ]] ]] :}
+
+If you also put a boolean condition, it will keep foreaching while the condition is true.
+    
+    <_a, _c, c, _e, e, _a>.{: ] ]] ]] :: !groovy == 5 :}
+
+# conditionals
+
+An if example:
+
+    {? !x == !y ?? ]]] ?}
+
+An if with else example:
+
+    {? !x == !y ?? ]]] ?? ooo/ ?}
+    
 # Skoarpions
 
 The __Skoarpion__ is a flexible device; we can use it as a function or a sequence.
@@ -358,6 +366,8 @@ Cthulhu can also make assertions.
 Install
 =======
 
+For the time being, this requires [my fork of SuperCollider](https://github.com/sofakid/supercollider).
+
 You just need to point SuperCollider at the Skoar folder (that you git cloned) and you're set.
 
 In SuperCollider's interpreter options, __include__ the folder `~/.../Skoar/SuperCollider/Skoar` and
@@ -379,10 +389,8 @@ Skoarcery
 
 - Tokens are defined with regexes that have to work with both SuperCollider and Python.
 All we do is recognise, no capture groups.
-    - If tagged with \*, it means see appropriate toke_inspector for further token processing.
-        - SuperCollider: [toke_inspector.sc]
-        - Python:        [toke_inspector.py]
 
+- \* after a terminal means there are values we need to pick out of the lexeme: [decorating.sc]
 
 ### [nonterminals.py]
 - Defines an LL(1) grammar suitable for building recursive decent predictive parsers for skoar.
@@ -393,9 +401,7 @@ All we do is recognise, no capture groups.
 constructed parse tree, it will not create a new skoarnode, instead appending its noads to
 its parent's children list.
 
-- \* after a nonterminal means there is corresponding semantic code for this, defined in:
-    - SuperCollider: [skoarmantics.sc]
-    - Python:        [skoarmantics.py]
+- \* after a nonterminal means there is corresponding semantic code for this: [decorating.sc]
 
 
 ### Misc Skoarcery
@@ -433,6 +439,7 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 
 - [skoar.sc] - The skoar object you get from compiling your skoar. From here you get a pattern object and play it.
 - [apparatus.sc] - The parse tree code. Noads, searching, iteration, etc.
+- [decorating.sc] - Second stage, decorate the parse tree.
 - [koar.sc] - Each voice is performed on a koar by a minstrel.
 - [minstrel.sc] - Minstrels are agents who read and perform their own voice of a skoar piece.
 - [skoarpions.sc] - Implements the Skoarpion, our general purpose control-flow construct.
@@ -450,8 +457,6 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 [toke_inspector.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/toke_inspector.sc
 [toke_inspector.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/toke_inspector.py
 
-[skoarmantics.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/skoarmantics.sc
-[skoarmantics.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/pymp/skoarmantics.py
 
 [langoids.py]:   https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/langoids.py
 [dragonsets.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/dragonsets.py
@@ -470,6 +475,7 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 [lex.sc]:          https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/lex.sc
 [rdpp.sc]:         https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/rdpp.sc
 [apparatus.sc]:    https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/apparatus.sc
+[decorating.sc]:   https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/decorating.sc
 [skoar.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/skoar.sc
 [minstrel.sc]:     https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/minstrel.sc
 [beaty.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/beaty.sc
