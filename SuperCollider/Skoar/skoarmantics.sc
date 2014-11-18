@@ -34,7 +34,7 @@ Skoarmantics {
 
             \conditional -> {
                 | skoar, noad |
-                noad.skoarpuscle = SkoarpuscleConditional(noad);
+                noad.skoarpuscle = SkoarpuscleConditional(skoar, noad);
                 noad.children = [];
             },
 

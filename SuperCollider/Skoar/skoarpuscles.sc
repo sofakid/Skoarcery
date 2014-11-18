@@ -67,6 +67,7 @@ SkoarpuscleUnknown : Skoarpuscle {
 }
 
 SkoarpuscleInt : Skoarpuscle {
+
     flatten {
         ^val.asInteger;
     }
@@ -76,10 +77,10 @@ SkoarpuscleInt : Skoarpuscle {
         var k = if (val > 30) {\freq} {\degree};
         m.koar[k] = val;
     }
-
 }
 
 SkoarpuscleFloat : Skoarpuscle {
+
     flatten {
         ^val.asFloat;
     }
@@ -157,7 +158,6 @@ SkoarpuscleDeref : Skoarpuscle {
                 x.performer(m, nav);
             };
         };
-
     }
 
     skoar_msg {
@@ -267,20 +267,32 @@ SkoarpuscleConditional : Skoarpuscle {
 
     var ifs;
 
-    init {
-        | noad |
+    *new {
+        | skoar, noad |
+        ^super.new.init_two(skoar, noad);
+    }
 
-        //noad.draw_tree.postln;
+    init_two {
+        | skoar, noad |
+
+        noad.draw_tree.postln;
         ifs = [];
 
         noad.collect(\cond_if).do {
             | x |
             var condition = x.children[0].next_skoarpuscle;
-            var if_body   = x.children[2];
-            var else_body = x.children[4];
-            ifs.add([condition, if_body, else_body]);
-        };
+            var if_body;
+            var else_body;
 
+            if_body = Skoarpion.new_from_subtree(skoar, x.children[2]);
+
+            else_body = x.children[4];
+            if (else_body.notNil) {
+                else_body = Skoarpion.new_from_subtree(skoar, else_body);
+            };
+
+            ifs = ifs.add([condition, if_body, else_body]);
+        };
 
     }
 
@@ -293,16 +305,11 @@ SkoarpuscleConditional : Skoarpuscle {
             var i = x[1];
             var e = x[2];
 
-            debug("c" ++ c.asString ++ "i" ++ i.asString ++ " e" ++ e.asString);
-
-            m.do_like_skoarpion(
-                if (c.evaluate(m) == true) {i} {e}
+            m.koar.do_skoarpion(
+                if (c.evaluate(m) == true) {i} {e},
+                m, nav, [\inline], nil
             );
-
         };
-
-        //if (condition.evaluate(m) == true)
-
     }
 
 }

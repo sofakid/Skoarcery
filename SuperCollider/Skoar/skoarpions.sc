@@ -1,4 +1,3 @@
-// The Skoarpion is our general purpose control structure.
 Skoarpion {
 
     var skoar;
@@ -18,6 +17,11 @@ Skoarpion {
     *new_from_skoar {
         | skr |
         ^super.new.init_from_skoar(skr);
+    }
+
+    *new_from_subtree {
+        | skr, subtree |
+        ^super.new.init_from_subtree(skr, subtree);
     }
 
     init_from_skoar {
@@ -44,6 +48,29 @@ Skoarpion {
 
         body.decorate_zero(skoar.all_voice, body, [], 0);
         n = body.size;
+    }
+
+    init_from_subtree {
+        | skr, subtree |
+        name = nil;
+
+        skoar = skr;
+        skoar.skoarpions.add(this);
+
+        body = subtree;
+
+        subtree.children.do {
+            | line |
+            var v = line.next_skoarpuscle;
+
+            if (v.isKindOf(SkoarpuscleVoice)) {
+                line.voice = skoar.get_voice(v.val);
+            };
+
+        };
+
+        subtree.decorate_zero(skoar.all_voice, subtree, [], 0);
+        n = subtree.size;
     }
 
     init {
@@ -127,6 +154,7 @@ Skoarpion {
         } {
             stinger = SkoarNoad(\stinger);
             stinger.children = sections[1..];
+            stinger.skoap = stinger.children[0].skoap;
         };
 
         n = body.size;
@@ -139,11 +167,7 @@ Skoarpion {
     }
 
     post_tree {
-        var s = if (name.isNil) {
-                    "anonymous"
-                } {
-                    name
-                };
+        var s = name ?? "anonymous";
 
         debug("---< Skoarpion " ++ s ++ " >---");
 
