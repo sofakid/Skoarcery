@@ -371,20 +371,20 @@ Skoarmantics {
 
             \msg -> {
                 | skoar, noad |
-                var x = nil;
+                var msg = nil;
                 var args = nil;
 
-                x = noad.next_skoarpuscle;
+                msg = noad.next_skoarpuscle;
 
-                case {x.isKindOf(SkoarpuscleArray)} {
-                    // here they are sending an array as the message
-                    // this is the same as the \for message
-                    "\\msg -> SkoarpuscleEach".postln;
-                    noad.skoarpuscle = SkoarpuscleEach(x);
+                case {msg.isKindOf(SkoarpuscleArray)} {
+                    // i'm not sure what i want this to mean
 
-                } {x.isKindOf(SkoarpuscleMsgName)} {
+                } {msg.isKindOf(SkoarpuscleLoop)} {
+                    noad.skoarpuscle = msg;
+
+                } {msg.isKindOf(SkoarpuscleMsgName)} {
                     args = SkoarpuscleArray(noad.collect_skoarpuscles(1));
-                    noad.skoarpuscle = SkoarpuscleMsg(x.val, args);
+                    noad.skoarpuscle = SkoarpuscleMsg(msg.val, args);
                 };
 
                 noad.children = [];
@@ -439,8 +439,11 @@ Skoarmantics {
                         kids.do {
                             | y |
                             var x = y.skoarpuscle;
-                            if (x.isKindOf(SkoarpuscleMsg)) {
+                            case {x.isKindOf(SkoarpuscleMsg)} {
                                 result = result.skoar_msg(x, minstrel);
+
+                            } {x.isKindOf(SkoarpuscleLoop)} {
+                                result = x.foreach(result);
                             };
                         };
 

@@ -181,6 +181,7 @@ SkoarKoar {
         var vars = stack[stack.size - 1];
 
         if (args_def.isKindOf(SkoarpuscleArgs)) {
+            // foreach arg name defined, set the value from args
             args_def.val.do {
                 | k |
                 k = k.val;
@@ -237,6 +238,7 @@ SkoarKoar {
         if (inlined == false) {
             this.push_state;
         };
+        // load arg values into their names
         this.set_args(skoarpion.args, skrp_args);
 
         projections = this.state_at(\projections);

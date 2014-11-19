@@ -340,6 +340,7 @@ SkoarpuscleLoop : Skoarpuscle {
 
     var <condition;
     var <body;
+    var <each;
 
     *new {
         | skoar, noad |
@@ -361,21 +362,63 @@ SkoarpuscleLoop : Skoarpuscle {
             body = Skoarpion.new_from_subtree(skoar, x);
         };
 
+        each = nil;
     }
 
     performer {
         | m, nav |
-        var continu = true;
+        var i = 0;
 
-        while {continu == true} {
-            m.koar.do_skoarpion(body, m, nav, [\inline], nil);
+        m.koar[\i] = 0;
 
-            continu = if (condition.notNil) {
-                          condition.evaluate(m)
-                      } {
-                          false
-                      };
+        block {
+            | break |
+            while {true} {
+                var f = {
+                    | element |
+
+                    // this is how we foreach
+                    if (element.notNil) {
+                        element.performer(m, nav);
+                    };
+
+                    m.koar.do_skoarpion(body, m, nav, [\inline]);
+
+                    i = i + 1;
+                    m.koar[\i] = i;
+
+                    if (condition.notNil) {
+                        if (condition.evaluate(m) == false) {
+                            break.();
+                        };
+                    };
+
+                };
+
+                if (each.isNil) {
+                    f.(nil);
+                } {
+                    debug("each: " ++ each.asString);
+                    each.val.do {
+                        | element |
+                        debug("each:el: " ++ element.asString);
+                        f.(element);
+                    };
+                };
+
+                if (condition.isNil) {
+                    break.();
+                };
+            };
         };
+    }
+
+    // when we send a loop as a message, the receiver
+    // goes into _each_ and _this_ becomes the new receiver.
+    foreach {
+        | listy |
+        each = listy;
+        ^this;
     }
 }
 
