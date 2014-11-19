@@ -380,7 +380,7 @@ Skoarmantics {
                     // i'm not sure what i want this to mean
 
                 } {msg.isKindOf(SkoarpuscleLoop)} {
-                    noad.skoarpuscle = msg;
+                    noad.skoarpuscle = SkoarpuscleLoopMsg(msg);
 
                 } {msg.isKindOf(SkoarpuscleMsgName)} {
                     args = SkoarpuscleArray(noad.collect_skoarpuscles(1));
@@ -442,8 +442,8 @@ Skoarmantics {
                             case {x.isKindOf(SkoarpuscleMsg)} {
                                 result = result.skoar_msg(x, minstrel);
 
-                            } {x.isKindOf(SkoarpuscleLoop)} {
-                                result = x.foreach(result);
+                            } {x.isKindOf(SkoarpuscleLoopMsg)} {
+                                result = x.val.foreach(result);
                             };
                         };
 

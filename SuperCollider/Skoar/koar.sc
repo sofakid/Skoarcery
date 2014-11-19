@@ -216,7 +216,7 @@ SkoarKoar {
     do_skoarpion {
         | skoarpion, minstrel, up_nav, msg_arr, skrp_args, stinger |
 
-        var dst;
+        var subtree;
         var projection;
         var projections;
         var msg_name;
@@ -254,9 +254,9 @@ SkoarKoar {
             projection = skoarpion.projection;
         };
 
-        dst = projection.performMsg(msg_arr);
+        subtree = projection.performMsg(msg_arr);
 
-        this.nav_loop(dst, projection, minstrel, up_nav, stinger, inlined);
+        this.nav_loop(subtree, projection, minstrel, up_nav, stinger, inlined);
 
         if (inlined == false) {
             this.pop_state;
@@ -270,7 +270,7 @@ SkoarKoar {
         var running = true;
         var subtree = dst;
 
-        while {running == true} {
+        while {running} {
 
             // you can think of this like a try/catch for nav signals
             nav_result = block {
@@ -318,11 +318,11 @@ SkoarKoar {
                     };
                 }
 
-                {\nav_jump} {
+                {\nav_colon} {
                     dst = this.state_at(\colon_seen);
 
                     if (dst.isNil || (dst.skoap != subtree.skoap)) {
-                        this.bubble_up_nav(up_nav, \nav_jump, inlined);
+                        this.bubble_up_nav(up_nav, \nav_colon, inlined);
                     };
                 };
 

@@ -33,7 +33,7 @@ SkoarMinstrel {
             var running = true;
             var nav_result = nil;
 
-            while {running == true} {
+            while {running} {
 
                 nav_result = block {
                     | nav |
@@ -43,10 +43,7 @@ SkoarMinstrel {
 
                 switch (nav_result)
 
-                    {\nav_done} {
-                        running = false;
-                    }
-
+                    {\nav_done} { running = false; }
                     {\nav_fine} { running = false; }
 
                     {\nav_da_capo} {
@@ -54,7 +51,7 @@ SkoarMinstrel {
                         // do nothing, will enter skoarpion again
                     }
 
-                    {\nav_jump} {
+                    {\nav_colon} {
                         // do nothing, will enter skoarpion again
                     }
 

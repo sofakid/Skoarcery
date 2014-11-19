@@ -9,11 +9,11 @@ Skoarpuscle {
 
     performer { | m, nav, stinger=nil | }
 
-    flatten {^val;}
+    flatten { | m | ^val; }
 
     skoar_msg {
         | msg, minstrel |
-        var o = msg.get_msg_arr;
+        var o = msg.get_msg_arr(minstrel);
         var ret = val.performMsg(o);
 
         ^Skoarpuscle.wrap(ret);
@@ -69,6 +69,7 @@ SkoarpuscleUnknown : Skoarpuscle {
 SkoarpuscleInt : Skoarpuscle {
 
     flatten {
+        | m |
         ^val.asInteger;
     }
 
@@ -82,6 +83,7 @@ SkoarpuscleInt : Skoarpuscle {
 SkoarpuscleFloat : Skoarpuscle {
 
     flatten {
+        | m |
         ^val.asFloat;
     }
 
@@ -108,7 +110,7 @@ SkoarpuscleSymbol : Skoarpuscle {
 
     skoar_msg {
         | msg, minstrel |
-        var o = msg.get_msg_arr;
+        var o = msg.get_msg_arr(minstrel);
         var ret = val.performMsg(o);
 
         ^Skoarpuscle.wrap(ret);
@@ -137,6 +139,17 @@ SkoarpuscleDeref : Skoarpuscle {
         ^m.koar[val];
     }
 
+    flatten {
+        | m |
+        var x = this.lookup(m);
+
+        if (x.isKindOf(Skoarpuscle)) {
+            x = x.flatten(m);
+        };
+
+        ^x;
+    }
+
     performer {
         | m, nav |
         var x = this.lookup(m);
@@ -144,16 +157,16 @@ SkoarpuscleDeref : Skoarpuscle {
         "deref:performer: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
-            "blerg:".postln;
+            /*"blerg:".postln;
             x.val.postln;
             m.postln;
             nav.postln;
             msg_arr.postln;
-            args.postln;
+            args.postln;*/
 
             m.koar.do_skoarpion(x.val, m, nav, msg_arr, args);
         } {
-            "zorp".postln;
+            //"zorp".postln;
             if (x.isKindOf(Skoarpuscle)) {
                 x.performer(m, nav);
             };
@@ -166,7 +179,7 @@ SkoarpuscleDeref : Skoarpuscle {
         var x = this.lookup(minstrel);
 
         //"deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
-        msg_arr = msg.get_msg_arr;
+        msg_arr = msg.get_msg_arr(minstrel);
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
             ^this;
@@ -229,8 +242,18 @@ SkoarpuscleBooleanOp : Skoarpuscle {
 
     compare {
         | a, b, m |
-        var x = a.evaluate.(m).flatten;
-        var y = b.evaluate.(m).flatten;
+        var x = a.evaluate.(m);
+        var y = b.evaluate.(m);
+
+        if (x.isKindOf(Skoarpuscle)) {
+            debug(x);
+            x = x.flatten(m);
+        };
+
+        if (y.isKindOf(Skoarpuscle)) {
+            debug(y);
+            y = y.flatten(m);
+        };
 
         debug("{? " ++ x.asString ++ " " ++ val ++ " " ++ y.asString ++ " ?}");
 
@@ -319,7 +342,7 @@ SkoarpuscleSkoarpion : Skoarpuscle {
 
     skoar_msg {
         | msg, minstrel |
-        msg_arr = msg.get_msg_arr;
+        msg_arr = msg.get_msg_arr(minstrel);
         ^this;
     }
 
@@ -422,16 +445,23 @@ SkoarpuscleLoop : Skoarpuscle {
     }
 }
 
+
+SkoarpuscleLoopMsg : Skoarpuscle {
+
+}
+
+
 SkoarpuscleArray : Skoarpuscle {
 
     flatten {
+        | m |
         var n = val.size;
         var out = Array.newClear(n);
         var i = -1;
 
         val.do {
             | x |
-            var y = if (x.respondsTo(\flatten)) {x.flatten} {x};
+            var y = if (x.respondsTo(\flatten)) {x.flatten(m)} {x};
             debug("SkoarpuscleArray.flatten: x: " ++ x.asString ++ " y: " ++ y);
             i = i + 1;
             out[i] = y;
@@ -442,7 +472,7 @@ SkoarpuscleArray : Skoarpuscle {
 
     skoar_msg {
         | msg, minstrel |
-        var o = msg.get_msg_arr;
+        var o = msg.get_msg_arr(minstrel);
         var name = msg.val;
         var ret;
 
@@ -459,7 +489,7 @@ SkoarpuscleArray : Skoarpuscle {
 
     performer {
         | m, nav |
-        m.koar[\degree] = val.flatten;
+        m.koar[\degree] = val.flatten(m);
     }
 
 }
@@ -494,10 +524,11 @@ SkoarpuscleMsg : Skoarpuscle {
     }
 
     get_msg_arr {
+        | m |
         var x = Array.new(args.size + 1);
 
         x.add(val);
-        args.flatten.do {
+        args.flatten(m).do {
             | y |
             x.add(y);
         };
@@ -535,7 +566,7 @@ SkoarpuscleBars : Skoarpuscle {
 
             if (burned.falseAt(noad)) {
                 burned[noad] = true;
-                nav.(\nav_jump);
+                nav.(\nav_colon);
             };
 
         };
