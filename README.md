@@ -213,7 +213,7 @@ Segnos and Codas:
 
     | _a ) c ) e ) | ,segno` ) ]] ]] e ]] | f D.S. al fine ) ) ) fine
 
-    |,segno` c ]] D.S. al Coda  '............'  (+) | a) c) e) } |
+    | ,segno` c ]] e ]] (+) ]] ]] D.S. al Coda '.......'  (+) | a) c) e) } |
 
 Infinite repeats:
 
