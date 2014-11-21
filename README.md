@@ -117,9 +117,9 @@ Example
     !}
 
     {! drums !!
-      .hats  |: ] ] ] ] ] ] ] ]] ]] :| :| :| :| :| :| :| :| :| :| :|
-      .snare |: } ) } ) :| :| :| :| :| :| :| :| :| :| ] ]] ]]  ] ]] ]]  ] ]] ]]  ]  ] |
-      .kick  |: ) } ) } :| :| :| :| :| :| :| :| :| :| :|
+      .hats  {: ] ] ] ] ] ] ] ]] ]] :: !i <= 11 :}
+      .kick  {: ) } ) } :: !i <= 11 :}
+      .snare {: } ) } ) :: !i <= 10 :} | ] ]] ]]  ] ]] ]]  ] ]] ]]  ]  ] |
     !}
 
     !intro !melody_a
@@ -254,6 +254,11 @@ If you also put a boolean condition, it will keep foreaching while the condition
     
     <_a, _c, c, _e, e, _a>.{: ] ]] ]] :: !groovy == 5 :}
 
+You get a monotonic `!i` that starts at `0` and is incremented _just before_ the test.
+ 
+    <? executes 8 times ?>
+    {: <_a, _c, _e, a>.choose ]] ]] ] :: !i <= 8:}
+    
 # conditionals
 
 An if example:
@@ -334,7 +339,7 @@ Arrays and arraylike things can be iterated like skoarpions.
 
 With messages you can work with the underlying objects (i.e. the SuperCollider objects)
 
-    <? a random number between zero and five ?>
+    <? save into @food, a random number between zero and five ?>
     5.rand => @food
 
     <? print foo to the post screen ?>
@@ -366,7 +371,7 @@ Cthulhu can also make assertions.
 Install
 =======
 
-For the time being, this requires [my fork of SuperCollider](https://github.com/sofakid/supercollider).
+You need the very latest [SuperCollider] (Until 3.7 comes out, that means you will have to build it (do it 3.7 alpha is rad)).
 
 You just need to point SuperCollider at the Skoar folder (that you git cloned) and you're set.
 
@@ -485,5 +490,5 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 [skoarpuscles.sc]: https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/skoarpuscles.sc
 [toker.sc]:        https://github.com/sofakid/Skoarcery/blob/master/SuperCollider/Skoar/toker.sc
 
-[SuperCollider]: http://supercollider.sourceforge.net/
+[SuperCollider]: https://github.com/supercollider/supercollider
 [examples.md]:   https://github.com/sofakid/Skoarcery/blob/master/examples.md

@@ -46,11 +46,11 @@ Skoarpuscle {
             ^SkoarpuscleSymbol(x);
 
         } {x.isKindOf(Array)} {
-            var a = Array.new(x.size);
+            var a = Array.newClear(x.size);
             "x array".postln;
             x.do {
                 | el |
-                a.add(Skoarpuscle.wrap(el));
+                a = a.add(Skoarpuscle.wrap(el));
             };
 
             ^SkoarpuscleArray(a);
@@ -155,6 +155,7 @@ SkoarpuscleDeref : Skoarpuscle {
         var x = this.lookup(m);
 
         "deref:performer: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+        x = Skoarpuscle.wrap(x);
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
             /*"blerg:".postln;
@@ -166,10 +167,7 @@ SkoarpuscleDeref : Skoarpuscle {
 
             m.koar.do_skoarpion(x.val, m, nav, msg_arr, args);
         } {
-            //"zorp".postln;
-            if (x.isKindOf(Skoarpuscle)) {
-                x.performer(m, nav);
-            };
+            x.performer(m, nav);
         };
     }
 
@@ -221,9 +219,17 @@ SkoarpuscleBooleanOp : Skoarpuscle {
                 | a, b |
                 a <= b
             }}
+            {"<"}  {{
+                | a, b |
+                a < b
+            }}
             {">="}  {{
                 | a, b |
                 a >= b
+            }}
+            {">"}  {{
+                | a, b |
+                a < b
             }}
             {"and"} {{
                 | a, b |

@@ -1,7 +1,7 @@
 // =====
 // Skoar
 // =====
-Skoar : Object {
+Skoar {
 
     var   skoarse;      // the skoarse code
     var   parser;       // the parser
@@ -49,8 +49,7 @@ Skoar : Object {
 
         parse_time = (Process.elapsedTime - start_time).round(0.01);
 
-        "---< Undecorated Skoar Tree >---".postln;
-        tree.draw_tree.postln;
+        "---< Undecorated Skoar Tree >---".postln; tree.draw_tree.postln;
 
         "<<< tree created, now decorating...".postln;
         this.decorate;

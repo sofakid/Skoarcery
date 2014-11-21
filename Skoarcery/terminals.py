@@ -17,7 +17,7 @@ Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
-# careful not to match ottavas with end in (ma,mb,va,vb), or steal from floats
+# careful not to match ottavas ending in (ma,mb,va,vb), or steal from floats
 Int*:           (-)?(0|[1-9][0-9]*)(?![mv][ab]|\\.[0-9]|/)
 Float*:         (-)?(0|[1-9][0-9]*)\\.[0-9]+
 
@@ -40,7 +40,7 @@ Quarters*:      \\.?[)]+(?:__?)?\\.?
 Eighths*:       \\.?\\]+(?:__?)?\\.?
 
 Caesura:        //
-Slash:          /(?!/)
+Slash:          /(?![/0-9])
 
 
 # we can't allow f for forte as f is a noat, so we allow
@@ -61,7 +61,7 @@ AssOp:            =>|[+]>|->
 MsgOp:            \\.(?![)\\]])
 
 NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
-BooleanOp*:       ==|!=|<=|>=|and|or|xor
+BooleanOp*:       ==|!=|<(?!=)|<=|>(?!=)|>=|and|or|xor
 Choard*:          (D(?![a.])|[ABCEFG])([Mm0-9]|sus|dim)*
 CondS:            [{][?][\\n]*
 CondIf:           [?][?](?![}])
@@ -82,7 +82,7 @@ SymbolName*:      [a-zA-Z_][a-zA-Z0-9_]*
 SkoarpionStart:   [{]!
 SkoarpionEnd:     ![}]
 SkoarpionSep:     !!
-Deref:            !(?![!}])
+Deref:            !(?![!}]|=)
 
 Nosey:            ,
 
