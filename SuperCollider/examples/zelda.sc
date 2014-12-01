@@ -49,7 +49,16 @@ b.play;
 )
 SynthDef.synthDefDir.postln
 SynthDef.browse
+
 (
+SynthDef(\blips, {arg out = 0, freq = 25, numharm = 10, att = 0.01, rel = 1, amp = 0.1, pan = 0.5;
+	var snd, env;
+	env = Env.perc(att, rel, amp).kr(doneAction: 2);
+	snd = LeakDC.ar(Mix(Blip.ar([freq, freq*1.01], numharm, env)));
+	Out.ar(out, Pan2.ar(snd, pan));
+}).add;
+
+
 SynthDef(\sawpulse, { |out, freq = 440, gate = 0.5, plfofreq = 6, mw = 0,
 ffreq = 2000, rq = 0.3, freqlag = 0.05, amp = 1|
     var sig, plfo, fcurve;
@@ -162,148 +171,127 @@ SynthDef(\hats,
 
 x = "
 
-130 => )
+<? Zelda Theme - inspired by piano arrangement by Shinobu Amayake ?>
 
-.alice     <0,3,5> => @detune mp
-.bob       <0,3,5> => @detune mp
-.bass    @sawpulse => @instrument mp o~~~~
-.hats        @hats => @instrument pp
-.snare      @snare => @instrument mf
-.kick        @kick => @instrument mf
+    130 => )
 
-{! four_bars_rest !! }}}}} !}
-{! eight_bars_rest !! }}}}}} !}
-{! twelve_bars_rest !! !four_bars_rest !eight_bars_rest !}
+    .alice   @plucking => @instrument ppp
+    .bob     @plucking => @instrument ppp
+    .bass    @sawpulse => @instrument mp o~~~~
+    .hats        @hats => @instrument pp
+    .snare      @snare => @instrument mp
+    .kick    @ringkick => @instrument ff
 
-{! bass_fun<x>    !! !x ) ]] ]] ] ) ) !}
+    {! four_bars_rest  !! }}}}}  !}
+    {! eight_bars_rest !! }}}}}} !}
 
-{! bass_end<x>    !! !x ) ) ) ] ] !}
-{! bass_climb     !! | _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } | !}
+    {! bass_end<x>    !! !x ) ) ) ] ]     !}
+    {! bass_climb     !! | _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } | !}
 
-{! bassline_a !!
-  !bass_fun<a#>
-  !bass_fun<g#>
-  !bass_fun<f#>
-  !bass_fun<c#>
+    {! bassline_a !!
+      <a#, g#, f#, c#, b, a#, c>.{: ) ]] ]] ] ) ) :}
+      !bass_end<f>
+    !}
 
-  !bass_fun<b>
-  !bass_fun<a#>
-  !bass_fun<c>
-  !bass_end<f>
-!}
+    {! bassline_b !!
+      <a#, g#, f#, f>.{: ) ]] ]] ] ) ) :}
 
-{! bassline_b !!
-  !bass_fun<a#>
-  !bass_fun<g#>
-  !bass_fun<f#>
-  !bass_fun<f>
+      !bass_climb !bass_climb
 
-  !bass_climb
-  !bass_climb
+      <b, a#, c     >.{: ) ]] ]] ] ) ) :} !bass_end<f>
+    !}
 
-  !bass_fun<b>
-  !bass_fun<a#>
-  !bass_fun<c>
-  !bass_end<f>
+    {! intro !!
 
-!}
+      .hats  !four_bars_rest
+      .snare !four_bars_rest
+      .kick  !four_bars_rest
 
-{! intro !!
+      .alice | _a# ))        o/. ]]  ]] ]] ] |     ]. _g#  ]] _a# )        o/.  ]]  ]] ]] ] |
+      .bob   | _d  ))        o/. ]]  ]] ]] ] | _c  ].      ]]     )        o/.  ]]  ]] ]] ] |
+      .bass  |  a# ) ]] ]] ] )       ]] ]] ] |  g# )              ]] ]] ]  )        ]] ]] ] |
 
-  .hats  !four_bars_rest
-  .snare !four_bars_rest
-  .kick  !four_bars_rest
+      .alice |     ]. _g# ]] _a# )       o/. ]] ]] ]] ] |   ]    _f ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
+      .bob   | _c# ].     ]]     )       o/. ]] ]] ]] ] |   ] o~ _a ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
+      .bass  |  f# )             ]] ]] ] )      ]] ]] ] | f )              )        )      g ]   a ] |
+    !}
 
-  .alice | _a# ))        o/. ]]  ]] ]] ] |     ]. _g#  ]] _a# )        o/.  ]]  ]] ]] ] |
-  .bob   | _d  ))        o/. ]]  ]] ]] ] | _c  ].      ]]     )        o/.  ]]  ]] ]] ] |
-  .bass  |  a# ) ]] ]] ] )       ]] ]] ] |  g# )              ]] ]] ]  )        ]] ]] ] |
+    {! melody_a !! .bass !bassline_a
 
-  .alice |     ]. _g# ]] _a# )       o/. ]] ]] ]] ] |   ]    _f ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
-  .bob   | _c# ].     ]]     )       o/. ]] ]] ]] ] |   ] o~ _a ]] ]]  ] ]] ]]  ] ]] ]]  ]     ] |
-  .bass  |  f# )             ]] ]] ] )      ]] ]] ] | f )              )        )      g ]   a ] |
-!}
+      .alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
+      .bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
 
-{! melody_a !! .bass !bassline_a
+      .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
+      .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
 
-  .alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
-  .bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
+      .alice |  a# ))                                  o/ a# ]  ]  g# ]]  f# ]] |
+      .bob   |  c# ]. _f# ]]  ]] _g# ]] _a# ]] c ]] c# ]. ]]    ]  c  ]] _a# ]] |
 
-  .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
-  .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
+      .alice | g# ].  f# ]]  f ))                      )               |
+      .bob   | c# ]. _g# ]]    ]] ]] _f# ]  _g# ]. ]]  ]] _f# ]] _g# ] |
 
-  .alice |  a# ))                                  o/ a# ]  ]  g# ]]  f# ]] |
-  .bob   |  c# ]. _f# ]]  ]] _g# ]] _a# ]] c ]] c# ]. ]]    ]  c  ]] _a# ]] |
+      .alice |  d# ] ]]  f ]]  f# ))                   f ] d#  ] |
+      .bob   | _f# ] ]] _f ]] _f# ] ]] _g# ]]  _a# ) _g# ] _f# ] |
 
-  .alice | g# ].  f# ]]  f ))                      )               |
-  .bob   | c# ]. _g# ]]    ]] ]] _f# ]  _g# ]. ]]  ]] _f# ]] _g# ] |
+      .alice |  c# ] ]]  d# ]]  f ))                 d# ]  c# ] |
+      .bob   | _f  ] ]] _d# ]] _f ] ]] _f# ]] _g# ) _f# ] _d# ] |
 
-  .alice |  d# ] ]]  f ]]  f# ))                   f ] d#  ] |
-  .bob   | _f# ] ]] _f ]] _f# ] ]] _g# ]]  _a# ) _g# ] _f# ] |
+      .alice |  c ] ]]  d ]]  e ))                   g )     |
+      .bob   | _e ] ]] _d ]] _e ] ]] _g ] ]] _a ]] _a# ] c ] |
 
-  .alice |  c# ] ]]  d# ]]  f ))                 d# ]  c# ] |
-  .bob   | _f  ] ]] _d# ]] _f ] ]] _f# ]] _g# ) _f# ] _d# ] |
+      .alice |  f ]     _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
+      .bob   | _a ] o~  _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
 
-  .alice |  c ] ]]  d ]]  e ))                   g )     |
-  .bob   | _e ] ]] _d ]] _e ] ]] _g ] ]] _a ]] _a# ] c ] |
+    !}
 
-  .alice |  f ]     _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
-  .bob   | _a ] o~  _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
+    {! melody_b !! .bass !bassline_b
 
-!}
+      .alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
+      .bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
 
-{! melody_b !! .bass !bassline_b
+      .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
+      .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
 
-  .alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
-  .bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
+      .alice | a# )). ~o c# ) | c  ) o~ a )) f  ) |  f# )).  a# ) | a )  f )) ) |
+      .bob   | c# )).    e  ) | d# )    c )) _a ) | _b  )).  c# ) | c ) _a )) ) |
 
-  .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
-  .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
+      .alice |  f# )). a# ) | a )  f )) d ) |  d# )).  f# ) |  f  )  c# )) _a# ) |
+      .bob   | _b  )). c# ) | c ) _a ))   ) | _f# )). _b  ) | _a# ) _f  )) _c# ) |
 
-  .alice | a# )). ~o c# ) | c  ) o~ a )) f  ) |  f# )).  a# ) | a )  f )) ) |
-  .bob   | c# )).    e  ) | d# )    c )) _a ) | _b  )).  c# ) | c ) _a )) ) |
+      .alice |  c ] ]]  d ]]  e ))                        g  )     |
+      .bob   | _e ] ]] _d ]] _e ] ]] _f ]] _g ] ]] _a ]] _a# ] c ] |
 
-  .alice |  f# )). a# ) | a )  f )) d ) |  d# )).  f# ) |  f  )  c# )) _a# ) |
-  .bob   | _b  )). c# ) | c ) _a ))   ) | _f# )). _b  ) | _a# ) _f  )) _c# ) |
+      .alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
+      .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
 
-  .alice |  c ] ]]  d ]]  e ))                        g  )     |
-  .bob   | _e ] ]] _d ]] _e ] ]] _f ]] _g ] ]] _a ]] _a# ] c ] |
+    !}
 
-  .alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
-  .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
+    {! fill !!
+      .alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
+      .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
+      .snare |    ]       ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
+      .hats  |    ]       ]      ] ]       ] ]       ]  ]    |
+      .kick  |    )              }         )         }       |
+      .bass !bass_end<f>
+    !}
 
-!}
+    {! drums !!
+      .hats  {: ] ] ] ] ] ] ] ]] ]] :: !i <= 11 :}
+      .kick  {: ) } ) } :: !i <= 11 :}
+      .snare {: } ) } ) :: !i <= 10 :} | ] ]] ]]  ] ]] ]]  ] ]] ]]  ]  ] |
+    !}
 
-{! fill !!
-  .alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
-  .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
-  .snare |    ]       ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
-  .hats  |    ]       ]      ] ]       ] ]       ]  ]    |
-  .kick  |    )              }         )         }       |
-  .bass !bass_end<f>
-!}
+    !intro !melody_a
 
-{! drums !!
-.hats  |: ] ] ] ] ] ] ] ]] ]] :| :| :| :| :| :| :| :| :| :| :|
-.snare |: } ) } ) :| :| :| :| :| :| :| :| :| :| ] ]] ]]  ] ]] ]]  ] ]] ]]  ]  ] |
-.kick  |: ) } ) } :| :| :| :| :| :| :| :| :| :| :|
-!}
+    .kick !eight_bars_rest
+    .hats !four_bars_rest }}} }}} }}} ] ] ] ] ] ] ] ]
+    .snare !eight_bars_rest
 
-!intro
-!melody_a
-
-.kick !eight_bars_rest
-.hats !four_bars_rest }}} }}} }}} ] ] ] ] ] ] ] ]
-.snare !eight_bars_rest
-!fill
-
-!melody_b
-!drums
-
-!fill
+    !fill !melody_b !drums !fill
 
 ".skoar;
 
-
+x.play;
 
 )
 Object.gcInfo

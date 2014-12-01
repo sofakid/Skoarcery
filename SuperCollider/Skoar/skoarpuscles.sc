@@ -47,10 +47,12 @@ Skoarpuscle {
 
         } {x.isKindOf(Array)} {
             var a = Array.newClear(x.size);
+            var i = -1;
             "x array".postln;
             x.do {
                 | el |
-                a = a.add(Skoarpuscle.wrap(el));
+                i = i + 1;
+                a[i] = Skoarpuscle.wrap(el);
             };
 
             ^SkoarpuscleArray(a);
@@ -95,6 +97,11 @@ SkoarpuscleFloat : Skoarpuscle {
 }
 
 SkoarpuscleString : Skoarpuscle {
+
+    performer {
+        | m, nav |
+        val.speak(0,true);
+    }
 }
 
 SkoarpuscleSymbolName : Skoarpuscle {
@@ -189,11 +196,35 @@ SkoarpuscleDeref : Skoarpuscle {
         };
 
         if (x.notNil) {
+            if (x.isKindOf(SkoarpuscleString)) {
+                x = x.val;
+            };
             ret = x.performMsg(msg_arr);
         };
 
         ^Skoarpuscle.wrap(ret);
     }
+
+}
+
+SkoarpuscleMathOp : Skoarpuscle {
+    var f;
+
+    init {
+        | toke |
+        val = toke.lexeme;
+
+        f = switch (val)
+            {"+"}  {{
+                | a, b |
+                a + b
+            }}
+            {"-"}  {{
+                | a, b |
+                a - b
+            }};
+    }
+
 
 }
 
@@ -467,7 +498,7 @@ SkoarpuscleArray : Skoarpuscle {
 
         val.do {
             | x |
-            var y = if (x.respondsTo(\flatten)) {x.flatten(m)} {x};
+            var y = if (x.isKindOf(Skoarpuscle)) {x.flatten(m)} {x};
             debug("SkoarpuscleArray.flatten: x: " ++ x.asString ++ " y: " ++ y);
             i = i + 1;
             out[i] = y;
@@ -495,7 +526,7 @@ SkoarpuscleArray : Skoarpuscle {
 
     performer {
         | m, nav |
-        m.koar[\degree] = val.flatten(m);
+        m.koar[\degree] = this.flatten(m);
     }
 
 }
@@ -531,12 +562,14 @@ SkoarpuscleMsg : Skoarpuscle {
 
     get_msg_arr {
         | m |
-        var x = Array.new(args.size + 1);
+        var x = Array.newClear(args.size + 1);
+        var i = 0;
 
-        x.add(val);
+        x[0] = val;
         args.flatten(m).do {
             | y |
-            x.add(y);
+            i = i + 1;
+            x[i] = y;
         };
         ^x;
     }

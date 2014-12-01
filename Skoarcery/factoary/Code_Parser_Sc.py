@@ -136,6 +136,7 @@ class Code_Parser_Sc(unittest.TestCase):
 
                 # debugging
                 #SC.print("burning empty")
+
                 SC.stmt("deep = deep - 1")
                 SC.return_("noad")
 

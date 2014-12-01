@@ -195,6 +195,12 @@ SkoarTokeInspector {
                 var s = toke.lexeme;
                 noad.skoarpuscle = SkoarpuscleMsgName(s[0..s.size-2].asSymbol);
                 noad.toke = nil;
+            },
+
+            \Toke_MathOp -> {
+                | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleMathOp(toke);
+                noad.toke = nil;
             }
 
         ];

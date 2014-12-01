@@ -59,6 +59,7 @@ DynFP:            fp
 
 AssOp:            =>|[+]>|->
 MsgOp:            \\.(?![)\\]])
+MathOp:           [+x\\-](?!>)
 
 NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
 BooleanOp*:       ==|!=|<(?!=)|<=|>(?!=)|>=|and|or|xor

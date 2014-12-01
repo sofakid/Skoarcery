@@ -557,7 +557,7 @@ class ScTongue(Tongue):
         self.if_(self.v_match_regex(regex, buf, offs) + " == " + self.false)
 
     def find_regex(self, match, regex, buf, offs):
-        self.stmt(match + " = " + buf + ".firstRegexp(" + regex + ", " + offs + ")")
+        self.stmt(match + " = " + buf + ".findRegexpAt(" + regex + ", " + offs + ")")
 
     def try_(self):
         self.stmt("try {", end="\n")

@@ -59,8 +59,9 @@ deref*           : Deref deref_prime
 +deref_prime     : MsgNameWithArgs listy_suffix | MsgName
 
 stmt*            : skoaroid stmt_prime
-+stmt_prime      : assignment stmt_prime | <e>
++stmt_prime      : assignment stmt_prime | math | <e>
 
++math            : MathOp skoaroid stmt_prime
 assignment*      : AssOp settable
 +settable        : Caesura | Symbol | listy | Quarters | Eighths
 
