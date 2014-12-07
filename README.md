@@ -371,7 +371,7 @@ Cthulhu can also make assertions.
 Install
 =======
 
-You need the very latest [SuperCollider] (Until 3.7 comes out, that means you will have to build it (do it 3.7 alpha is rad)).
+You need the very latest [SuperCollider 3.7](http://supercollider.github.io/download.html)
 
 You just need to point SuperCollider at the Skoar folder (that you git cloned) and you're set.
 
