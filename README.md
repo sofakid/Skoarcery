@@ -1,6 +1,8 @@
 Skoar and Skoarcery
 ===================
 
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/sofakid/Skoarcery?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 __Skoar__ is a high-level language for coding music.
 
 It runs on [SuperCollider], a free and fantastic audio programming environment.
