@@ -23,9 +23,9 @@ mf
 
 .mel  | ottava alta }}} o/  | }}} o/     | }}} o/              |    }}} o/   |
 
-.mel  | _a)   d] f#)   e] d)     c#] | d)  _b] _g)  c#] _a] d] _b]       |
+.mel  | _a)   d] f#)   e] d)     c#]  | d)  _b] _g)  c#] _a] d] _b]       |
 .mel  | c#)   _a] _g)   d] _b)    c#] | d)   e]] ]] f#] d] e] _a)   ] |
-.mel  | _a)  d]] e]] f#)  e] d)  c#] | d)  _b] _g)  c#] _a] d] _b]       |
+.mel  | _a)  d]] e]] f#)  e] d)  c#]  | d)  _b] _g)  c#] _a] d] _b]       |
 .mel  | c#)  d] e)  f#]] ]] g] e] c#] | d)   oo/ e]] d).      _a)   ] |
 
 .mel  | _a)  d]] e]] f#)  e] d)  c#] | e]] d].  _b] _g)  c#] _a] d] _b]  | c#)   _a] _g)   d] _b)    c#] | ]] d]] e]] ]] f#] d] e] _a) ] |
@@ -175,12 +175,12 @@ x = "
 
     130 => )
 
-    .alice   @plucking => @instrument ppp
-    .bob     @plucking => @instrument ppp
+    .alice   @default => @instrument mf
+    .bob     @default => @instrument mf
     .bass    @sawpulse => @instrument mp o~~~~
     .hats        @hats => @instrument pp
     .snare      @snare => @instrument mp
-    .kick    @ringkick => @instrument ff
+    .kick    @kick => @instrument ff
 
     {! four_bars_rest  !! }}}}}  !}
     {! eight_bars_rest !! }}}}}} !}
@@ -189,7 +189,7 @@ x = "
     {! bass_climb     !! | _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } | !}
 
     {! bassline_a !!
-      <a#, g#, f#, c#, b, a#, c>.{: ) ]] ]] ] ) ) :}
+      <a#, g#, f#, c#, b, a#, c>.{: .) ]] ]] ] ) ) :}
       !bass_end<f>
     !}
 
@@ -231,13 +231,13 @@ x = "
       .bob   | c# ]. _g# ]]    ]] ]] _f# ]  _g# ]. ]]  ]] _f# ]] _g# ] |
 
       .alice |  d# ] ]]  f ]]  f# ))                   f ] d#  ] |
-      .bob   | _f# ] ]] _f ]] _f# ] ]] _g# ]]  _a# ) _g# ] _f# ] |
+      .bob   | _f# ] ]] _f ]] _f# ] ]] _g#  _a# ) _g# ] _f# ] |
 
       .alice |  c# ] ]]  d# ]]  f ))                 d# ]  c# ] |
       .bob   | _f  ] ]] _d# ]] _f ] ]] _f# ]] _g# ) _f# ] _d# ] |
 
-      .alice |  c ] ]]  d ]]  e ))                   g )     |
-      .bob   | _e ] ]] _d ]] _e ] ]] _g ] ]] _a ]] _a# ] c ] |
+      .alice |  c ] ]]  d ]]  e ))                      g )     |
+      .bob   | _e ] ]] _d ]] _e ] ]] _g ] ]] _a ]] ]] _a# ] c ] |
 
       .alice |  f ]     _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
       .bob   | _a ] o~  _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
@@ -246,8 +246,8 @@ x = "
 
     {! melody_b !! .bass !bassline_b
 
-      .alice | _a# ) _f )__          o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
-      .bob   | _d  )    ]] ]] _c ] _d ].     ]]  ]] _d# ]] _f ]] _g ]] |
+      .alice | _a# ) _f )__            o/. _a# ]]  ]]   c ]]  d ]] d# ]] |
+      .bob   | _d  )    ]] ]] _c ] _d ] ].     ]]  ]] _d# ]] _f ]] _g ]] |
 
       .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
       .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |

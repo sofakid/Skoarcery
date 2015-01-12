@@ -313,7 +313,7 @@ SkoarKoar {
                 {\nav_segno} {
                     dst = this.state_at(\segno_seen);
 
-                    if (dst.isNil || (dst.skoap != subtree.skoap)) {
+                    if ((dst !? (_.skoap)) != subtree.skoap) {
                         this.bubble_up_nav(up_nav, \nav_segno, inlined);
                     };
                 }
@@ -321,7 +321,7 @@ SkoarKoar {
                 {\nav_colon} {
                     dst = this.state_at(\colon_seen);
 
-                    if (dst.isNil || (dst.skoap != subtree.skoap)) {
+                    if ((dst !? (_.skoap)) != subtree.skoap) {
                         this.bubble_up_nav(up_nav, \nav_colon, inlined);
                     };
                 };
