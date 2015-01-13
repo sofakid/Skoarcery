@@ -19,7 +19,8 @@ SkoarFairy {
 
     impress {
         | x |
-        impression = x;
+        ("$:" ++ name ++ ".impression: " ++ x.asString).postln;
+        impression = Skoarpuscle.wrap(x);
         ^impression;
     }
 

@@ -20,76 +20,10 @@ SkoarKoar {
 
         stack = List[];
         state_stack = List[];
-        skoarboard = IdentityDictionary.new;
+        skoarboard = ();
         stack.add(skoarboard);
 
     }
-
-    assign_incr {
-        | x, y |
-
-        if (y.isKindOf(SkoarpuscleSymbol)) {
-            this.incr_symbol(x, y);
-        };
-
-        if (y.isKindOf(SkoarpuscleBeat)) {
-            this.incr_tempo(x, y);
-        };
-    }
-
-    assign_decr {
-        | x, y |
-
-        if (y.isKindOf(SkoarpuscleSymbol)) {
-            this.decr_symbol(x, y);
-        };
-
-        if (y.isKindOf(SkoarpuscleBeat)) {
-            this.decr_tempo(x, y);
-        };
-    }
-
-    // x +> y
-    incr_symbol {
-        | x, y |
-        var k = y.val;
-        var v = x.flatten;
-
-        v = this[k].flatten + v;
-
-        //("@" ++ k ++ " <= ").post; v.dump;
-        this[k] = v;
-    }
-
-    // x -> y
-    decr_symbol {
-        | x, y |
-        var k = y.val;
-        var v = x.flatten;
-
-        v = this[k].flatten - v;
-
-        //("@" ++ k ++ " <= ").post; v.dump;
-        this[k] = v;
-    }
-
-    // these should be in tempo skoarpuscles
-    incr_tempo {
-        | bpm, beat |
-
-        var x = bpm.flatten / 60 * beat.val;
-        var y = this[\tempo] + x;
-        this[\tempo] = y;
-    }
-
-    decr_tempo {
-        | bpm, beat |
-
-        var x = bpm.flatten / 60 * beat.val;
-        var y = this[\tempo] - x;
-        this[\tempo] = y;
-    }
-
 
     // ---------------------
     // State and scope stuff
@@ -146,16 +80,28 @@ SkoarKoar {
     }
 
     set_args {
-        | args_def, args |
+        | minstrel, args_def, args |
         var i = 0;
         var vars = stack[stack.size - 1];
 
         if (args_def.isKindOf(SkoarpuscleArgs)) {
+            var passed_args, n;
+
+            passed_args = if (args.isNil) { [] } { args.val };
+            n = passed_args.size;
+
             // foreach arg name defined, set the value from args
             args_def.val.do {
                 | k |
+                ("k: " ++ k).postln;
                 k = k.val;
-                vars[k] = args.val[i];
+                vars[k] = if (i < n) {
+                    args.val[i]
+                } {
+                    // this defaults to passing the fairy's impression
+                    // when not enough args are sent.
+                    minstrel.fairy.impression
+                };
                 i = i + 1;
             };
         };
@@ -209,7 +155,7 @@ SkoarKoar {
             this.push_state;
         };
         // load arg values into their names
-        this.set_args(skoarpion.args, skrp_args);
+        this.set_args(minstrel, skoarpion.args, skrp_args);
 
         projections = this.state_at(\projections);
         if (skoarpion.name.notNil) {

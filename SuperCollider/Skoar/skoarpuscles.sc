@@ -80,6 +80,8 @@ SkoarpuscleInt : Skoarpuscle {
         | m, nav |
         var k = if (val > 30) {\freq} {\degree};
         m.koar[k] = val;
+
+        m.fairy.impress(this);
     }
 
 }
@@ -95,6 +97,8 @@ SkoarpuscleFloat : Skoarpuscle {
         | m, nav |
         var k = if (val > 30) {\freq} {\degree};
         m.koar[k] = val;
+
+        m.fairy.impress(this);
     }
 }
 
@@ -102,7 +106,7 @@ SkoarpuscleString : Skoarpuscle {
 
     performer {
         | m, nav |
-        val.speak(0,true);
+        m.fairy.impress(this);
     }
 }
 
@@ -115,6 +119,8 @@ SkoarpuscleSymbolName : Skoarpuscle {
 SkoarpuscleSymbol : Skoarpuscle {
 
     performer {
+        | m, nav |
+        m.fairy.impress(this);
     }
 
     skoar_msg {
@@ -528,7 +534,9 @@ SkoarpuscleArray : Skoarpuscle {
 
     performer {
         | m, nav |
-        m.koar[\degree] = this.flatten(m);
+        var x = this.flatten(m);
+        m.fairy.impress(x);
+        m.koar[\degree] = x;
     }
 
 }
