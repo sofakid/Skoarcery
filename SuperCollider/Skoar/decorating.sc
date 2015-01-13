@@ -406,7 +406,7 @@ Skoarmantics {
                     if (y.name == \assignment) {{
                         | m, nav |
                         var res = skoaroid.evaluate.(m);
-                        y.setter.(res, m.koar);
+                        y.setter.(res, m);
 
                     }}
 
@@ -425,7 +425,7 @@ Skoarmantics {
                 | skoar, noad |
                 var kids = List[];
 
-                // strip out the operators
+                // strip out the msg operators
                 noad.children.do {
                     | x |
                     if (x.toke.isKindOf(Toke_MsgOp) == false) {
@@ -476,22 +476,22 @@ Skoarmantics {
                 op = noad.children[0].toke.lexeme;
                 settable = noad.children[1].next_skoarpuscle;
 
-                // we prepare the destination here (noad.f), we'll setup the write in skoaroid
+                // we prepare the destination here (noad.setter), we'll setup the write in skoaroid
 
                 noad.setter = switch (op)
                     {"+>"} {{
-                        | x, voice |
-                        voice.assign_incr(x, settable);
+                        | x, koar |
+                        //koar.assign_incr(x, settable);
                     }}
 
                     {"->"} {{
-                        | x, voice |
-                        voice.assign_decr(x, settable);
+                        | x, minstrel |
+                        //koar.assign_decr(x, settable);
                     }}
 
                     {"=>"} {{
-                        | x, voice |
-                        voice.assign_set(x, settable);
+                        | x, minstrel |
+                        skoar.ops.assign(minstrel, x, settable);
                     }};
             },
 

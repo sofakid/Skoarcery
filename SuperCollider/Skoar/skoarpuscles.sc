@@ -2,6 +2,7 @@
 // Value types
 // ===========
 Skoarpuscle {
+
     var <>val;
 
     *new { | v | ^super.new.init(v); }
@@ -80,6 +81,7 @@ SkoarpuscleInt : Skoarpuscle {
         var k = if (val > 30) {\freq} {\degree};
         m.koar[k] = val;
     }
+
 }
 
 SkoarpuscleFloat : Skoarpuscle {

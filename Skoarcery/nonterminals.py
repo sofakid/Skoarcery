@@ -53,7 +53,7 @@ ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | Quindic
 dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
 
 nouny*           : cthulhu | conditional | loop | nouny_literal | musical_keyword | listy | deref | skoarpion
-+nouny_literal   : Tuplet | Caesura | Int | Float | String | Choard | NamedNoat | Symbol
++nouny_literal   : Tuplet | Caesura | Int | Float | String | Choard | NamedNoat | Symbol | Fairy
 
 deref*           : Deref deref_prime
 +deref_prime     : MsgNameWithArgs listy_suffix | MsgName
@@ -61,9 +61,9 @@ deref*           : Deref deref_prime
 stmt*            : skoaroid stmt_prime
 +stmt_prime      : assignment stmt_prime | math | <e>
 
-+math            : MathOp skoaroid stmt_prime
+math             : MathOp skoaroid stmt_prime
 assignment*      : AssOp settable
-+settable        : Caesura | Symbol | listy | Quarters | Eighths
++settable        : Caesura | Symbol | listy | Quarters | Eighths | Fairy
 
 skoaroid*        : nouny msg_chain_node
 +msg_chain_node  : MsgOp msg msg_chain_node | <e>

@@ -49,19 +49,6 @@ SkoarKoar {
         };
     }
 
-    assign_set {
-        | x, y |
-
-        if (y.isKindOf(SkoarpuscleSymbol)) {
-            this.assign_symbol(x, y);
-        };
-
-        if (y.isKindOf(SkoarpuscleBeat)) {
-            this.set_tempo(x, y);
-        };
-
-    }
-
     // x +> y
     incr_symbol {
         | x, y |
@@ -86,16 +73,6 @@ SkoarKoar {
         this[k] = v;
     }
 
-    // x => y
-    assign_symbol {
-        | x, y |
-        var k = y.val;
-        var v = x.flatten;
-
-        //("@" ++ k ++ " <= ").post; x.postln; v.dump;
-        this[k] = v;
-    }
-
     // these should be in tempo skoarpuscles
     incr_tempo {
         | bpm, beat |
@@ -111,13 +88,6 @@ SkoarKoar {
         var x = bpm.flatten / 60 * beat.val;
         var y = this[\tempo] - x;
         this[\tempo] = y;
-    }
-
-    set_tempo {
-        | bpm, beat |
-
-        var x = bpm.flatten / 60 * beat.val;
-        this[\tempo] = x;
     }
 
 

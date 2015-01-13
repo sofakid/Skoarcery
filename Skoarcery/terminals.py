@@ -73,6 +73,7 @@ LoopS:            [{]:[\\n]*
 LoopE:            :[}]
 LoopSep:          ::[\\n]*(?![|])
 
+Fairy:            [$]
 
 # we do this, because skoaroids can follow skoaroids.
 MsgName*:         [a-zA-Z_][a-zA-Z0-9_]*(?!<)

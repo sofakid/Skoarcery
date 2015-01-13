@@ -4,6 +4,7 @@ SkoarMinstrel {
     var   skoar;
     var  <koar;
     var  <all_voice;
+    var  <fairy;
 
     var   event_stream;
 
@@ -24,6 +25,8 @@ SkoarMinstrel {
         koar[\octave] = 5;
         koar[\tempo] = 1;
         koar[\amp] = 0.5;
+
+        fairy = SkoarFairy.new;
 
         all_voice = skr.all_voice;
 

@@ -10,6 +10,7 @@ Skoar {
     var  <voices;       // all the voices
     var  <all_voice;    // the all voice
     var  <skoarpions;   // all the skoarpions
+    var  <ops;          // operations tables object
 
     *new {
         | code |
@@ -27,9 +28,11 @@ Skoar {
         toker = Toker(skoarse);
         parser = SkoarParser.new(this);
 
-        voices = IdentityDictionary.new;
+        voices = ();
         all_voice = SkoarKoar.new(this, \all);
         voices[\all] = all_voice;
+
+        ops = SkoarOps.new;
 
         skoarpions = List[];
 
