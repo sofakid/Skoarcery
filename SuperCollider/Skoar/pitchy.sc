@@ -56,6 +56,7 @@ SkoarpuscleNoat : Skoarpuscle {
     performer {
         | m, nav |
         m.koar[\degree] = val;
+        m.fairy.impress(this);
     }
 
 }
@@ -67,6 +68,7 @@ SkoarpuscleChoard : Skoarpuscle {
 
     performer {
         | m, nav |
+        m.fairy.impress(this);
     }
 
 }
