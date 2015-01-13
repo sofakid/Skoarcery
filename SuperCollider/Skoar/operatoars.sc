@@ -19,7 +19,7 @@ SkoarOps {
                 // v
                 Any: {
                     | minstrel, v, symbol |
-                    minstrel.koar[symbol.val] = v.flatten;
+                    minstrel.koar[symbol.val] = v.flatten(minstrel);
                 }
 
             ),
@@ -41,9 +41,9 @@ SkoarOps {
             SkoarpuscleInt: (
 
                 // y
-                SkoarpuscleInt:   { | minstrel, x, y | ^SkoarpuscleInt(x.val + y.val); },
-                SkoarpuscleFloat: { | minstrel, x, y | ^SkoarpuscleFloat(x.val + y.val); },
-                SkoarpuscleArray: { | minstrel, x, y | ^SkoarpuscleArray([x] ++ y.val); }
+                SkoarpuscleInt:   { | x, y | ^SkoarpuscleInt(x.val + y.val); },
+                SkoarpuscleFloat: { | x, y | ^SkoarpuscleFloat(x.val + y.val); },
+                SkoarpuscleArray: { | x, y | ^SkoarpuscleArray([x] ++ y.val); }
 
             ),
 
@@ -51,9 +51,9 @@ SkoarOps {
             SkoarpuscleFloat: (
 
                 // y
-                SkoarpuscleInt:   { | minstrel, x, y | ^SkoarpuscleFloat(x.val + y.val); },
-                SkoarpuscleFloat: { | minstrel, x, y | ^SkoarpuscleFloat(x.val + y.val); },
-                SkoarpuscleArray: { | minstrel, x, y | ^SkoarpuscleArray([x] ++ y.val); }
+                SkoarpuscleInt:   { | x, y | ^SkoarpuscleFloat(x.val + y.val); },
+                SkoarpuscleFloat: { | x, y | ^SkoarpuscleFloat(x.val + y.val); },
+                SkoarpuscleArray: { | x, y | ^SkoarpuscleArray([x] ++ y.val); }
             )
         );
 
@@ -64,8 +64,8 @@ SkoarOps {
             SkoarpuscleInt: (
 
                 // y
-                SkoarpuscleInt:   { | minstrel, x, y | ^SkoarpuscleInt(x.val * y.val); },
-                SkoarpuscleFloat: { | minstrel, x, y | ^SkoarpuscleFloat(x.val * y.val); }
+                SkoarpuscleInt:   { | x, y | ^SkoarpuscleInt(x.val * y.val); },
+                SkoarpuscleFloat: { | x, y | ^SkoarpuscleFloat(x.val * y.val); }
 
             ),
 
@@ -73,8 +73,8 @@ SkoarOps {
             SkoarpuscleFloat: (
 
                 // y
-                SkoarpuscleInt:   { | minstrel, x, y | ^SkoarpuscleFloat(x.val * y.val); },
-                SkoarpuscleFloat: { | minstrel, x, y | ^SkoarpuscleFloat(x.val * y.val); }
+                SkoarpuscleInt:   { | x, y | ^SkoarpuscleFloat(x.val * y.val); },
+                SkoarpuscleFloat: { | x, y | ^SkoarpuscleFloat(x.val * y.val); }
             )
         );
 
@@ -101,7 +101,7 @@ SkoarOps {
     assign {
         | minstrel, v, settable |
         var f = this.lookup(assignment, settable, v);
-
+        var koar = minstrel.koar;
         ^minstrel.fairy.impress(f.(minstrel, v, settable));
     }
 
@@ -110,14 +110,14 @@ SkoarOps {
         | minstrel, x, y |
         var f = this.lookup(addition, x, y);
 
-        ^minstrel.fairy.impress(f.(minstrel, x, y));
+        ^minstrel.fairy.impress(f.(x, y));
     }
 
     // x + y
     multiply {
         | minstrel, x, y |
         var f = this.lookup(multiplication, x, y);
-        ^minstrel.fairy.impress(f.(minstrel, x, y));
+        ^minstrel.fairy.impress(f.(x, y));
     }
 
 
