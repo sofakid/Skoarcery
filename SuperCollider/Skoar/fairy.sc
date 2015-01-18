@@ -25,3 +25,47 @@ SkoarFairy {
     }
 
 }
+
+SkoarpuscleFairy : Skoarpuscle {
+
+    var msg_arr;
+
+    *new { ^super.new.init; }
+
+    init {
+        msg_arr = #[];
+    }
+
+    flatten {
+        | m |
+        var x = m.fairy.impression;
+
+        if (x.isKindOf(Skoarpuscle)) {
+            x = x.flatten(m);
+        };
+
+        ^x;
+    }
+
+    performer {
+        | m, nav |
+        var x = m.fairy.impression;
+
+        "performing fairy impression: ".post; x.dump;
+
+        if (x.isKindOf(Skoarpuscle)) {
+            x.perform(m, nav);
+        };
+
+    }
+
+    skoar_msg {
+        | msg, minstrel |
+        msg_arr = msg.get_msg_arr(minstrel);
+
+        "Fairy got msg: ".post; msg_arr.dump;
+
+        ^this;
+    }
+
+}

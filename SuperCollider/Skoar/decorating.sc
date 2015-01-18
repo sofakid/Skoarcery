@@ -9,45 +9,50 @@ SkoarTokeInspector {
 
     *new {
 
-        ^IdentityDictionary[
+        ^(
+            Toke_Fairy: {
+                | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleFairy.new;
+                noad.toke = nil;
+            },
 
-            \Toke_Int -> {
+            Toke_Int: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleInt(toke.lexeme.asInteger);
                 noad.toke = nil;
             },
 
-            \Toke_Float -> {
+            Toke_Float: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleFloat(toke.lexeme.asFloat);
                 noad.toke = nil;
             },
 
-            \Toke_NamedNoat -> {
+            Toke_NamedNoat: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleNoat(toke.lexeme);
                 noad.toke = nil;
             },
 
-            \Toke_Choard -> {
+            Toke_Choard: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleChoard(toke.lexeme);
                 noad.toke = nil;
             },
 
-            \Toke_String -> {
+            Toke_String: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleString(toke.lexeme.asString);
                 noad.toke = nil;
             },
 
-            \Toke_Symbol -> {
+            Toke_Symbol: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleSymbol(toke.lexeme[1..].asSymbol);
                 noad.toke = nil;
             },
 
-            \Toke_SymbolName -> {
+            Toke_SymbolName: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleSymbolName(toke.lexeme.asSymbol);
                 noad.toke = nil;
@@ -55,155 +60,155 @@ SkoarTokeInspector {
 
             // rests
             // } }} }}}
-            \Toke_Crotchets -> {
+            Toke_Crotchets: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleRest(toke);
                 noad.toke = nil;
             },
 
             // o/ oo/ ooo/
-            \Toke_Quavers -> {
+            Toke_Quavers: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleRest(toke);
                 noad.toke = nil;
             },
 
             // unrests
-            \Toke_Quarters -> {
+            Toke_Quarters: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleBeat(toke);
                 noad.toke = nil;
             },
 
-            \Toke_Eighths -> {
+            Toke_Eighths: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleBeat(toke);
                 noad.toke = nil;
             },
 
-            \Toke_Bars -> {
+            Toke_Bars: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleBars(toke);
                 noad.toke = nil;
             },
 
-            \Toke_Volta -> {
+            Toke_Volta: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleVolta(noad, toke);
                 noad.toke = nil;
             },
 
-            \Toke_Meter -> {
+            Toke_Meter: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleMeter(toke);
                 noad.toke = nil;
             },
 
-            \Toke_Carrots -> {
+            Toke_Carrots: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleCarrots(toke);
                 noad.toke = nil;
             },
 
-            \Toke_Tuplet -> {
+            Toke_Tuplet: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleTuplet(toke);
                 noad.toke = nil;
             },
 
-            \Toke_DynPiano -> {
+            Toke_DynPiano: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleDynamic(toke);
                 noad.toke = nil;
             },
 
-            \Toke_DynForte -> {
+            Toke_DynForte: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleDynamic(toke);
                 noad.toke = nil;
             },
 
-            \Toke_OctaveShift -> {
+            Toke_OctaveShift: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },
 
-            \Toke_OttavaA -> {
+            Toke_OttavaA: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },
 
-            \Toke_OttavaB  -> {
+            Toke_OttavaB : {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },
 
-            \Toke_QuindicesimaA -> {
+            Toke_QuindicesimaA: {
                 | skoar, noad, toke |
 
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },
 
-            \Toke_QuindicesimaB -> {
+            Toke_QuindicesimaB: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },
 
-            \Toke_BooleanOp -> {
+            Toke_BooleanOp: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleBooleanOp(toke);
                 noad.toke = nil;
             },
 
-            \Toke_Voice -> {
+            Toke_Voice: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleVoice(toke);
                 noad.toke = nil;
             },
 
-            \Toke_Segno -> {
+            Toke_Segno: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleSegno(noad, toke);
                 noad.toke = nil;
             },
 
-            \Toke_Rep -> {
+            Toke_Rep: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleRep(toke);
                 noad.toke = nil;
             },
 
-            \Toke_Fine -> {
+            Toke_Fine: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleFine.new;
                 noad.toke = nil;
             },
 
-            \Toke_MsgName -> {
+            Toke_MsgName: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleMsgName(toke.lexeme.asSymbol);
                 noad.toke = nil;
             },
 
-            \Toke_MsgNameWithArgs -> {
+            Toke_MsgNameWithArgs: {
                 | skoar, noad, toke |
                 var s = toke.lexeme;
                 noad.skoarpuscle = SkoarpuscleMsgName(s[0..s.size-2].asSymbol);
                 noad.toke = nil;
             },
 
-            \Toke_MathOp -> {
+            Toke_MathOp: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleMathOp(toke);
                 noad.toke = nil;
             }
 
-        ];
+        );
     }
 
 }
@@ -228,33 +233,33 @@ Skoarmantics {
 
     *new {
 
-        var dict = IdentityDictionary[
+        var dict = (
 
-            \skoar -> {
+            skoar: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion.new_from_skoar(skoar));
                 noad.children = [];
             },
 
-            \skoarpion -> {
+            skoarpion: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion(skoar, noad));
                 noad.children = [];
             },
 
-            \conditional -> {
+            conditional: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleConditional(skoar, noad);
                 noad.children = [];
             },
 
-            \boolean -> {
+            boolean: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleBoolean(noad);
                 noad.children = [];
             },
 
-            \beat -> {
+            beat: {
                 | skoar, noad |
                 var x = noad.next_skoarpuscle;
                 noad.skoarpuscle = x;
@@ -265,19 +270,23 @@ Skoarmantics {
                 noad.children = [];
             },
 
-            \listy -> {
+            listy: {
                 | skoar, noad |
+
+                // collecting skoarpuscles isn't enough.
+                // there can be statements.
+
                 noad.skoarpuscle = SkoarpuscleArray(noad.collect_skoarpuscles);
                 noad.children = [];
             },
 
-            \loop -> {
+            loop: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleLoop(skoar, noad);
                 noad.children = [];
             },
 
-            \musical_keyword_misc -> {
+            musical_keyword_misc: {
                 | skoar, noad |
                 var skoarpuscle = noad.next_skoarpuscle;
 
@@ -286,7 +295,7 @@ Skoarmantics {
                 };
             },
 
-            \ottavas -> {
+            ottavas: {
                 | skoar, noad |
                 var x = noad.next_skoarpuscle;
 
@@ -296,12 +305,12 @@ Skoarmantics {
                 };
             },
 
-            \cthulhu -> {
+            cthulhu: {
                 | skoar, noad |
                 noad.performer = {skoar.cthulhu(noad);};
             },
 
-            \dynamic -> {
+            dynamic: {
                 | skoar, noad |
                 var x = noad.next_skoarpuscle;
 
@@ -311,7 +320,7 @@ Skoarmantics {
                 };
             },
 
-            \dal_goto -> {
+            dal_goto: {
                 | skoar, noad |
                 var x = SkoarpuscleGoto(noad);
 
@@ -321,7 +330,7 @@ Skoarmantics {
                 };
             },
 
-            \marker -> {
+            marker: {
                 | skoar, noad |
 
                 var x = noad.next_skoarpuscle;
@@ -339,7 +348,7 @@ Skoarmantics {
                 };
             },
 
-            \nouny -> {
+            nouny: {
                 | skoar, noad |
 
                 var x = noad.next_skoarpuscle;
@@ -352,7 +361,7 @@ Skoarmantics {
 
             // deref*         : Deref MsgNameWithArgs listy_suffix
             //                | Deref MsgName
-            \deref -> {
+            deref: {
                 | skoar, noad |
 
                 var x;
@@ -369,13 +378,13 @@ Skoarmantics {
                 noad.children = [];
             },
 
-            \args -> {
+            args: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleArgs(noad.collect_skoarpuscles);
                 noad.children = [];
             },
 
-            \msg -> {
+            msg: {
                 | skoar, noad |
                 var msg = nil;
                 var args = nil;
@@ -396,32 +405,24 @@ Skoarmantics {
                 noad.children = [];
             },
 
-            \stmt -> {
+            expr: {
                 | skoar, noad |
-                var skoaroid = noad.children[0];
-                var y = noad.children[1];
+                var msgable = noad.children[0];
 
-                noad.performer = if (y.notNil) {
-
-                    if (y.name == \assignment) {{
-                        | m, nav |
-                        var res = skoaroid.evaluate.(m);
-                        y.setter.(res, m);
-
-                    }}
-
-                } {{
+                noad.performer = {
                     | m, nav |
-                    var skrd; // don't overwrite skoaroid
-                    //"evaluating...".postln;
-                    skrd = skoaroid.evaluate.(m);
-                    //"performing result".postln; skrd.asString.postln;
-                    skrd.performer(m, nav);
+                    var res;
+                    //"evaluating messages...".postln;
+                    res = msgable.evaluate.(m);
 
-                }};
+                    m.fairy.impress(res);
+                    //"performing result".postln; res.asString.postln;
+                    res.performer(m, nav);
+
+                };
             },
 
-            \skoaroid -> {
+            msgable: {
                 | skoar, noad |
                 var kids = List[];
 
@@ -436,7 +437,7 @@ Skoarmantics {
                 noad.children = kids.asArray;
                 kids = noad.children;
 
-                // evaluate messages, returning the result
+                // evaluate a chain of messages, returning the result
                 noad.evaluate = {
                     | minstrel |
                     var result = kids[0].next_skoarpuscle;
@@ -462,13 +463,14 @@ Skoarmantics {
                             x
                         } {
                             "no evaluation.".postln; noad.dump;
-                            noad
+                            noad //- i don't like this
+                            //nil
                         }
                     }
                 };
             },
 
-            \assignment -> {
+            assignment: {
                 | skoar, noad |
                 var op = nil;
                 var settable = nil;
@@ -476,26 +478,41 @@ Skoarmantics {
                 op = noad.children[0].toke.lexeme;
                 settable = noad.children[1].next_skoarpuscle;
 
-                // we prepare the destination here (noad.setter), we'll setup the write in skoaroid
-
-                noad.setter = switch (op)
+                noad.performer = switch (op)
                     {"+>"} {{
-                        | x, koar |
-                        //koar.assign_incr(x, settable);
+                        | m, nav |
+                        var x = m.fairy.impression;
+                        // todo Skoar.ops.increment(m, x, settable);
                     }}
 
                     {"->"} {{
-                        | x, minstrel |
-                        //koar.assign_decr(x, settable);
+                        | m, nav |
+                        var x = m.fairy.impression;
+                        // todo Skoar.ops.decrement(m, x, settable);
                     }}
 
                     {"=>"} {{
-                        | x, minstrel |
-                        skoar.ops.assign(minstrel, x, settable);
+                        | m, nav |
+                        var x = m.fairy.impression;
+                        Skoar.ops.assign(m, x, settable);
                     }};
             },
 
-        ];
+            math: {
+                | skoar, noad |
+                var op = nil;
+                var r_value = nil;
+
+                op = noad.children[0].skoarpuscle;
+                r_value = noad.children[1].next_skoarpuscle;
+
+                noad.performer = {
+                    | m, nav |
+                    op.performer(m, nav, r_value);
+                };
+            },
+
+        );
         ^dict;
     }
 

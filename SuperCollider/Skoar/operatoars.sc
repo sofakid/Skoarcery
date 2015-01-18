@@ -114,7 +114,6 @@ SkoarOps {
     assign {
         | minstrel, v, settable |
         var f = this.lookup(assignment, settable, v);
-        var koar = minstrel.koar;
         ^minstrel.fairy.impress(f.(minstrel, v, settable));
     }
 

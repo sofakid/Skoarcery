@@ -18,7 +18,7 @@ branch*            : optional_voice phrases Newline
 +optional_voice    : Voice | <e>
 
 +phrases           : phrasey phrases | <e>
-+phrasey           : Comment | marker | Meter | stmt | dal_goto | beat
++phrasey           : Comment | marker | Meter | expr | dal_goto | beat
 
 skoarpion          : SkoarpionStart skrp_sig SkoarpionSep skrp_suffix
 skrp_sig           : args | SymbolName optional_args | <e>
@@ -35,7 +35,7 @@ args_suffix        : args_entries ListE
 
 listy*             : ListS listy_suffix
 +listy_suffix      : listy_entries ListE | ListE
-+listy_entries     : skoaroid moar_listy_entries
++listy_entries     : expr moar_listy_entries
 +moar_listy_entries: ListSep listy_entries | Newline | <e>
 
 marker*            : Segno | Fine | coda | Volta | Bars
@@ -58,18 +58,18 @@ nouny*           : cthulhu | conditional | loop | nouny_literal | musical_keywor
 deref*           : Deref deref_prime
 +deref_prime     : MsgNameWithArgs listy_suffix | MsgName
 
-stmt*            : skoaroid stmt_prime
-+stmt_prime      : assignment stmt_prime | math | <e>
+expr*            : msgable expr_prime
+expr_prime       : assignment expr_prime | math expr_prime | <e>
 
-math             : MathOp skoaroid stmt_prime
+math             : MathOp msgable
 assignment*      : AssOp settable
 +settable        : Caesura | Symbol | listy | Quarters | Eighths | Fairy
 
-skoaroid*        : nouny msg_chain_node
+msgable*         : nouny msg_chain_node
 +msg_chain_node  : MsgOp msg msg_chain_node | <e>
 msg*             : MsgNameWithArgs listy_suffix | MsgName | listy | loop
 
-boolean*         : skoaroid BooleanOp skoaroid
+boolean*         : expr BooleanOp expr
 cthulhu*         : LWing Semicolon cthulhu_prime
 +cthulhu_prime   : boolean Semicolon RWing | Nosey Semicolon RWing
 

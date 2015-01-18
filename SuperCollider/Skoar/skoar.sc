@@ -3,6 +3,8 @@
 // =====
 Skoar {
 
+    classvar <ops;      // operations tables object
+
     var   skoarse;      // the skoarse code
     var   parser;       // the parser
     var  <tree;         // root of tree
@@ -10,7 +12,10 @@ Skoar {
     var  <voices;       // all the voices
     var  <all_voice;    // the all voice
     var  <skoarpions;   // all the skoarpions
-    var  <ops;          // operations tables object
+
+    *initClass {
+        ops = SkoarOps.new;
+    }
 
     *new {
         | code |

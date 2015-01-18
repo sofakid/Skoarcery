@@ -1,6 +1,8 @@
-// ===========
-// Value types
-// ===========
+// Skoarpuscles are the closest thing we have to "types".
+//
+// They represent value types, as well as most things that
+// can be spoken of as things, like a statement, boolean expression, etc.
+//
 Skoarpuscle {
 
     var <>val;
@@ -67,6 +69,7 @@ Skoarpuscle {
 }
 
 SkoarpuscleUnknown : Skoarpuscle {
+
 }
 
 SkoarpuscleInt : Skoarpuscle {
@@ -224,15 +227,29 @@ SkoarpuscleMathOp : Skoarpuscle {
 
         f = switch (val)
             {"+"}  {{
-                | a, b |
-                a + b
+                | minstrel, a, b |
+                Skoar.ops.add(minstrel, a, b);
             }}
+
+            {"mul"}  {{
+                | minstrel, a, b |
+                Skoar.ops.multiply(minstrel, a, b);
+            }}
+
             {"-"}  {{
-                | a, b |
-                a - b
+                | minstrel, a, b |
+                // todo minstrel.skoar.ops.sub(minstrel, a, b);
             }};
     }
 
+    performer {
+        | m, nav, r_val |
+
+        var x = m.fairy.impression;
+
+        f.(m, x, r_val);
+
+    }
 
 }
 
@@ -315,7 +332,7 @@ SkoarpuscleBoolean : Skoarpuscle {
 
     init {
         | noad |
-        // a and b are skoaroids
+        // a and b are exprs
         a = noad.children[0];
         op = noad.children[1].next_skoarpuscle;
         b = noad.children[2];
@@ -610,6 +627,7 @@ SkoarpuscleBars : Skoarpuscle {
     performer {
         | m, nav |
 
+        // :|
         if (pre_repeat == true) {
             var burned = m.koar.state_at(\colons_burned);
 
@@ -620,6 +638,7 @@ SkoarpuscleBars : Skoarpuscle {
 
         };
 
+        // |:
         if (post_repeat == true) {
             m.koar.state_put(\colon_seen, noad);
         };
