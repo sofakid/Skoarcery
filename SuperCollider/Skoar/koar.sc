@@ -197,13 +197,18 @@ SkoarKoar {
 
                 subtree.inorder_from_here(
                     here,
+
                     {   | x |
-                        x.perform(minstrel, nav, stinger); },
+                        x.enter_noad(minstrel, nav, stinger); },
+
+                    {   | x |
+                        x.exit_noad(minstrel, nav); },
+
                     stinger);
 
                 // our metaphorical throws look like this,
                 // you'll also find them in the navigational
-                // skoarpuscles' performers. (segno, bars, etc..)
+                // skoarpuscles' on_enters. (segno, bars, etc..)
                 nav.(\nav_done);
             };
 

@@ -4,18 +4,16 @@
 // ==========================
 SkoarNoad {
 
-    var  address;         // a list code to find the noad quickly
+    var   address;         // a list code to find the noad quickly
     var <>parent;          // the parent noad
     var <>children;        // a list of child noads
-
-    var <>evaluate;        // pass functions between skoarmantic levels here
-    var <>setter;          // pass functions between skoarmantic levels here
 
     var <>name;            // name of the nonterminal
     var <>skoarpuscle;     // skoarpuscle types go here
     var <>toke;
 
-    var <>performer;       // function to set when defining semantics.
+    var <>on_enter;
+    var <>on_exit;
     var <>one_shots;       // function to set for stuff that applies for one beat.
 
     var <>voice;           // what voice to use
@@ -175,42 +173,44 @@ SkoarNoad {
     }
 
     inorder {
-        | f, stinger=nil |
+        | f_enter, f_exit, stinger=nil |
 
         //debug(">>> inorder: " ++ name);
         if (stinger.notNil and: skoarpuscle.isKindOf(SkoarpuscleBeat)) {
             //debug("!!! stinger: " ++ stinger.asString);
-            stinger.inorder(f);
+            stinger.inorder(f_enter, f_exit);
         };
 
-        f.(this);
+        f_enter.(this);
 
         children.do {
             | y |
-            y.inorder(f, stinger);
+            y.inorder(f_enter, f_exit, stinger);
         };
+
+        f_exit.(this);
 
         //debug("<<< inorder: " ++ name);
     }
 
     // debug here if it's crashing while performing the skoar
     inorder_from_here {
-        | here, f, stinger |
+        | here, f_enter, f_exit, stinger |
         var j = here.pop;
         var n = children.size - 1;
 
         //debug("inorder_from_here: j:" ++ j ++ " " ++ name);
 
         if (j.isNil) {
-            this.inorder(f, stinger);
+            this.inorder(f_enter, f_exit, stinger);
         } {
-            children[j].inorder_from_here(here, f, stinger);
+            children[j].inorder_from_here(here, f_enter, f_exit, stinger);
 
             j = j + 1;
             if (j <= n) {
                 for (j, n, {
                     | k |
-                    children[k].inorder(f, stinger);
+                    children[k].inorder(f_enter, f_exit, stinger);
                 });
             };
         };
@@ -252,11 +252,19 @@ SkoarNoad {
     // -------------------
     // performing the tree
     // -------------------
-    perform {
+    enter_noad {
         | minstrel, nav, stinger=nil |
 
-        if (performer.notNil) {
-            performer.(minstrel, nav, stinger);
+        if (on_enter.notNil) {
+            on_enter.(minstrel, nav, stinger);
+        };
+    }
+
+    exit_noad {
+        | minstrel, nav |
+
+        if (on_exit.notNil) {
+            on_exit.(minstrel, nav);
         };
     }
 

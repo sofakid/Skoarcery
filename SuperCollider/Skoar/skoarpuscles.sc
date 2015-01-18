@@ -10,7 +10,8 @@ Skoarpuscle {
     *new { | v | ^super.new.init(v); }
     init { | v | val = v; }
 
-    performer { | m, nav, stinger=nil | }
+    on_enter { | m, nav, stinger=nil | }
+    on_exit  { | m, nav | }
 
     flatten { | m | ^val; }
 
@@ -79,7 +80,7 @@ SkoarpuscleInt : Skoarpuscle {
         ^val.asInteger;
     }
 
-    performer {
+    on_enter {
         | m, nav |
         var k = if (val > 30) {\freq} {\degree};
         m.koar[k] = val;
@@ -96,7 +97,7 @@ SkoarpuscleFloat : Skoarpuscle {
         ^val.asFloat;
     }
 
-    performer {
+    on_enter {
         | m, nav |
         var k = if (val > 30) {\freq} {\degree};
         m.koar[k] = val;
@@ -107,7 +108,7 @@ SkoarpuscleFloat : Skoarpuscle {
 
 SkoarpuscleString : Skoarpuscle {
 
-    performer {
+    on_enter {
         | m, nav |
         m.fairy.impress(this);
     }
@@ -115,13 +116,13 @@ SkoarpuscleString : Skoarpuscle {
 
 SkoarpuscleSymbolName : Skoarpuscle {
 
-    performer {
+    on_enter {
     }
 }
 
 SkoarpuscleSymbol : Skoarpuscle {
 
-    performer {
+    on_enter {
         | m, nav |
         m.fairy.impress(this);
     }
@@ -168,11 +169,11 @@ SkoarpuscleDeref : Skoarpuscle {
         ^x;
     }
 
-    performer {
+    on_enter {
         | m, nav |
         var x = this.lookup(m);
 
-        "deref:performer: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+        "deref:on_enter: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
         x = Skoarpuscle.wrap(x);
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
@@ -185,7 +186,7 @@ SkoarpuscleDeref : Skoarpuscle {
 
             m.koar.do_skoarpion(x.val, m, nav, msg_arr, args);
         } {
-            x.performer(m, nav);
+            x.on_enter(m, nav);
         };
     }
 
@@ -242,7 +243,7 @@ SkoarpuscleMathOp : Skoarpuscle {
             }};
     }
 
-    performer {
+    on_enter {
         | m, nav, r_val |
 
         var x = m.fairy.impression;
@@ -303,9 +304,15 @@ SkoarpuscleBooleanOp : Skoarpuscle {
     }
 
     compare {
-        | a, b, m |
-        var x = a.evaluate.(m);
-        var y = b.evaluate.(m);
+        | a, b, m, nav |
+        var x;
+        var y;
+
+        a.on_enter(m, nav);
+        x = m.fairy.impression;
+
+        b.on_enter(m, nav);
+        y = m.fairy.impression;
 
         if (x.isKindOf(Skoarpuscle)) {
             debug(x);
@@ -341,8 +348,8 @@ SkoarpuscleBoolean : Skoarpuscle {
     }
 
     evaluate {
-        | m |
-        ^op.compare(a, b, m);
+        | m, nav |
+        ^op.compare(a, b, m, nav);
     }
 
 }
@@ -380,7 +387,7 @@ SkoarpuscleConditional : Skoarpuscle {
 
     }
 
-    performer {
+    on_enter {
         | m, nav |
 
         ifs.do {
@@ -390,7 +397,7 @@ SkoarpuscleConditional : Skoarpuscle {
             var e = x[2];
 
             m.koar.do_skoarpion(
-                if (c.evaluate(m) == true) {i} {e},
+                if (c.evaluate(m, nav) == true) {i} {e},
                 m, nav, [\inline], nil
             );
         };
@@ -408,7 +415,7 @@ SkoarpuscleSkoarpion : Skoarpuscle {
         ^this;
     }
 
-    performer {
+    on_enter {
         | m, nav |
         if (val.name.notNil) {
             m.koar[val.name] = this;
@@ -450,7 +457,7 @@ SkoarpuscleLoop : Skoarpuscle {
         each = nil;
     }
 
-    performer {
+    on_enter {
         | m, nav |
         var i = 0;
 
@@ -464,7 +471,7 @@ SkoarpuscleLoop : Skoarpuscle {
 
                     // this is how we foreach
                     if (element.notNil) {
-                        element.performer(m, nav);
+                        element.on_enter(m, nav);
                     };
 
                     m.koar.do_skoarpion(body, m, nav, [\inline]);
@@ -549,7 +556,7 @@ SkoarpuscleArray : Skoarpuscle {
         ^Skoarpuscle.wrap(ret);
     }
 
-    performer {
+    on_enter {
         | m, nav |
         var x = this.flatten(m);
         m.fairy.impress(x);
@@ -560,7 +567,7 @@ SkoarpuscleArray : Skoarpuscle {
 
 SkoarpuscleArgs : SkoarpuscleArray {
 
-    performer {
+    on_enter {
         | m, nav |
     }
 
@@ -582,7 +589,7 @@ SkoarpuscleMsg : Skoarpuscle {
         args = a;
     }
 
-    performer {
+    on_enter {
         | m, nav |
         //val.postln;
     }
@@ -624,7 +631,7 @@ SkoarpuscleBars : Skoarpuscle {
         post_repeat = val.endsWith(":");
     }
 
-    performer {
+    on_enter {
         | m, nav |
 
         // :|
@@ -647,7 +654,7 @@ SkoarpuscleBars : Skoarpuscle {
 
 SkoarpuscleFine : Skoarpuscle {
 
-    performer {
+    on_enter {
         | m, nav |
         if (m.koar.state_at(\al_fine) == true) {
             debug("fine");
@@ -681,7 +688,7 @@ SkoarpuscleSegno : Skoarpuscle {
         val = s[1..n].asSymbol;
     }
 
-    performer {
+    on_enter {
         | m, nav |
         m.koar.state_put(\segno_seen, noad);
     }
@@ -710,7 +717,7 @@ SkoarpuscleGoto : Skoarpuscle {
         };
     }
 
-    performer {
+    on_enter {
         | m, nav |
         if (al_fine == true) {
             m.koar.state_put(\al_fine, true);
@@ -738,7 +745,7 @@ SkoarpuscleVolta : Skoarpuscle {
         noad = nod;
     }
 
-    performer {
+    on_enter {
         | m, nav |
     }
 
@@ -797,7 +804,7 @@ SkoarpuscleDynamic : Skoarpuscle {
         ^val/8;
     }
 
-    performer {
+    on_enter {
         | m, nav |
         m.koar[\amp] = this.amp;
     }
@@ -825,7 +832,7 @@ SkoarpuscleOctaveShift : Skoarpuscle {
                    {toke.isKindOf(Toke_QuindicesimaB)} {-2};
     }
 
-    performer {
+    on_enter {
         | m, nav |
         var octave = m.koar[\octave] ?? 5;
         m.koar[\octave] = octave + val;

@@ -53,7 +53,7 @@ SkoarpuscleNoat : Skoarpuscle {
 
     flatten {^val;}
 
-    performer {
+    on_enter {
         | m, nav |
         m.koar[\degree] = val;
         m.fairy.impress(this);
@@ -66,7 +66,7 @@ SkoarpuscleChoard : Skoarpuscle {
 
     flatten {^this;}
 
-    performer {
+    on_enter {
         | m, nav |
         m.fairy.impress(this);
     }

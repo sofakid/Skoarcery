@@ -263,9 +263,9 @@ Skoarmantics {
                 | skoar, noad |
                 var x = noad.next_skoarpuscle;
                 noad.skoarpuscle = x;
-                noad.performer = {
+                noad.on_enter = {
                     | m, nav |
-                    x.performer(m, nav);
+                    x.on_enter(m, nav);
                 };
                 noad.children = [];
             },
@@ -299,24 +299,24 @@ Skoarmantics {
                 | skoar, noad |
                 var x = noad.next_skoarpuscle;
 
-                noad.performer = {
+                noad.on_enter = {
                     | m, nav |
-                    x.performer(m, nav);
+                    x.on_enter(m, nav);
                 };
             },
 
             cthulhu: {
                 | skoar, noad |
-                noad.performer = {skoar.cthulhu(noad);};
+                noad.on_enter = {skoar.cthulhu(noad);};
             },
 
             dynamic: {
                 | skoar, noad |
                 var x = noad.next_skoarpuscle;
 
-                noad.performer = {
+                noad.on_enter = {
                     | m, nav |
-                    x.performer(m, nav);
+                    x.on_enter(m, nav);
                 };
             },
 
@@ -324,9 +324,9 @@ Skoarmantics {
                 | skoar, noad |
                 var x = SkoarpuscleGoto(noad);
 
-                noad.performer = {
+                noad.on_enter = {
                     | m, nav |
-                    x.performer(m, nav);
+                    x.on_enter(m, nav);
                 };
             },
 
@@ -336,9 +336,9 @@ Skoarmantics {
                 var x = noad.next_skoarpuscle;
 
                 if (x.notNil) {
-                    noad.performer = {
+                    noad.on_enter = {
                         | m, nav |
-                        x.performer(m, nav);
+                        x.on_enter(m, nav);
                     };
 
                     if (x.isKindOf(SkoarpuscleBars)) {
@@ -405,68 +405,54 @@ Skoarmantics {
                 noad.children = [];
             },
 
+            // at the end of an expression, this one
+            // will exist with no children (it parsed <empty>)
             expr: {
                 | skoar, noad |
-                var msgable = noad.children[0];
 
-                noad.performer = {
+                noad.on_exit = {
                     | m, nav |
-                    var res;
-                    //"evaluating messages...".postln;
-                    res = msgable.evaluate.(m);
-
-                    m.fairy.impress(res);
-                    //"performing result".postln; res.asString.postln;
-                    res.performer(m, nav);
-
+                    m.fairy.impression.on_enter(m, nav);
+                    m.fairy.impression.on_exit(m, nav);
                 };
             },
 
             msgable: {
                 | skoar, noad |
-                var kids = List[];
+                var noads = List[];
 
                 // strip out the msg operators
                 noad.children.do {
                     | x |
                     if (x.toke.isKindOf(Toke_MsgOp) == false) {
-                        kids.add(x);
+                        noads.add(x);
                     };
                 };
 
-                noad.children = kids.asArray;
-                kids = noad.children;
+                noad.children = noads.asArray;
+                noads = noad.children;
 
                 // evaluate a chain of messages, returning the result
-                noad.evaluate = {
-                    | minstrel |
-                    var result = kids[0].next_skoarpuscle;
+                noad.on_enter = {
+                    | m, nav |
+                    var result = noads[0].next_skoarpuscle;
 
                     if (result.notNil) {
-                        kids.do {
+                        noads.do {
                             | y |
                             var x = y.skoarpuscle;
                             case {x.isKindOf(SkoarpuscleMsg)} {
-                                result = result.skoar_msg(x, minstrel);
+                                result = result.skoar_msg(x, m);
 
                             } {x.isKindOf(SkoarpuscleLoopMsg)} {
                                 result = x.val.foreach(result);
                             };
                         };
 
-                        //"result: ".post; result.postln;
-                        result
-                    } {
-                        var x = noad.next_skoarpuscle;
+                        "result: ".post; result.postln;
+                        m.fairy.impress(result);
+                    };
 
-                        if (x.notNil) {
-                            x
-                        } {
-                            "no evaluation.".postln; noad.dump;
-                            noad //- i don't like this
-                            //nil
-                        }
-                    }
                 };
             },
 
@@ -478,7 +464,7 @@ Skoarmantics {
                 op = noad.children[0].toke.lexeme;
                 settable = noad.children[1].next_skoarpuscle;
 
-                noad.performer = switch (op)
+                noad.on_enter = switch (op)
                     {"+>"} {{
                         | m, nav |
                         var x = m.fairy.impression;
@@ -500,16 +486,24 @@ Skoarmantics {
 
             math: {
                 | skoar, noad |
-                var op = nil;
-                var r_value = nil;
+                var op;
+                var r_value;
+                var result;
 
                 op = noad.children[0].skoarpuscle;
                 r_value = noad.children[1].next_skoarpuscle;
 
-                noad.performer = {
+                noad.on_enter = {
                     | m, nav |
-                    op.performer(m, nav, r_value);
+                    op.on_enter(m, nav, r_value);
+                    result = m.fairy.impression;
                 };
+
+                noad.on_exit = {
+                    | m, nav |
+                    m.fairy.impress(result);
+                };
+
             },
 
         );

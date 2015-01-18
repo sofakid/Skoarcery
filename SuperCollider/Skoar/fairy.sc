@@ -47,7 +47,7 @@ SkoarpuscleFairy : Skoarpuscle {
         ^x;
     }
 
-    performer {
+    on_enter {
         | m, nav |
         var x = m.fairy.impression;
 

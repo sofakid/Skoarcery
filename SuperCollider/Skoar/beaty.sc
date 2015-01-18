@@ -72,7 +72,7 @@ SkoarpuscleBeat : Skoarpuscle {
 
     }
 
-    performer {
+    on_enter {
         | m, nav |
         // create an event with everything we've collected up until now
         var e = m.koar.event;
@@ -103,7 +103,7 @@ SkoarpuscleRest : SkoarpuscleBeat {
 
     }
 
-    performer {
+    on_enter {
         | m, nav |
         var e = (\dur: val, \isRest: true);
 
