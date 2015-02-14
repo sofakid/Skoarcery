@@ -537,15 +537,16 @@ SkoarpuscleExpr : Skoarpuscle {
         | m, nav |
 
         var last_op;
+        var imp;
         var inorder = {
             | f |
 
             f.(this);
 
-            children.do {
-                | y |
-                y.inorder.(f);
-            };
+            //children.do {
+            //    | y |
+            //    y.inorder.(f);
+            //};
 
             //debug("<<< inorder: " ++ name);
 
@@ -553,15 +554,18 @@ SkoarpuscleExpr : Skoarpuscle {
 
 "EXPR:".postln;
 
-        noad.inorder({
-            | x |
-            x.name.postln;
-            x.enter_noad(m, nav);
+        //noad.inorder({
+        //    | x |
+        //    x.name.postln;
+        //    x.enter_noad(m, nav);
+        //
+        //});
 
-        });
 
-
-        m.fairy.impression.on_enter(m, nav);
+        imp = m.fairy.impression;
+        if (imp.notNil) {
+            imp.on_enter(m, nav);
+        };
 
     }
 }
