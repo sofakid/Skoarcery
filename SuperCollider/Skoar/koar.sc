@@ -201,9 +201,6 @@ SkoarKoar {
                     {   | x |
                         x.enter_noad(minstrel, nav, stinger); },
 
-                    {   | x |
-                        x.exit_noad(minstrel, nav); },
-
                     stinger);
 
                 // our metaphorical throws look like this,

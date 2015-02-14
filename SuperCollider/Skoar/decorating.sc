@@ -274,9 +274,19 @@ Skoarmantics {
                 | skoar, noad |
 
                 // collecting skoarpuscles isn't enough.
-                // there can be statements.
+                // there can be expressions.
+                var list = List[];
 
-                noad.skoarpuscle = SkoarpuscleArray(noad.collect_skoarpuscles);
+                noad.children.do {
+                    | x |
+
+                    if (x.skoarpuscle.isKindOf(Skoarpuscle)) {
+                        list = list.add(x.skoarpuscle);
+                    };
+
+                };
+
+                noad.skoarpuscle = SkoarpuscleArray(list.asArray);
                 noad.children = [];
             },
 
@@ -405,16 +415,18 @@ Skoarmantics {
                 noad.children = [];
             },
 
-            // at the end of an expression, this one
-            // will exist with no children (it parsed <empty>)
             expr: {
                 | skoar, noad |
 
-                noad.on_exit = {
+                var skoarpuscle = SkoarpuscleExpr(noad);
+                noad.skoarpuscle = skoarpuscle;
+                noad.children = [];
+
+                noad.on_enter = {
                     | m, nav |
-                    m.fairy.impression.on_enter(m, nav);
-                    m.fairy.impression.on_exit(m, nav);
+                    skoarpuscle.on_enter(m, nav);
                 };
+
             },
 
             msgable: {
@@ -497,11 +509,6 @@ Skoarmantics {
                     | m, nav |
                     op.on_enter(m, nav, r_value);
                     result = m.fairy.impression;
-                };
-
-                noad.on_exit = {
-                    | m, nav |
-                    m.fairy.impress(result);
                 };
 
             },

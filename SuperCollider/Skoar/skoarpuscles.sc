@@ -11,7 +11,6 @@ Skoarpuscle {
     init { | v | val = v; }
 
     on_enter { | m, nav, stinger=nil | }
-    on_exit  { | m, nav | }
 
     flatten { | m | ^val; }
 
@@ -519,6 +518,53 @@ SkoarpuscleLoopMsg : Skoarpuscle {
 
 }
 
+SkoarpuscleExpr : Skoarpuscle {
+
+    var <subtree;
+
+    init {
+        | noad |
+        val = noad;
+        subtree = noad.children;
+    }
+
+    flatten {
+        | m |
+        ^m.fairy.impression.flatten(m);
+    }
+
+    on_enter {
+        | m, nav |
+
+        var last_op;
+        var inorder = {
+            | f |
+
+            f.(this);
+
+            children.do {
+                | y |
+                y.inorder.(f);
+            };
+
+            //debug("<<< inorder: " ++ name);
+
+        };
+
+"EXPR:".postln;
+
+        noad.inorder({
+            | x |
+            x.name.postln;
+            x.enter_noad(m, nav);
+
+        });
+
+
+        m.fairy.impression.on_enter(m, nav);
+
+    }
+}
 
 SkoarpuscleArray : Skoarpuscle {
 
