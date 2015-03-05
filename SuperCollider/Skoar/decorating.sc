@@ -417,16 +417,14 @@ Skoarmantics {
 
             expr: {
                 | skoar, noad |
-
-                var skoarpuscle = SkoarpuscleExpr(noad);
-                noad.skoarpuscle = skoarpuscle;
-                noad.children = [];
-
-                noad.on_enter = {
+                // we insert a node at the end of the expression
+                // so we can impress the result
+                var end_noad = SkoarNoad(\expr_end, noad);
+                end_noad.on_enter = {
                     | m, nav |
-                    skoarpuscle.on_enter(m, nav);
+                    m.fairy.impress_arcane_magic;
                 };
-
+                noad.add_noad(end_noad);
             },
 
             msgable: {
@@ -491,24 +489,25 @@ Skoarmantics {
 
                     {"=>"} {{
                         | m, nav |
-                        var x = m.fairy.impression;
+                        var x = m.fairy.impress_arcane_magic;
                         Skoar.ops.assign(m, x, settable);
                     }};
             },
 
             math: {
                 | skoar, noad |
-                var op;
-                var r_value;
-                var result;
-
-                op = noad.children[0].skoarpuscle;
-                r_value = noad.children[1].next_skoarpuscle;
+                var op = noad.children[0].skoarpuscle;
 
                 noad.on_enter = {
                     | m, nav |
-                    op.on_enter(m, nav, r_value);
-                    result = m.fairy.impression;
+                    var left = m.fairy.impression;
+
+                    m.fairy.learn_arcane_magic({
+                        var right = m.fairy.impression;
+                        op.calculate(m, nav, left, right);
+                        m.fairy.impression
+                    });
+
                 };
 
             },

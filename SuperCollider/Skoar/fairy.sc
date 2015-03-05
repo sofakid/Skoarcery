@@ -3,6 +3,7 @@ SkoarFairy {
     var <name;
     var <minstrel;
     var <impression;
+    var magic;
 
     *new {
         | nom, m |
@@ -15,6 +16,14 @@ SkoarFairy {
         name = nom;
         minstrel = m;
         impression = nil; // todo
+        this.reset_magic;
+    }
+
+    reset_magic {
+        magic = {
+            "magic".post;
+            "magic"
+        };
     }
 
     impress {
@@ -24,6 +33,28 @@ SkoarFairy {
         ^impression;
     }
 
+    learn_arcane_magic {
+        | spell |
+        var f = magic;
+
+        magic = {
+            f.();
+            spell.()
+        };
+
+    }
+
+    cast_arcane_magic {
+        var x = magic.();
+
+        this.reset_magic;
+
+        ^Skoarpuscle.wrap(x);
+    }
+
+    impress_arcane_magic {
+        ^this.impress(this.cast_arcane_magic);
+    }
 }
 
 SkoarpuscleFairy : Skoarpuscle {

@@ -14,6 +14,11 @@ Skoarpuscle {
 
     flatten { | m | ^val; }
 
+    asString {
+        var s = super.asString ++ ": " ++ val.asString;
+        ^s;
+    }
+
     skoar_msg {
         | msg, minstrel |
         var o = msg.get_msg_arr(minstrel);
@@ -228,6 +233,7 @@ SkoarpuscleMathOp : Skoarpuscle {
         f = switch (val)
             {"+"}  {{
                 | minstrel, a, b |
+                "snoob ".post;
                 Skoar.ops.add(minstrel, a, b);
             }}
 
@@ -242,13 +248,11 @@ SkoarpuscleMathOp : Skoarpuscle {
             }};
     }
 
-    on_enter {
-        | m, nav, r_val |
+    calculate {
+        | m, nav, left, right |
 
-        var x = m.fairy.impression;
-
-        f.(m, x, r_val);
-
+        // the result is impressed by the operation
+        f.(m, left, right);
     }
 
 }
@@ -518,55 +522,11 @@ SkoarpuscleLoopMsg : Skoarpuscle {
 
 }
 
-SkoarpuscleExpr : Skoarpuscle {
-
-    var <subtree;
-
-    init {
-        | noad |
-        val = noad;
-        subtree = noad.children;
-    }
-
-    flatten {
-        | m |
-        ^m.fairy.impression.flatten(m);
-    }
+SkoarpuscleExprEnd : Skoarpuscle {
 
     on_enter {
         | m, nav |
-
-        var last_op;
-        var imp;
-        var inorder = {
-            | f |
-
-            f.(this);
-
-            //children.do {
-            //    | y |
-            //    y.inorder.(f);
-            //};
-
-            //debug("<<< inorder: " ++ name);
-
-        };
-
-"EXPR:".postln;
-
-        //noad.inorder({
-        //    | x |
-        //    x.name.postln;
-        //    x.enter_noad(m, nav);
-        //
-        //});
-
-
-        imp = m.fairy.impression;
-        if (imp.notNil) {
-            imp.on_enter(m, nav);
-        };
-
+        m.fairy.impress_arcane_magic;
     }
 }
 

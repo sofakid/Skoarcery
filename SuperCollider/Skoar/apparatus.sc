@@ -95,14 +95,14 @@ SkoarNoad {
     // ----------------
     add_noad {
         | noad |
-        children.add(noad);
+        children = children.add(noad);
     }
 
     add_toke {
         | name, t |
         var x = SkoarNoad(t.class.name, this);
         x.toke = t;
-        children.add(x);
+        children = children.add(x);
     }
 
     // ----------------

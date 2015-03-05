@@ -3,7 +3,7 @@ SkoarTest : UnitTest {
     *report {
         super.report;
         Post.nl;
-		if(failures.size > 0) {
+		if (failures.size > 0) {
 			"SKOAR FAIL".inform;
         } {
 			"SKOAR PASS".inform;

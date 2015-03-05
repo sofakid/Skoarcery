@@ -114,6 +114,7 @@ SkoarOps {
     assign {
         | minstrel, v, settable |
         var f = this.lookup(assignment, settable, v);
+        "assign ".post; v.postln;
         ^minstrel.fairy.impress(f.(minstrel, v, settable));
     }
 
@@ -121,13 +122,15 @@ SkoarOps {
     add {
         | minstrel, x, y |
         var f = this.lookup(addition, x, y);
+        "snerp".postln;
         ^minstrel.fairy.impress(f.(x, y));
     }
 
-    // x + y
+    // x by y
     multiply {
         | minstrel, x, y |
         var f = this.lookup(multiplication, x, y);
+        "x by y".postln;
         ^minstrel.fairy.impress(f.(x, y));
     }
 
