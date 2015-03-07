@@ -29,7 +29,11 @@ Skoarpuscle {
 
     *wrap {
         | x |
-        case {x.isKindOf(Skoarpuscle)} {
+        case {x.isNil} {
+            "x nil".postln;
+            ^SkoarpuscleCrap();
+
+        } {x.isKindOf(Skoarpuscle)} {
             "already wrapped".postln;
             ^x;
 
@@ -75,6 +79,17 @@ Skoarpuscle {
 
 SkoarpuscleUnknown : Skoarpuscle {
 
+}
+
+// we don't have null, null is crap.
+// Is the value any good? no, it's crap.
+// What did we get back? oh, crap.
+SkoarpuscleCrap : Skoarpuscle {
+    asString {"crap"}
+
+    // these aren't doing nothing, they are returning this crap
+    skoar_msg {}
+    flatten {}
 }
 
 SkoarpuscleInt : Skoarpuscle {
@@ -237,7 +252,7 @@ SkoarpuscleMathOp : Skoarpuscle {
                 Skoar.ops.add(minstrel, a, b);
             }}
 
-            {"mul"}  {{
+            {"x"}  {{
                 | minstrel, a, b |
                 Skoar.ops.multiply(minstrel, a, b);
             }}
@@ -526,7 +541,7 @@ SkoarpuscleExprEnd : Skoarpuscle {
 
     on_enter {
         | m, nav |
-        m.fairy.impress_arcane_magic;
+        m.fairy.cast_arcane_magic;
     }
 }
 

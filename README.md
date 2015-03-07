@@ -185,7 +185,7 @@ But we can use lists of noats:
 
     <_a,c,e> )  <_a,c#,e> )
 
-# octaving
+# changing the octave
 
     <? up one octave ?>    <? down one ?>
     ~o                     o~

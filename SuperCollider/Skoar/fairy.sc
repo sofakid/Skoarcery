@@ -16,14 +16,7 @@ SkoarFairy {
         name = nom;
         minstrel = m;
         impression = nil; // todo
-        this.reset_magic;
-    }
-
-    reset_magic {
-        magic = {
-            "magic".post;
-            "magic"
-        };
+        magic = nil;
     }
 
     impress {
@@ -33,28 +26,29 @@ SkoarFairy {
         ^impression;
     }
 
-    learn_arcane_magic {
+    charge_arcane_magic {
         | spell |
         var f = magic;
 
         magic = {
-            f.();
-            spell.()
+            var x;
+            if (f.notNil) {
+                "ARCANE-alpha".postln;
+                f.();
+            };
+            "ARCANE-omega".postln;
+            this.impress(spell.());
         };
-
     }
 
     cast_arcane_magic {
-        var x = magic.();
-
-        this.reset_magic;
-
-        ^Skoarpuscle.wrap(x);
+        if (magic.notNil) {
+            magic.();
+            magic = nil;
+        };
+        ^this.impression;
     }
 
-    impress_arcane_magic {
-        ^this.impress(this.cast_arcane_magic);
-    }
 }
 
 SkoarpuscleFairy : Skoarpuscle {
