@@ -16,6 +16,12 @@ SkoarTokeInspector {
                 noad.toke = nil;
             },
 
+            Toke_Freq: {
+                | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleFreq(toke.lexeme);
+                noad.toke = nil;
+            },
+
             Toke_Int: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleInt(toke.lexeme.asInteger);
@@ -426,12 +432,6 @@ Skoarmantics {
                 };
 
                 noad.add_noad(end_noad);
-                //noad.on_enter = {
-                //    | m, nav |
-                //    var x = m.fairy.impression;
-                //    "bleep ".post; x.postln;
-                //    m.fairy.charge_arcane_magic({x});
-                //};
             },
 
             msgable: {
@@ -511,7 +511,6 @@ Skoarmantics {
 
                     m.fairy.charge_arcane_magic({
                         var right = m.fairy.impression;
-                        ("ARCANE: " ++ left.asString ++ op.val ++ right.asString).postln;
                         op.calculate(m, nav, left, right);
                         m.fairy.impression
                     });

@@ -53,9 +53,14 @@ SkoarpuscleNoat : Skoarpuscle {
 
     flatten {^val;}
 
+    isNoatworthy { ^true; }
+
+    asNoat {
+        ^SkoarNoat_Degree(val);
+    }
+
     on_enter {
         | m, nav |
-        m.koar[\degree] = val;
         m.fairy.impress(this);
     }
 
@@ -71,4 +76,38 @@ SkoarpuscleChoard : Skoarpuscle {
         m.fairy.impress(this);
     }
 
+}
+
+SkoarNoat {
+    var <key;
+    var <val;
+
+    *new {
+        | x |
+        ^super.new.init(x);
+    }
+
+    execute {
+        | minstrel |
+        "sss: ".post; key.post; val.postln;
+        minstrel.koar[key] = val;
+    }
+}
+
+SkoarNoat_Freq : SkoarNoat {
+
+    init {
+        | x |
+        key = \freq;
+        val = x;
+    }
+}
+
+SkoarNoat_Degree : SkoarNoat {
+
+    init {
+        | x |
+        key = \degree;
+        val = x;
+    }
 }

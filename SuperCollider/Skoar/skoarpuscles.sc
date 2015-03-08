@@ -12,6 +12,10 @@ Skoarpuscle {
 
     on_enter { | m, nav, stinger=nil | }
 
+    // override and implement .asNoat;
+    isNoatworthy { ^false; }
+    asNoat {SkoarError("asNoat called on " ++ this.class.asString ++ ", which is not noatworthy.").throw;}
+
     flatten { | m | ^val; }
 
     asString {
@@ -94,6 +98,12 @@ SkoarpuscleCrap : Skoarpuscle {
 
 SkoarpuscleInt : Skoarpuscle {
 
+    isNoatworthy { ^true; }
+
+    asNoat {
+        ^SkoarNoat_Degree(val.asInteger);
+    }
+
     flatten {
         | m |
         ^val.asInteger;
@@ -101,15 +111,18 @@ SkoarpuscleInt : Skoarpuscle {
 
     on_enter {
         | m, nav |
-        var k = if (val > 30) {\freq} {\degree};
-        m.koar[k] = val;
-
         m.fairy.impress(this);
     }
 
 }
 
 SkoarpuscleFloat : Skoarpuscle {
+
+    isNoatworthy { ^true; }
+
+    asNoat {
+        ^SkoarNoat_Degree(val.asFloat);
+    }
 
     flatten {
         | m |
@@ -118,12 +131,30 @@ SkoarpuscleFloat : Skoarpuscle {
 
     on_enter {
         | m, nav |
-        var k = if (val > 30) {\freq} {\degree};
-        m.koar[k] = val;
-
         m.fairy.impress(this);
     }
 }
+
+SkoarpuscleFreq : Skoarpuscle {
+
+    init {
+        | lexeme |
+        val = lexeme; // todo chop off Hz
+
+    }
+
+    isNoatworthy { ^false; } // todo
+
+    asNoat {
+        ^SkoarNoat_Freq(val.asFloat);
+    }
+
+    on_enter {
+        | m, nav |
+        m.fairy.impress(this);
+    }
+}
+
 
 SkoarpuscleString : Skoarpuscle {
 
@@ -546,6 +577,33 @@ SkoarpuscleExprEnd : Skoarpuscle {
 }
 
 SkoarpuscleArray : Skoarpuscle {
+
+    isNoatworthy {
+
+        val.do {
+            | x |
+            if (x.isNoatworthy == false) {
+                ^false;
+            };
+        };
+
+        ^true;
+    }
+
+    asNoat {
+
+        var n = val.size;
+        var out = Array.newClear(n);
+        var i = -1;
+
+        val.do {
+            | x |
+            i = i + 1;
+            out[i] = x.asNoat;
+        };
+
+        ^out;
+    }
 
     flatten {
         | m |

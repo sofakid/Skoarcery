@@ -26,7 +26,7 @@ SkoarMinstrel {
         koar[\tempo] = 1;
         koar[\amp] = 0.5;
 
-        fairy = SkoarFairy.new;
+        fairy = SkoarFairy("$"++nom, this);
 
         all_voice = skr.all_voice;
 

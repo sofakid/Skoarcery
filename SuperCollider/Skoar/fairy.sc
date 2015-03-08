@@ -2,8 +2,10 @@ SkoarFairy {
 
     var <name;
     var <minstrel;
+    var <noat;
     var <impression;
     var magic;
+
 
     *new {
         | nom, m |
@@ -15,16 +17,33 @@ SkoarFairy {
         | nom, m |
         name = nom;
         minstrel = m;
-        impression = nil; // todo
+        impression = nil;
         magic = nil;
+        noat = SkoarpuscleInt(0);
     }
 
     impress {
         | x |
         ("$:" ++ name ++ ".impression: " ++ x.asString).postln;
-        impression = Skoarpuscle.wrap(x);
+
+        if (x.isKindOf(SkoarpuscleDeref)) {
+            x = x.lookup(minstrel);
+        };
+
+        impression = if (x.isKindOf(Skoarpuscle)) {
+            x
+        } {
+            Skoarpuscle.wrap(x)
+        };
+
+        if (impression.isNoatworthy == true) {
+            noat = impression;
+        };
+
         ^impression;
     }
+
+
 
     charge_arcane_magic {
         | spell |
@@ -33,10 +52,10 @@ SkoarFairy {
         magic = {
             var x;
             if (f.notNil) {
-                "ARCANE-alpha".postln;
+//                "ARCANE-alpha".postln;
                 f.();
             };
-            "ARCANE-omega".postln;
+//            "ARCANE-omega".postln;
             this.impress(spell.());
         };
     }
@@ -84,6 +103,7 @@ SkoarpuscleFairy : Skoarpuscle {
 
     }
 
+
     skoar_msg {
         | msg, minstrel |
         msg_arr = msg.get_msg_arr(minstrel);
@@ -93,4 +113,9 @@ SkoarpuscleFairy : Skoarpuscle {
         ^this;
     }
 
+    //isNoatworthy { ^true; }
+
+    //asNoat {
+        // need a reference to the fairy
+    //}
 }
