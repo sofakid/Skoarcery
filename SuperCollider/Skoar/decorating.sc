@@ -212,6 +212,28 @@ SkoarTokeInspector {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleMathOp(toke);
                 noad.toke = nil;
+            },
+
+            Toke_ListSep: {
+                | skoar, noad, toke |
+                var x = SkoarpuscleListSep.new;
+                noad.skoarpuscle = x;
+                noad.toke = nil;
+                noad.on_enter = {
+                    | m, nav |
+                    x.on_enter(m, nav);
+                };
+            },
+
+            Toke_ListE: {
+                | skoar, noad, toke |
+                var x = SkoarpuscleListEnd.new;
+                noad.skoarpuscle = x;
+                noad.toke = nil;
+                noad.on_enter = {
+                    | m, nav |
+                    x.on_enter(m, nav);
+                };
             }
 
         );
@@ -279,21 +301,14 @@ Skoarmantics {
             listy: {
                 | skoar, noad |
 
-                // collecting skoarpuscles isn't enough.
-                // there can be expressions.
-                var list = List[];
+                var x = SkoarpuscleList(noad);
 
-                noad.children.do {
-                    | x |
-
-                    if (x.skoarpuscle.isKindOf(Skoarpuscle)) {
-                        list = list.add(x.skoarpuscle);
-                    };
-
+                noad.skoarpuscle = x;
+                noad.on_enter = {
+                    | m, nav |
+                    x.on_enter(m, nav);
                 };
 
-                noad.skoarpuscle = SkoarpuscleArray(list.asArray);
-                noad.children = [];
             },
 
             loop: {
@@ -364,7 +379,7 @@ Skoarmantics {
                 };
             },
 
-            nouny: {
+/*            nouny: {
                 | skoar, noad |
 
                 var x = noad.next_skoarpuscle;
@@ -373,7 +388,7 @@ Skoarmantics {
                     noad.skoarpuscle = x;
                     noad.children = [];
                 };
-            },
+            },*/
 
             // deref*         : Deref MsgNameWithArgs listy_suffix
             //                | Deref MsgName
@@ -407,14 +422,14 @@ Skoarmantics {
 
                 msg = noad.next_skoarpuscle;
 
-                case {msg.isKindOf(SkoarpuscleArray)} {
+                case {msg.isKindOf(SkoarpuscleList)} {
                     // i'm not sure what i want this to mean
 
                 } {msg.isKindOf(SkoarpuscleLoop)} {
                     noad.skoarpuscle = SkoarpuscleLoopMsg(msg);
 
                 } {msg.isKindOf(SkoarpuscleMsgName)} {
-                    args = SkoarpuscleArray(noad.collect_skoarpuscles(1));
+                    args = SkoarpuscleList(noad.collect_skoarpuscles(1));
                     noad.skoarpuscle = SkoarpuscleMsg(msg.val, args);
                 };
 
@@ -466,7 +481,7 @@ Skoarmantics {
                             };
                         };
 
-                        "result: ".post; result.postln;
+                        "msgable: ".post; result.postln;
                         m.fairy.impress(result);
                     };
 

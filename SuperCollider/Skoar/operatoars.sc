@@ -19,9 +19,9 @@ SkoarOps {
                 // v
                 Any: {
                     | minstrel, v, symbol |
-                    var x = v.flatten(minstrel);
-                    minstrel.koar[symbol.val] = x;
-                    x
+                    "zrop ".post; v.post; symbol.postln;
+                    minstrel.koar[symbol.val] = v;
+                    v
                 }
 
             ),
@@ -56,7 +56,7 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:   { | x, y | SkoarpuscleInt(x.val + y.val)   },
                 SkoarpuscleFloat: { | x, y | SkoarpuscleFloat(x.val + y.val) },
-                SkoarpuscleArray: { | x, y | SkoarpuscleArray([x] ++ y.val)  }
+                SkoarpuscleList: { | x, y | SkoarpuscleList([x] ++ y.val)  }
 
             ),
 
@@ -66,7 +66,7 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:   { | x, y | SkoarpuscleFloat(x.val + y.val); },
                 SkoarpuscleFloat: { | x, y | SkoarpuscleFloat(x.val + y.val); },
-                SkoarpuscleArray: { | x, y | SkoarpuscleArray([x] ++ y.val);  }
+                SkoarpuscleList: { | x, y | SkoarpuscleList([x] ++ y.val);  }
             )
         );
 

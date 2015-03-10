@@ -18,23 +18,23 @@ TestSkoarSanity : SkoarTest {
 
     setUp {
         // this will wait until the server is booted
-      	//this.bootServer;
+      	//this.bootServer;
         // if the server is already booted it will free all nodes
-      	// and create new allocators, giving you a clean slate
+      	// and create new allocators, giving you a clean slate
     }
 
     tearDown {
         // this will be called after each test
     }
 
-  	//this.assert( 6 == 6, "6 should equal 6");
-  	//this.assertEquals( 9, 9, "9 should equal 9");
-  	//this.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0, 
-  	//	"floating point math should be close to equal");
- 
-  	// will wait until the condition is true
-  	// will be considered a failure after 10 seconds
-  	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
+  	//this.assert( 6 == 6, "6 should equal 6");
+  	//this.assertEquals( 9, 9, "9 should equal 9");
+  	//this.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0,
+  	//	"floating point math should be close to equal");
+
+  	// will wait until the condition is true
+  	// will be considered a failure after 10 seconds
+  	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
 
     test_expectations {
 
@@ -86,7 +86,7 @@ SkoarTests {
 *sanity {
     var qrt = (\dur:1);
     var eth = (\dur:1/2);
-    
+
     ^IdentityDictionary[
 
     \long_beats -> [
@@ -384,18 +384,23 @@ Expectoar {
 
         exp_event.keysValuesDo {
             | ekey, eval |
-            var x, y;
 
-            x = seen_event[ekey];
-            testoar.assert(seen_event.isKindOf(Event), tag ++ "is x an event?");
+            testoar.assert(seen_event.isKindOf(Event), tag ++ "not an event.");
 
             if (seen_event.notNil) {
-                testoar.assert(seen_event[ekey] == eval, tag ++
-                    "seen_event[" ++ ekey ++ "] = " ++ x ++ " == " ++ eval ++ " expected"
+                var seen_val = seen_event[ekey];
+
+                if (seen_val.isKindOf(Skoarpuscle)) {
+                    seen_val = seen_val.val;
+                };
+
+                testoar.assert(seen_val == eval, tag ++
+                    "seen_event[" ++ ekey ++ "] = " ++ seen_val ++ " == " ++ eval ++ " expected"
                 );
             };
         };
     }
+
 
     matches {
         | exp_event, seen_events |

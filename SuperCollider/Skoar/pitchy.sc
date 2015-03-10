@@ -111,3 +111,68 @@ SkoarNoat_Degree : SkoarNoat {
         val = x;
     }
 }
+
+SkoarNoat_DegreeList : SkoarNoat {
+
+    init {
+        | x |
+        key = \degree;
+        val = List.new(x.size());
+
+        x.do {
+            | y |
+
+            case {y.isKindOf(SkoarNoat_Degree)} {
+                val = val.add(y.val);
+
+            } {y.isKindOf(SkoarNoat_Freq)} {
+                val = val.add(y.val.cpsmidi);
+
+            } {y.isKindOf(SkoarNoat_DegreeList)} {
+                y.val.do {
+                    | z |
+                    val = val.add(z);
+                };
+
+            } {y.isKindOf(SkoarNoat_FreqList)} {
+                y.val.do {
+                    | z |
+                    val = val.add(z.cpsmidi);
+                };
+            };
+        };
+    }
+}
+
+SkoarNoat_FreqList : SkoarNoat {
+
+    init {
+        | x |
+        key = \freq;
+        val = List.new(x.size());
+
+        x.do {
+            | y |
+
+            case {y.isKindOf(SkoarNoat_Degree)} {
+                val = val.add(y.val.midicps);
+
+            } {y.isKindOf(SkoarNoat_Freq)} {
+                val = val.add(y.val);
+
+            } {y.isKindOf(SkoarNoat_DegreeList)} {
+                y.val.do {
+                    | z |
+                    val = val.add(z.midicps);
+                };
+
+            } {y.isKindOf(SkoarNoat_FreqList)} {
+                y.val.do {
+                    | z |
+                    val = val.add(z);
+                };
+            };
+
+        };
+    }
+}

@@ -5,6 +5,7 @@ SkoarFairy {
     var <noat;
     var <impression;
     var magic;
+    var <listy_stack;
 
 
     *new {
@@ -20,6 +21,38 @@ SkoarFairy {
         impression = nil;
         magic = nil;
         noat = SkoarpuscleInt(0);
+        listy_stack = [];
+    }
+
+    get_top_listy {
+        var n = listy_stack.size;
+        if (n == 0) {
+            ^nil;
+        };
+        ^listy_stack[n - 1];
+    }
+
+    set_top_listy {
+        | x |
+        var n = listy_stack.size;
+        listy_stack[n - 1] = x;
+    }
+
+    push_listy {
+        listy_stack = listy_stack.add([]);
+    }
+
+    pop_listy {
+        impression = listy_stack.pop;
+    }
+
+    next_listy {
+        var listy = this.get_top_listy;
+
+        if (listy.notNil) {
+            listy = listy.add(impression);
+            this.set_top_listy(listy);
+        };
     }
 
     impress {
@@ -43,8 +76,6 @@ SkoarFairy {
         ^impression;
     }
 
-
-
     charge_arcane_magic {
         | spell |
         var f = magic;
@@ -56,7 +87,10 @@ SkoarFairy {
                 f.();
             };
 //            "ARCANE-omega".postln;
-            this.impress(spell.());
+            x = spell.();
+            if (x.notNil) {
+                this.impress(x);
+            };
         };
     }
 

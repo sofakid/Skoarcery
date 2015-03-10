@@ -115,13 +115,13 @@ SkoarKoar {
         var state = IdentityDictionary.new;
         var projections = IdentityDictionary.new;
 
-        state_stack.add(state);
+        state_stack = state_stack.add(state);
 
         state[\colons_burned] = Dictionary.new;
         state[\al_fine] = false;
         state[\projections] = projections;
 
-        stack.add(IdentityDictionary.new);
+        stack = stack.add(IdentityDictionary.new);
     }
 
     pop_state {

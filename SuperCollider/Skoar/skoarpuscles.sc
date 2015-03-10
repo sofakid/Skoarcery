@@ -71,7 +71,7 @@ Skoarpuscle {
                 a[i] = Skoarpuscle.wrap(el);
             };
 
-            ^SkoarpuscleArray(a);
+            ^SkoarpuscleList(a);
 
         } {
             "x unknown: ".post; x.dump;
@@ -576,7 +576,38 @@ SkoarpuscleExprEnd : Skoarpuscle {
     }
 }
 
-SkoarpuscleArray : Skoarpuscle {
+SkoarpuscleListSep : Skoarpuscle {
+
+    on_enter {
+        | m, nav |
+        m.fairy.next_listy;
+    }
+}
+
+SkoarpuscleListEnd : Skoarpuscle {
+
+    on_enter {
+        | m, nav |
+        m.fairy.next_listy;
+        m.fairy.pop_listy;
+    }
+}
+
+SkoarpuscleList : Skoarpuscle {
+
+    var noad;
+
+    init {
+        | x |
+        // can optimise here if the children are constants
+        noad = x;
+        val = [];
+    }
+
+    on_enter {
+        | m, nav |
+        m.fairy.push_listy;
+    }
 
     isNoatworthy {
 
@@ -593,33 +624,16 @@ SkoarpuscleArray : Skoarpuscle {
     asNoat {
 
         var n = val.size;
-        var out = Array.newClear(n);
+        var noats = Array.newClear(n);
         var i = -1;
 
         val.do {
             | x |
             i = i + 1;
-            out[i] = x.asNoat;
+            noats[i] = x.asNoat;
         };
 
-        ^out;
-    }
-
-    flatten {
-        | m |
-        var n = val.size;
-        var out = Array.newClear(n);
-        var i = -1;
-
-        val.do {
-            | x |
-            var y = if (x.isKindOf(Skoarpuscle)) {x.flatten(m)} {x};
-            debug("SkoarpuscleArray.flatten: x: " ++ x.asString ++ " y: " ++ y);
-            i = i + 1;
-            out[i] = y;
-        };
-
-        ^out;
+        ^SkoarNoat_Degree(noats);
     }
 
     skoar_msg {
@@ -639,16 +653,11 @@ SkoarpuscleArray : Skoarpuscle {
         ^Skoarpuscle.wrap(ret);
     }
 
-    on_enter {
-        | m, nav |
-        var x = this.flatten(m);
-        m.fairy.impress(x);
-        m.koar[\degree] = x;
-    }
+
 
 }
 
-SkoarpuscleArgs : SkoarpuscleArray {
+SkoarpuscleArgs : SkoarpuscleList {
 
     on_enter {
         | m, nav |
