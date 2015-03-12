@@ -106,7 +106,7 @@ OttavaA:          8va|ottava (alta|sopra)|all' ottava
 OttavaB:          8vb|ottava (bassa|sotto)
 
 QuindicesimaA:    15ma|alla quindicesima
-QuindicesimaB:    15mb|alla quindicesimb
+QuindicesimaB:    15mb
 
 Portamento:       port\\.?
 Loco:             loco

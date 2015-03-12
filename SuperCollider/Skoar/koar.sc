@@ -73,7 +73,19 @@ SkoarKoar {
 
         stack.do {
             | skrb |
+
             e = skrb.transformEvent(e);
+
+            // flatten
+            e.keysValuesChange {
+                | key, value |
+
+                case {value.isKindOf(SkoarpuscleSymbol)} {
+                    value.val
+                };
+            };
+
+
         }
 
         ^e
