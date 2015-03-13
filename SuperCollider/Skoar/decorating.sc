@@ -271,8 +271,13 @@ Skoarmantics {
 
             skoarpion: {
                 | skoar, noad |
-                noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion(skoar, noad));
+                var x = SkoarpuscleSkoarpion(Skoarpion(skoar, noad));
+                noad.skoarpuscle = x;
                 noad.children = [];
+                noad.on_enter = {
+                    | m, nav |
+                    x.on_enter(m,nav);
+                };
             },
 
             conditional: {
@@ -379,17 +384,6 @@ Skoarmantics {
                 };
             },
 
-/*            nouny: {
-                | skoar, noad |
-
-                var x = noad.next_skoarpuscle;
-
-                if (x.notNil) {
-                    noad.skoarpuscle = x;
-                    noad.children = [];
-                };
-            },*/
-
             // deref*         : Deref MsgNameWithArgs listy_suffix
             //                | Deref MsgName
             deref: {
@@ -405,8 +399,13 @@ Skoarmantics {
                     args = SkoarpuscleArgs(noad.collect_skoarpuscles(2));
                 };
 
-                noad.skoarpuscle = SkoarpuscleDeref(msg_name, args);
+                x = SkoarpuscleDeref(msg_name, args);
+                noad.skoarpuscle = x;
                 noad.children = [];
+                noad.on_enter = {
+                    | m, nav |
+                    x.on_enter(m, nav);
+                };
             },
 
             args: {

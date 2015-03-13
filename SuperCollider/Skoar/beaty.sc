@@ -79,7 +79,7 @@ SkoarpuscleBeat : Skoarpuscle {
 
         noat.execute(m);
         // create an event with everything we've collected up until now
-        e = m.koar.event;
+        e = m.koar.event(m);
 
         e[\dur] = val;
 

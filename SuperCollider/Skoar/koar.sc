@@ -69,6 +69,7 @@ SkoarKoar {
     }
 
     event {
+        | minstrel |
         var e = Event.new;
 
         stack.do {
@@ -80,12 +81,15 @@ SkoarKoar {
             e.keysValuesChange {
                 | key, value |
 
-                case {value.isKindOf(SkoarpuscleSymbol)} {
-                    value.val
-                };
+                ("::" ++ key.asString ++ ": " ++ value.asString).postln;
+                case {value.isKindOf(Skoarpuscle)} {
+                    value.flatten(minstrel)
+                } {
+                    value
+                }
             };
 
-
+            e.postln;
         }
 
         ^e

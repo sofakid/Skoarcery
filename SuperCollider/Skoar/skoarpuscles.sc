@@ -93,7 +93,7 @@ SkoarpuscleCrap : Skoarpuscle {
 
     // these aren't doing nothing, they are returning this crap
     skoar_msg {}
-    flatten {}
+    flatten {^nil}
 }
 
 SkoarpuscleInt : Skoarpuscle {
@@ -210,13 +210,7 @@ SkoarpuscleDeref : Skoarpuscle {
 
     flatten {
         | m |
-        var x = this.lookup(m);
-
-        if (x.isKindOf(Skoarpuscle)) {
-            x = x.flatten(m);
-        };
-
-        ^x;
+        ^this.lookup(m);
     }
 
     on_enter {
@@ -466,6 +460,7 @@ SkoarpuscleSkoarpion : Skoarpuscle {
 
     on_enter {
         | m, nav |
+        "sna".postln;
         if (val.name.notNil) {
             m.koar[val.name] = this;
         };
