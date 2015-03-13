@@ -72,7 +72,6 @@ Skoarpuscle {
             };
 
             ^SkoarpuscleList(a);
-
         } {
             "x unknown: ".post; x.dump;
             ^SkoarpuscleUnknown(x);
@@ -165,9 +164,6 @@ SkoarpuscleString : Skoarpuscle {
 }
 
 SkoarpuscleSymbolName : Skoarpuscle {
-
-    on_enter {
-    }
 }
 
 SkoarpuscleSymbol : Skoarpuscle {
@@ -230,7 +226,7 @@ SkoarpuscleDeref : Skoarpuscle {
 
             m.koar.do_skoarpion(x.val, m, nav, msg_arr, m.fairy.impression);
         } {
-            x.on_enter(m, nav);
+            m.fairy.impress(x);
         };
     }
 
@@ -590,13 +586,9 @@ SkoarpuscleListEnd : Skoarpuscle {
 
 SkoarpuscleList : Skoarpuscle {
 
-    var noad;
-
     init {
-        | x |
-        // can optimise here if the children are constants
-        noad = x;
-        val = [];
+        | x=#[] |
+        val = x;
     }
 
     on_enter {
@@ -654,27 +646,22 @@ SkoarpuscleList : Skoarpuscle {
 
 SkoarpuscleArgs : SkoarpuscleList {
 
-    var <argc;
+}
+
+// {! f<a,b,c> !! '[\a,\b,\c] is the ArgsSpec' !}
+SkoarpuscleArgsSpec : Skoarpuscle {
 
     init {
-        | nod |
-        var i = 0;
-        // can optimise here if the children are constants
-        noad = nod;
+        | noad |
         val = [];
-
-        argc = 0;
-        nod.children.do {
+        noad.collect_skoarpuscles.do {
             | x |
-            if (x.name == \expr) {
-                argc = argc + 1;
+            if (x.isKindOf(SkoarpuscleSymbolName)) {
+                val = val.add(x.val);
             };
         };
     }
-
-
 }
-
 
 SkoarpuscleMsg : Skoarpuscle {
 

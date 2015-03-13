@@ -383,7 +383,7 @@ Skoarmantics {
                 msg_name = noad.children[1].skoarpuscle.val;
 
                 if (noad.children.size > 2) {
-                    args = SkoarpuscleArgs(noad);
+                    args = SkoarpuscleArgs.new;
                 };
 
                 x = SkoarpuscleDeref(msg_name, args);
@@ -419,7 +419,7 @@ Skoarmantics {
             listy: {
                 | skoar, noad |
 
-                var x = SkoarpuscleList(noad);
+                var x = SkoarpuscleList.new;
 
                 noad.skoarpuscle = x;
                 noad.on_enter = {
@@ -431,12 +431,9 @@ Skoarmantics {
 
             args: {
                 | skoar, noad |
-                var x = SkoarpuscleArgs(noad);
+                var x = SkoarpuscleArgsSpec(noad);
                 noad.skoarpuscle = x;
-                noad.on_enter = {
-                    | m, nav |
-                    x.on_enter(m, nav);
-                };
+                noad.children = [];
             },
 
             msg: {
@@ -453,7 +450,7 @@ Skoarmantics {
                     noad.skoarpuscle = SkoarpuscleLoopMsg(msg);
 
                 } {msg.isKindOf(SkoarpuscleMsgName)} {
-                    args = SkoarpuscleList(noad);
+                    args = SkoarpuscleArgs.new;
                     noad.skoarpuscle = SkoarpuscleMsg(msg.val, args);
                 };
 

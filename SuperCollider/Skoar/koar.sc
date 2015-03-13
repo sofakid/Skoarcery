@@ -104,7 +104,7 @@ SkoarKoar {
         var i = 0;
         var vars = stack[stack.size - 1];
 
-        if (args_def.isKindOf(SkoarpuscleArgs)) {
+        if (args_def.isKindOf(SkoarpuscleArgsSpec)) {
             var passed_args, n;
 
             passed_args = if (args.isNil) { [] } { args };
@@ -114,7 +114,6 @@ SkoarKoar {
             args_def.val.do {
                 | k |
                 ("k: " ++ k).postln;
-                k = k.val;
                 vars[k] = if (i < n) {
                     args[i]
                 } {
