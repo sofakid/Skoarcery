@@ -89,7 +89,7 @@ SkoarNoat {
 
     execute {
         | minstrel |
-        "sss: ".post; key.post; val.postln;
+        //"SkoarNoat.execute: ".post; key.post; val.postln;
         minstrel.koar[key] = val;
     }
 }

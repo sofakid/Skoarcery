@@ -213,17 +213,10 @@ SkoarpuscleDeref : Skoarpuscle {
         | m, nav |
         var x = this.lookup(m);
 
-        "deref:on_enter: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+        //"deref:on_enter: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
         x = Skoarpuscle.wrap(x);
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
-            /*"blerg:".postln;
-            x.val.postln;
-            m.postln;
-            nav.postln;
-            msg_arr.postln;
-            args.postln;*/
-
             m.koar.do_skoarpion(x.val, m, nav, msg_arr, m.fairy.impression);
         } {
             m.fairy.impress(x);
@@ -269,7 +262,6 @@ SkoarpuscleMathOp : Skoarpuscle {
         f = switch (val)
             {"+"}  {{
                 | minstrel, a, b |
-                "snoob ".post;
                 Skoar.ops.add(minstrel, a, b);
             }}
 
@@ -456,7 +448,6 @@ SkoarpuscleSkoarpion : Skoarpuscle {
 
     on_enter {
         | m, nav |
-        "sna".postln;
         if (val.name.notNil) {
             m.koar[val.name] = this;
         };
@@ -513,7 +504,7 @@ SkoarpuscleLoop : Skoarpuscle {
                     if (element.notNil) {
                         element.on_enter(m, nav);
                     };
-
+"eh?".postln;
                     m.koar.do_skoarpion(body, m, nav, [\inline], m.fairy.impression);
 
                     i = i + 1;

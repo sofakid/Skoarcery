@@ -68,52 +68,53 @@ SkoarKoar {
         ^out;
     }
 
+    // constructs the event that will be played by SC
     event {
         | minstrel |
         var e = Event.new;
 
         stack.do {
             | skrb |
-
+            // native function constructs the event quickly
             e = skrb.transformEvent(e);
 
-            // flatten
+            // but we need to change stuff
             e.keysValuesChange {
                 | key, value |
 
-                ("::" ++ key.asString ++ ": " ++ value.asString).postln;
                 case {value.isKindOf(SkoarpuscleSkoarpion)} {
+                    // we don't need to pass skoarpions to SC
                     nil
 
                 } {value.isKindOf(Skoarpuscle)} {
+                    // we want values, not skoarpuscles
                     value.flatten(minstrel)
 
                 } {
+                    // perfect
                     value
                 }
             };
-
-            e.postln;
         }
 
         ^e
     }
 
     set_args {
-        | minstrel, args_def, args |
+        | minstrel, args_spec, args |
         var i = 0;
         var vars = stack[stack.size - 1];
 
-        if (args_def.isKindOf(SkoarpuscleArgsSpec)) {
+        if (args_spec.isKindOf(SkoarpuscleArgsSpec)) {
             var passed_args, n;
 
             passed_args = if (args.isNil) { [] } { args };
             n = passed_args.size;
 
             // foreach arg name defined, set the value from args
-            args_def.val.do {
+            args_spec.val.do {
                 | k |
-                ("k: " ++ k).postln;
+                //("k: " ++ k).postln;
                 vars[k] = if (i < n) {
                     args[i]
                 } {
@@ -148,14 +149,13 @@ SkoarKoar {
     }
 
     do_skoarpion {
-        | skoarpion, minstrel, up_nav, msg_arr, skrp_args, stinger |
+        | skoarpion, minstrel, up_nav, msg_arr, args, stinger |
 
         var subtree;
         var projection;
         var projections;
         var msg_name;
         var inlined;
-        var args;
 
         if (skoarpion.isKindOf(Skoarpion) == false) {
             "This isn't a skoarpion: ".post; skoarpion.postln;
@@ -175,7 +175,7 @@ SkoarKoar {
         };
 
         // load arg values into their names
-        this.set_args(minstrel, skoarpion.args, skrp_args);
+        this.set_args(minstrel, skoarpion.args_spec, args);
 
         projections = this.state_at(\projections);
         if (skoarpion.name.notNil) {

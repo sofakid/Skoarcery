@@ -7,7 +7,7 @@ Skoarpion {
     var <body;
     var <stinger;
 
-    var <args;
+    var <args_spec;
 
     *new {
         | skr, noad |
@@ -97,11 +97,11 @@ Skoarpion {
             case {x.skoarpuscle.isKindOf(SkoarpuscleSymbolName)} {
                 name = x.skoarpuscle.val;
             } {x.name == \args} {
-                args = x.skoarpuscle;
+                args_spec = x.skoarpuscle;
             };
         };
 
-        //"SIG: ".post; name.post; args.postln;
+        //"SIG: ".post; name.post; args_spec.postln;
 
         suffix.children.do {
             | x |
@@ -171,10 +171,10 @@ Skoarpion {
 
         debug("---< Skoarpion " ++ s ++ " >---");
 
-        if (args.notNil) {
-            "args: ".post; args.postln;
+        if (args_spec.notNil) {
+            "args_spec: ".post; args_spec.postln;
 
-            args.val.do {
+            args_spec.val.do {
                 | x |
                 if (x.isKindOf(Skoarpuscle)) {
                     x.val.post; " ".post;

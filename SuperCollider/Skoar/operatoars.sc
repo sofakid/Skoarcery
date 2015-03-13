@@ -19,7 +19,6 @@ SkoarOps {
                 // v
                 Any: {
                     | minstrel, v, symbol |
-                    "zrop ".post; v.post; symbol.postln;
                     minstrel.koar[symbol.val] = v;
                     v
                 }
@@ -114,7 +113,7 @@ SkoarOps {
     assign {
         | minstrel, v, settable |
         var f = this.lookup(assignment, settable, v);
-        "assign ".post; v.postln;
+        //"assign ".post; v.postln;
         ^minstrel.fairy.impress(f.(minstrel, v, settable));
     }
 
@@ -122,7 +121,7 @@ SkoarOps {
     add {
         | minstrel, x, y |
         var f = this.lookup(addition, x, y);
-        "snerp".postln;
+        //"add".postln;
         ^minstrel.fairy.impress(f.(x, y));
     }
 
@@ -130,7 +129,7 @@ SkoarOps {
     multiply {
         | minstrel, x, y |
         var f = this.lookup(multiplication, x, y);
-        "x by y".postln;
+        //"multiply".postln;
         ^minstrel.fairy.impress(f.(x, y));
     }
 

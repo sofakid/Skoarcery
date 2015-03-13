@@ -502,7 +502,7 @@ Skoarmantics {
                             };
                         };
 
-                        "msgable: ".post; result.postln;
+                        //"msgable: ".post; result.postln;
                         m.fairy.impress(result);
                     };
 
