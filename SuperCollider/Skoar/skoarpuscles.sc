@@ -620,7 +620,7 @@ SkoarpuscleList : Skoarpuscle {
             noats[i] = x.asNoat;
         };
 
-        ^SkoarNoat_Degree(noats);
+        ^SkoarNoat_DegreeList(noats);
     }
 
     skoar_msg {

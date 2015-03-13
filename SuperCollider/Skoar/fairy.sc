@@ -50,7 +50,7 @@ SkoarFairy {
 
     pop {
         magic = magic_stack.pop;
-        impression = listy_stack.pop;
+        this.impress(listy_stack.pop);
         "popped listy: ".post; impression.postln;
     }
 
