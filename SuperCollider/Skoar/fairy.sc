@@ -6,6 +6,7 @@ SkoarFairy {
     var <impression;
     var magic;
     var <listy_stack;
+    var <magic_stack;
 
 
     *new {
@@ -22,6 +23,7 @@ SkoarFairy {
         magic = nil;
         noat = SkoarpuscleInt(0);
         listy_stack = [];
+        magic_stack = [];
     }
 
     get_top_listy {
@@ -38,12 +40,18 @@ SkoarFairy {
         listy_stack[n - 1] = x;
     }
 
-    push_listy {
+    push {
+        magic_stack = magic_stack.add(magic);
+        magic = nil;
         listy_stack = listy_stack.add([]);
+        "$.push;".postln;
+
     }
 
-    pop_listy {
+    pop {
+        magic = magic_stack.pop;
         impression = listy_stack.pop;
+        "popped listy: ".post; impression.postln;
     }
 
     next_listy {

@@ -82,8 +82,12 @@ SkoarKoar {
                 | key, value |
 
                 ("::" ++ key.asString ++ ": " ++ value.asString).postln;
-                case {value.isKindOf(Skoarpuscle)} {
+                case {value.isKindOf(SkoarpuscleSkoarpion)} {
+                    nil
+
+                } {value.isKindOf(Skoarpuscle)} {
                     value.flatten(minstrel)
+
                 } {
                     value
                 }
@@ -103,7 +107,7 @@ SkoarKoar {
         if (args_def.isKindOf(SkoarpuscleArgs)) {
             var passed_args, n;
 
-            passed_args = if (args.isNil) { [] } { args.val };
+            passed_args = if (args.isNil) { [] } { args };
             n = passed_args.size;
 
             // foreach arg name defined, set the value from args
@@ -112,11 +116,10 @@ SkoarKoar {
                 ("k: " ++ k).postln;
                 k = k.val;
                 vars[k] = if (i < n) {
-                    args.val[i]
+                    args[i]
                 } {
-                    // this defaults to passing the fairy's impression
-                    // when not enough args are sent.
-                    minstrel.fairy.impression
+                    // this defaults to passing 0 when not enough args are sent.
+                    SkoarpuscleInt(0)
                 };
                 i = i + 1;
             };
@@ -153,6 +156,7 @@ SkoarKoar {
         var projections;
         var msg_name;
         var inlined;
+        var args;
 
         if (skoarpion.isKindOf(Skoarpion) == false) {
             "This isn't a skoarpion: ".post; skoarpion.postln;
@@ -170,6 +174,7 @@ SkoarKoar {
         if (inlined == false) {
             this.push_state;
         };
+
         // load arg values into their names
         this.set_args(minstrel, skoarpion.args, skrp_args);
 

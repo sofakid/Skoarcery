@@ -8,7 +8,7 @@ SkoarNoad {
     var <>parent;          // the parent noad
     var <>children;        // a list of child noads
 
-    var <>name;            // name of the nonterminal
+    var <>name;            // name of the nonterminal (a \symbol)
     var <>skoarpuscle;     // skoarpuscle types go here
     var <>toke;
 

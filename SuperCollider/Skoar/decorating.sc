@@ -303,19 +303,6 @@ Skoarmantics {
                 noad.children = [];
             },
 
-            listy: {
-                | skoar, noad |
-
-                var x = SkoarpuscleList(noad);
-
-                noad.skoarpuscle = x;
-                noad.on_enter = {
-                    | m, nav |
-                    x.on_enter(m, nav);
-                };
-
-            },
-
             loop: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleLoop(skoar, noad);
@@ -396,22 +383,60 @@ Skoarmantics {
                 msg_name = noad.children[1].skoarpuscle.val;
 
                 if (noad.children.size > 2) {
-                    args = SkoarpuscleArgs(noad.collect_skoarpuscles(2));
+                    args = SkoarpuscleArgs(noad);
                 };
 
                 x = SkoarpuscleDeref(msg_name, args);
                 noad.skoarpuscle = x;
-                noad.children = [];
+
+                // !f<x,y>
+                if (args.isKindOf(SkoarpuscleArgs)) {
+
+                    var end_noad = SkoarNoad(\deref_end, noad);
+                    end_noad.on_enter = {
+                        | m, nav |
+                        m.fairy.cast_arcane_magic;
+                        x.on_enter(m, nav);
+                    };
+
+                    noad.add_noad(end_noad);
+                    noad.on_enter = {
+                        | m, nav |
+                        args.on_enter(m, nav);
+                    };
+
+                // !f
+                } {
+                    noad.on_enter = {
+                        | m, nav |
+                        x.on_enter(m, nav);
+                    };
+                };
+
+            },
+
+
+            listy: {
+                | skoar, noad |
+
+                var x = SkoarpuscleList(noad);
+
+                noad.skoarpuscle = x;
                 noad.on_enter = {
                     | m, nav |
                     x.on_enter(m, nav);
                 };
+
             },
 
             args: {
                 | skoar, noad |
-                noad.skoarpuscle = SkoarpuscleArgs(noad.collect_skoarpuscles);
-                noad.children = [];
+                var x = SkoarpuscleArgs(noad);
+                noad.skoarpuscle = x;
+                noad.on_enter = {
+                    | m, nav |
+                    x.on_enter(m, nav);
+                };
             },
 
             msg: {
@@ -428,7 +453,7 @@ Skoarmantics {
                     noad.skoarpuscle = SkoarpuscleLoopMsg(msg);
 
                 } {msg.isKindOf(SkoarpuscleMsgName)} {
-                    args = SkoarpuscleList(noad.collect_skoarpuscles(1));
+                    args = SkoarpuscleList(noad);
                     noad.skoarpuscle = SkoarpuscleMsg(msg.val, args);
                 };
 

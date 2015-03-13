@@ -228,7 +228,7 @@ SkoarpuscleDeref : Skoarpuscle {
             msg_arr.postln;
             args.postln;*/
 
-            m.koar.do_skoarpion(x.val, m, nav, msg_arr, args);
+            m.koar.do_skoarpion(x.val, m, nav, msg_arr, m.fairy.impression);
         } {
             x.on_enter(m, nav);
         };
@@ -518,7 +518,7 @@ SkoarpuscleLoop : Skoarpuscle {
                         element.on_enter(m, nav);
                     };
 
-                    m.koar.do_skoarpion(body, m, nav, [\inline]);
+                    m.koar.do_skoarpion(body, m, nav, [\inline], m.fairy.impression);
 
                     i = i + 1;
                     m.koar[\i] = i;
@@ -584,7 +584,7 @@ SkoarpuscleListEnd : Skoarpuscle {
     on_enter {
         | m, nav |
         m.fairy.next_listy;
-        m.fairy.pop_listy;
+        m.fairy.pop;
     }
 }
 
@@ -601,7 +601,7 @@ SkoarpuscleList : Skoarpuscle {
 
     on_enter {
         | m, nav |
-        m.fairy.push_listy;
+        m.fairy.push;
     }
 
     isNoatworthy {
@@ -654,9 +654,24 @@ SkoarpuscleList : Skoarpuscle {
 
 SkoarpuscleArgs : SkoarpuscleList {
 
-    on_enter {
-        | m, nav |
+    var <argc;
+
+    init {
+        | nod |
+        var i = 0;
+        // can optimise here if the children are constants
+        noad = nod;
+        val = [];
+
+        argc = 0;
+        nod.children.do {
+            | x |
+            if (x.name == \expr) {
+                argc = argc + 1;
+            };
+        };
     }
+
 
 }
 

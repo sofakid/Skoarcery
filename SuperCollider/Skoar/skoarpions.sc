@@ -172,11 +172,15 @@ Skoarpion {
         debug("---< Skoarpion " ++ s ++ " >---");
 
         if (args.notNil) {
-            "args: ".post;
+            "args: ".post; args.postln;
 
             args.val.do {
                 | x |
-                x.val.post; " ".post;
+                if (x.isKindOf(Skoarpuscle)) {
+                    x.val.post; " ".post;
+                } {
+                    x.post; " ".post;
+                };
             };
             "".postln;
         };
