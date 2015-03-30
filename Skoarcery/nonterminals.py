@@ -24,8 +24,7 @@ skoarpion          : SkoarpionStart skrp_sig SkoarpionSep skrp_suffix
 skrp_sig           : args | SymbolName optional_args | <e>
 skrp_suffix        : skrp_lines SkoarpionEnd
 +skrp_lines        : optional_voice phrases skrp_moar_lines
-+skrp_moar_lines   : skrp_sep_or_nl skrp_lines | <e>
-+skrp_sep_or_nl    : Newline | SkoarpionSep
++skrp_moar_lines   : Newline skrp_lines | <e>
 
 +optional_args     : args | <e>
 args*              : ListS args_suffix

@@ -172,19 +172,15 @@ SkoarNoad {
     }
 
     inorder {
-        | f, stinger=nil |
+        | f |
 
         //debug(">>> inorder: " ++ name);
-        if (stinger.notNil and: skoarpuscle.isKindOf(SkoarpuscleBeat)) {
-            //debug("!!! stinger: " ++ stinger.asString);
-            stinger.inorder(f);
-        };
-
+        
         f.(this);
 
         children.do {
             | y |
-            y.inorder(f, stinger);
+            y.inorder(f);
         };
 
         //debug("<<< inorder: " ++ name);
@@ -192,22 +188,22 @@ SkoarNoad {
 
     // debug here if it's crashing while performing the skoar
     inorder_from_here {
-        | here, f, stinger |
+        | here, f |
         var j = here.pop;
         var n = children.size - 1;
 
         //debug("inorder_from_here: j:" ++ j ++ " " ++ name);
 
         if (j.isNil) {
-            this.inorder(f, stinger);
+            this.inorder(f);
         } {
-            children[j].inorder_from_here(here, f, stinger);
+            children[j].inorder_from_here(here, f);
 
             j = j + 1;
             if (j <= n) {
                 for (j, n, {
                     | k |
-                    children[k].inorder(f, stinger);
+                    children[k].inorder(f);
                 });
             };
         };
@@ -250,10 +246,10 @@ SkoarNoad {
     // performing the tree
     // -------------------
     enter_noad {
-        | minstrel, nav, stinger=nil |
+        | minstrel, nav |
 
         if (on_enter.notNil) {
-            on_enter.(minstrel, nav, stinger);
+            on_enter.(minstrel, nav);
         };
     }
 

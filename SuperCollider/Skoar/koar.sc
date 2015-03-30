@@ -149,7 +149,7 @@ SkoarKoar {
     }
 
     do_skoarpion {
-        | skoarpion, minstrel, up_nav, msg_arr, args, stinger |
+        | skoarpion, minstrel, up_nav, msg_arr, args |
 
         var subtree;
         var projection;
@@ -192,7 +192,7 @@ SkoarKoar {
 
         subtree = projection.performMsg(msg_arr);
 
-        this.nav_loop(subtree, projection, minstrel, up_nav, stinger, inlined);
+        this.nav_loop(subtree, projection, minstrel, up_nav, inlined);
 
         if (inlined == false) {
             this.pop_state;
@@ -200,7 +200,7 @@ SkoarKoar {
     }
 
     nav_loop {
-        | dst, projection, minstrel, up_nav, stinger, inlined |
+        | dst, projection, minstrel, up_nav, inlined |
 
         var nav_result;
         var running = true;
@@ -219,9 +219,7 @@ SkoarKoar {
                     here,
 
                     {   | x |
-                        x.enter_noad(minstrel, nav, stinger); },
-
-                    stinger);
+                        x.enter_noad(minstrel, nav); });
 
                 // our metaphorical throws look like this,
                 // you'll also find them in the navigational

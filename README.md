@@ -276,23 +276,18 @@ The __Skoarpion__ is a flexible device; we can use it as a function or a sequenc
     {! name<args> !!
       body
       ...
-    !! stinger !}
-
-
-Each time you call the skoarpion the `body`; the `stinger` runs before every
-beat in the body.
+    !}
 
 Let's make a function:
 
-    {! zorp<derp> !!
+    {! zorp<x> !!
      | )         }             |
      | )         ]] oo/ ]      |
      | ]    ]    ]] ]]  ]      |
      | ]    ]    ]] ]]  oo/ ]] |
-    !! !derp.choose !}
+    !}
 
-    <? - this calls !zorp.choose, setting @derp to <_a, c#, e>
-       - !derp.choose in the stinger, means it will pick one noat from @derp each beat.
+    <? - this calls !zorp.choose, setting @x to <_a, c#, e>
        - the !zorp.choose will choose one line at random ?>
     !zorp<<_a, c#, e>>.choose
 
@@ -300,9 +295,9 @@ You can cycle the lines in order with `.next` or backwards with `.last`
 
     <_a, c#, e> => @A
 
-    !zorp<!A>.next   <? plays | ) }        | ?>
-    !zorp<!A>.next   <? plays | ) ]] oo/ ] | ?>
-    !zorp<!A>.last   <? plays | ) }        | ?>
+    !zorp<!A.choose>.next   <? plays | ) }        | with a random noat ?>
+    !zorp<!A.choose>.next   <? plays | ) ]] oo/ ] | with a random noat ?>
+    !zorp<!A.choose>.last   <? plays | ) }        | with a random noat ?>
 
 Skoarpions normally have scope, but they can be inlined with `.inline`, which can be convenient:
 

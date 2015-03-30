@@ -5,7 +5,6 @@ Skoarpion {
     var <n;
 
     var <body;
-    var <stinger;
 
     var <args_spec;
 
@@ -149,14 +148,7 @@ Skoarpion {
         };
 
         body = sections[0];
-        if (sections.size == 1) {
-            stinger = nil;
-        } {
-            stinger = SkoarNoad(\stinger);
-            stinger.children = sections[1..];
-            stinger.skoap = stinger.children[0].skoap;
-        };
-
+        
         n = body.size;
 
     }
@@ -188,11 +180,6 @@ Skoarpion {
         if (body.notNil) {
             "body:".postln;
             body.draw_tree.post;
-        };
-
-        if (stinger.notNil) {
-            "stinger: ".postln;
-            stinger.draw_tree.post;
         };
 
         "".postln;

@@ -10,7 +10,7 @@ Skoarpuscle {
     *new { | v | ^super.new.init(v); }
     init { | v | val = v; }
 
-    on_enter { | m, nav, stinger=nil | }
+    on_enter { | m, nav | }
 
     // override and implement .asNoat;
     isNoatworthy { ^false; }
@@ -288,10 +288,17 @@ SkoarpuscleMathOp : Skoarpuscle {
 SkoarpuscleBooleanOp : Skoarpuscle {
 
     var f;
+	var <noad;
 
-    init {
-        | toke |
+    *new {
+        | n, toke |
+        ^super.new.init_two(n, toke);
+    }
+
+    init_two {
+        | n, toke |
         val = toke.lexeme;
+		noad = n;
 
         // ==|!=|<=|>=|in|nin|and|or|xor
         f = switch (val)
@@ -339,12 +346,6 @@ SkoarpuscleBooleanOp : Skoarpuscle {
         var x;
         var y;
 
-        a.on_enter(m, nav);
-        x = m.fairy.impression;
-
-        b.on_enter(m, nav);
-        y = m.fairy.impression;
-
         if (x.isKindOf(Skoarpuscle)) {
             debug(x);
             x = x.flatten(m);
@@ -366,20 +367,17 @@ SkoarpuscleBooleanOp : Skoarpuscle {
 
 SkoarpuscleBoolean : Skoarpuscle {
 
-    var a, b, op;
+    var <op;
 
     init {
         | noad |
-        // a and b are exprs
-        a = noad.children[0];
         op = noad.children[1].next_skoarpuscle;
-        b = noad.children[2];
-
+        
         noad.children = [];
     }
 
     evaluate {
-        | m, nav |
+        | m, nav, a, b |
         ^op.compare(a, b, m, nav);
     }
 
@@ -490,9 +488,8 @@ SkoarpuscleLoop : Skoarpuscle {
 
     on_enter {
         | m, nav |
-        var i = 0;
-
-        m.koar[\i] = 0;
+        
+		m.fairy.push_i;
 
         block {
             | break |
@@ -501,14 +498,13 @@ SkoarpuscleLoop : Skoarpuscle {
                     | element |
 
                     // this is how we foreach
-                    if (element.notNil) {
-                        element.on_enter(m, nav);
+                    if (element.isKindOf(Skoarpuscle)) {
+                        m.fairy.impress(element);
                     };
 "eh?".postln;
                     m.koar.do_skoarpion(body, m, nav, [\inline], m.fairy.impression);
 
-                    i = i + 1;
-                    m.koar[\i] = i;
+                    m.fairy.incr_i;
 
                     if (condition.notNil) {
                         if (condition.evaluate(m) == false) {
@@ -534,6 +530,8 @@ SkoarpuscleLoop : Skoarpuscle {
                 };
             };
         };
+
+		m.fairy.pop_i;
     }
 
     // when we send a loop as a message, the receiver
@@ -630,8 +628,6 @@ SkoarpuscleList : Skoarpuscle {
 
         ^Skoarpuscle.wrap(ret);
     }
-
-
 
 }
 

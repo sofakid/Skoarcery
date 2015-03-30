@@ -167,7 +167,7 @@ SkoarTokeInspector {
 
             Toke_BooleanOp: {
                 | skoar, noad, toke |
-                noad.skoarpuscle = SkoarpuscleBooleanOp(toke);
+                noad.skoarpuscle = SkoarpuscleBooleanOp(noad, toke);
                 noad.toke = nil;
             },
 
@@ -283,13 +283,37 @@ Skoarmantics {
             conditional: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleConditional(skoar, noad);
-                noad.children = [];
+                
             },
 
             boolean: {
                 | skoar, noad |
-                noad.skoarpuscle = SkoarpuscleBoolean(noad);
-                noad.children = [];
+				// we insert a node at the end of the expression
+                // so we can evaluate the result
+                var end_noad = SkoarNoad(\boolean_end, noad);
+				var x = SkoarpuscleBoolean(noad);
+				noad.skoarpuscle = x;
+				
+				noad.on_enter = {
+					| m, nav |
+					m.fairy.push_compare;
+				};
+
+				x.op.noad.on_enter = {
+					| m, nav |
+					m.fairy.compare_impress;
+				};
+
+				end_noad.on_enter = {
+                    | m, nav |
+					var l_value = m.fairy.l_value;
+                    var y = x.evaluate(m, nav, l_value, m.fairy.impression);
+					m.fairy.impress(y);
+                };
+
+                noad.add_noad(end_noad);
+				
+                
             },
 
             beat: {
@@ -305,8 +329,13 @@ Skoarmantics {
 
             loop: {
                 | skoar, noad |
-                noad.skoarpuscle = SkoarpuscleLoop(skoar, noad);
+				var x = SkoarpuscleLoop(skoar, noad);
+                noad.skoarpuscle = x; 
                 noad.children = [];
+				noad.on_enter = {
+					| m, nav |
+					x.on_enter(m, nav);
+				};
             },
 
             musical_keyword_misc: {
@@ -447,7 +476,14 @@ Skoarmantics {
                     // i'm not sure what i want this to mean
 
                 } {msg.isKindOf(SkoarpuscleLoop)} {
-                    noad.skoarpuscle = SkoarpuscleLoopMsg(msg);
+					noad.skoarpuscle = SkoarpuscleLoopMsg(msg);
+					
+					noad.on_enter = {
+						| m, nav |
+						var listy = m.fairy.impression;
+						msg.foreach(listy);
+						msg.on_enter(m, nav);
+					};
 
                 } {msg.isKindOf(SkoarpuscleMsgName)} {
                     args = SkoarpuscleArgs.new;
@@ -489,20 +525,19 @@ Skoarmantics {
                 noad.on_enter = {
                     | m, nav |
                     var result = noads[0].next_skoarpuscle;
-
+					"msgable::noads: ".post; noads.postln;
+					"msgable::result: ".post; result.postln;
                     if (result.notNil) {
                         noads.do {
                             | y |
                             var x = y.skoarpuscle;
+							"msgable::x: ".post; x.postln;
                             case {x.isKindOf(SkoarpuscleMsg)} {
                                 result = result.skoar_msg(x, m);
-
-                            } {x.isKindOf(SkoarpuscleLoopMsg)} {
-                                result = x.val.foreach(result);
                             };
                         };
 
-                        //"msgable: ".post; result.postln;
+                        "msgable:impressing ".post; result.postln;
                         m.fairy.impress(result);
                     };
 
