@@ -13,11 +13,11 @@ class Code_Parser_Sc(unittest.TestCase):
         parsetable.init()
         emissions.init()
 
-    def test_sc_rdpp(self):
+    def test_SC_rdpp(self):
         from Skoarcery.dragonsets import FIRST, FOLLOW
         from Skoarcery.terminals import Empty
 
-        fd = open("../../SuperCollider/Skoar/rdpp.sc", "w")
+        fd = open("SuperCollider/Skoar/rdpp.sc", "w")
         ____SC = SC = emissions.SC
         SC.fd = fd
 

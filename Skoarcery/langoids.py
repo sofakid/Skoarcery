@@ -1,3 +1,4 @@
+
 def init():
     print("langoids initialized.")
 

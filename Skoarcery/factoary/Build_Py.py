@@ -14,7 +14,7 @@ from Skoarcery.laboaratoary.TestApparatus import Test_Apparatus
 
 class Build_Pymp(Buildoar):
 
-    def test_all_steps(self):
+    def tes_Build_Skoar_Python(self):
 
         #
         # Grammar

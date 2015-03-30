@@ -13,11 +13,11 @@ class Code_Parser_Py(unittest.TestCase):
         parsetable.init()
         emissions.init()
 
-    def test_pyrdpp(self):
+    def test_PY_rdpp(self):
         from Skoarcery.dragonsets import FIRST, FOLLOW
         from Skoarcery.terminals import Empty
 
-        fd = open("../SkoarPyon/rdpp.py", "w")
+        fd = open("SkoarPyon/rdpp.py", "w")
         PY = emissions.PY
         PY.fd = fd
 

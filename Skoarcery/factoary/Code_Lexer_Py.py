@@ -40,9 +40,9 @@ class SkoarError(AssertionError):
     def typical_token(self, token):
         underskoar.typical_token(token)
 
-    def test_PyLexer(self):
+    def test_PY_lexer(self):
 
-        fd = open("../SkoarPyon/lex.py", mode="w")
+        fd = open("SkoarPyon/lex.py", mode="w")
 
         emissions.PY.fd = fd
         emissions.PY.file_header("lex", "Code_Py_Lexer")

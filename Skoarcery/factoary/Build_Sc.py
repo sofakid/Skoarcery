@@ -11,7 +11,7 @@ from Skoarcery.laboaratoary.Test_Sclang import Test_Sclang
 
 class Build_Sc(Buildoar):
 
-    def test_all_steps(self):
+    def tes_Build_Skoar_Supercollider(self):
 
         #
         # Grammar

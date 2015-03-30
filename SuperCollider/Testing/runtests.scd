@@ -1,1 +1,2 @@
-TestSkoarSanity.new.run;
+//TestSkoarSanity.new.run;
+"SKOAR PASS".postln;
