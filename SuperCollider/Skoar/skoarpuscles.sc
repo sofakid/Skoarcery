@@ -6,9 +6,14 @@
 Skoarpuscle {
 
     var <>val;
+	var <>impressionable;
 
     *new { | v | ^super.new.init(v); }
-    init { | v | val = v; }
+    init { 
+		| v | 
+		val = v;
+		impressionable = true;
+	}
 
     on_enter { | m, nav | }
 
@@ -36,6 +41,10 @@ Skoarpuscle {
         case {x.isNil} {
             "x nil".postln;
             ^SkoarpuscleCrap();
+
+		} {x == false} {
+            "x lies".postln;
+            ^SkoarpuscleLies();
 
         } {x.isKindOf(Skoarpuscle)} {
             "already wrapped".postln;
@@ -284,6 +293,13 @@ SkoarpuscleMathOp : Skoarpuscle {
 
 }
 
+SkoarpuscleLies : Skoarpuscle {
+	asString {"lies"}
+
+    skoar_msg {}
+    flatten {^false}
+}
+
 SkoarpuscleBooleanOp : Skoarpuscle {
 
     var f;
@@ -323,7 +339,7 @@ SkoarpuscleBooleanOp : Skoarpuscle {
             }}
             {">"}  {{
                 | a, b |
-                a < b
+                a > b
             }}
             {"and"} {{
                 | a, b |
@@ -342,25 +358,29 @@ SkoarpuscleBooleanOp : Skoarpuscle {
 
     compare {
         | m, nav, a, b |
-        var x;
-        var y;
-
-        if (x.isKindOf(Skoarpuscle)) {
-            debug(x);
-            x = x.flatten(m);
+     
+        if (a.isKindOf(Skoarpuscle)) {
+            debug(a);
+            a = a.flatten(m);
         };
 
-        if (y.isKindOf(Skoarpuscle)) {
-            debug(y);
-            y = y.flatten(m);
+        if (b.isKindOf(Skoarpuscle)) {
+            debug(b);
+            b = b.flatten(m);
         };
 
-        debug("{? " ++ x.asString ++ " " ++ val ++ " " ++ y.asString ++ " ?}");
+        debug("{? " ++ a.asString ++ " " ++ val ++ " " ++ b.asString ++ " ?}");
 
-        x !? y !? {^f.(x, y)};
+        a !? b !? {^f.(a, b)};
 
-        false
+        ^false
     }
+
+	on_enter {
+		| m, nav |
+		m.fairy.cast_arcane_magic;
+		m.fairy.compare_impress(m);
+	}
 
 }
 
@@ -370,12 +390,17 @@ SkoarpuscleBoolean : Skoarpuscle {
 
     init {
         | noad |
-        op = noad.children[1].next_skoarpuscle;
-        noad.children = [];
+        op = noad.children[0].next_skoarpuscle;
     }
+
+	on_enter {
+		| m, nav |
+		m.fairy.push_compare;
+	}
 
     evaluate {
         | m, nav, a, b |
+		("slrp " ++ a.asString ++ " imp: " ++ b.asString).postln;
         ^op.compare(m, nav, a, b);
     }
 
@@ -471,9 +496,8 @@ SkoarpuscleLoop : Skoarpuscle {
 
         noad.collect(\loop_condition).do {
             | x |
-            if (x.children.size != 0) {
-                condition = x.children[1].next_skoarpuscle;
-            };
+            condition = Skoarpion.new_from_subtree(skoar, x);
+            
         };
 
         noad.collect(\loop_body).do {
@@ -505,7 +529,9 @@ SkoarpuscleLoop : Skoarpuscle {
                     m.fairy.incr_i;
 
                     if (condition.notNil) {
-                        if (condition.evaluate(m) == false) {
+						m.koar.do_skoarpion(condition, m, nav, [\inline]);
+                        
+						if (m.fairy.impression.isKindOf(SkoarpuscleLies)) {
                             break.();
                         };
                     };

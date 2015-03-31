@@ -89,29 +89,44 @@ SkoarFairy {
 
     pop_compare {
         l_value = compare_stack.pop;
+		"popped l_value:".post; l_value.postln;
     }
 
 	compare_impress {
-		| x |
+		| m |
 		l_value = this.impression;
+
+		if (l_value.isKindOf(SkoarpuscleFairy))	{
+			// we want the impression now
+			l_value = m.fairy.impression;
+		};
+		
+		"l_value from impression: ".post; l_value.postln;
 	}
 
 	impress_i {
-		this.impress(i);
+		^this.impress(i);
 	}
 
     impress {
         | x |
         ("$:" ++ name ++ ".impression: " ++ x.asString).postln;
 
+		if (x.isKindOf(SkoarpuscleFairy)) {
+            ^impression;
+        };
+
         if (x.isKindOf(SkoarpuscleDeref)) {
             x = x.lookup(minstrel);
         };
 
-        impression = if (x.isKindOf(Skoarpuscle)) {
-            x
+        if (x.isKindOf(Skoarpuscle)) {
+            if (x.impressionable == false) {
+				^impression; 
+			};
+			impression = x;
         } {
-            Skoarpuscle.wrap(x)
+            impression = Skoarpuscle.wrap(x)
         };
 
         if (impression.isNoatworthy == true) {
@@ -165,7 +180,7 @@ SkoarpuscleFairy : Skoarpuscle {
         if (x.isKindOf(Skoarpuscle)) {
             x = x.flatten(m);
         };
-
+		"Flattening the fairy: ".post; x.postln;
         ^x;
     }
 
@@ -176,7 +191,7 @@ SkoarpuscleFairy : Skoarpuscle {
         "Fairy got msg: ".post; msg_arr.dump;
 
 		if (msg_arr[0] == \i) {
-			minstrel.fairy.impress_i;
+			^minstrel.fairy.impress_i;
 		};
 
         ^this;

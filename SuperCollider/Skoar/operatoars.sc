@@ -55,7 +55,7 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:   { | x, y | SkoarpuscleInt(x.val + y.val)   },
                 SkoarpuscleFloat: { | x, y | SkoarpuscleFloat(x.val + y.val) },
-                SkoarpuscleList: { | x, y | SkoarpuscleList([x] ++ y.val)  }
+                SkoarpuscleList:  { | x, y | SkoarpuscleList([x] ++ y.val)  }
 
             ),
 
@@ -65,7 +65,7 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:   { | x, y | SkoarpuscleFloat(x.val + y.val); },
                 SkoarpuscleFloat: { | x, y | SkoarpuscleFloat(x.val + y.val); },
-                SkoarpuscleList: { | x, y | SkoarpuscleList([x] ++ y.val);  }
+                SkoarpuscleList:  { | x, y | SkoarpuscleList([x] ++ y.val);  }
             )
         );
 
@@ -113,7 +113,7 @@ SkoarOps {
     assign {
         | minstrel, v, settable |
         var f = this.lookup(assignment, settable, v);
-        //"assign ".post; v.postln;
+        "assign ".post; v.postln;
         ^minstrel.fairy.impress(f.(minstrel, v, settable));
     }
 

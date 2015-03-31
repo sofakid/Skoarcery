@@ -280,27 +280,20 @@ Skoarmantics {
 				var x = SkoarpuscleBoolean(noad);
 				noad.skoarpuscle = x;
 				
-				noad.on_enter = {
-					| m, nav |
-					m.fairy.push_compare;
-				};
-
-				x.op.noad.on_enter = {
-					| m, nav |
-					m.fairy.compare_impress;
-				};
-
 				end_noad.on_enter = {
                     | m, nav |
 					var l_value = m.fairy.l_value;
-                    var y = x.evaluate(m, nav, l_value, m.fairy.impression);
+                    var y;
+					var imp = m.fairy.impression;
+					
+					("derp " ++ l_value.asString ++ " imp: " ++ imp.asString).postln;
+					y = x.evaluate(m, nav, l_value, imp);
+
 					m.fairy.impress(y);
 					m.fairy.pop_compare;
                 };
 
                 noad.add_noad(end_noad);
-				
-                
             },
 
             beat: {
@@ -390,11 +383,9 @@ Skoarmantics {
 				};
             },
 
-
             listy: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleList.new;
-                
             },
 
             args: {
@@ -473,6 +464,7 @@ Skoarmantics {
 							"msgable::x: ".post; x.postln;
                             case {x.isKindOf(SkoarpuscleMsg)} {
                                 result = result.skoar_msg(x, m);
+								"msgable::msg_result: ".post; result.postln;
                             };
                         };
 
@@ -490,6 +482,7 @@ Skoarmantics {
 
                 op = noad.children[0].toke.lexeme;
                 settable = noad.children[1].next_skoarpuscle;
+				settable.impressionable = false;
 
                 noad.on_enter = switch (op)
                     {"+>"} {{
@@ -508,6 +501,7 @@ Skoarmantics {
                         | m, nav |
                         var x = m.fairy.cast_arcane_magic;
                         Skoar.ops.assign(m, x, settable);
+						m.fairy.impress(x);
                     }};
             },
 
