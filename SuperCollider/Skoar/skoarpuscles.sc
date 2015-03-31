@@ -371,8 +371,8 @@ SkoarpuscleBooleanOp : Skoarpuscle {
 
         debug("{? " ++ a.asString ++ " " ++ val ++ " " ++ b.asString ++ " ?}");
 
-        a !? b !? {^f.(a, b)};
-
+		a !? b !? {^f.(a, b)};
+		
         ^false
     }
 

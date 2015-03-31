@@ -64,7 +64,7 @@ MsgOp:            \\.(?![)\\]])
 MathOp:           [+x\\-](?!>)
 
 NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
-BooleanOp*:       ==|!=|<(?!=)|<=|>(?!=)|>=|and|or|xor
+BooleanOp*:       ==|!=|<=|>=|and|or|xor
 Choard*:          (D(?![a.])|[ABCEFG])([Mm0-9]|sus|dim)*
 CondS:            [{][?][\\n]*
 CondIf:           [?][?](?![}])
