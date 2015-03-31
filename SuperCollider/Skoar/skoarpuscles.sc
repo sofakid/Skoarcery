@@ -139,7 +139,6 @@ SkoarpuscleFreq : Skoarpuscle {
     init {
         | lexeme |
         val = lexeme; // todo chop off Hz
-
     }
 
     isNoatworthy { ^false; } // todo
@@ -342,7 +341,7 @@ SkoarpuscleBooleanOp : Skoarpuscle {
     }
 
     compare {
-        | a, b, m, nav |
+        | m, nav, a, b |
         var x;
         var y;
 
@@ -372,13 +371,12 @@ SkoarpuscleBoolean : Skoarpuscle {
     init {
         | noad |
         op = noad.children[1].next_skoarpuscle;
-        
         noad.children = [];
     }
 
     evaluate {
         | m, nav, a, b |
-        ^op.compare(a, b, m, nav);
+        ^op.compare(m, nav, a, b);
     }
 
 }

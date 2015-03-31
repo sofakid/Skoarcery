@@ -251,6 +251,10 @@ SkoarNoad {
         if (on_enter.notNil) {
             on_enter.(minstrel, nav);
         };
+
+		if (skoarpuscle.notNil and: skoarpuscle.respondsTo(\on_enter)) {
+			skoarpuscle.on_enter(minstrel, nav);
+		};
     }
 
     // ------------------
