@@ -1,6 +1,5 @@
-
 src = """
-
+#
 # Skoar Nonterminals
 #
 # like_this for nonterminals, LikeThis for terminals

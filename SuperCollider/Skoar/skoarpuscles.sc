@@ -418,12 +418,12 @@ SkoarpuscleConditional : Skoarpuscle {
 
     init_two {
         | skoar, noad |
-
+		var i = 0;
         ifs = [];
 
         noad.collect(\cond_if).do {
             | x |
-            var condition = x.children[0].next_skoarpuscle;
+            var condition = Skoarpion.new_from_subtree(skoar, x.children[0]);
             var if_body;
             var else_body;
 
@@ -436,6 +436,7 @@ SkoarpuscleConditional : Skoarpuscle {
 
             ifs = ifs.add([condition, if_body, else_body]);
         };
+		noad.children = #[];
 
     }
 
@@ -444,12 +445,18 @@ SkoarpuscleConditional : Skoarpuscle {
 
         ifs.do {
             | x |
-            var c = x[0];
-            var i = x[1];
-            var e = x[2];
+            var condition = x[0];
+            var if_body = x[1];
+            var else_body = x[2];
+			var impression;
 
+			m.koar.do_skoarpion(condition,
+                m, nav, [\inline], nil
+            );
+
+			impression = m.fairy.impression;
             m.koar.do_skoarpion(
-                if (c.evaluate(m, nav) == true) {i} {e},
+                if (impression.isKindOf(SkoarpuscleLies) == false) {if_body} {else_body},
                 m, nav, [\inline], nil
             );
         };
@@ -496,8 +503,9 @@ SkoarpuscleLoop : Skoarpuscle {
 
         noad.collect(\loop_condition).do {
             | x |
-            condition = Skoarpion.new_from_subtree(skoar, x);
-            
+			if (x.children.size > 0) {
+				condition = Skoarpion.new_from_subtree(skoar, x);
+			};
         };
 
         noad.collect(\loop_body).do {
@@ -525,17 +533,15 @@ SkoarpuscleLoop : Skoarpuscle {
                     };
 "eh?".postln;
                     m.koar.do_skoarpion(body, m, nav, [\inline], m.fairy.impression);
-
                     m.fairy.incr_i;
 
-                    if (condition.notNil) {
+					if (condition.notNil) {
 						m.koar.do_skoarpion(condition, m, nav, [\inline]);
                         
 						if (m.fairy.impression.isKindOf(SkoarpuscleLies)) {
-                            break.();
-                        };
+							break.();
+						};
                     };
-
                 };
 
                 if (each.isNil) {
@@ -548,7 +554,8 @@ SkoarpuscleLoop : Skoarpuscle {
                         f.(element);
                     };
                 };
-
+				
+				"zorp: condition: ".post; condition.postln;
                 if (condition.isNil) {
                     break.();
                 };
@@ -569,7 +576,6 @@ SkoarpuscleLoop : Skoarpuscle {
 
 
 SkoarpuscleLoopMsg : Skoarpuscle {
-
 }
 
 SkoarpuscleExprEnd : Skoarpuscle {

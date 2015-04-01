@@ -317,7 +317,7 @@ Skoarmantics {
 
             ottavas: {
                 | skoar, noad |
-                noad.skoarpuscle = noad.next_skoarpuscle;
+                
             },
 
             cthulhu: {
@@ -413,6 +413,7 @@ Skoarmantics {
 						| m, nav |
 						var listy = m.fairy.impression;
 						msg.foreach(listy);
+						msg.on_enter(m, nav);
 					};
 
                 } {msg.isKindOf(SkoarpuscleMsgName)} {
