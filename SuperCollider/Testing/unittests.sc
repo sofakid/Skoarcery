@@ -163,11 +163,11 @@ SkoarTests {
 
     ],
 
-/*    \numbers -> [
+    \numbers -> [
         "-1 ) 0 ) 1 ) 2 ) 20 ] 0.1 ] 1.0 ]  ",
         [(\degree:-1),(\degree:0),(\degree:1),(\degree:2),
         (\degree:20),(\degree:0.1),(\degree:1.0)]
-    ],*/
+    ],
 
     \colons_simple -> [
         "|: ) ) ) :| ] ] :|",
@@ -242,10 +242,31 @@ SkoarTests {
         [qrt, eth]
     ],
 
-    \skoarpion_d -> [
-        ") {! f !! ] !! 'food' !} !f",
-        [qrt, (\string: "food")]
+	\math_add_a -> [
+        "1 + 2 ) 3 + 4 + 5 )",
+        [(\degree:3),(\degree:12)]
     ],
+
+	\math_add_b -> [
+        "1 + 2 ) 3 + 4 + 5 ) $ + 3 )",
+        [(\degree:3),(\degree:12),(\degree:15)]
+    ],
+
+	\math_add_c -> [
+        "0 + 0 ) 1 + 1 + 1 => @x )",
+        [(\degree:0),(\degree:3)]
+    ],
+
+	\math_mul_a -> [
+        "1 x 2 ) 3 x 4 x 5 )",
+        [(\degree:2),(\degree:60)]
+    ],
+
+	\math_mul_b -> [
+        "1 + 2 x 5 ) 3 + 4 x 5 ) $ x 2 + 1 )",
+        [(\degree:15),(\degree:35),(\degree:71)]
+    ],
+
 ]}
 
 
@@ -388,11 +409,7 @@ Expectoar {
             testoar.assert(seen_event.isKindOf(Event), tag ++ "not an event.");
 
             if (seen_event.notNil) {
-                var seen_val = seen_event[ekey];
-
-                if (seen_val.isKindOf(Skoarpuscle)) {
-                    seen_val = seen_val.val;
-                };
+                var seen_val = this.flatten(seen_event[ekey]);
 
                 testoar.assert(seen_val == eval, tag ++
                     "seen_event[" ++ ekey ++ "] = " ++ seen_val ++ " == " ++ eval ++ " expected"
@@ -411,7 +428,8 @@ Expectoar {
             exp_event.keysValuesDo {
                 | ekey, eval |
                 if (seen_event.notNil) {
-                    var x = seen_event[ekey];
+                    var x = this.flatten(seen_event[ekey]);
+
                     seen = seen && (x == eval);
                 };
             };
@@ -423,4 +441,23 @@ Expectoar {
 
         ^false;
     }
+
+	flatten {
+		| obj |
+
+		if (obj.isKindOf(Skoarpuscle)) {
+			obj = obj.val;
+		};
+
+		if (obj.isKindOf(Array)) {
+			var a = [];
+			obj.do {
+				| x |
+				a = a.add(this.flatten(x));
+			};
+			obj = a;
+		};
+		
+		^obj;
+	}
 }

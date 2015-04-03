@@ -252,7 +252,7 @@ SkoarpuscleDeref : Skoarpuscle {
 
 		if (x.isKindOf(SkoarpuscleSkoarpion)) {
 			var impression = m.fairy.impression;
-			"passing args: ".post; impression.postln;													
+			"passing args: ".post; impression.class.asString.postln;													
 			m.koar.do_skoarpion(x.val, m, nav, msg_arr, impression);
 		} {
 			m.fairy.impress(x);
