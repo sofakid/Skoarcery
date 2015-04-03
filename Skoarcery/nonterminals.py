@@ -57,8 +57,9 @@ deref*           : Deref deref_prime
 +deref_prime     : MsgNameWithArgs listy_suffix | MsgName
 
 expr*            : msgable expr_prime
-expr_prime       : assignment expr_prime | math expr_prime | boolean | <e> 
+expr_prime       : assignment expr_prime | math expr_prime | boolean | times | <e> 
 
+times            : Times
 boolean*         : BooleanOp expr
 math*            : MathOp msgable
 assignment*      : AssOp settable

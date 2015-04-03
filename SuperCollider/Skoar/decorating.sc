@@ -258,13 +258,13 @@ Skoarmantics {
             skoar: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion.new_from_skoar(skoar));
-                noad.children = [];
+                noad.children = #[];
             },
 
             skoarpion: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleSkoarpion(Skoarpion(skoar, noad));
-                noad.children = [];
+                noad.children = #[];
             },
 
             conditional: {
@@ -371,15 +371,11 @@ Skoarmantics {
                     var end_noad = SkoarNoad(\deref_end, noad);
                     end_noad.on_enter = {
                         | m, nav |
-                        m.fairy.cast_arcane_magic;
-                        x.on_enter(m, nav);
+						x.on_exit(m, nav);
                     };
 
                     noad.add_noad(end_noad);
-                    noad.on_enter = {
-                        | m, nav |
-                        args.on_enter(m, nav);
-                    };
+                    
 				};
             },
 
@@ -417,6 +413,7 @@ Skoarmantics {
 					};
 
                 } {msg.isKindOf(SkoarpuscleMsgName)} {
+					"foooood".postln;
                     args = SkoarpuscleArgs.new;
                     noad.skoarpuscle = SkoarpuscleMsg(msg.val, args);
                 };
@@ -440,40 +437,46 @@ Skoarmantics {
             msgable: {
                 | skoar, noad |
                 var noads = List[];
-
+				var has_messages = false;
+				
                 // strip out the msg operators
                 noad.children.do {
                     | x |
                     if (x.toke.isKindOf(Toke_MsgOp) == false) {
                         noads.add(x);
-                    };
+                    } {
+						has_messages = true;
+					};
                 };
 
-                noad.children = noads.asArray;
-                noads = noad.children;
+				if (has_messages == true) {
+				 
+					noad.children = noads.asArray;
+					noads = noad.children;
 
-                // evaluate a chain of messages, returning the result
-                noad.on_enter = {
-                    | m, nav |
-                    var result = noads[0].next_skoarpuscle;
-					"msgable::noads: ".post; noads.postln;
-					"msgable::result: ".post; result.postln;
-                    if (result.notNil) {
-                        noads.do {
-                            | y |
-                            var x = y.skoarpuscle;
-							"msgable::x: ".post; x.postln;
-                            case {x.isKindOf(SkoarpuscleMsg)} {
-                                result = result.skoar_msg(x, m);
-								"msgable::msg_result: ".post; result.postln;
-                            };
-                        };
+					// evaluate a chain of messages, returning the result
+					noad.on_enter = {
+						| m, nav |
+						var result = noads[0].next_skoarpuscle;
+						"msgable::noads: ".post; noads.postln;
+						"msgable::result: ".post; result.postln;
+						if (result.notNil) {
+							noads.do {
+								| y |
+								var x = y.skoarpuscle;
+								"msgable::x: ".post; x.postln;
+								case {x.isKindOf(SkoarpuscleMsg)} {
+									result = result.skoar_msg(x, m);
+									"msgable::msg_result: ".post; result.postln;
+								};
+							};
 
-                        "msgable:impressing ".post; result.postln;
-                        m.fairy.impress(result);
-                    };
+							"msgable:impressing ".post; result.postln;
+							m.fairy.impress(result);
+						};
 
-                };
+					};
+				};
             },
 
             assignment: {

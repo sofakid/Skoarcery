@@ -194,7 +194,7 @@ SkoarpuscleSymbol : Skoarpuscle {
 SkoarpuscleDeref : Skoarpuscle {
 
     var msg_arr;
-    var args;
+    var <args;
 
     *new {
         | v, a |
@@ -219,24 +219,40 @@ SkoarpuscleDeref : Skoarpuscle {
 
     on_enter {
         | m, nav |
-        var x = this.lookup(m);
-
-        //"deref:on_enter: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
-        x = Skoarpuscle.wrap(x);
-
-        if (x.isKindOf(SkoarpuscleSkoarpion)) {
-            m.koar.do_skoarpion(x.val, m, nav, msg_arr, m.fairy.impression);
-        } {
-            m.fairy.impress(x);
-        };
+		if (args.isNil) {
+			this.do_deref(m, nav);
+		} {
+			args.on_enter(m, nav);
+		};
     }
+
+	on_exit {
+		| m, nav |
+		this.do_deref(m, nav);
+	}
+
+	do_deref {
+		| m, nav |
+		var x = this.lookup(m);
+
+		"deref:on_enter: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+		x = Skoarpuscle.wrap(x);
+
+		if (x.isKindOf(SkoarpuscleSkoarpion)) {
+			var impression = m.fairy.impression;
+			"passing args: ".post; impression.postln;													
+			m.koar.do_skoarpion(x.val, m, nav, msg_arr, impression);
+		} {
+			m.fairy.impress(x);
+		};
+	}
 
     skoar_msg {
         | msg, minstrel |
         var ret = val;
         var x = this.lookup(minstrel);
 
-        //"deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+        "deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
         msg_arr = msg.get_msg_arr(minstrel);
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
@@ -480,8 +496,12 @@ SkoarpuscleSkoarpion : Skoarpuscle {
             m.koar[val.name] = this;
         };
 
+		"zoop".postln;
         if (msg_arr.notNil) {
-            m.koar.do_skoarpion(val, m, nav, msg_arr, nil);
+			m.fairy.impression.postln;
+			msg_arr.postln;
+
+            m.koar.do_skoarpion(val, m, nav, msg_arr, m.fairy.impression);
         };
     }
 
@@ -531,7 +551,7 @@ SkoarpuscleLoop : Skoarpuscle {
                     if (element.isKindOf(Skoarpuscle)) {
                         m.fairy.impress(element);
                     };
-"eh?".postln;
+
                     m.koar.do_skoarpion(body, m, nav, [\inline], m.fairy.impression);
                     m.fairy.incr_i;
 

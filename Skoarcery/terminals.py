@@ -120,6 +120,7 @@ Bars*:            :?\\|+:?
 PedalDown:        Ped\\.?
 PedalUp:          [*](?!>)
 
+Times:            [Tt]imes
 """
 
 #

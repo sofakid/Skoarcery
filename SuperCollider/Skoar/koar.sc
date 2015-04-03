@@ -108,7 +108,7 @@ SkoarKoar {
         if (args_spec.isKindOf(SkoarpuscleArgsSpec)) {
             var passed_args, n;
 
-            passed_args = if (args.isNil) { [] } { args };
+            passed_args = if (args.isKindOf(SkoarpuscleList)) { args.val } { [] };
             n = passed_args.size;
 
             // foreach arg name defined, set the value from args
@@ -116,7 +116,7 @@ SkoarKoar {
                 | k |
                 //("k: " ++ k).postln;
                 vars[k] = if (i < n) {
-                    args[i]
+                    passed_args[i]
                 } {
                     // this defaults to passing 0 when not enough args are sent.
                     SkoarpuscleInt(0)

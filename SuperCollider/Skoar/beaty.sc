@@ -83,7 +83,7 @@ SkoarpuscleBeat : Skoarpuscle {
 
         e[\dur] = val;
 
-        //e.asCompileString.postln;
+        e.asCompileString.postln;
         e.yield;
     }
 
