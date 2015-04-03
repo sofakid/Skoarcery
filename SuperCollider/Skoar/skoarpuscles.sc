@@ -7,6 +7,7 @@ Skoarpuscle {
 
     var <>val;
 	var <>impressionable;
+	var <>county;
 
     *new { | v | ^super.new.init(v); }
     init { 
@@ -20,6 +21,11 @@ Skoarpuscle {
     // override and implement .asNoat;
     isNoatworthy { ^false; }
     asNoat {SkoarError("asNoat called on " ++ this.class.asString ++ ", which is not noatworthy.").throw;}
+
+	// override and implement .asCount;
+    isCounty { ^false; }
+    asCount {SkoarError("asCount called on " ++ this.class.asString ++ ", which is not county.").throw;}
+
 
     flatten { | m | ^val; }
 
@@ -110,6 +116,12 @@ SkoarpuscleInt : Skoarpuscle {
 
     asNoat {
         ^SkoarNoat_Degree(val.asInteger);
+    }
+
+    isCounty { ^true; }
+
+    asCount {
+        ^val.asInteger;
     }
 
     flatten {
@@ -496,13 +508,30 @@ SkoarpuscleSkoarpion : Skoarpuscle {
             m.koar[val.name] = this;
         };
 
-		"zoop".postln;
         if (msg_arr.notNil) {
 			m.fairy.impression.postln;
 			msg_arr.postln;
 
             m.koar.do_skoarpion(val, m, nav, msg_arr, m.fairy.impression);
         };
+    }
+
+}
+
+SkoarpuscleTimes : Skoarpuscle {
+
+	on_enter {
+        | m, nav |
+		var desired_times = m.fairy.impression;
+		
+		if (desired_times.isCounty) {
+			var times_seen = m.fairy.how_many_times_have_you_seen(this);
+			desired_times = desired_times.asCount;
+
+			("desired_times: " ++ desired_times.asString ++ "\n times seen: " ++ times_seen.asString).postln;
+			m.fairy.impress( (desired_times > times_seen) );
+		};
+		 
     }
 
 }

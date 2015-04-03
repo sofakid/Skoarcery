@@ -5,12 +5,15 @@ SkoarFairy {
     var <noat;
     var <impression;
     var magic;
-    var <listy_stack;
-    var <magic_stack;
-	var <i_stack;
+    var listy_stack;
+    var magic_stack;
+	var i_stack;
 	var i;
-	var <compare_stack;
+	var compare_stack;
 	var <l_value;
+
+	var times_seen_stack;
+	var times_seen;
 
     *new {
         | nom, m |
@@ -31,6 +34,10 @@ SkoarFairy {
 		i = 0;
 		compare_stack = [];
 		l_value = nil;
+
+		times_seen_stack = [];
+		times_seen = IdentityDictionary.new;
+
     }
 
 	get_top_listy {
@@ -80,6 +87,30 @@ SkoarFairy {
 
 	incr_i {
 		i = i + 1;
+	}
+
+	push_times_seen {
+        times_seen_stack = times_seen_stack.add(times_seen);
+		times_seen = IdentityDictionary.new;
+    }
+
+    pop_times_seen {
+        times_seen = times_seen_stack.pop;
+    }
+
+	how_many_times_have_you_seen {
+		| thing |
+
+		var times = times_seen[thing];
+
+		if (times.isNil) {
+			times_seen[thing] = 1;
+			^1;
+		};
+		
+		times = times + 1;
+		times_seen[thing] = times;
+		^times;	
 	}
 
 	push_compare {

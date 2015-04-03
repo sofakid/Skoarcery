@@ -59,7 +59,7 @@ deref*           : Deref deref_prime
 expr*            : msgable expr_prime
 expr_prime       : assignment expr_prime | math expr_prime | boolean | times | <e> 
 
-times            : Times
+times*           : Times
 boolean*         : BooleanOp expr
 math*            : MathOp msgable
 assignment*      : AssOp settable

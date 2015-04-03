@@ -226,6 +226,13 @@ SkoarTokeInspector {
                 var x = SkoarpuscleListEnd.new;
                 noad.skoarpuscle = x;
                 noad.toke = nil;
+            },
+
+			Toke_Times: {
+                | skoar, noad, toke |
+                var x = SkoarpuscleTimes.new;
+                noad.skoarpuscle = x;
+                noad.toke = nil;
             }
 
         );
