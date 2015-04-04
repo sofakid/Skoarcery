@@ -7,13 +7,10 @@ src = """
 # + before a nonterminal indicates this is an intermediate step that can be
 # skipped in the constructed parse tree, it will not create a new skoarnode,
 # instead appending its noads to its parent's children list.
-#
-# * after a nonterminal means there is corresponding semantic code for this,
-# defined in skoarmantics.py
 
 skoar              : branches
 +branches          : branch branches | <e>
-branch*            : optional_voice phrases Newline
+branch             : optional_voice phrases Newline
 +optional_voice    : Voice | <e>
 
 +phrases           : phrasey phrases | <e>
@@ -26,50 +23,50 @@ skrp_suffix        : skrp_lines SkoarpionEnd
 +skrp_moar_lines   : Newline skrp_lines | <e>
 
 +optional_args     : args | <e>
-args*              : ListS args_suffix
+args               : ListS args_suffix
 args_suffix        : args_entries ListE
 +args_entries      : SymbolName moar_args_entries
 +moar_args_entries : ListSep args_entries | <e>
 
-listy*             : ListS listy_suffix
+listy              : ListS listy_suffix
 +listy_suffix      : listy_entries ListE | ListE
 +listy_entries     : expr moar_listy_entries
 +moar_listy_entries: ListSep listy_entries | Newline | <e>
 
-marker*            : Segno | Fine | coda | Volta | Bars
-coda*              : Coda optional_al_coda
+marker             : Segno | Fine | coda | Volta | Bars
+coda               : Coda optional_al_coda
 optional_al_coda   : AlCoda | <e>
-dal_goto*          : DaCapo al_x | DalSegno al_x
+dal_goto           : DaCapo al_x | DalSegno al_x
 al_x               : AlCoda | AlSegno | AlFine | <e>
 
-beat*              : Crotchets | Quavers | Quarters | Eighths | Slash
+beat               : Crotchets | Quavers | Quarters | Eighths | Slash
 
 musical_keyword      : dynamic | ottavas | pedally | musical_keyword_misc
-musical_keyword_misc*: Rep | Portamento | Carrot
-pedally*             : PedalDown | PedalUp
-ottavas*             : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
-dynamic*             : DynPiano | DynForte | DynSFZ | DynFP
+musical_keyword_misc : Rep | Portamento | Carrot
+pedally              : PedalDown | PedalUp
+ottavas              : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
+dynamic              : DynPiano | DynForte | DynSFZ | DynFP
 
-nouny*           : cthulhu | conditional | loop | nouny_literal | musical_keyword | listy | deref | skoarpion
+nouny            : cthulhu | conditional | loop | nouny_literal | musical_keyword | listy | deref | skoarpion
 +nouny_literal   : Tuplet | Caesura | Freq | Int | Float | String | Choard | NamedNoat | Symbol | Fairy
 
-deref*           : Deref deref_prime
+deref            : Deref deref_prime
 +deref_prime     : MsgNameWithArgs listy_suffix | MsgName
 
-expr*            : msgable expr_prime
+expr             : msgable expr_prime
 expr_prime       : assignment expr_prime | math expr_prime | boolean | times | <e> 
 
-times*           : Times
-boolean*         : BooleanOp expr
+times            : Times
+boolean          : BooleanOp expr
 math*            : MathOp msgable
-assignment*      : AssOp settable
+assignment       : AssOp settable
 +settable        : Caesura | Symbol | listy | Quarters | Eighths | Fairy
 
-msgable*         : nouny msg_chain_node
+msgable          : nouny msg_chain_node
 +msg_chain_node  : MsgOp msg msg_chain_node | <e>
-msg*             : MsgNameWithArgs listy_suffix | MsgName | listy | loop
+msg              : MsgNameWithArgs listy_suffix | MsgName | listy | loop
 
-cthulhu*         : LWing Semicolon cthulhu_prime
+cthulhu          : LWing Semicolon cthulhu_prime
 +cthulhu_prime   : expr Semicolon RWing | Nosey Semicolon RWing
 
 conditional      : CondS cond_ifs CondE
@@ -124,6 +121,7 @@ def init():
         else:
             intermediate = False
 
+        # i'm not using this, but feel like i ought to be
         if name.endswith("*"):
             name = name.rstrip("*")
             has_semantics = True

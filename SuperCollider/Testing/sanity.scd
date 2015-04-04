@@ -1,0 +1,1 @@
+TestSkoarSanity.new.run;

@@ -7,12 +7,14 @@ import subprocess
 class Test_Sclang(unittest.TestCase):
 
     #home = "/p/supercollider/build/Install/SuperCollider/SuperCollider.app/Contents/Resources/"
-    home = "C:\\supercollider\\"
+    home = "C:\\supercollider\\SuperCollider\\"
 
     #sclang = home + "sclang"
     sclang = home + "sclang.exe"
 
-    testing_home = "../../SuperCollider/testing/runtests.scd"
+    sanity_scd = "SuperCollider/testing/sanity.scd"
+    dev_scd = "SuperCollider/testing/dev.scd"
+    ops_scd = "SuperCollider/testing/ops.scd"
 
     def print(self, msg):
         print("sclang: " + msg, end="")
@@ -91,4 +93,10 @@ class Test_Sclang(unittest.TestCase):
         self.assertTrue(tests_passed, "scland unit tests failed.")
 
     def test_sanity(self):
-        self.exec(Test_Sclang.testing_home)
+        self.exec(Test_Sclang.sanity_scd)
+
+    def test_dev(self):
+        self.exec(Test_Sclang.dev_scd)
+
+    def test_ops(self):
+        self.exec(Test_Sclang.ops_scd)

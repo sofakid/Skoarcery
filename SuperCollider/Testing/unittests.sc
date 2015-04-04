@@ -36,7 +36,7 @@ TestSkoarSanity : SkoarTest {
   	// will be considered a failure after 10 seconds
   	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
 
-    test_expectations {
+    test_sanity {
 
         SkoarTests.sanity.keysValuesDo {
             | test_name, test_meat |
@@ -78,6 +78,100 @@ TestSkoarSanity : SkoarTest {
 
     }
 
+
+}
+
+TestSkoarDev : SkoarTest {
+
+    var <>skoarse;
+
+    setUp {
+        // this will wait until the server is booted
+      	//this.bootServer;
+        // if the server is already booted it will free all nodes
+      	// and create new allocators, giving you a clean slate
+    }
+
+    tearDown {
+        // this will be called after each test
+    }
+
+  	//this.assert( 6 == 6, "6 should equal 6");
+  	//this.assertEquals( 9, 9, "9 should equal 9");
+  	//this.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0,
+  	//	"floating point math should be close to equal");
+
+  	// will wait until the condition is true
+  	// will be considered a failure after 10 seconds
+  	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
+
+    test_dev {
+
+        SkoarTests.dev.keysValuesDo {
+            | test_name, test_meat |
+            var s = test_meat[0];
+            var a = test_meat[1];
+            var msg = test_name.asString;
+
+            ("Test: " ++ test_name).postln;
+            "Test input: ".post; s.postln;
+            "Expectations:".postln; a.do {
+                | x |
+                x.postln;
+            };
+
+            Expectoar.test(s, a, this, msg);
+
+        };
+
+    }
+
+}
+
+TestSkoarOps : SkoarTest {
+
+    var <>skoarse;
+
+    setUp {
+        // this will wait until the server is booted
+      	//this.bootServer;
+        // if the server is already booted it will free all nodes
+      	// and create new allocators, giving you a clean slate
+    }
+
+    tearDown {
+        // this will be called after each test
+    }
+
+  	//this.assert( 6 == 6, "6 should equal 6");
+  	//this.assertEquals( 9, 9, "9 should equal 9");
+  	//this.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0,
+  	//	"floating point math should be close to equal");
+
+  	// will wait until the condition is true
+  	// will be considered a failure after 10 seconds
+  	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
+
+    test_ops {
+
+        SkoarTests.ops.keysValuesDo {
+            | test_name, test_meat |
+            var s = test_meat[0];
+            var a = test_meat[1];
+            var msg = test_name.asString;
+
+            ("Test: " ++ test_name).postln;
+            "Test input: ".post; s.postln;
+            "Expectations:".postln; a.do {
+                | x |
+                x.postln;
+            };
+
+            Expectoar.test(s, a, this, msg);
+
+        };
+
+    }
 
 }
 
@@ -150,16 +244,9 @@ SkoarTests {
 
     ],
 
-
     \listy_e -> [
         "<3,4> => @x <0,!x,2> => @food )",
         [( 'dur': 1.0, 'food': [ 0, [3,4], 2 ], 'x':[3, 4] )]
-
-    ],
-
-    \listy_f -> [
-        "<3,4> => @x <0, !x.next, !x.next, 2> => @food )",
-        [( 'dur': 1.0, 'food': [ 0, 3, 4, 2 ], 'x':[3, 4] )]
 
     ],
 
@@ -183,31 +270,6 @@ SkoarTests {
         [
         qrt,qrt,qrt,
         eth,eth,eth,eth
-        ]
-    ],
-
-    \colons_unbalanced -> [
-        "| ) ) ) :| ] ] :|",
-        [
-        qrt, qrt, qrt,
-        qrt, qrt, qrt, eth, eth,
-        qrt, qrt, qrt, eth, eth,
-        ]
-    ],
-
-    \da_capo_a -> [
-        ") ) ) fine ] ] D.C. al fine",
-        [
-        qrt, qrt, qrt, eth, eth,
-        qrt, qrt, qrt
-        ]
-    ],
-
-    \da_capo_b -> [
-        ") ) ) |: ] ] :| fine D.C. al fine",
-        [
-        qrt, qrt, qrt, eth, eth, eth, eth,
-        qrt, qrt, qrt, eth, eth, eth, eth
         ]
     ],
 
@@ -237,10 +299,13 @@ SkoarTests {
         [qrt, eth]
     ],
 
-    \skoarpion_c -> [
-        ") {! <x> !! ] !} => @f !f",
-        [qrt, eth]
-    ],
+]}
+
+*ops {
+    var qrt = (\dur:1);
+    var eth = (\dur:1/2);
+
+    ^IdentityDictionary[
 
 	\math_add_a -> [
         "1 + 2 ) 3 + 4 + 5 )",
@@ -269,7 +334,6 @@ SkoarTests {
 
 ]}
 
-
 *sanity_simple {^[
     "a ) )) ))) )))) ))))) )))))) )))))))",
     "b ] ]] ]]] ]]]] ]]]]] ]]]]]] ]]]]]]]",
@@ -287,6 +351,51 @@ SkoarTests {
     "{! f<x,y,z> !! !x ] ] !y ] !z ] !} !f.next",
     "^^(;,;)^^"
     ]}
+
+// These tests are for feature work, and are expected to fail until the feature is done.
+*dev {
+	var qrt = (\dur:1);
+    var eth = (\dur:1/2);
+
+	^IdentityDictionary[
+
+		\skoarpion_c -> [
+			") {! <x> !! ] !} => @f !f<0>",
+			[qrt, eth]
+		],
+
+		\da_capo_a -> [
+			") ) ) fine ] ] D.C. al fine",
+			[
+			qrt, qrt, qrt, eth, eth,
+			qrt, qrt, qrt
+			]
+		],
+
+		\da_capo_b -> [
+			") ) ) |: ] ] :| fine D.C. al fine",
+			[
+			qrt, qrt, qrt, eth, eth, eth, eth,
+			qrt, qrt, qrt, eth, eth, eth, eth
+			]
+		],
+
+		\listy_f -> [
+			"<3,4> => @x <0, !x.next, !x.next, 2> => @food )",
+			[( 'dur': 1.0, 'food': [ 0, 3, 4, 2 ], 'x':[3, 4] )]
+		],
+
+		\colons_unbalanced -> [
+			"| ) ) ) :| ] ] :|",
+			[
+			qrt, qrt, qrt,
+			qrt, qrt, qrt, eth, eth,
+			qrt, qrt, qrt, eth, eth,
+			]
+		],
+
+	];
+}
 
 *multikoar {
     var qrt = (\dur:1);
