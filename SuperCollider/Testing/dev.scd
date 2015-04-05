@@ -1,1 +1,42 @@
-TestSkoarDev.new.run;
+
+var qrt = (\dur:1);
+var eth = (\dur:1/2);
+
+SkoarTestRunner((
+
+	skoarpion_c: [
+		") {! <x> !! ] !} => @f !f<0>",
+		[qrt, eth]
+	],
+
+	da_capo_a: [
+		") ) ) fine ] ] D.C. al fine",
+		[
+		qrt, qrt, qrt, eth, eth,
+		qrt, qrt, qrt
+		]
+	],
+
+	da_capo_b: [
+		") ) ) |: ] ] :| fine D.C. al fine",
+		[
+		qrt, qrt, qrt, eth, eth, eth, eth,
+		qrt, qrt, qrt, eth, eth, eth, eth
+		]
+	],
+
+	listy_f: [
+		"<3,4> => @x <0, !x.next, !x.next, 2> => @food )",
+		[( 'dur': 1.0, 'food': [ 0, 3, 4, 2 ], 'x':[3, 4] )]
+	],
+
+	colons_unbalanced: [
+		"| ) ) ) :| ] ] :|",
+		[
+		qrt, qrt, qrt,
+		qrt, qrt, qrt, eth, eth,
+		qrt, qrt, qrt, eth, eth,
+		]
+	],
+
+));

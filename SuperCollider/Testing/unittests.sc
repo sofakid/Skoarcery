@@ -1,4 +1,6 @@
 SkoarTest : UnitTest {
+	
+	var <>tests_table;
 
     *report {
         super.report;
@@ -9,14 +11,8 @@ SkoarTest : UnitTest {
 			"SKOAR PASS".inform;
 		};
     }
-
-}
-
-TestSkoarSanity : SkoarTest {
-
-    var <>skoarse;
-
-    setUp {
+	
+	setUp {
         // this will wait until the server is booted
       	//this.bootServer;
         // if the server is already booted it will free all nodes
@@ -36,10 +32,16 @@ TestSkoarSanity : SkoarTest {
   	// will be considered a failure after 10 seconds
   	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
 
-    test_sanity {
+	test_do {
+		 
+		 this.assert(tests_table.notNil == true, "You didn't set up the tests right.");
+		 if (tests_table.isNil) {
+			^nil;
+		 };
 
-        SkoarTests.sanity.keysValuesDo {
+		 tests_table.keysValuesDo {
             | test_name, test_meat |
+
             var s = test_meat[0];
             var a = test_meat[1];
             var msg = test_name.asString;
@@ -54,383 +56,22 @@ TestSkoarSanity : SkoarTest {
             Expectoar.test(s, a, this, msg);
 
         };
-
-    }
-
-    test_multikoar {
-
-        SkoarTests.multikoar.keysValuesDo {
-            | test_name, test_meat |
-            var s = test_meat[0];
-            var a = test_meat[1];
-            var msg = test_name.asString;
-
-            ("Test: " ++ test_name).postln;
-            "Test input: ".post; s.postln;
-            "Expectations:".postln; a.do {
-                | x |
-                x.postln;
-            };
-
-            Expectoar.test(s, a, this, msg);
-
-        };
-
-    }
-
-
+	}
 }
 
-TestSkoarDev : SkoarTest {
-
-    var <>skoarse;
-
-    setUp {
-        // this will wait until the server is booted
-      	//this.bootServer;
-        // if the server is already booted it will free all nodes
-      	// and create new allocators, giving you a clean slate
-    }
-
-    tearDown {
-        // this will be called after each test
-    }
-
-  	//this.assert( 6 == 6, "6 should equal 6");
-  	//this.assertEquals( 9, 9, "9 should equal 9");
-  	//this.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0,
-  	//	"floating point math should be close to equal");
-
-  	// will wait until the condition is true
-  	// will be considered a failure after 10 seconds
-  	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
-
-    test_dev {
-
-        SkoarTests.dev.keysValuesDo {
-            | test_name, test_meat |
-            var s = test_meat[0];
-            var a = test_meat[1];
-            var msg = test_name.asString;
-
-            ("Test: " ++ test_name).postln;
-            "Test input: ".post; s.postln;
-            "Expectations:".postln; a.do {
-                | x |
-                x.postln;
-            };
-
-            Expectoar.test(s, a, this, msg);
-
-        };
-
-    }
-
-}
-
-TestSkoarOps : SkoarTest {
-
-    var <>skoarse;
-
-    setUp {
-        // this will wait until the server is booted
-      	//this.bootServer;
-        // if the server is already booted it will free all nodes
-      	// and create new allocators, giving you a clean slate
-    }
-
-    tearDown {
-        // this will be called after each test
-    }
-
-  	//this.assert( 6 == 6, "6 should equal 6");
-  	//this.assertEquals( 9, 9, "9 should equal 9");
-  	//this.assertFloatEquals( 4.0 , 1.0 * 4.0 / 4.0 * 4.0,
-  	//	"floating point math should be close to equal");
-
-  	// will wait until the condition is true
-  	// will be considered a failure after 10 seconds
-  	//this.wait( { p.isPlaying }, "waiting for synth to play", 10);
-
-    test_ops {
-
-        SkoarTests.ops.keysValuesDo {
-            | test_name, test_meat |
-            var s = test_meat[0];
-            var a = test_meat[1];
-            var msg = test_name.asString;
-
-            ("Test: " ++ test_name).postln;
-            "Test input: ".post; s.postln;
-            "Expectations:".postln; a.do {
-                | x |
-                x.postln;
-            };
-
-            Expectoar.test(s, a, this, msg);
-
-        };
-
-    }
-
-}
-
-SkoarTests {
-
-*sanity {
-    var qrt = (\dur:1);
-    var eth = (\dur:1/2);
-
-    ^IdentityDictionary[
-
-    \long_beats -> [
-        ") ). )) )). ))) )))) .))))) )))))) )))))))",
-        [(\dur:1),(\dur:1.5),(\dur:2),(\dur:3),(\dur:4),(\dur:8),(\dur:16),(\dur:32),(\dur:64)]
-    ],
-
-    \short_beats -> [
-        "] ]] ]]]  ]]]] ]]. ]]].  ]]]]] .]]]]]] ]]]]]]]",
-        [(\dur:1/2), (\dur:1/4),(\dur:1/8),
-         (\dur:1/16),(\dur:3/8), (\dur:3/16),
-         (\dur:1/32),(\dur:1/64),(\dur:1/128)]
-    ],
-
-    \long_rests -> [
-        "} }} }}} }}}} }. }}.",
-        [(\dur:1,\isRest:true),(\dur:2,\isRest:true),
-         (\dur:4,\isRest:true),(\dur:8,\isRest:true),
-         (\dur:1.5,\isRest:true),(\dur:3,\isRest:true)]
-    ],
-
-    \short_rests -> [
-        "o/ oo/ ooo/ oooo/ ooooo/   o/. oo/. ooo/.",
-        [(\dur:1/2,\isRest:true),(\dur:1/4,\isRest:true),
-         (\dur:1/8,\isRest:true), (\dur:1/16,\isRest:true),
-         (\dur:1/32,\isRest:true),(\dur:3/4,\isRest:true),
-         (\dur:3/8,\isRest:true),(\dur:3/16,\isRest:true)]
-    ],
-
-    \fancy_beats -> [
-        ".] .]]. ]. .)__ .)__. ]__.",
-        [(\dur:1/2),(\dur:3/8),(\dur:3/4),(\dur:1),(\dur:1.5),(\dur:3/4)]
-    ],
-
-    \fancy_beats -> [
-        ".] .]]. ]. .)__ .)__. ]__.",
-        [(\dur:1/2),(\dur:3/8),(\dur:3/4),(\dur:1),(\dur:1.5),(\dur:3/4)]
-    ],
-
-    \listy_a -> [
-        "<0,1,2> => @food )",
-        [( 'dur': 1.0, 'food': [ 0, 1, 2 ] )]
-
-    ],
-
-    \listy_b -> [
-        "<0.0, -1, 2.2> => @food )",
-        [( 'dur': 1.0, 'food': [ 0.0, -1, 2.2 ] )]
-
-    ],
-
-    \listy_c -> [
-        "<<0,3>,1,2> => @food )",
-        [( 'dur': 1.0, 'food': [ [0,3], 1, 2 ] )]
-
-    ],
-
-    \listy_d -> [
-        "3 => @x <0,!x,2> => @food )",
-        [( 'dur': 1.0, 'food': [ 0, 3, 2 ], 'x': 3 )]
-
-    ],
-
-    \listy_e -> [
-        "<3,4> => @x <0,!x,2> => @food )",
-        [( 'dur': 1.0, 'food': [ 0, [3,4], 2 ], 'x':[3, 4] )]
-
-    ],
-
-    \numbers -> [
-        "-1 ) 0 ) 1 ) 2 ) 20 ] 0.1 ] 1.0 ]  ",
-        [(\degree:-1),(\degree:0),(\degree:1),(\degree:2),
-        (\degree:20),(\degree:0.1),(\degree:1.0)]
-    ],
-
-    \colons_simple -> [
-        "|: ) ) ) :| ] ] :|",
-        [
-        qrt,qrt,qrt,
-        qrt,qrt,qrt, eth,eth,
-        qrt,qrt,qrt, eth,eth
-        ]
-    ],
-
-    \colons_middle -> [
-        "|: ) ) ) |: ] ] :|",
-        [
-        qrt,qrt,qrt,
-        eth,eth,eth,eth
-        ]
-    ],
-
-    \dal_segno_a -> [
-        ",segno` ) ) ) |: ] ] :| fine D.S. al fine",
-        [
-        qrt, qrt, qrt, eth, eth, eth, eth,
-        qrt, qrt, qrt, eth, eth, eth, eth
-        ]
-    ],
-
-    \dal_segno_b -> [
-        ",segno` ) ,segno` ) ) |: ] ] :| fine Dal Segno al fine",
-        [
-        qrt, qrt, qrt, eth, eth, eth, eth,
-             qrt, qrt, eth, eth, eth, eth,
-        ]
-    ],
-
-    \skoarpion_a -> [
-        ") {! f !! ] !} !f",
-        [qrt, eth]
-    ],
-
-    \skoarpion_b -> [
-        ") {! f<x> !! !x ] !} !f<0>",
-        [qrt, eth]
-    ],
-
-]}
-
-*ops {
-    var qrt = (\dur:1);
-    var eth = (\dur:1/2);
-
-    ^IdentityDictionary[
-
-	\math_add_a -> [
-        "1 + 2 ) 3 + 4 + 5 )",
-        [(\degree:3),(\degree:12)]
-    ],
-
-	\math_add_b -> [
-        "1 + 2 ) 3 + 4 + 5 ) $ + 3 )",
-        [(\degree:3),(\degree:12),(\degree:15)]
-    ],
-
-	\math_add_c -> [
-        "0 + 0 ) 1 + 1 + 1 => @x )",
-        [(\degree:0),(\degree:3)]
-    ],
-
-	\math_mul_a -> [
-        "1 x 2 ) 3 x 4 x 5 )",
-        [(\degree:2),(\degree:60)]
-    ],
-
-	\math_mul_b -> [
-        "1 + 2 x 5 ) 3 + 4 x 5 ) $ x 2 + 1 )",
-        [(\degree:15),(\degree:35),(\degree:71)]
-    ],
-
-]}
-
-*sanity_simple {^[
-    "a ) )) ))) )))) ))))) )))))) )))))))",
-    "b ] ]] ]]] ]]]] ]]]]] ]]]]]] ]]]]]]]",
-    "c .] .]]. .]]]__. ]]]]__ ]]]]] ]]]]]] ]]]]]]]",
-    "} }} }}} }}}} ",
-    "o/ oo/ ooo/ oooo/ ooooo/",
-    "_a _b _c# _d _e _f _g a b c d e f g",
-    "^o/ {! <x> !! !x !}",
-    "1 2.18 @foo @foo.postln",
-    "@foo !foo.postln",
-    "<'mic check',1,2>",
-    "{! f<x,y,z> !! !x ] ] !y ] !z ] !} !f<_a,c,e>.next",
-    "{! f<x,y,z> !! !x ] ] !y ] !z ] !} !f<_a,c,e,g>.next",
-    "{! f<x,y,z> !! !x ] ] !y ] !z ] !} !f<_a,c>.next",
-    "{! f<x,y,z> !! !x ] ] !y ] !z ] !} !f.next",
-    "^^(;,;)^^"
-    ]}
-
-// These tests are for feature work, and are expected to fail until the feature is done.
-*dev {
-	var qrt = (\dur:1);
-    var eth = (\dur:1/2);
-
-	^IdentityDictionary[
-
-		\skoarpion_c -> [
-			") {! <x> !! ] !} => @f !f<0>",
-			[qrt, eth]
-		],
-
-		\da_capo_a -> [
-			") ) ) fine ] ] D.C. al fine",
-			[
-			qrt, qrt, qrt, eth, eth,
-			qrt, qrt, qrt
-			]
-		],
-
-		\da_capo_b -> [
-			") ) ) |: ] ] :| fine D.C. al fine",
-			[
-			qrt, qrt, qrt, eth, eth, eth, eth,
-			qrt, qrt, qrt, eth, eth, eth, eth
-			]
-		],
-
-		\listy_f -> [
-			"<3,4> => @x <0, !x.next, !x.next, 2> => @food )",
-			[( 'dur': 1.0, 'food': [ 0, 3, 4, 2 ], 'x':[3, 4] )]
-		],
-
-		\colons_unbalanced -> [
-			"| ) ) ) :| ] ] :|",
-			[
-			qrt, qrt, qrt,
-			qrt, qrt, qrt, eth, eth,
-			qrt, qrt, qrt, eth, eth,
-			]
-		],
-
-	];
-}
-
-*multikoar {
-    var qrt = (\dur:1);
-    var eth = (\dur:1/2);
-    var sxt = (\dur:1/4);
-
-
-    ^IdentityDictionary[
-
-    \one_voice_a -> [
-        ")
-         .a ]
-         )
-         .a ]
-        ",
-        [qrt, eth, qrt, eth]
-    ],
-
-    \one_voice_b -> [
-        ") )
-         .a ] ]
-        ",
-        [qrt, qrt, eth, eth]
-    ],
-
-    \two_voices_a -> [
-        ") )
-         .a ]     ] ]
-         .b ]] ]] )
-        ",
-        [[qrt,qrt], [qrt,qrt], [eth,sxt], sxt, [eth,qrt], eth]
-    ],
-
-]}
-
+SkoarTestRunner {
+
+	*new {
+		| x |
+		^super.new.init(x);
+	}
+
+	init {
+		| tests |
+		var testoar = SkoarTest.new;
+		testoar.tests_table = tests;
+		testoar.run;
+	}
 }
 
 Expectoar {

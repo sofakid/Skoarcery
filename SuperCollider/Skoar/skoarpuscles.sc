@@ -159,10 +159,10 @@ SkoarpuscleFreq : Skoarpuscle {
 
     init {
         | lexeme |
-        val = lexeme; // todo chop off Hz
+        val = lexeme[0..lexeme.size-3]; // chop off Hz
     }
 
-    isNoatworthy { ^false; } // todo
+    isNoatworthy { ^true; }
 
     asNoat {
         ^SkoarNoat_Freq(val.asFloat);

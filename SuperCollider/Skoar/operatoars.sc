@@ -427,5 +427,4 @@ SkoarOps {
         ^minstrel.fairy.impress(f.(x, y));
     }
 
-
 }

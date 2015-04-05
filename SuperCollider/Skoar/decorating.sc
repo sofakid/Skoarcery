@@ -216,22 +216,19 @@ SkoarTokeInspector {
 
             Toke_ListSep: {
                 | skoar, noad, toke |
-                var x = SkoarpuscleListSep.new;
-                noad.skoarpuscle = x;
+                noad.skoarpuscle = SkoarpuscleListSep.new;
                 noad.toke = nil;
             },
 
             Toke_ListE: {
                 | skoar, noad, toke |
-                var x = SkoarpuscleListEnd.new;
-                noad.skoarpuscle = x;
+                noad.skoarpuscle = SkoarpuscleListEnd.new;
                 noad.toke = nil;
             },
 
 			Toke_Times: {
                 | skoar, noad, toke |
-                var x = SkoarpuscleTimes.new;
-                noad.skoarpuscle = x;
+                noad.skoarpuscle = SkoarpuscleTimes.new;
                 noad.toke = nil;
             }
 
