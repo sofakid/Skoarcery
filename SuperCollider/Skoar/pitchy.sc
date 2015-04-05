@@ -8,14 +8,16 @@ SkoarpuscleNoat : Skoarpuscle {
     var <sharps;
 
     init {
-        | lexeme |
+        | lex |
 
         var noat_regex = "^(_?)([a-g])";
         var sharps_regex = "[a-g](#*|b*)$";
-        var s = lexeme;
+        var s = lex;
         var r = s.findRegexp(noat_regex);
         var x = -1;
         var letter;
+
+		lexeme = lex;
 
         low = r[1][1] != "";
         letter = r[2][1];
@@ -59,6 +61,19 @@ SkoarpuscleNoat : Skoarpuscle {
         ^SkoarNoat_Degree(val);
     }
 
+	asString {
+		^lexeme;
+	}
+
+	asSymbol {
+		^lexeme.asSymbol;
+	}
+
+	raiseBy {
+		| x |
+		("should raise " ++ lexeme ++ " by " ++ x).postln;
+	}
+
     on_enter {
         | m, nav |
         m.fairy.impress(this);
@@ -68,8 +83,65 @@ SkoarpuscleNoat : Skoarpuscle {
 
 
 SkoarpuscleChoard : Skoarpuscle {
+     
+	 var <sharps;
+	 var <lexeme;
 
-    flatten {^this;}
+	 init {
+        | lex |
+
+		// lexeme was matched by: (D(?![a.])|[ABCEFG])(#|b)?([Mm0-9]|sus|dim)*
+        var noat_regex = "^([A-G])";
+        var sharps_regex = "[A-G](#|b)?";
+        var s = lex;
+        var r = s.findRegexp(noat_regex);
+        var x = -1;
+        var letter;
+
+		lexeme = lex;
+        letter = r[1][1];
+
+        r = s.findRegexp(sharps_regex);
+        s = r[1][1];
+
+        if (s.beginsWith("#")) {
+            x = 1;
+        };
+
+        sharps = s.size * x;
+
+        x = switch (letter)
+            {"C"} {0}
+            {"D"} {1}
+            {"E"} {2}
+            {"F"} {3}
+            {"G"} {4}
+            {"A"} {5}
+            {"B"} {6};
+
+        case {sharps > 0} {
+            x = sharps * 0.1 + x;
+        } {sharps < 0} {
+            x = sharps * -0.1 + x - 1;
+        };
+
+        val = x;
+    }
+
+    asString {
+		^lexeme;
+	}
+
+	asSymbol {
+		^lexeme.asSymbol;
+	}
+
+	raiseBy {
+		| x |
+		("should raise " ++ lexeme ++ " by " ++ x).postln;
+	}
+
+    flatten {^lexeme;}
 
     on_enter {
         | m, nav |
