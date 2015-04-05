@@ -161,9 +161,9 @@ SkoarOps {
 			),
 
 			SkoarpuscleSymbol: (
-				SkoarpuscleInt:     { | x, y | SkoarpuscleSymbol(x.val ++ y.asSymbol) },
-                SkoarpuscleFloat:   { | x, y | SkoarpuscleSymbol(x.val ++ y.asSymbol) },
-				SkoarpuscleFreq:    { | x, y | SkoarpuscleSymbol(x.val ++ y.asSymbol) },
+				SkoarpuscleInt:     { | x, y | SkoarpuscleSymbol(x.val ++ y.val.asSymbol) },
+                SkoarpuscleFloat:   { | x, y | SkoarpuscleSymbol(x.val ++ y.val.asSymbol) },
+				SkoarpuscleFreq:    { | x, y | SkoarpuscleSymbol(x.val ++ y.val.asSymbol ++ 'Hz') },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleSymbol(x.val ++ y.asSymbol) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleSymbol(x.val ++ y.asSymbol) },
@@ -178,14 +178,14 @@ SkoarOps {
 			),
 
 			SkoarpuscleString: (
-				SkoarpuscleInt:     { | x, y | SkoarpuscleString(x.val ++ y.asSymbol) },
-                SkoarpuscleFloat:   { | x, y | SkoarpuscleString(x.val ++ y.asSymbol) },
-				SkoarpuscleFreq:    { | x, y | SkoarpuscleString(x.val ++ y.asString) },
+				SkoarpuscleInt:     { | x, y | SkoarpuscleString(x.val ++ y.val.asString) },
+                SkoarpuscleFloat:   { | x, y | SkoarpuscleString(x.val ++ y.val.asString) },
+				SkoarpuscleFreq:    { | x, y | SkoarpuscleString(x.val ++ y.val.asString ++ "Hz") },
 
-				SkoarpuscleNoat:    { | x, y | SkoarpuscleString(x.val ++ y.asSymbol) },
-				SkoarpuscleChoard:  { | x, y | SkoarpuscleString(x.val ++ y.asSymbol) },
+				SkoarpuscleNoat:    { | x, y | SkoarpuscleString(x.val ++ y.asString) },
+				SkoarpuscleChoard:  { | x, y | SkoarpuscleString(x.val ++ y.asString) },
 
-				SkoarpuscleLies:    { | x, y | SkoarpuscleString(x.val ++ y.asSymbol) },
+				SkoarpuscleLies:    { | x, y | SkoarpuscleString(x.val ++ y.asString) },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleString(x.val ++ y.val.asString) },
@@ -207,8 +207,8 @@ SkoarOps {
 				SkoarpuscleLies:    { | x, y | y },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
-				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.asSymbol ++ y.val) },
-				SkoarpuscleString:  { | x, y | SkoarpuscleString(x.asString ++ y.val) },
+				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ 'Hz' ++ y.val) },
+				SkoarpuscleString:  { | x, y | SkoarpuscleString(x.val.asString ++ "Hz" ++ y.val) },
 
                 SkoarpuscleList:    { | x, y | SkoarpuscleList([x] ++ y.val) }
 				  
