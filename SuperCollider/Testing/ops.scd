@@ -29,463 +29,462 @@ SkoarTestRunner((
 		[(\degree:15),(\degree:35),(\degree:71)]
 	],
 
-	op_add_SkoarpuscleSymbol_SkoarpuscleSymbol: [
+	op_add_Symbol_Symbol: [
 		"@abc + @def => @x )", 
-		[(x:\abcdef)]
+		[(x:'abcdef')]
 	],
 
-	op_add_SkoarpuscleSymbol_SkoarpuscleInt: [
+	op_add_Symbol_Int: [
 		"@abc + 7 => @x )", 
-		[(x:\abc7)]
+		[(x:'abc7')]
 	],
 
-	op_add_SkoarpuscleSymbol_SkoarpuscleNoat: [
+	op_add_Symbol_Noat: [
 		"@abc + c# => @x )", 
-		[(x: 'abcc#' )]
+		[(x: 'abcc#')]
 	],
 
-	op_add_SkoarpuscleSymbol_SkoarpuscleChoard: [
+	op_add_Symbol_Choard: [
 		"@abc + A# => @x )", 
-		[(x: 'abcA' )]
+		[(x: 'abcA#')]
 	],
 
-	//op_add_SkoarpuscleSymbol_SkoarpuscleLies: [
+	//op_add_Symbol_Lies: [
 	//	"@abc + lies => @x )", 
-	//	[(x: nil )]
+	//	[(x: false)]
 	//],
 
-	op_add_SkoarpuscleSymbol_SkoarpuscleList: [
+	op_add_Symbol_List: [
 		"@abc + <0,1> => @x )", 
-		[(x: nil )]
+		[(x: ['abc', 0, 1])]
 	],
 
-	op_add_SkoarpuscleSymbol_SkoarpuscleFreq: [
+	op_add_Symbol_Freq: [
 		"@abc + 2600Hz => @x )", 
-		[(x: nil )]
+		[(x: 'abc2600Hz')]
 	],
 
-	//op_add_SkoarpuscleSymbol_SkoarpuscleCrap: [
+	//op_add_Symbol_Crap: [
 	//	"@abc + crap => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleSymbol_SkoarpuscleString: [
+	op_add_Symbol_String: [
 		"@abc + 'ABC' => @x )", 
-		[(x: nil )]
+		[(x: 'abcABC')]
 	],
 
-	op_add_SkoarpuscleSymbol_SkoarpuscleFloat: [
+	op_add_Symbol_Float: [
 		"@abc + 2.18 => @x )", 
-		[(x: nil )]
+		[(x: 'abc2.18')]
 	],
 
-
-	op_add_SkoarpuscleInt_SkoarpuscleSymbol: [
+	op_add_Int_Symbol: [
 		"7 + @abc => @x )", 
-		[(x: nil )]
+		[(x: '7abc')]
 	],
 
-	op_add_SkoarpuscleInt_SkoarpuscleInt: [
+	op_add_Int_Int: [
 		"7 + 7 => @x )", 
-		[(x: nil )]
+		[(x: 14)]
 	],
 
-	op_add_SkoarpuscleInt_SkoarpuscleNoat: [
+	op_add_Int_Noat: [
 		"7 + c# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleInt_SkoarpuscleChoard: [
+	op_add_Int_Choard: [
 		"7 + A# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	//op_add_SkoarpuscleInt_SkoarpuscleLies: [
+	//op_add_Int_Lies: [
 	//	"7 + lies => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleInt_SkoarpuscleList: [
+	op_add_Int_List: [
 		"7 + <0,1> => @x )", 
-		[(x: nil )]
+		[(x: [7,0,1])]
 	],
 
-	op_add_SkoarpuscleInt_SkoarpuscleFreq: [
-		"7 + 2600Hz => @x )", 
-		[(x: nil )]
+	op_add_Int_Freq: [
+		"7 + 2600Hz )", 
+		[(freq: 2607)] // how do i test the type?
 	],
 
-	//op_add_SkoarpuscleInt_SkoarpuscleCrap: [
+	//op_add_Int_Crap: [
 	//	"7 + crap => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleInt_SkoarpuscleString: [
+	op_add_Int_String: [
 		"7 + 'ABC' => @x )", 
-		[(x: nil )]
+		[(x: "7ABC")]
 	],
 
-	op_add_SkoarpuscleInt_SkoarpuscleFloat: [
+	op_add_Int_Float: [
 		"7 + 2.18 => @x )", 
-		[(x: nil )]
+		[(x: 9.18)]
 	],
 
 
-	op_add_SkoarpuscleList_SkoarpuscleSymbol: [
-		"<0,1> + @abc=> @x )", 
-		[(x: nil )]
+	op_add_List_Symbol: [
+		"<0,1> + @abc => @x )", 
+		[(x: [0,1,\abc])]
 	],
 
-	op_add_SkoarpuscleList_SkoarpuscleInt: [
+	op_add_List_Int: [
 		"<0,1> + 7 => @x )", 
-		[(x: nil )]
+		[(x: [0,1,7])]
 	],
 
-	op_add_SkoarpuscleList_SkoarpuscleNoat: [
+	op_add_List_Noat: [
 		"<0,1> + c# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleList_SkoarpuscleChoard: [
+	op_add_List_Choard: [
 		"<0,1> + A# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	//op_add_SkoarpuscleList_SkoarpuscleLies: [
+	//op_add_List_Lies: [
 	//	"<0,1> + lies => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleList_SkoarpuscleList: [
+	op_add_List_List: [
 		"<0,1> + <0,1> => @x )", 
-		[(x: nil )]
+		[(x: [0,1,0,1])]
 	],
 
-	op_add_SkoarpuscleList_SkoarpuscleFreq: [
+	op_add_List_Freq: [
 		"<0,1> + 2600Hz => @x )", 
-		[(x: nil )]
+		[(x: [0,1,2600])]
 	],
 
-	//op_add_SkoarpuscleList_SkoarpuscleCrap: [
+	//op_add_List_Crap: [
 	//	"<0,1> + crap => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleList_SkoarpuscleString: [
+	op_add_List_String: [
 		"<0,1> + 'ABC' => @x )", 
-		[(x: nil )]
+		[(x: [0,1,"ABC"] )]
 	],
 
-	op_add_SkoarpuscleList_SkoarpuscleFloat: [
+	op_add_List_Float: [
 		"<0,1> + 2.18 => @x )", 
-		[(x: nil )]
+		[(x: [0,1,2.18])]
 	],
 
 
-	op_add_SkoarpuscleNoat_SkoarpuscleSymbol: [
+	op_add_Noat_Symbol: [
 		"c# + @abc=> @x )", 
-		[(x: nil )]
+		[(x: 'c#abc')]
 	],
 
-	op_add_SkoarpuscleNoat_SkoarpuscleInt: [
+	op_add_Noat_Int: [
 		"c# + 7 => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleNoat_SkoarpuscleNoat: [
+	op_add_Noat_Noat: [
 		"c# + c# => @x )", 
-		[(x: nil )]
+		[(x: inf )]
 	],
 
-	op_add_SkoarpuscleNoat_SkoarpuscleChoard: [
+	op_add_Noat_Choard: [
 		"c# + A# => @x )", 
-		[(x: nil )]
+		[(x: inf )]
 	],
 
-	//op_add_SkoarpuscleNoat_SkoarpuscleLies: [
+	//op_add_Noat_Lies: [
 	//	"c# + lies => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf )]
 	//],
 
-	op_add_SkoarpuscleNoat_SkoarpuscleList: [
+	op_add_Noat_List: [
 		"c# + <0,1> => @x )", 
-		[(x: nil )]
+		[(x: inf )]
 	],
 
-	op_add_SkoarpuscleNoat_SkoarpuscleFreq: [
+	op_add_Noat_Freq: [
 		"c# + 2600Hz => @x )", 
-		[(x: nil )]
+		[(x: inf )]
 	],
 
-	//op_add_SkoarpuscleNoat_SkoarpuscleCrap: [
+	//op_add_Noat_Crap: [
 	//	"c# + crap => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleNoat_SkoarpuscleString: [
+	op_add_Noat_String: [
 		"c# + 'ABC' => @x )", 
-		[(x: nil )]
+		[(x: "c#ABC")]
 	],
 
-	op_add_SkoarpuscleNoat_SkoarpuscleFloat: [
+	op_add_Noat_Float: [
 		"c# + 2.18 => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
 
-	op_add_SkoarpuscleChoard_SkoarpuscleSymbol: [
+	op_add_Choard_Symbol: [
 		"A# + @abc=> @x )", 
-		[(x: nil )]
+		[(x: 'A#abc')]
 	],
 
-	op_add_SkoarpuscleChoard_SkoarpuscleInt: [
+	op_add_Choard_Int: [
 		"A# + 7 => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleChoard_SkoarpuscleNoat: [
+	op_add_Choard_Noat: [
 		"A# + c# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleChoard_SkoarpuscleChoard: [
+	op_add_Choard_Choard: [
 		"A# + A# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	//op_add_SkoarpuscleChoard_SkoarpuscleLies: [
+	//op_add_Choard_Lies: [
 	//	"A# + lies => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleChoard_SkoarpuscleList: [
+	op_add_Choard_List: [
 		"A# + <0,1> => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleChoard_SkoarpuscleFreq: [
+	op_add_Choard_Freq: [
 		"A# + 2600Hz => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	//op_add_SkoarpuscleChoard_SkoarpuscleCrap: [
+	//op_add_Choard_Crap: [
 	//	"A# + crap => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleChoard_SkoarpuscleString: [
+	op_add_Choard_String: [
 		"A# + 'ABC' => @x )", 
-		[(x: nil )]
+		[(x: "A#ABC" )]
 	],
 
-	op_add_SkoarpuscleChoard_SkoarpuscleFloat: [
+	op_add_Choard_Float: [
 		"A# + 2.18 => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
 
-	/*op_add_SkoarpuscleLies_SkoarpuscleSymbol: [
+	/*op_add_Lies_Symbol: [
 		"lies + @abc=> @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleLies_SkoarpuscleChoard: [
+	op_add_Lies_Choard: [
 		"lies + A# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleLies_SkoarpuscleFreq: [
+	op_add_Lies_Freq: [
 		"lies + 2600Hz => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleLies_SkoarpuscleList: [
+	op_add_Lies_List: [
 		"lies + <0,1> => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleLies_SkoarpuscleNoat: [
+	op_add_Lies_Noat: [
 		"lies + c# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleLies_SkoarpuscleString: [
+	op_add_Lies_String: [
 		"lies + 'ABC' => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleLies_SkoarpuscleLies: [
+	op_add_Lies_Lies: [
 		"lies + lies => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleLies_SkoarpuscleInt: [
+	op_add_Lies_Int: [
 		"lies + 7 => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleLies_SkoarpuscleFloat: [
+	op_add_Lies_Float: [
 		"lies + 2.18 => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 	*/
 
-	op_add_SkoarpuscleString_SkoarpuscleSymbol: [
-		"'ABC' + @abc=> @x )", 
-		[(x: nil )]
+	op_add_String_Symbol: [
+		"'ABC' + @abc => @x )", 
+		[(x: "ABCabc" )]
 	],
 
-	op_add_SkoarpuscleString_SkoarpuscleInt: [
+	op_add_String_Int: [
 		"'ABC' + 7 => @x )", 
-		[(x: nil )]
+		[(x: "ABC7" )]
 	],
 
-	op_add_SkoarpuscleString_SkoarpuscleNoat: [
+	op_add_String_Noat: [
 		"'ABC' + c# => @x )", 
-		[(x: nil )]
+		[(x: "ABCc#" )]
 	],
 
-	op_add_SkoarpuscleString_SkoarpuscleChoard: [
+	op_add_String_Choard: [
 		"'ABC' + A# => @x )", 
-		[(x: nil )]
+		[(x: "ABCA#")]
 	],
 
-	//op_add_SkoarpuscleString_SkoarpuscleLies: [
+	//op_add_String_Lies: [
 	//	"'ABC' + lies => @x )", 
-	//	[(x: nil )]
+	//	[(x: false )]
 	//],
 
-	op_add_SkoarpuscleString_SkoarpuscleList: [
+	op_add_String_List: [
 		"'ABC' + <0,1> => @x )", 
-		[(x: nil )]
+		[(x: ["ABC",0,1])]
 	],
 
-	op_add_SkoarpuscleString_SkoarpuscleFreq: [
+	op_add_String_Freq: [
 		"'ABC' + 2600Hz => @x )", 
-		[(x: nil )]
+		[(x: "ABC2600Hz" )]
 	],
 
-	//op_add_SkoarpuscleString_SkoarpuscleCrap: [
+	//op_add_String_Crap: [
 	//	"'ABC' + crap => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleString_SkoarpuscleString: [
+	op_add_String_String: [
 		"'ABC' + 'ABC' => @x )", 
-		[(x: nil )]
+		[(x: "ABCABC" )]
 	],
 
-	op_add_SkoarpuscleString_SkoarpuscleFloat: [
+	op_add_String_Float: [
 		"'ABC' + 2.18 => @x )", 
-		[(x: nil )]
+		[(x: "ABC2.18" )]
 	],
 
 
-	//op_add_SkoarpuscleCrap_Any: [
+	//op_add_Crap_Any: [
 	//	"crap + Any => @x )", 
 	//	[(x:nil)]
 	//],
 
 
-	op_add_SkoarpuscleFreq_SkoarpuscleSymbol: [
+	op_add_Freq_Symbol: [
 		"2600Hz + @abc=> @x )", 
-		[(x:nil)]
+		[(x:'2600Hzabc')]
 	],
 
-	op_add_SkoarpuscleFreq_SkoarpuscleInt: [
+	op_add_Freq_Int: [
 		"2600Hz + 7 => @x )", 
 		[(x:2607)]
 	],
 
-	op_add_SkoarpuscleFreq_SkoarpuscleNoat: [
+	op_add_Freq_Noat: [
 		"2600Hz + c# => @x )", 
-		[(x:nil)]
+		[(x:inf)]
 	],
 
-	op_add_SkoarpuscleFreq_SkoarpuscleChoard: [
+	op_add_Freq_Choard: [
 		"2600Hz + A# => @x )", 
-		[(x: nil )]
+		[(x: inf )]
 	],
 
-	//op_add_SkoarpuscleFreq_SkoarpuscleLies: [
+	//op_add_Freq_Lies: [
 	//	"2600Hz + lies => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleFreq_SkoarpuscleList: [
+	op_add_Freq_List: [
 		"2600Hz + <0,1> => @x )", 
-		[(x: nil )]
+		[(x: [2600,0,1])]
 	],
 
-	op_add_SkoarpuscleFreq_SkoarpuscleFreq: [
+	op_add_Freq_Freq: [
 		"2600Hz + 2600Hz => @x )", 
-		[(x: nil )]
+		[(x: 5200)]
 	],
 
-	//op_add_SkoarpuscleFreq_SkoarpuscleCrap: [
+	//op_add_Freq_Crap: [
 	//	"2600Hz + crap => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleFreq_SkoarpuscleString: [
+	op_add_Freq_String: [
 		"2600Hz + 'ABC' => @x )", 
-		[(x: nil )]
+		[(x: "2600HzABC" )]
 	],
 
-	op_add_SkoarpuscleFreq_SkoarpuscleFloat: [
+	op_add_Freq_Float: [
 		"2600Hz + 2.18 => @x )", 
-		[(x: nil )]
+		[(x: 2602.18 )]
 	],
 
 
-	op_add_SkoarpuscleFloat_SkoarpuscleSymbol: [
+	op_add_Float_Symbol: [
 		"2.18 + @abc=> @x )", 
-		[(x: nil )]
+		[(x: '2.18abc')]
 	],
 
-	op_add_SkoarpuscleFloat_SkoarpuscleInt: [
+	op_add_Float_Int: [
 		"2.18 + 7 => @x )", 
-		[(x: nil )]
+		[(x: 9.18)]
 	],
 
-	op_add_SkoarpuscleFloat_SkoarpuscleNoat: [
+	op_add_Float_Noat: [
 		"2.18 + c# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleFloat_SkoarpuscleChoard: [
+	op_add_Float_Choard: [
 		"2.18 + A# => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	//op_add_SkoarpuscleFloat_SkoarpuscleLies: [
+	//op_add_Float_Lies: [
 	//	"2.18 + lies => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleFloat_SkoarpuscleList: [
+	op_add_Float_List: [
 		"2.18 + <0,1> => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleFloat_SkoarpuscleFreq: [
+	op_add_Float_Freq: [
 		"2.18 + 2600Hz => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	//op_add_SkoarpuscleFloat_SkoarpuscleCrap: [
+	//op_add_Float_Crap: [
 	//	"2.18 + crap => @x )", 
-	//	[(x: nil )]
+	//	[(x: inf)]
 	//],
 
-	op_add_SkoarpuscleFloat_SkoarpuscleString: [
+	op_add_Float_String: [
 		"2.18 + 'ABC' => @x )", 
-		[(x: nil )]
+		[(x: inf)]
 	],
 
-	op_add_SkoarpuscleFloat_SkoarpuscleFloat: [
+	op_add_Float_Float: [
 		"2.18 + 2.18 => @x )", 
-		[(x: nil )]
+		[(x: 4.36)]
 	],
 
 

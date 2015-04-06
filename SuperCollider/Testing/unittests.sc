@@ -156,15 +156,19 @@ Expectoar {
         exp_event.keysValuesDo {
             | ekey, eval |
 
-            testoar.assert(seen_event.isKindOf(Event), tag ++ "not an event.");
+			if (eval == inf) {
+				testoar.assert(false, "Unimplemented test: " ++ tag);
+			} {
+				testoar.assert(seen_event.isKindOf(Event), tag ++ "should be an event.");
 
-            if (seen_event.notNil) {
-                var seen_val = this.flatten(seen_event[ekey]);
+				if (seen_event.notNil) {
+					var seen_val = this.flatten(seen_event[ekey]);
 
-                testoar.assert(seen_val == eval, tag ++
-                    "seen_event[" ++ ekey ++ "] = " ++ seen_val ++ " == " ++ eval ++ " expected"
-                );
-            };
+					testoar.assert(seen_val == eval, tag ++
+						"seen_event[" ++ ekey ++ "] = " ++ seen_val ++ " == " ++ eval ++ " expected :: <" ++ seen_val.class.asString ++ ", " ++ eval.class.asString ++ ">";
+					);
+				};
+			};
         };
     }
 

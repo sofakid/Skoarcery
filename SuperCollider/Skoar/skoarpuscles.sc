@@ -159,13 +159,18 @@ SkoarpuscleFreq : Skoarpuscle {
 
     init {
         | lexeme |
-        val = lexeme[0..lexeme.size-3]; // chop off Hz
-    }
+		if (lexeme.isKindOf(String)) {
+			val = lexeme[0..lexeme.size-3].asFloat;
+		} {
+			val = lexeme.asFloat;
+		};
+		("BLERG:  " ++ val.asString ++ " " ++ lexeme.asString).postln;
+	}
 
     isNoatworthy { ^true; }
 
     asNoat {
-        ^SkoarNoat_Freq(val.asFloat);
+        ^SkoarNoat_Freq(val);
     }
 
     on_enter {
@@ -187,6 +192,15 @@ SkoarpuscleSymbolName : Skoarpuscle {
 }
 
 SkoarpuscleSymbol : Skoarpuscle {
+
+	init {
+		| v |
+
+		if (v.isKindOf(Symbol) == false) {
+			v = v.asSymbol;
+		};
+		val = v;
+	}
 
     on_enter {
         | m, nav |

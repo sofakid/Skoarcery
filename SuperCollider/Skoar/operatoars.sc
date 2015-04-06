@@ -70,8 +70,8 @@ SkoarOps {
 				SkoarpuscleLies:    { | x, y | y },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
-				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.asSymbol ++ y.val) },
-				SkoarpuscleString:  { | x, y | SkoarpuscleString(x.asString ++ y.val) },
+				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ y.val) },
+				SkoarpuscleString:  { | x, y | SkoarpuscleString(x.val.asString ++ y.val) },
 
                 SkoarpuscleList:    { | x, y | SkoarpuscleList([x] ++ y.val) }
 
@@ -90,8 +90,8 @@ SkoarOps {
 				SkoarpuscleLies:    { | x, y | y },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
-				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.asSymbol ++ y.val) },
-				SkoarpuscleString:  { | x, y | SkoarpuscleString(x.asString ++ y.val) },
+				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ y.val) },
+				SkoarpuscleString:  { | x, y | SkoarpuscleString(x.val.asString ++ y.val) },
 
                 SkoarpuscleList:    { | x, y | SkoarpuscleList([x] ++ y.val) }
             ),

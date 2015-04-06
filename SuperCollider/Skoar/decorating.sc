@@ -48,7 +48,7 @@ SkoarTokeInspector {
 
             Toke_String: {
                 | skoar, noad, toke |
-                noad.skoarpuscle = SkoarpuscleString(toke.lexeme.asString);
+                noad.skoarpuscle = SkoarpuscleString(toke.lexeme[1..toke.lexeme.size-2]);
                 noad.toke = nil;
             },
 

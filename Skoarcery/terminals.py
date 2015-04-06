@@ -18,7 +18,7 @@ Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
 
 # careful not to match ottavas ending in (ma,mb,va,vb), or steal from floats
-Int*:           (-)?(0|[1-9][0-9]*)(?!Hz|[mv][ab]|\\.[0-9]|/)
+Int*:           (-)?(0|[1-9][0-9]*)(?![0-9]*Hz|[mv][ab]|\\.[0-9]|/)
 Float*:         (-)?(0|[1-9][0-9]*)\\.[0-9]+(?!Hz)
 
 Freq*:          (0|[1-9][0-9]*)(\\.[0-9]+)?Hz
@@ -61,7 +61,7 @@ DynFP:            fp
 
 AssOp:            =>|[+]>|->
 MsgOp:            \\.(?![)\\]])
-MathOp:           [+x\\-](?!>)
+MathOp:           [+x\\-](?!>|or)
 
 NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
 Choard*:          (D(?![a.])|[ABCEFG])(#|b)?([Mm0-9]|sus|dim)*
