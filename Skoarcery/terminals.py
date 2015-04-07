@@ -63,7 +63,7 @@ AssOp:            =>|[+]>|->
 MsgOp:            \\.(?![)\\]])
 MathOp:           [+x\\-](?!>|or)
 
-NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#*|b*)
+NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#|b)?
 Choard*:          (D(?![a.])|[ABCEFG])(#|b)?([Mm0-9]|sus|dim)*
 
 BooleanOp*:       ==|!=|<=|>=|and|or|xor

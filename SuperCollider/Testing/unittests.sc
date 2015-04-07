@@ -163,9 +163,20 @@ Expectoar {
 
 				if (seen_event.notNil) {
 					var seen_val = this.flatten(seen_event[ekey]);
+					var x;
 
-					testoar.assert(seen_val == eval, tag ++
-						"seen_event[" ++ ekey ++ "] = " ++ seen_val ++ " == " ++ eval ++ " expected :: <" ++ seen_val.class.asString ++ ", " ++ eval.class.asString ++ ">";
+					if (eval.isKindOf(Float)) {
+						x = eval - seen_val;
+						if (x < 0) {
+							x = -1 * x;
+						};
+						x = x < 0.0001;
+					} {
+						x = seen_val == eval;
+					};
+
+					testoar.assert(x, tag ++  "seen_event[" ++ ekey ++ "] = " ++ seen_val ++ " == " ++ eval ++ " expected :: <" 
+										  ++ seen_val.class.asString ++ ", " ++ eval.class.asString ++ ">";
 					);
 				};
 			};

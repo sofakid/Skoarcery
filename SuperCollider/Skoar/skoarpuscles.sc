@@ -528,6 +528,10 @@ SkoarpuscleSkoarpion : Skoarpuscle {
 
             m.koar.do_skoarpion(val, m, nav, msg_arr, m.fairy.impression);
         };
+
+		if (val.name.isNil) {
+			m.fairy.impress(this);
+		};
     }
 
 }

@@ -15,6 +15,7 @@ class Test_Sclang(unittest.TestCase):
     sanity_scd = "SuperCollider/testing/sanity.scd"
     dev_scd = "SuperCollider/testing/dev.scd"
     ops_scd = "SuperCollider/testing/ops.scd"
+    noaty_scd = "SuperCollider/testing/noaty.scd"
 
     def print(self, msg):
         print("sclang: " + msg, end="")
@@ -100,3 +101,6 @@ class Test_Sclang(unittest.TestCase):
 
     def test_ops(self):
         self.exec(Test_Sclang.ops_scd)
+
+    def test_noaty(self):
+        self.exec(Test_Sclang.noaty_scd)

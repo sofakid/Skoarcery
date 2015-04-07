@@ -4,10 +4,7 @@ var eth = (\dur:1/2);
 
 SkoarTestRunner((
 
-	skoarpion_c: [
-		") {! <x> !! ] !} => @f !f<0>",
-		[qrt, eth]
-	],
+	
 
 	da_capo_a: [
 		") ) ) fine ] ] D.C. al fine",
