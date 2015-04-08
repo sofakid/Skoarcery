@@ -16,19 +16,13 @@ branch             : optional_voice phrases Newline
 +phrases           : phrasey phrases | <e>
 +phrasey           : Comment | marker | Meter | expr | dal_goto | beat
 
-skoarpion          : SkoarpionStart skrp_sig SkoarpionSep skrp_suffix
-skrp_sig           : args | SymbolName optional_args | <e>
-
+skoarpion          : SkoarpionStart skrp_sig skrp_suffix
+skrp_sig           : ArgSpec SkoarpionSep | SymbolName opt_arg_spec SkoarpionSep | <e>
+opt_arg_spec       : ArgSpec | <e>
 skrp_suffix        : skrp_lines SkoarpionEnd
 
 +skrp_lines        : optional_voice phrases skrp_moar_lines
 +skrp_moar_lines   : Newline skrp_lines | <e>
-
-+optional_args     : args | <e>
-args               : ListS args_suffix
-args_suffix        : args_entries ListE
-+args_entries      : SymbolName moar_args_entries
-+moar_args_entries : ListSep args_entries | <e>
 
 listy              : ListS listy_suffix
 +listy_suffix      : listy_entries ListE | ListE

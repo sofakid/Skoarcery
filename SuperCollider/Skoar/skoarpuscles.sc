@@ -733,17 +733,21 @@ SkoarpuscleArgs : SkoarpuscleList {
 }
 
 // {! f<a,b,c> !! '[\a,\b,\c] is the ArgsSpec' !}
-SkoarpuscleArgsSpec : Skoarpuscle {
+SkoarpuscleArgSpec : Skoarpuscle {
 
     init {
-        | noad |
-        val = [];
-        noad.collect_skoarpuscles.do {
-            | x |
-            if (x.isKindOf(SkoarpuscleSymbolName)) {
-                val = val.add(x.val);
-            };
-        };
+        | toke |
+        var matches = toke.lexeme.findRegexp("[a-zA-Z_]*",1);
+
+		if (matches.notNil) {
+			matches.do {
+				| x |
+				var m = x[1];
+				if (m != "") {
+					val = val.add(SkoarpuscleSymbolName(m.asSymbol));
+				};
+			};
+		};
     }
 }
 
@@ -772,9 +776,11 @@ SkoarpuscleMsg : Skoarpuscle {
         var x = Array.newClear(args.size + 1);
         var i = 0;
 
+		"snerp".postln;
         x[0] = val;
         args.flatten(m).do {
             | y |
+			"y: ".post; y.postln;
             i = i + 1;
             x[i] = y;
         };

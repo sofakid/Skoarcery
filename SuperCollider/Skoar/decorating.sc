@@ -230,6 +230,12 @@ SkoarTokeInspector {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleTimes.new;
                 noad.toke = nil;
+            },
+
+			Toke_ArgSpec: {
+			    | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleArgSpec(toke);
+                noad.toke = nil;
             }
 
         );
@@ -390,7 +396,7 @@ Skoarmantics {
 
             args: {
                 | skoar, noad |
-                noad.skoarpuscle = SkoarpuscleArgsSpec(noad);
+                noad.skoarpuscle = SkoarpuscleArgSpec(noad);
                 noad.children = [];
             },
 

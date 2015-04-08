@@ -25,8 +25,10 @@ Freq*:          (0|[1-9][0-9]*)(\\.[0-9]+)?Hz
 
 Meter*:         [1-9][0-9]*/[1-9][0-9]*
 
-ListS:          <(?![=?])
-ListE:          >
+ArgSpec:        <[a-zA-Z]+(,[a-zA-Z]+)*>
+
+ListS:          <(?![=?]|[a-zA-Z]+(,[a-zA-Z]+)*>)
+ListE:          >(?![=])
 ListSep:        ,
 
 # one ^ but don't eat ^^( which is cthulhu's left wing

@@ -101,20 +101,26 @@ SkoarKoar {
     }
 
     set_args {
-        | minstrel, args_spec, args |
+        | minstrel, arg_spec, args |
         var i = 0;
         var vars = stack[stack.size - 1];
 
-        if (args_spec.isKindOf(SkoarpuscleArgsSpec)) {
+		"ARG_SPEC: ".post; arg_spec.dump;
+		"ARGS    : ".post; args.dump;
+
+        if (arg_spec.isKindOf(SkoarpuscleArgSpec)) {
             var passed_args, n;
 
             passed_args = if (args.isKindOf(SkoarpuscleList)) { args.val } { [] };
             n = passed_args.size;
 
             // foreach arg name defined, set the value from args
-            args_spec.val.do {
+            arg_spec.val.do {
                 | k |
-                //("k: " ++ k).postln;
+				if (k.isKindOf(SkoarpuscleSymbolName)) {
+					k = k.val;
+				};
+                ("k: " ++ k).postln;
                 vars[k] = if (i < n) {
                     passed_args[i]
                 } {
@@ -182,7 +188,7 @@ SkoarKoar {
         };
 
         // load arg values into their names
-        this.set_args(minstrel, skoarpion.args_spec, args);
+        this.set_args(minstrel, skoarpion.arg_spec, args);
 
         projections = this.state_at(\projections);
         if (skoarpion.name.notNil) {

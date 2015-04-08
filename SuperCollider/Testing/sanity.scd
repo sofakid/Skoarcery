@@ -127,7 +127,7 @@ SkoarTestRunner((
 	],
 
 	skoarpion_d: [
-		") {!!! ] !} => @f ) !f",
+		") {! ] !} => @f ) !f",
 		[qrt, qrt, eth]
 	],
 
