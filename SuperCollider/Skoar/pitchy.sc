@@ -41,14 +41,23 @@ SkoarpuscleNoat : Skoarpuscle {
             {"b"} {6};
 
         case {sharps > 0} {
-            x = sharps * 0.1 + x;
+            x = x + 0.1;
         } {sharps < 0} {
-            x = sharps * -0.1 + x - 1;
-        };
+			x = -0.9 + x;
+		};
 
+		if (x == -0.9) {
+			x = -0.1;
+		};
+		
         if (low == false) {
             x = x + 7;
         };
+
+		// wow
+		if (x == 6.9) {
+			x = 6.1;
+		};
 
         val = x;
     }
