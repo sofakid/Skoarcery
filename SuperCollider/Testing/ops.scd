@@ -29,6 +29,13 @@ SkoarTestRunner((
 		[(\degree:15),(\degree:35),(\degree:71)]
 	],
 
+	
+	// ---------------------------------------------------
+	// ---------------------------------------------------
+	//     Addition
+	// ---------------------------------------------------
+	// ---------------------------------------------------
+	
 	op_add_Symbol_Symbol: [
 		"@abc + @def => @x )", 
 		[(x:'abcdef')]
@@ -49,10 +56,6 @@ SkoarTestRunner((
 		[(x: 'abcA#')]
 	],
 
-	//op_add_Symbol_Lies: [
-	//	"@abc + lies => @x )", 
-	//	[(x: false)]
-	//],
 
 	op_add_Symbol_List: [
 		"@abc + <0,1> => @x )", 
@@ -63,11 +66,6 @@ SkoarTestRunner((
 		"@abc + 2600Hz => @x )", 
 		[(x: 'abc2600Hz')]
 	],
-
-	//op_add_Symbol_Crap: [
-	//	"@abc + crap => @x )", 
-	//	[(x: inf)]
-	//],
 
 	op_add_Symbol_String: [
 		"@abc + 'ABC' => @x )", 
@@ -89,20 +87,6 @@ SkoarTestRunner((
 		[(x: 14)]
 	],
 
-	op_add_Int_Noat: [
-		"7 + c# => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Int_Choard: [
-		"7 + A# => @x )", 
-		[(x: inf)]
-	],
-
-	//op_add_Int_Lies: [
-	//	"7 + lies => @x )", 
-	//	[(x: inf)]
-	//],
 
 	op_add_Int_List: [
 		"7 + <0,1> => @x )", 
@@ -111,13 +95,10 @@ SkoarTestRunner((
 
 	op_add_Int_Freq: [
 		"7 + 2600Hz )", 
-		[(freq: 2607)] // how do i test the type?
+		[(freq: 2607)]
 	],
 
-	//op_add_Int_Crap: [
-	//	"7 + crap => @x )", 
-	//	[(x: inf)]
-	//],
+
 
 	op_add_Int_String: [
 		"7 + 'ABC' => @x )", 
@@ -140,21 +121,6 @@ SkoarTestRunner((
 		[(x: [0,1,7])]
 	],
 
-	op_add_List_Noat: [
-		"<0,1> + c# => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_List_Choard: [
-		"<0,1> + A# => @x )", 
-		[(x: inf)]
-	],
-
-	//op_add_List_Lies: [
-	//	"<0,1> + lies => @x )", 
-	//	[(x: inf)]
-	//],
-
 	op_add_List_List: [
 		"<0,1> + <0,1> => @x )", 
 		[(x: [0,1,0,1])]
@@ -164,11 +130,6 @@ SkoarTestRunner((
 		"<0,1> + 2600Hz => @x )", 
 		[(x: [0,1,2600])]
 	],
-
-	//op_add_List_Crap: [
-	//	"<0,1> + crap => @x )", 
-	//	[(x: inf)]
-	//],
 
 	op_add_List_String: [
 		"<0,1> + 'ABC' => @x )", 
@@ -186,148 +147,27 @@ SkoarTestRunner((
 		[(x: 'c#abc')]
 	],
 
-	op_add_Noat_Int: [
-		"c# + 7 => @x )", 
-		[(x: inf)]
-	],
 
-	op_add_Noat_Noat: [
-		"c# + c# => @x )", 
-		[(x: inf )]
-	],
-
-	op_add_Noat_Choard: [
-		"c# + A# => @x )", 
-		[(x: inf )]
-	],
-
-	//op_add_Noat_Lies: [
-	//	"c# + lies => @x )", 
-	//	[(x: inf )]
-	//],
-
-	op_add_Noat_List: [
-		"c# + <0,1> => @x )", 
-		[(x: inf )]
-	],
-
-	op_add_Noat_Freq: [
-		"c# + 2600Hz => @x )", 
-		[(x: inf )]
-	],
-
-	//op_add_Noat_Crap: [
-	//	"c# + crap => @x )", 
-	//	[(x: inf)]
-	//],
 
 	op_add_Noat_String: [
 		"c# + 'ABC' => @x )", 
 		[(x: "c#ABC")]
 	],
 
-	op_add_Noat_Float: [
-		"c# + 2.18 => @x )", 
-		[(x: inf)]
-	],
-
-
+	
 	op_add_Choard_Symbol: [
 		"A# + @abc=> @x )", 
 		[(x: 'A#abc')]
 	],
 
-	op_add_Choard_Int: [
-		"A# + 7 => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Choard_Noat: [
-		"A# + c# => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Choard_Choard: [
-		"A# + A# => @x )", 
-		[(x: inf)]
-	],
-
-	//op_add_Choard_Lies: [
-	//	"A# + lies => @x )", 
-	//	[(x: inf)]
-	//],
-
-	op_add_Choard_List: [
-		"A# + <0,1> => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Choard_Freq: [
-		"A# + 2600Hz => @x )", 
-		[(x: inf)]
-	],
-
-	//op_add_Choard_Crap: [
-	//	"A# + crap => @x )", 
-	//	[(x: inf)]
-	//],
+	
 
 	op_add_Choard_String: [
 		"A# + 'ABC' => @x )", 
 		[(x: "A#ABC" )]
 	],
 
-	op_add_Choard_Float: [
-		"A# + 2.18 => @x )", 
-		[(x: inf)]
-	],
-
-
-	/*op_add_Lies_Symbol: [
-		"lies + @abc=> @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Choard: [
-		"lies + A# => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Freq: [
-		"lies + 2600Hz => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_List: [
-		"lies + <0,1> => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Noat: [
-		"lies + c# => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_String: [
-		"lies + 'ABC' => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Lies: [
-		"lies + lies => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Int: [
-		"lies + 7 => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Float: [
-		"lies + 2.18 => @x )", 
-		[(x: inf)]
-	],
-	*/
+	
 
 	op_add_String_Symbol: [
 		"'ABC' + @abc => @x )", 
@@ -349,11 +189,6 @@ SkoarTestRunner((
 		[(x: "ABCA#")]
 	],
 
-	//op_add_String_Lies: [
-	//	"'ABC' + lies => @x )", 
-	//	[(x: false )]
-	//],
-
 	op_add_String_List: [
 		"'ABC' + <0,1> => @x )", 
 		[(x: ["ABC",0,1])]
@@ -364,10 +199,7 @@ SkoarTestRunner((
 		[(x: "ABC2600Hz" )]
 	],
 
-	//op_add_String_Crap: [
-	//	"'ABC' + crap => @x )", 
-	//	[(x: inf)]
-	//],
+
 
 	op_add_String_String: [
 		"'ABC' + 'ABC' => @x )", 
@@ -378,13 +210,6 @@ SkoarTestRunner((
 		"'ABC' + 2.18 => @x )", 
 		[(x: "ABC2.18" )]
 	],
-
-
-	//op_add_Crap_Any: [
-	//	"crap + Any => @x )", 
-	//	[(x:nil)]
-	//],
-
 
 	op_add_Freq_Symbol: [
 		"2600Hz + @abc=> @x )", 
@@ -406,10 +231,7 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	//op_add_Freq_Lies: [
-	//	"2600Hz + lies => @x )", 
-	//	[(x: inf)]
-	//],
+
 
 	op_add_Freq_List: [
 		"2600Hz + <0,1> => @x )", 
@@ -420,11 +242,6 @@ SkoarTestRunner((
 		"2600Hz + 2600Hz => @x )", 
 		[(x: 5200)]
 	],
-
-	//op_add_Freq_Crap: [
-	//	"2600Hz + crap => @x )", 
-	//	[(x: inf)]
-	//],
 
 	op_add_Freq_String: [
 		"2600Hz + 'ABC' => @x )", 
@@ -447,40 +264,7 @@ SkoarTestRunner((
 		[(x: 9.18)]
 	],
 
-	op_add_Float_Noat: [
-		"2.18 + c# => @x )", 
-		[(x: inf)]
-	],
 
-	op_add_Float_Choard: [
-		"2.18 + A# => @x )", 
-		[(x: inf)]
-	],
-
-	//op_add_Float_Lies: [
-	//	"2.18 + lies => @x )", 
-	//	[(x: inf)]
-	//],
-
-	op_add_Float_List: [
-		"2.18 + <0,1> => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Float_Freq: [
-		"2.18 + 2600Hz => @x )", 
-		[(x: inf)]
-	],
-
-	//op_add_Float_Crap: [
-	//	"2.18 + crap => @x )", 
-	//	[(x: inf)]
-	//],
-
-	op_add_Float_String: [
-		"2.18 + 'ABC' => @x )", 
-		[(x: inf)]
-	],
 
 	op_add_Float_Float: [
 		"2.18 + 2.18 => @x )", 
@@ -502,5 +286,173 @@ SkoarTestRunner((
 		[(x: 0.7)]
 	],
 
+	// ---------------------------------------------------
+	// ---------------------------------------------------
+	//     Subtraction
+	// ---------------------------------------------------
+	// ---------------------------------------------------
+	
+	op_sub_Int_Int: [
+		"7 - 7 => @x )", 
+		[(x: 0)]
+	],
 
+
+
+	
+	op_sub_Int_Freq: [
+		"7 - 2600Hz => @x )", 
+		[(x: -2593)] 
+	],
+
+	op_sub_Int_Float: [
+		"7 - 2.18 => @x )", 
+		[(x: 4.82)]
+	],
+
+
+
+	op_sub_Freq_Freq: [
+		"2600Hz - 2600Hz => @x )", 
+		[(x: 0)]
+	],
+
+
+
+	
+	op_sub_Freq_Float: [
+		"2600Hz - 2.18 )", 
+		[(freq: 2597.82 )]
+	],
+
+	op_sub_Float_Int: [
+		"2.18 - 7 => @x )", 
+		[(x: -4.82)]
+	],
+
+	
+	
+
+	op_sub_Float_Float: [
+		"2.18 - 2.18 => @x )", 
+		[(x: 0)]
+	],
+
+	op_sub_Hash_Int: [
+		"[###  ] - 7 => @x )", 
+		[(x: -6.4)]
+	],
+
+	op_sub_Int_Hash: [
+		"7 - [###  ]=> @x )", 
+		[(x: 6.4)]
+	],
+
+	op_sub_Hash_Hash: [
+		"[###       ] - [####      ] => @x )", 
+		[(x: -0.9)]
+	],
+
+
+	// ---------------------------------------------------
+	// ---------------------------------------------------
+	//     Multiplication
+	// ---------------------------------------------------
+	// ---------------------------------------------------
+	
+	
+	op_mul_Int_Int: [
+		"7 x 7 => @x )", 
+		[(x: 49)]
+	],
+
+	
+
+	
+	op_mul_Int_Freq: [
+		"7 x 2600Hz )", 
+		[(freq: 18200)]
+	],
+
+	
+	op_mul_Int_Float: [
+		"7 x 2.18 => @x )", 
+		[(x: 15.26)]
+	],
+
+
+	op_mul_List_Int: [
+		"<0,1> x 7 => @x )", 
+		[(x: [0,7])]
+	],
+
+	
+
+	op_mul_List_List: [
+		"<0,1> x <0,1> => @x )", 
+		[(x: [[0,0],[0,1],[1,0],[1,1]])]
+	],
+
+	op_mul_List_Freq: [
+		"<0,1> x 2600Hz => @x )", 
+		[(x: [0,2600])]
+	],
+
+	
+
+	op_mul_List_Float: [
+		"<0,1> x 2.18 => @x )", 
+		[(x: [0,2.18])]
+	],
+
+
+	
+	op_mul_Freq_Int: [
+		"2600Hz x 7 => @x )", 
+		[(x:18200)]
+	],
+
+	
+
+	op_mul_Freq_Freq: [
+		"2600Hz x 2600Hz )", 
+		[(freq:6760000)]
+	],
+
+	
+	
+	op_mul_Freq_Float: [
+		"2600Hz x 2.18 => @x )", 
+		[(x: 5668 )]
+	],
+
+
+
+	op_mul_Float_Int: [
+		"2.18 x 7 => @x )", 
+		[(x: 15.26)]
+	],
+
+
+	
+
+	op_mul_Float_Float: [
+		"2.18 x 2.18 => @x )", 
+		[(x: 4.36)]
+	],
+
+	op_mul_Hash_Int: [
+		"[###  ] x 7 => @x )", 
+		[(x: 4.2)]
+	],
+
+	op_mul_Int_Hash: [
+		"7 x [###  ]=> @x )", 
+		[(x: 4.2)]
+	],
+
+	op_mul_Hash_Hash: [
+		"[###       ] x [####      ] => @x )", 
+		[(x: 0.7)]
+	],
 ));

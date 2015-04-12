@@ -193,7 +193,7 @@ SkoarFairy {
         };
         ^this.impression;
     }
-
+		  
 }
 
 SkoarpuscleFairy : Skoarpuscle {

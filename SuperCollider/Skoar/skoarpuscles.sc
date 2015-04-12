@@ -164,7 +164,6 @@ SkoarpuscleFreq : Skoarpuscle {
 		} {
 			val = lexeme.asFloat;
 		};
-		("BLERG:  " ++ val.asString ++ " " ++ lexeme.asString).postln;
 	}
 
     isNoatworthy { ^true; }
@@ -261,7 +260,7 @@ SkoarpuscleDeref : Skoarpuscle {
 		| m, nav |
 		var x = this.lookup(m);
 
-		"deref:on_enter: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+		//"deref:on_enter: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
 		x = Skoarpuscle.wrap(x);
 
 		if (x.isKindOf(SkoarpuscleSkoarpion)) {
@@ -278,7 +277,7 @@ SkoarpuscleDeref : Skoarpuscle {
         var ret = val;
         var x = this.lookup(minstrel);
 
-        "deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
+        //"deref:skoar_msg: SYMBOL LOOKEDUP : ".post; val.post; " ".post; x.postln;
         msg_arr = msg.get_msg_arr(minstrel);
 
         if (x.isKindOf(SkoarpuscleSkoarpion)) {
@@ -322,7 +321,7 @@ SkoarpuscleMathOp : Skoarpuscle {
 
             {"-"}  {{
                 | minstrel, a, b |
-                // todo minstrel.skoar.ops.sub(minstrel, a, b);
+                minstrel.skoar.ops.sub(minstrel, a, b);
             }};
     }
 

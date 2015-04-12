@@ -511,6 +511,12 @@ Skoarmantics {
                         var x = m.fairy.cast_arcane_magic;
                         Skoar.ops.assign(m, x, settable);
 						m.fairy.impress(x);
+                    }}
+					
+					{"x>"} {{
+                        | m, nav |
+                        var x = m.fairy.impression;
+                        Skoar.ops.multr(m, x, settable);
                     }};
             },
 

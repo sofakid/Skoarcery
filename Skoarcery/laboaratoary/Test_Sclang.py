@@ -98,6 +98,9 @@ class Test_Sclang(unittest.TestCase):
     def test_SC_ops(self):
         self.exec("SuperCollider/testing/ops.scd")
 
+    def test_SC_ops_dev(self):
+        self.exec("SuperCollider/testing/ops_dev.scd")
+
     def test_SC_noaty(self):
         self.exec("SuperCollider/testing/noaty.scd")
 
