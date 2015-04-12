@@ -331,19 +331,9 @@ Skoarmantics {
 				noad.children = #[];
             },
 
-            ottavas: {
-                | skoar, noad |
-                
-            },
-
             cthulhu: {
                 | skoar, noad |
                 noad.on_enter = {skoar.cthulhu(noad);};
-            },
-
-            dynamic: {
-                | skoar, noad |
-                noad.skoarpuscle = noad.next_skoarpuscle;
             },
 
             dal_goto: {
@@ -403,7 +393,7 @@ Skoarmantics {
             args: {
                 | skoar, noad |
                 noad.skoarpuscle = SkoarpuscleArgSpec(noad);
-                noad.children = [];
+                noad.children = #[];
             },
 
             msg: {
@@ -429,8 +419,7 @@ Skoarmantics {
 					};
 
                 } {msg.isKindOf(SkoarpuscleMsgName)} {
-					"foooood".postln;
-                    args = SkoarpuscleArgs.new;
+					args = SkoarpuscleArgs.new;
                     noad.skoarpuscle = SkoarpuscleMsg(msg.val, args);
                 };
 
@@ -508,13 +497,13 @@ Skoarmantics {
                     {"+>"} {{
                         | m, nav |
                         var x = m.fairy.impression;
-                        // todo Skoar.ops.increment(m, x, settable);
+                        Skoar.ops.increment(m, x, settable);
                     }}
 
                     {"->"} {{
                         | m, nav |
                         var x = m.fairy.impression;
-                        // todo Skoar.ops.decrement(m, x, settable);
+                        Skoar.ops.decrement(m, x, settable);
                     }}
 
                     {"=>"} {{

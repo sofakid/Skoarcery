@@ -13,12 +13,6 @@ class Test_Sclang(unittest.TestCase):
     #sclang = home + "sclang"
     sclang = home + "sclang.exe"
 
-    sanity_scd = "SuperCollider/testing/sanity.scd"
-    dev_scd = "SuperCollider/testing/dev.scd"
-    ops_scd = "SuperCollider/testing/ops.scd"
-    noaty_scd = "SuperCollider/testing/noaty.scd"
-    levels_scd = "SuperCollider/testing/levels.scd"
-
     def print(self, msg):
         print("sclang: " + msg, end="")
 
@@ -96,16 +90,19 @@ class Test_Sclang(unittest.TestCase):
         self.assertTrue(tests_passed, "scland unit tests failed.")
 
     def test_SC_sanity(self):
-        self.exec(Test_Sclang.sanity_scd)
+        self.exec("SuperCollider/testing/sanity.scd")
 
     def test_SC_dev(self):
-        self.exec(Test_Sclang.dev_scd)
+        self.exec("SuperCollider/testing/dev.scd")
 
     def test_SC_ops(self):
-        self.exec(Test_Sclang.ops_scd)
+        self.exec("SuperCollider/testing/ops.scd")
 
     def test_SC_noaty(self):
-        self.exec(Test_Sclang.noaty_scd)
+        self.exec("SuperCollider/testing/noaty.scd")
 
     def test_SC_levels(self):
-        self.exec(Test_Sclang.levels_scd)
+        self.exec("SuperCollider/testing/levels.scd")
+
+    def test_SC_increments(self):
+        self.exec("SuperCollider/testing/increments.scd")

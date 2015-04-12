@@ -61,7 +61,7 @@ SkoarFairy {
         listy_stack = listy_stack.add([]);
         "$.push;".postln;
 
-    }
+    }											  
 
     pop {
         magic = magic_stack.pop;
