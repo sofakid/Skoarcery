@@ -22,11 +22,13 @@ SkoarTestRunner((
 		]
 	],
 
+	// next is unimplemented
 	listy_f: [
 		"<3,4> => @x <0, !x.next, !x.next, 2> => @food )",
 		[( 'dur': 1.0, 'food': [ 0, 3, 4, 2 ], 'x':[3, 4] )]
 	],
 
+	// right now it's popping the skoar off, and forgetting that it has seen the colon
 	colons_unbalanced: [
 		"| ) ) ) :| ] ] :|",
 		[

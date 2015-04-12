@@ -27,7 +27,7 @@ SkoarFairy {
         minstrel = m;
         impression = nil;
         magic = nil;
-        noat = SkoarpuscleInt(0);
+        noat = nil;
         listy_stack = [];
         magic_stack = [];
 		i_stack = [];
@@ -38,6 +38,7 @@ SkoarFairy {
 		times_seen_stack = [];
 		times_seen = IdentityDictionary.new;
 
+		this.impress(0);
     }
 
 	get_top_listy {

@@ -46,6 +46,8 @@ Eighths*:       \\.?\\]+(?:__?)?\\.?
 Caesura:        //
 Slash:          /(?![/0-9])
 
+HashLevel:      \\[#*[ ]*\\]
+
 
 # we can't allow f for forte as f is a noat, so we allow
 #
@@ -56,8 +58,8 @@ Slash:          /(?![/0-9])
 #  default velocity:
 #    ppp (16), pp (32), p (48), mp (64), mf (80), f (96), ff (112), fff (127)
 
-DynPiano*:        (mp|p+)(iano)?
-DynForte*:        mf(orte)?|f+orte|ff+
+DynPiano*:        (m(ezzo)?p|p+)(iano)?
+DynForte*:        m(ezzo)?f(orte)?|f+orte|ff+
 DynSFZ:           sfz
 DynFP:            fp
 

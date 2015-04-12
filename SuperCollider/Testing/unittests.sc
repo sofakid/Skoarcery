@@ -89,12 +89,15 @@ Expectoar {
 
     init {
         | skrs, exp, tstr, msg |
-        skoar = skrs.skoar;
         expected = exp;
         testoar = tstr;
         tag = msg ++ ": ";
         end = (\dur: 0, \isRest: true, \delta: 0);
-    }
+		this.catch {
+			skoar = skrs.skoar;
+        };
+		
+	}
 
     *test {
         | skrs, exp, tstr, msg |
@@ -103,9 +106,29 @@ Expectoar {
         expectoar.run;
     }
 
+	catch {
+		| f |
+		try {
+			f.value();
+		} {
+			| e |
+			testoar.assert(false == true, tag ++ "SkoarError");
+			//e.postProtectedBacktrace;	
+		};
+	}
+
     run {
-        var pat = skoar.pskoar;
+        var pat;
         var result;
+
+		testoar.assert(skoar.notNil == true, "Parse Fail");
+		if (skoar.isNil) {
+			^nil;
+		};
+
+		this.catch {
+			pat = skoar.pskoar;
+		};
 
         expected.do {
             | ex |
@@ -116,7 +139,9 @@ Expectoar {
 
                 for (0, n-1, {
                     | i |
-                    results.put(i, pat.nextFunc.value);
+					this.catch {
+						results.put(i, pat.nextFunc.value);
+					};
                 });
                 "Expecting events:".postln;
                 ex.do {
@@ -127,7 +152,10 @@ Expectoar {
 
             } {ex.isKindOf(Event)} {
                 "Expecting event: ".post; ex.postln;
-                result = pat.nextFunc.value;
+				this.catch {
+					result = pat.nextFunc.value;
+				};
+                
                 testoar.assert(result.notNil, tag ++ "expect a result");
 
                 // that assert doesn't abort.
@@ -143,7 +171,10 @@ Expectoar {
 
         };
 
-        result = pat.nextFunc.value;
+        this.catch {
+			result = pat.nextFunc.value;
+		};
+
         if (result.notNil) {
             this.match(end, result);
         };

@@ -26,7 +26,6 @@ Skoarpuscle {
     isCounty { ^false; }
     asCount {SkoarError("asCount called on " ++ this.class.asString ++ ", which is not county.").throw;}
 
-
     flatten { | m | ^val; }
 
     asString {
@@ -129,7 +128,7 @@ SkoarpuscleInt : Skoarpuscle {
         ^val.asInteger;
     }
 
-    on_enter {
+	on_enter {
         | m, nav |
         m.fairy.impress(this);
     }
@@ -149,10 +148,11 @@ SkoarpuscleFloat : Skoarpuscle {
         ^val.asFloat;
     }
 
-    on_enter {
+	on_enter {
         | m, nav |
         m.fairy.impress(this);
     }
+
 }
 
 SkoarpuscleFreq : Skoarpuscle {
@@ -498,7 +498,11 @@ SkoarpuscleConditional : Skoarpuscle {
 
 			impression = m.fairy.impression;
             m.koar.do_skoarpion(
-                if (impression.isKindOf(SkoarpuscleLies) == false) {if_body} {else_body},
+                if (impression.isKindOf(SkoarpuscleLies) or: impression.isKindOf(SkoarpuscleCrap)) {
+						else_body
+					} {
+						if_body
+					},
                 m, nav, [\inline], nil
             );
         };
@@ -603,9 +607,11 @@ SkoarpuscleLoop : Skoarpuscle {
                     m.fairy.incr_i;
 
 					if (condition.notNil) {
+						var x;
+
 						m.koar.do_skoarpion(condition, m, nav, [\inline]);
-                        
-						if (m.fairy.impression.isKindOf(SkoarpuscleLies)) {
+                        x = m.fairy.impression;
+						if (x.isKindOf(SkoarpuscleLies) or: x.isKindOf(SkoarpuscleCrap)) {
 							break.();
 						};
                     };
@@ -962,21 +968,23 @@ SkoarpuscleDynamic : Skoarpuscle {
         var s = toke.lexeme;
 
         val = switch (s)
-            {"ppp"}     {1}
-            {"pppiano"} {1}
-            {"pp"}      {2}
-            {"ppiano"}  {2}
-            {"p"}       {3}
-            {"piano"}   {3}
-            {"mp"}      {4}
-            {"mpiano"}  {4}
-            {"mf"}      {5}
-            {"mforte"}  {5}
-            {"forte"}   {6}
-            {"ff"}      {7}
-            {"fforte"}  {7}
-            {"fff"}     {8}
-            {"ffforte"} {8};
+            {"ppp"}			{1}
+            {"pppiano"}		{1}
+            {"pp"}			{2}
+            {"ppiano"}		{2}
+            {"p"}			{3}
+            {"piano"}		{3}
+            {"mp"}			{4}
+            {"mpiano"}		{4}
+			{"mezzopiano"}  {4}
+            {"mf"}			{5}
+            {"mforte"}		{5}
+            {"mezzoforte"}  {5}
+            {"forte"}		{6}
+            {"ff"}			{7}
+            {"fforte"}		{7}
+            {"fff"}			{8}
+            {"ffforte"}		{8};
     }
 
     amp {
@@ -1038,3 +1046,28 @@ SkoarpuscleRep : Skoarpuscle {
     }
 
 }
+
+SkoarpuscleHashLevel : SkoarpuscleFloat {
+
+	init {
+		| toke |
+		var n = -2, i = 0;
+		toke.lexeme.do {
+			| x |
+			if (x.notNil) {
+				n = n + 1;
+				if (x == $#) {
+					i = i + 1;
+				};
+			}; 
+		};
+
+		val = if (n <= 0) {
+			0.0
+		} {
+			i/n
+		};
+	}
+
+}
+

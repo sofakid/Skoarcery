@@ -62,6 +62,7 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:     { | x, y | SkoarpuscleInt(x.val + y.val) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val + y.val) },
+				SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val + y.val) },
 				SkoarpuscleFreq:    { | x, y | SkoarpuscleFreq(x.val + y.val) },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
@@ -82,6 +83,27 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:     { | x, y | SkoarpuscleFloat(x.val + y.val) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val + y.val) },
+				SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val + y.val) },
+				SkoarpuscleFreq:    { | x, y | SkoarpuscleFreq(x.val + y.val) },
+
+				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
+				SkoarpuscleChoard:  { | x, y | SkoarpuscleList([x, y]) },
+
+				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
+
+				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ y.val) },
+				SkoarpuscleString:  { | x, y | SkoarpuscleString(x.val.asString ++ y.val) },
+
+                SkoarpuscleList:    { | x, y | SkoarpuscleList([x] ++ y.val) }
+            ),
+
+			// x +
+            SkoarpuscleHashLevel: (
+                // y
+                SkoarpuscleInt:     { | x, y | SkoarpuscleFloat(x.val + y.val) },
+                SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val + y.val) },
+				SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val + y.val) },
 				SkoarpuscleFreq:    { | x, y | SkoarpuscleFreq(x.val + y.val) },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
@@ -100,6 +122,7 @@ SkoarOps {
 				// y
                 SkoarpuscleInt:     { | x, y | SkoarpuscleList(x.val ++ [y]) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleList(x.val ++ [y]) },
+				SkoarpuscleHashLevel:   { | x, y | SkoarpuscleList(x.val ++ [y]) },
 				SkoarpuscleFreq:    { | x, y | SkoarpuscleList(x.val ++ [y]) },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList(x.val ++ [y]) },
@@ -117,6 +140,7 @@ SkoarOps {
 			SkoarpuscleNoat: (
 				SkoarpuscleInt:     { | x, y | x.raiseBy(y) },
                 SkoarpuscleFloat:   { | x, y | x.raiseBy(y) },
+				SkoarpuscleHashLevel:   { | x, y | x.raiseBy(y) },
 				SkoarpuscleFreq:    { | x, y | x.raiseBy(y) },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
@@ -134,6 +158,7 @@ SkoarOps {
 			SkoarpuscleChoard: (
 				SkoarpuscleInt:     { | x, y | x.raiseBy(y) },
                 SkoarpuscleFloat:   { | x, y | x.raiseBy(y) },
+				SkoarpuscleHashLevel:   { | x, y | x.raiseBy(y) },
 				SkoarpuscleFreq:    { | x, y | x.raiseBy(y) },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
@@ -151,6 +176,7 @@ SkoarOps {
 			SkoarpuscleLies: (
 				SkoarpuscleInt:     { | x, y | x },
                 SkoarpuscleFloat:   { | x, y | x },
+				SkoarpuscleHashLevel:   { | x, y | x },
 				SkoarpuscleFreq:    { | x, y | x },
 				SkoarpuscleNoat:    { | x, y | x },
 				SkoarpuscleSymbol:  { | x, y | x },
@@ -163,6 +189,7 @@ SkoarOps {
 			SkoarpuscleSymbol: (
 				SkoarpuscleInt:     { | x, y | SkoarpuscleSymbol(x.val ++ y.val.asSymbol) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleSymbol(x.val ++ y.val.asSymbol) },
+				SkoarpuscleHashLevel:   { | x, y | SkoarpuscleSymbol(x.val ++ y.val.asSymbol) },
 				SkoarpuscleFreq:    { | x, y | SkoarpuscleSymbol(x.val ++ y.val.asSymbol ++ 'Hz') },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleSymbol(x.val ++ y.asSymbol) },
@@ -180,6 +207,7 @@ SkoarOps {
 			SkoarpuscleString: (
 				SkoarpuscleInt:     { | x, y | SkoarpuscleString(x.val ++ y.val.asString) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleString(x.val ++ y.val.asString) },
+				SkoarpuscleHashLevel:   { | x, y | SkoarpuscleString(x.val ++ y.val.asString) },
 				SkoarpuscleFreq:    { | x, y | SkoarpuscleString(x.val ++ y.val.asString ++ "Hz") },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleString(x.val ++ y.asString) },
@@ -199,6 +227,7 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:     { | x, y | SkoarpuscleFreq(x.val + y.val) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleFreq(x.val + y.val) },			 
+				SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFreq(x.val + y.val) },			 
 				SkoarpuscleFreq:    { | x, y | SkoarpuscleFreq(x.val + y.val) },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
@@ -230,6 +259,7 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:     { | x, y | SkoarpuscleInt(x.val * y.val) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleFreq:    { | x, y | SkoarpuscleFreq(x.val * y.val) },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
@@ -250,6 +280,27 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:     { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
+                SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
+
+				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleChoard:  { | x, y | SkoarpuscleCrap.new },
+				
+				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
+				
+				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
+				
+				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
+            ),
+
+			// x
+            SkoarpuscleHashLevel: (
+                // y
+                SkoarpuscleInt:     { | x, y | SkoarpuscleFloat(x.val * y.val) },
+                SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
@@ -268,6 +319,7 @@ SkoarOps {
 				// y
                 SkoarpuscleInt:     { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
@@ -285,6 +337,7 @@ SkoarOps {
 			SkoarpuscleNoat: (
 				SkoarpuscleInt:     { | x, y | SkoarpuscleCrap.new },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleCrap.new },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleCrap.new },
                 SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
@@ -302,7 +355,8 @@ SkoarOps {
 			SkoarpuscleChoard: (
 				SkoarpuscleInt:     { | x, y | SkoarpuscleCrap.new },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleCrap.new },
-                SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
+                SkoarpuscleHashLevel:    { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleCrap.new },
@@ -317,20 +371,22 @@ SkoarOps {
 			),
 
 			SkoarpuscleLies: (
-				SkoarpuscleInt:     { | x, y | x },
-                SkoarpuscleFloat:   { | x, y | x },
-				SkoarpuscleFreq:    { | x, y | x },
-				SkoarpuscleNoat:    { | x, y | x },
-				SkoarpuscleSymbol:  { | x, y | x },
-				SkoarpuscleString:  { | x, y | x },
-				SkoarpuscleChoard:  { | x, y | x },
-				SkoarpuscleLies:    { | x, y | x },
-                SkoarpuscleList:    { | x, y | x }
+				SkoarpuscleInt:         { | x, y | x },
+                SkoarpuscleFloat:       { | x, y | x },
+				SkoarpuscleHashLevel:   { | x, y | x },
+				SkoarpuscleFreq:        { | x, y | x },
+				SkoarpuscleNoat:        { | x, y | x },
+				SkoarpuscleSymbol:      { | x, y | x },
+				SkoarpuscleString:      { | x, y | x },
+				SkoarpuscleChoard:      { | x, y | x },
+				SkoarpuscleLies:        { | x, y | x },
+                SkoarpuscleList:        { | x, y | x }
 			),
 
 			SkoarpuscleSymbol: (
 				SkoarpuscleInt:     { | x, y | SkoarpuscleCrap.new },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleCrap.new },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleCrap.new },
                 SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
@@ -349,6 +405,7 @@ SkoarOps {
 
 				SkoarpuscleInt:     { | x, y | SkoarpuscleCrap.new },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleCrap.new },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleCrap.new },
                 SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
@@ -369,6 +426,7 @@ SkoarOps {
                 // y
                 SkoarpuscleInt:     { | x, y | SkoarpuscleFreq(x.val * y.val) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleFreq(x.val * y.val) },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFreq(x.val * y.val) },
                 SkoarpuscleFreq:    { | x, y | SkoarpuscleFreq(x.val * y.val) },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
@@ -407,7 +465,7 @@ SkoarOps {
     assign {
         | minstrel, v, settable |
         var f = this.lookup(assignment, settable, v);
-        "assign ".post; v.postln;
+        "assign ".post; v.val.post; v.dump;
         ^minstrel.fairy.impress(f.(minstrel, v, settable));
     }
 

@@ -236,7 +236,13 @@ SkoarTokeInspector {
 			    | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleArgSpec(toke);
                 noad.toke = nil;
-            }
+            },
+
+			Toke_HashLevel: {
+			    | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleHashLevel(toke);
+                noad.toke = nil;
+            },
 
         );
     }
