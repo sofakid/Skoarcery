@@ -44,7 +44,7 @@ ottavas              : OctaveShift | OttavaA | OttavaB | QuindicesimaA | Quindic
 dynamic              : DynPiano | DynForte | DynSFZ | DynFP
 
 nouny            : cthulhu | conditional | loop | nouny_literal | musical_keyword | listy | deref | skoarpion
-+nouny_literal   : Tuplet | Caesura | Freq | Int | Float | String | Choard | NamedNoat | Symbol | Fairy | HashLevel
++nouny_literal   : Tuplet | Caesura | Freq | Int | Float | String | Choard | NamedNoat | Symbol | Fairy | HashLevel | False | True | Crap
 
 deref            : Deref deref_prime
 +deref_prime     : MsgNameWithArgs listy_suffix | MsgName

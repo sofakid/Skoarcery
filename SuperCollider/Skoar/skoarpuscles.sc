@@ -44,41 +44,45 @@ Skoarpuscle {
     *wrap {
         | x |
         case {x.isNil} {
-            "x nil".postln;
+            //"wrapping: crap".postln;
             ^SkoarpuscleCrap();
 
 		} {x == false} {
-            "x lies".postln;
-            ^SkoarpuscleLies();
+            //"wrapping: False".postln;
+            ^SkoarpuscleFalse();
+
+        } {x == true} {
+            //"wrapping: True".postln;
+            ^SkoarpuscleTrue();
 
         } {x.isKindOf(Skoarpuscle)} {
-            "already wrapped".postln;
+            //"already wrapped".postln;
             ^x;
 
         } {x.isKindOf(Skoarpion)} {
-            "x skoarpion".postln;
+            //"wrapping: skoarpion".postln;
             ^SkoarpuscleSkoarpion(x);
 
         } {x.isKindOf(Integer)} {
-            debug("x int: " ++ x.asString);
+            //("wrapping: int: " ++ x.asString).postln;
             ^SkoarpuscleInt(x);
 
         } {x.isKindOf(Number)} {
-            "x float".postln;
+            //"wrapping: float".postln;
             ^SkoarpuscleFloat(x);
 
         } {x.isKindOf(String)} {
-            "x str".postln;
+            //"wrapping: str".postln;
             ^SkoarpuscleString(x);
 
         } {x.isKindOf(Symbol)} {
-            "x symbol".postln;
+            //"wrapping: symbol".postln;
             ^SkoarpuscleSymbol(x);
 
         } {x.isKindOf(Array)} {
             var a = Array.newClear(x.size);
             var i = -1;
-            "x array".postln;
+            "wrapping: array".postln;
             x.do {
                 | el |
                 i = i + 1;
@@ -87,7 +91,7 @@ Skoarpuscle {
 
             ^SkoarpuscleList(a);
         } {
-            "x unknown: ".post; x.dump;
+            "wrapping: unknown: ".post; x.dump;
             ^SkoarpuscleUnknown(x);
         };
 
@@ -102,11 +106,55 @@ SkoarpuscleUnknown : Skoarpuscle {
 // Is the value any good? no, it's crap.
 // What did we get back? oh, crap.
 SkoarpuscleCrap : Skoarpuscle {
-    asString {"crap"}
+
+	init {
+		val = "crap";
+	}
+
+    asString {^"crap"}
 
     // these aren't doing nothing, they are returning this crap
     skoar_msg {}
     flatten {^nil}
+
+	on_enter {
+        | m, nav |
+        m.fairy.impress(this);
+    }
+}
+
+SkoarpuscleFalse : Skoarpuscle {
+	
+	init {
+		val = false;
+	}
+
+	asString {^"no"}
+
+    skoar_msg {}
+    flatten {^false}
+
+	on_enter {
+        | m, nav |
+        m.fairy.impress(this);
+    }
+}
+
+SkoarpuscleTrue : Skoarpuscle {
+
+	init {
+		val = true;
+	}
+
+	asString {^"yes"}
+
+    skoar_msg {}
+    flatten {^true}
+	
+	on_enter {
+        | m, nav |
+        m.fairy.impress(this);
+    }
 }
 
 SkoarpuscleInt : Skoarpuscle {
@@ -321,7 +369,7 @@ SkoarpuscleMathOp : Skoarpuscle {
 
             {"-"}  {{
                 | minstrel, a, b |
-                minstrel.skoar.ops.sub(minstrel, a, b);
+                Skoar.ops.sub(minstrel, a, b);
             }};
     }
 
@@ -332,13 +380,6 @@ SkoarpuscleMathOp : Skoarpuscle {
         f.(m, left, right);
     }
 
-}
-
-SkoarpuscleLies : Skoarpuscle {
-	asString {"lies"}
-
-    skoar_msg {}
-    flatten {^false}
 }
 
 SkoarpuscleBooleanOp : Skoarpuscle {
@@ -497,7 +538,7 @@ SkoarpuscleConditional : Skoarpuscle {
 
 			impression = m.fairy.impression;
             m.koar.do_skoarpion(
-                if (impression.isKindOf(SkoarpuscleLies) or: impression.isKindOf(SkoarpuscleCrap)) {
+                if (impression.isKindOf(SkoarpuscleFalse) or: impression.isKindOf(SkoarpuscleCrap)) {
 						else_body
 					} {
 						if_body
@@ -610,7 +651,7 @@ SkoarpuscleLoop : Skoarpuscle {
 
 						m.koar.do_skoarpion(condition, m, nav, [\inline]);
                         x = m.fairy.impression;
-						if (x.isKindOf(SkoarpuscleLies) or: x.isKindOf(SkoarpuscleCrap)) {
+						if (x.isKindOf(SkoarpuscleFalse) or: x.isKindOf(SkoarpuscleCrap)) {
 							break.();
 						};
                     };

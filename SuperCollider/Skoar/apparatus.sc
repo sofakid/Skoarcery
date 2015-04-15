@@ -12,7 +12,7 @@ SkoarNoad {
     var <>toke;
 
     var <>on_enter;
-    var <>one_shots;       // function to set for stuff that applies for one beat.
+    var <>one_shots;       // function to set for stuff that appFalse for one beat.
 
     var <>voice;           // what voice to use
     var <>skoap;           // what skoap are we in

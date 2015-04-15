@@ -146,7 +146,7 @@ SkoarTokeInspector {
                 noad.toke = nil;
             },
 
-            Toke_OttavaB : {
+            Toke_OttavaB: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
@@ -154,7 +154,6 @@ SkoarTokeInspector {
 
             Toke_QuindicesimaA: {
                 | skoar, noad, toke |
-
                 noad.skoarpuscle = SkoarpuscleOctaveShift(toke);
                 noad.toke = nil;
             },
@@ -243,6 +242,20 @@ SkoarTokeInspector {
                 noad.skoarpuscle = SkoarpuscleHashLevel(toke);
                 noad.toke = nil;
             },
+
+			Toke_True: {
+			    | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleTrue.new;
+                noad.toke = nil;
+            },
+
+			Toke_False: {
+			    | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleFalse.new;
+                noad.toke = nil;
+            },
+
+
 
         );
     }

@@ -4,8 +4,6 @@ var eth = (\dur:1/2);
 
 SkoarTestRunner((
 
-	
-
 	da_capo_a: [
 		") ) ) fine ] ] D.C. al fine",
 		[

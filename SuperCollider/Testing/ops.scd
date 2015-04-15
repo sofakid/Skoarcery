@@ -354,39 +354,197 @@ SkoarTestRunner((
 	],
 
 
+	op_add_Float_String: [
+		"2.18 + 'ABC' => @x )", 
+		[(x: "2.18ABC")]
+	],
+
+	// False
+	op_add_Float_False: [
+		"2.18 + no => @x )", 
+		[(x: false)]
+	],
+
+	op_add_Symbol_False: [
+		"@abc + no => @x )", 
+		[(x: false)]
+	],
+
+	op_add_Int_False: [
+		"7 + no => @x )", 
+		[(x: false)]
+	],
+
+	op_add_List_False: [
+		"<0,1> + no => @x )", 
+		[(x: [0,1,false])]
+	],
+
+	op_add_Noat_False: [
+		"c# + no => @x )", 
+		[(x: false )]
+	],
+
+	op_add_Choard_False: [
+		"A# + no => @x )", 
+		[(x: false)]
+	],
+
+	op_add_False_Symbol: [
+		"no + @abc=> @x )", 
+		[(x: false)]
+	],
+
+	op_add_False_Choard: [
+		"no + A# => @x )", 
+		[(x: false)]
+	],
+
+	op_add_False_Freq: [
+		"no + 2600Hz => @x )", 
+		[(x: false)]
+	],
+
+	op_add_False_List: [
+		"no + <0,1> => @x )", 
+		[(x: false)]
+	],
+
+	op_add_False_Noat: [
+		"no + c# => @x )", 
+		[(x: false)]
+	],
+
+	op_add_False_String: [
+		"no + 'ABC' => @x )", 
+		[(x: false)]
+	],
+
+	op_add_False_False: [
+		"no + no => @x )", 
+		[(x: false)]
+	],
+
+	op_add_False_Int: [
+		"no + 7 => @x )", 
+		[(x: false)]
+	],
+
+	op_add_False_Float: [
+		"no + 2.18 => @x )", 
+		[(x: false)]
+	],
+	
+	op_add_String_False: [
+		"'ABC' + no => @x )", 
+		[(x: false)]
+	],
+
+	// True
+	op_add_Float_True: [
+		"2.18 + yes => @x )", 
+		[(x: 2.18)]
+	],
+
+	op_add_Symbol_True: [
+		"@abc + yes => @x )", 
+		[(x: \abc)]
+	],
+
+	op_add_Int_True: [
+		"7 + yes => @x )", 
+		[(x: 7)]
+	],
+
+	op_add_List_True: [
+		"<0,1> + yes => @x )", 
+		[(x: [0,1,true])]
+	],
+
+	op_add_Noat_True: [
+		"c# + yes => @x )", 
+		[(x: nil )]
+	],
+
+	op_add_Choard_True: [
+		"A# + yes => @x )", 
+		[(x: nil)]
+	],
+
+	op_add_True_Symbol: [
+		"yes + @abc=> @x )", 
+		[(x: 'abc')]
+	],
+
+	op_add_True_Choard: [
+		"yes + A# => @x )", 
+		[(x: nil)]
+	],
+
+	op_add_True_Freq: [
+		"yes + 2600Hz => @x )", 
+		[(x: 2600)]
+	],
+
+	op_add_True_List: [
+		"yes + <0,1> => @x )", 
+		[(x: [0,1])]
+	],
+
+	op_add_True_Noat: [
+		"yes + c# => @x )", 
+		[(x: nil)]
+	],
+
+	op_add_True_String: [
+		"yes + 'ABC' => @x )", 
+		[(x: "ABC")]
+	],
+
+	op_add_True_True: [
+		"yes + yes => @x )", 
+		[(x: true)]
+	],
+
+	op_add_True_Int: [
+		"yes + 7 => @x )", 
+		[(x: 7)]
+	],
+
+	op_add_True_Float: [
+		"yes + 2.18 => @x )", 
+		[(x: 2.18)]
+	],
+	
+	op_add_String_True: [
+		"'ABC' + yes => @x )", 
+		[(x: "ABC")]
+	],
+
 	// ---------------------------------------------------
 	// ---------------------------------------------------
 	//     Multiplication
 	// ---------------------------------------------------
 	// ---------------------------------------------------
-	
-	
 	op_mul_Int_Int: [
 		"7 x 7 => @x )", 
 		[(x: 49)]
 	],
-
-	
-
 	
 	op_mul_Int_Freq: [
 		"7 x 2600Hz )", 
 		[(freq: 18200)]
 	],
-
 	
 	op_mul_Int_Float: [
 		"7 x 2.18 => @x )", 
 		[(x: 15.26)]
 	],
 
-
 	op_mul_List_Int: [
 		"<0,1> x 7 => @x )", 
 		[(x: [0,7])]
 	],
-
-	
 
 	op_mul_List_List: [
 		"<0,1> x <0,1> => @x )", 
@@ -398,47 +556,34 @@ SkoarTestRunner((
 		[(x: [0,2600])]
 	],
 
-	
-
 	op_mul_List_Float: [
 		"<0,1> x 2.18 => @x )", 
 		[(x: [0,2.18])]
 	],
 
-
-	
 	op_mul_Freq_Int: [
 		"2600Hz x 7 => @x )", 
 		[(x:18200)]
 	],
 
-	
-
 	op_mul_Freq_Freq: [
 		"2600Hz x 2600Hz )", 
 		[(freq:6760000)]
 	],
-
-	
 	
 	op_mul_Freq_Float: [
 		"2600Hz x 2.18 => @x )", 
 		[(x: 5668 )]
 	],
 
-
-
 	op_mul_Float_Int: [
 		"2.18 x 7 => @x )", 
 		[(x: 15.26)]
 	],
 
-
-	
-
 	op_mul_Float_Float: [
 		"2.18 x 2.18 => @x )", 
-		[(x: 4.36)]
+		[(x: 4.7524)]
 	],
 
 	op_mul_Hash_Int: [
@@ -453,6 +598,6 @@ SkoarTestRunner((
 
 	op_mul_Hash_Hash: [
 		"[###       ] x [####      ] => @x )", 
-		[(x: 0.7)]
+		[(x: 0.12)]
 	],
 ));

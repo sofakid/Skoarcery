@@ -13,6 +13,10 @@ EOF:            unused
 Whitespace:     [ \\t]*
 Newline:        [\\n\\r\\f][\\n\\r\\f \\t]*
 
+True:           yes
+False:          no
+Crap:           crap
+
 Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
 Comment:        <[?](.|[\\n\\r\\f])*?[?]>
@@ -67,8 +71,8 @@ AssOp:            =>|[+]>|->
 MsgOp:            \\.(?![)\\]])
 MathOp:           [+x\\-](?!>|or)
 
-NamedNoat*:       (?:_?)(?:[a-eg]|f(?![ac-zA-Z_]))(#|b)?
-Choard*:          (D(?![a.])|[ABCEFG])(#|b)?([Mm0-9]|sus|dim)*
+NamedNoat*:       (?:_?)(?:[a-g](?![ac-zA-Z_]))(#|b)?
+Choard*:          [ABCDEFG](?![ce-ln-rt-zA-LN-Z])(#|b)?([Mm0-9]|sus|dim|aug|dom|add)*
 
 BooleanOp*:       ==|!=|<=|>=|and|or|xor
 CondS:            [{][?][\\n]*
@@ -98,8 +102,8 @@ Nosey:            ,
 DaCapo:           D\\.C\\.|Da Capo
 DalSegno:         D\\.S\\.|Dal Segno
 Fine:             fine
-Segno*:           ,segno`(?:_[a-zA-Z_][a-zA-Z0-9_]*`)*
-Coda:             \\([+]\\)
+Segno*:           ,[Ss](?:egno)?`(?:[a-zA-Z_][a-zA-Z0-9_]*`)*
+Coda:             \\([+]\\)(?:`(?:[a-zA-Z_][a-zA-Z0-9_]*`)*)?
 Rep*:             %+
 AlCoda:           al(la)? coda
 AlSegno:          al segno

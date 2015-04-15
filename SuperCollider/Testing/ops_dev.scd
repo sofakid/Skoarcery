@@ -4,20 +4,18 @@ var eth = (\dur:1/2);
 
 SkoarTestRunner((
 
-	
-	
 	// ---------------------------------------------------
 	// ---------------------------------------------------
 	//     Addition
 	// ---------------------------------------------------
 	// ---------------------------------------------------
 	
-	op_add_Symbol_Lies: [
-		"@abc + lies => @x )", 
-		[(x: false)]
-	],
-
 	
+
+
+
+
+
 	op_add_Symbol_Crap: [
 		"@abc + crap => @x )", 
 		[(x: inf)]
@@ -33,10 +31,7 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	op_add_Int_Lies: [
-		"7 + lies => @x )", 
-		[(x: inf)]
-	],
+	
 
 	op_add_Int_Crap: [
 		"7 + crap => @x )", 
@@ -54,10 +49,7 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	op_add_List_Lies: [
-		"<0,1> + lies => @x )", 
-		[(x: inf)]
-	],
+	
 
 	
 
@@ -83,11 +75,7 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	op_add_Noat_Lies: [
-		"c# + lies => @x )", 
-		[(x: inf )]
-	],
-
+	
 	op_add_Noat_List: [
 		"c# + <0,1> => @x )", 
 		[(x: inf )]
@@ -127,10 +115,6 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	//op_add_Choard_Lies: [
-	//	"A# + lies => @x )", 
-	//	[(x: inf)]
-	//],
 
 	op_add_Choard_List: [
 		"A# + <0,1> => @x )", 
@@ -154,58 +138,7 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-
-	op_add_Lies_Symbol: [
-		"lies + @abc=> @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Choard: [
-		"lies + A# => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Freq: [
-		"lies + 2600Hz => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_List: [
-		"lies + <0,1> => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Noat: [
-		"lies + c# => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_String: [
-		"lies + 'ABC' => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Lies: [
-		"lies + lies => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Int: [
-		"lies + 7 => @x )", 
-		[(x: inf)]
-	],
-
-	op_add_Lies_Float: [
-		"lies + 2.18 => @x )", 
-		[(x: inf)]
-	],
 	
-	
-
-	//op_add_String_Lies: [
-	//	"'ABC' + lies => @x )", 
-	//	[(x: false )]
-	//],
 
 	
 
@@ -231,8 +164,8 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	//op_add_Freq_Lies: [
-	//	"2600Hz + lies => @x )", 
+	//op_add_Freq_False: [
+	//	"2600Hz + false => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -257,10 +190,7 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	//op_add_Float_Lies: [
-	//	"2.18 + lies => @x )", 
-	//	[(x: inf)]
-	//],
+
 
 	op_add_Float_List: [
 		"2.18 + <0,1> => @x )", 
@@ -277,10 +207,7 @@ SkoarTestRunner((
 	//	[(x: inf)]
 	//],
 
-	op_add_Float_String: [
-		"2.18 + 'ABC' => @x )", 
-		[(x: inf)]
-	],
+	
 
 	// ---------------------------------------------------
 	// ---------------------------------------------------
@@ -313,11 +240,7 @@ SkoarTestRunner((
 		"<0,1> - A# => @x )", 
 		[(x: inf)]
 	],
-
-	//op_sub_List_Lies: [
-	//	"<0,1> - lies => @x )", 
-	//	[(x: inf)]
-	//],
+	 
 
 	op_sub_List_List: [
 		"<0,1> - <0,1> => @x )", 
@@ -334,6 +257,11 @@ SkoarTestRunner((
 	//	[(x: inf)]
 	//],
 
+	
+	//op_sub_List_False: [
+	//	"<0,1> - false => @x )", 
+	//	[(x: inf)]
+	//],
 	op_sub_List_String: [
 		"<0,1> - 'ABC' => @x )", 
 		[(x: inf )]
@@ -365,8 +293,8 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	//op_sub_Noat_Lies: [
-	//	"c# - lies => @x )", 
+	//op_sub_Noat_False: [
+	//	"c# - false => @x )", 
 	//	[(x: inf )]
 	//],
 
@@ -405,8 +333,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	//op_sub_Choard_Lies: [
-	//	"A# - lies => @x )", 
+	//op_sub_Choard_False: [
+	//	"A# - false => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -432,43 +360,43 @@ SkoarTestRunner((
 	],
 
 
-	op_sub_Lies_Symbol: [
-		"lies - @abc=> @x )", 
+	op_sub_False_Symbol: [
+		"false - @abc=> @x )", 
 		[(x: inf)]
 	],
 
-	op_sub_Lies_Choard: [
-		"lies - A# => @x )", 
+	op_sub_False_Choard: [
+		"false - A# => @x )", 
 		[(x: inf)]
 	],
 
-	op_sub_Lies_Freq: [
-		"lies - 2600Hz => @x )", 
+	op_sub_False_Freq: [
+		"false - 2600Hz => @x )", 
 		[(x: inf)]
 	],
 
-	op_sub_Lies_List: [
-		"lies - <0,1> => @x )", 
+	op_sub_False_List: [
+		"false - <0,1> => @x )", 
 		[(x: inf)]
 	],
 
-	op_sub_Lies_Noat: [
-		"lies - c# => @x )", 
+	op_sub_False_Noat: [
+		"false - c# => @x )", 
 		[(x: inf)]
 	],
 
-	op_sub_Lies_Lies: [
-		"lies - lies => @x )", 
+	op_sub_False_False: [
+		"false - false => @x )", 
 		[(x: inf)]
 	],
 
-	op_sub_Lies_Int: [
-		"lies - 7 => @x )", 
+	op_sub_False_Int: [
+		"false - 7 => @x )", 
 		[(x: inf)]
 	],
 
-	op_sub_Lies_Float: [
-		"lies - 2.18 => @x )", 
+	op_sub_False_Float: [
+		"false - 2.18 => @x )", 
 		[(x: inf)]
 	],
 	
@@ -487,8 +415,8 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	//op_sub_Freq_Lies: [
-	//	"2600Hz - lies => @x )", 
+	//op_sub_Freq_False: [
+	//	"2600Hz - false => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -523,8 +451,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	op_sub_Float_Lies: [
-		"2.18 - lies => @x )", 
+	op_sub_Float_False: [
+		"2.18 - false => @x )", 
 		[(x: inf)]
 	],
 
@@ -614,8 +542,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	op_mul_List_Lies: [
-		"<0,1> x lies => @x )", 
+	op_mul_List_False: [
+		"<0,1> x false => @x )", 
 		[(x: inf)]
 	],
 
@@ -665,8 +593,8 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	op_mul_Noat_Lies: [
-		"c# x lies => @x )", 
+	op_mul_Noat_False: [
+		"c# x false => @x )", 
 		[(x: inf )]
 	],
 
@@ -707,8 +635,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	op_mul_Choard_Lies: [
-		"A# x lies => @x )", 
+	op_mul_Choard_False: [
+		"A# x false => @x )", 
 		[(x: inf)]
 	],
 
@@ -734,43 +662,43 @@ SkoarTestRunner((
 	],
 
 
-	op_mul_Lies_Symbol: [
-		"lies x @abc=> @x )", 
+	op_mul_False_Symbol: [
+		"false x @abc=> @x )", 
 		[(x: inf)]
 	],
 
-	op_mul_Lies_Choard: [
-		"lies x A# => @x )", 
+	op_mul_False_Choard: [
+		"false x A# => @x )", 
 		[(x: inf)]
 	],
 
-	op_mul_Lies_Freq: [
-		"lies x 2600Hz => @x )", 
+	op_mul_False_Freq: [
+		"false x 2600Hz => @x )", 
 		[(x: inf)]
 	],
 
-	op_mul_Lies_List: [
-		"lies x <0,1> => @x )", 
+	op_mul_False_List: [
+		"false x <0,1> => @x )", 
 		[(x: inf)]
 	],
 
-	op_mul_Lies_Noat: [
-		"lies x c# => @x )", 
+	op_mul_False_Noat: [
+		"false x c# => @x )", 
 		[(x: inf)]
 	],
 
-	op_mul_Lies_Lies: [
-		"lies x lies => @x )", 
+	op_mul_False_False: [
+		"false x false => @x )", 
 		[(x: inf)]
 	],
 
-	op_mul_Lies_Int: [
-		"lies x 7 => @x )", 
+	op_mul_False_Int: [
+		"false x 7 => @x )", 
 		[(x: inf)]
 	],
 
-	op_mul_Lies_Float: [
-		"lies x 2.18 => @x )", 
+	op_mul_False_Float: [
+		"false x 2.18 => @x )", 
 		[(x: inf)]
 	],
 	
@@ -789,8 +717,8 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	//op_mul_Freq_Lies: [
-	//	"2600Hz x lies => @x )", 
+	//op_mul_Freq_False: [
+	//	"2600Hz x false => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -827,8 +755,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	//op_mul_Float_Lies: [
-	//	"2.18 x lies => @x )", 
+	//op_mul_Float_False: [
+	//	"2.18 x false => @x )", 
 	//	[(x: inf)]
 	//],
 

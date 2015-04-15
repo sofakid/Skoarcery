@@ -113,7 +113,7 @@ Expectoar {
 		} {
 			| e |
 			testoar.assert(false == true, tag ++ "SkoarError");
-			//e.postProtectedBacktrace;	
+			e.postProtectedBacktrace;	
 		};
 	}
 

@@ -10,9 +10,16 @@ SkoarOps {
 
     init {
 
-		// -----------------
-		// Assignment Tables
-		// -----------------
+		this.init_assignments;
+		this.init_addition;
+		this.init_multiplication;
+	}
+
+	// -----------------
+	// Assignment Tables
+	// -----------------
+	init_assignments {
+	
         // v => settable
         assignment = (
         
@@ -45,14 +52,17 @@ SkoarOps {
                     minstrel.koar[\tempo] = x;
                     SkoarpuscleFloat(x)
                 }
-
-            )
+			)
+            
         );
+	}
 
-		// ---------------
-		// Addition Tables
-		// ---------------
-		// x + y, x add y
+	// ---------------
+	// Addition Tables
+	// ---------------
+	init_addition {
+	
+		// x + y
         addition = (
 
 			SkoarpuscleCrap: ( Any: { | x, y | SkoarpuscleCrap.new } ),
@@ -68,7 +78,8 @@ SkoarOps {
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleList([x, y]) },
 
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ y.val) },
@@ -89,7 +100,8 @@ SkoarOps {
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleList([x, y]) },
 
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ y.val) },
@@ -109,7 +121,8 @@ SkoarOps {
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleList([x, y]) },
 
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ y.val) },
@@ -128,7 +141,8 @@ SkoarOps {
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList(x.val ++ [y]) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleList(x.val ++ [y]) },
 
-				SkoarpuscleLies:    { | x, y | SkoarpuscleList(x.val ++ [y]) },
+				SkoarpuscleFalse:    { | x, y | SkoarpuscleList(x.val ++ [y]) },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleList(x.val ++ [y]) },
@@ -146,7 +160,8 @@ SkoarOps {
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleList([x, y]) },
 
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.asSymbol ++ y.val) },
@@ -164,7 +179,8 @@ SkoarOps {
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleList([x, y]) },
 
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:   { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.asSymbol ++ y.val) },
@@ -173,7 +189,7 @@ SkoarOps {
                 SkoarpuscleList:    { | x, y | SkoarpuscleList([x] ++ y.val) }
 			),
 
-			SkoarpuscleLies: (
+			SkoarpuscleFalse: (
 				SkoarpuscleInt:     { | x, y | x },
                 SkoarpuscleFloat:   { | x, y | x },
 				SkoarpuscleHashLevel:   { | x, y | x },
@@ -182,8 +198,23 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | x },
 				SkoarpuscleString:  { | x, y | x },
 				SkoarpuscleChoard:  { | x, y | x },
-				SkoarpuscleLies:    { | x, y | x },
+				SkoarpuscleFalse:    { | x, y | x },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleList:    { | x, y | x }
+			),
+
+			SkoarpuscleTrue: (
+				SkoarpuscleInt:     { | x, y | y },
+                SkoarpuscleFloat:   { | x, y | y },
+				SkoarpuscleHashLevel:   { | x, y | y },
+				SkoarpuscleFreq:    { | x, y | y },
+				SkoarpuscleNoat:    { | x, y | y },
+				SkoarpuscleSymbol:  { | x, y | y },
+				SkoarpuscleString:  { | x, y | y },
+				SkoarpuscleChoard:  { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | y },
+				SkoarpuscleList:    { | x, y | y }
 			),
 
 			SkoarpuscleSymbol: (
@@ -195,7 +226,8 @@ SkoarOps {
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleSymbol(x.val ++ y.asSymbol) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleSymbol(x.val ++ y.asSymbol) },
 
-				SkoarpuscleLies:    { | x, y | SkoarpuscleString(x.val ++ y.asSymbol) },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val ++ y.val) },
@@ -213,7 +245,8 @@ SkoarOps {
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleString(x.val ++ y.asString) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleString(x.val ++ y.asString) },
 
-				SkoarpuscleLies:    { | x, y | SkoarpuscleString(x.val ++ y.asString) },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleString(x.val ++ y.val.asString) },
@@ -233,7 +266,8 @@ SkoarOps {
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleList([x, y]) },
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleList([x, y]) },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ 'Hz' ++ y.val) },
@@ -245,10 +279,13 @@ SkoarOps {
 
 
         );
+	}
+	
+	// ---------------------
+	// Multiplication Tables
+	// ---------------------
+	init_multiplication {
 
-		// ---------------------
-		// Multiplication Tables
-		// ---------------------
 		// x by y
         multiplication = (
 
@@ -268,7 +305,8 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 				
 				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
@@ -289,7 +327,8 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 				
 				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
@@ -309,7 +348,8 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:   { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 				
 				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
@@ -317,9 +357,9 @@ SkoarOps {
 
 			SkoarpuscleList: (
 				// y
-                SkoarpuscleInt:     { | x, y | SkoarpuscleFloat(x.val * y.val) },
-                SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
-                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
+                SkoarpuscleInt:     { | x, y | SkoarpuscleCrap.new },
+                SkoarpuscleFloat:   { | x, y | SkoarpuscleCrap.new },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleCrap.new },
                 SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
 
 				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
@@ -328,7 +368,8 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 				
 				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
@@ -346,7 +387,8 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 				
 				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
@@ -364,13 +406,14 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 				
 				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
 			),
 
-			SkoarpuscleLies: (
+			SkoarpuscleFalse: (
 				SkoarpuscleInt:         { | x, y | x },
                 SkoarpuscleFloat:       { | x, y | x },
 				SkoarpuscleHashLevel:   { | x, y | x },
@@ -379,8 +422,23 @@ SkoarOps {
 				SkoarpuscleSymbol:      { | x, y | x },
 				SkoarpuscleString:      { | x, y | x },
 				SkoarpuscleChoard:      { | x, y | x },
-				SkoarpuscleLies:        { | x, y | x },
-                SkoarpuscleList:        { | x, y | x }
+				SkoarpuscleFalse:        { | x, y | x },
+                SkoarpuscleTrue:    { | x, y | x },
+				SkoarpuscleList:        { | x, y | x }
+			),
+
+			SkoarpuscleTrue: (
+				SkoarpuscleInt:     { | x, y | y },
+                SkoarpuscleFloat:   { | x, y | y },
+				SkoarpuscleHashLevel:   { | x, y | y },
+				SkoarpuscleFreq:    { | x, y | y },
+				SkoarpuscleNoat:    { | x, y | y },
+				SkoarpuscleSymbol:  { | x, y | y },
+				SkoarpuscleString:  { | x, y | y },
+				SkoarpuscleChoard:  { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | y },
+				SkoarpuscleList:    { | x, y | y }
 			),
 
 			SkoarpuscleSymbol: (
@@ -395,7 +453,8 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 				
 				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
@@ -414,7 +473,8 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 				
 				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
@@ -435,7 +495,8 @@ SkoarOps {
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleCrap.new },
 				SkoarpuscleString:  { | x, y | SkoarpuscleCrap.new },
 				
-				SkoarpuscleLies:    { | x, y | y },
+				SkoarpuscleFalse:    { | x, y | y },
+				SkoarpuscleTrue:    { | x, y | x },
 				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
 				
 				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
@@ -474,6 +535,14 @@ SkoarOps {
         | minstrel, x, y |
         var f = this.lookup(addition, x, y);
         //"add".postln;
+        ^minstrel.fairy.impress(f.(x, y));
+    }
+
+	// x - y
+    sub {
+        | minstrel, x, y |
+        var f = this.lookup(addition, x, y);
+        //"sub".postln;
         ^minstrel.fairy.impress(f.(x, y));
     }
 
