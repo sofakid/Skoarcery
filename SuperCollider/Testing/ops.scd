@@ -221,17 +221,6 @@ SkoarTestRunner((
 		[(x:2607)]
 	],
 
-	op_add_Freq_Noat: [
-		"2600Hz + c# => @x )", 
-		[(x:inf)]
-	],
-
-	op_add_Freq_Choard: [
-		"2600Hz + A# => @x )", 
-		[(x: inf )]
-	],
-
-
 
 	op_add_Freq_List: [
 		"2600Hz + <0,1> => @x )", 
@@ -297,9 +286,6 @@ SkoarTestRunner((
 		[(x: 0)]
 	],
 
-
-
-	
 	op_sub_Int_Freq: [
 		"7 - 2600Hz => @x )", 
 		[(x: -2593)] 
@@ -310,16 +296,11 @@ SkoarTestRunner((
 		[(x: 4.82)]
 	],
 
-
-
 	op_sub_Freq_Freq: [
 		"2600Hz - 2600Hz => @x )", 
 		[(x: 0)]
 	],
 
-
-
-	
 	op_sub_Freq_Float: [
 		"2600Hz - 2.18 )", 
 		[(freq: 2597.82 )]
@@ -329,9 +310,6 @@ SkoarTestRunner((
 		"2.18 - 7 => @x )", 
 		[(x: -4.82)]
 	],
-
-	
-	
 
 	op_sub_Float_Float: [
 		"2.18 - 2.18 => @x )", 
@@ -350,7 +328,7 @@ SkoarTestRunner((
 
 	op_sub_Hash_Hash: [
 		"[###       ] - [####      ] => @x )", 
-		[(x: -0.9)]
+		[(x: -0.1)]
 	],
 
 
@@ -377,7 +355,7 @@ SkoarTestRunner((
 
 	op_add_List_False: [
 		"<0,1> + no => @x )", 
-		[(x: [0,1,false])]
+		[(x: false)]
 	],
 
 	op_add_Noat_False: [
@@ -458,7 +436,7 @@ SkoarTestRunner((
 
 	op_add_List_True: [
 		"<0,1> + yes => @x )", 
-		[(x: [0,1,true])]
+		[(x: [0,1])]
 	],
 
 	op_add_Noat_True: [
@@ -540,27 +518,7 @@ SkoarTestRunner((
 		"7 x 2.18 => @x )", 
 		[(x: 15.26)]
 	],
-
-	op_mul_List_Int: [
-		"<0,1> x 7 => @x )", 
-		[(x: [0,7])]
-	],
-
-	op_mul_List_List: [
-		"<0,1> x <0,1> => @x )", 
-		[(x: [[0,0],[0,1],[1,0],[1,1]])]
-	],
-
-	op_mul_List_Freq: [
-		"<0,1> x 2600Hz => @x )", 
-		[(x: [0,2600])]
-	],
-
-	op_mul_List_Float: [
-		"<0,1> x 2.18 => @x )", 
-		[(x: [0,2.18])]
-	],
-
+	
 	op_mul_Freq_Int: [
 		"2600Hz x 7 => @x )", 
 		[(x:18200)]
