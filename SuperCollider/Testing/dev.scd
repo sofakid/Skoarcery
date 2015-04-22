@@ -36,4 +36,9 @@ SkoarTestRunner((
 		]
 	],
 
+	argspec_ambiguity: [
+	   "{! <a,c,e> ) !}",
+	   [qrt]
+	],
+
 ));

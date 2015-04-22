@@ -31,7 +31,7 @@ Meter*:         [1-9][0-9]*/[1-9][0-9]*
 
 ArgSpec:        <[a-zA-Z]+(,[a-zA-Z]+)*>
 
-ListS:          <(?![=?]|[a-zA-Z]+(,[a-zA-Z]+)*>)
+ListS:          <(?![=?])
 ListE:          >(?![=])
 ListSep:        ,
 

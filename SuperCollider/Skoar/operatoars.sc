@@ -272,7 +272,6 @@ SkoarOps {
 				  
 			)
 
-
         );
 	}
 	
@@ -592,4 +591,29 @@ SkoarOps {
         ^minstrel.fairy.impress(f.(x, y));
     }
 
+	// x +> y
+    increment {
+        | minstrel, x, y |
+        var f;
+		
+		f = this.lookup(addition, y, x);
+        //"increment".postln;
+		^minstrel.fairy.impress(f.(x, y));
+	}
+
+	// x -> y
+    decrement {
+        | minstrel, x, y |
+        var f = this.lookup(subtraction, y, x);
+        //"decrement".postln;
+		^minstrel.fairy.impress(f.(x, y));
+	}
+	 
+	// x x> y
+	multr {
+        | minstrel, x, y |
+        var f = this.lookup(multiplication, y, x);
+        //"multr".postln;
+		^minstrel.fairy.impress(f.(x, y));
+	}
 }

@@ -4,9 +4,12 @@ src = """
 #
 # like_this for nonterminals, LikeThis for terminals
 #
+# <e> is the empty string
+#
 # + before a nonterminal indicates this is an intermediate step that can be
 # skipped in the constructed parse tree, it will not create a new skoarnode,
 # instead appending its noads to its parent's children list.
+
 
 skoar              : branches
 +branches          : branch branches | <e>
