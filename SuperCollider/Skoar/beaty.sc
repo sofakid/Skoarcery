@@ -73,18 +73,7 @@ SkoarpuscleBeat : Skoarpuscle {
     }
 
     on_enter {
-        | m, nav |
-        var noat = m.fairy.noat.asNoat;
-        var e;
-
-        noat.execute(m);
-        // create an event with everything we've collected up until now
-        e = m.koar.event(m);
-
-        e[\dur] = val;
-
-        e.asCompileString.postln;
-        e.yield;
+        // set in the decorating stage, if it's not in an assignment
     }
 
 }

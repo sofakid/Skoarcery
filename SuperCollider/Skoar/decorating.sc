@@ -329,6 +329,25 @@ Skoarmantics {
                 | skoar, noad |
                 noad.skoarpuscle = noad.next_skoarpuscle;
                 noad.children = #[];
+                
+                if (noad.parent.name != \assignment) {
+                    // i'd rather this was in beaty.sc, (in the skoarpuscle),
+                    // but then it always runs, even if it's a metronome marker.
+                    noad.on_enter = {
+                        | m, nav |
+                        var noat = m.fairy.noat.asNoat;
+                        var e;
+                
+                        noat.execute(m);
+                        // create an event with everything we've collected up until now
+                        e = m.koar.event(m);
+                
+                        e[\dur] = noad.skoarpuscle.val;
+                
+                        e.asCompileString.postln;
+                        e.yield;
+                    };
+                };
             },
 
             loop: {
@@ -523,7 +542,10 @@ Skoarmantics {
                         | m, nav |
                         var x = m.fairy.cast_arcane_magic;
                         Skoar.ops.assign(m, x, settable);
-						m.fairy.impress(x);
+                        
+                        if (settable.isKindOf(SkoarpuscleBeat) == false) { 
+						   m.fairy.impress(x);
+                        };
                     }}
 					
 					{"x>"} {{
