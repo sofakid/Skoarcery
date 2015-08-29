@@ -714,13 +714,20 @@ SkoarpuscleListEnd : Skoarpuscle {
         m.fairy.next_listy;
         m.fairy.pop;
     }
+
+	
 }
 
 SkoarpuscleList : Skoarpuscle {
 
     init {
-        | x=#[] |
-        val = x;
+        | x |
+		val = if (x.isNil) {
+			[]
+		} {
+			x
+		};
+		"new list: ".post; val.postln;
     }
 
     on_enter {
@@ -755,22 +762,27 @@ SkoarpuscleList : Skoarpuscle {
         ^SkoarNoat_DegreeList(noats);
     }
 
-    skoar_msg {
+
+	skoar_msg {
         | msg, minstrel |
         var o = msg.get_msg_arr(minstrel);
         var name = msg.val;
         var ret;
 
+		// todo teach the fairy to next and last
         case {name == \next} {
             ret = val.performMsg(o);
         } {name == \last} {
             ret = val.performMsg(o);
+        } {name == \choose} {
+            ret = val.choose();
         } {
             ret = val.performMsg(o);
-        }
+        };
 
         ^Skoarpuscle.wrap(ret);
     }
+    
 
 }
 
@@ -814,23 +826,36 @@ SkoarpuscleMsg : Skoarpuscle {
 
     on_enter {
         | m, nav |
-        //val.postln;
+		var result = m.fairy.impression;
+		"msg::impression: ".post; result.postln;
+		result = result.skoar_msg(this, m);
+		"msg:impressing ".post; result.postln;
+		m.fairy.impress(result);
     }
 
     get_msg_arr {
         | m |
-        var x = Array.newClear(args.size + 1);
-        var i = 0;
 
-		"snerp".postln;
-        x[0] = val;
-        args.flatten(m).do {
-            | y |
-			"y: ".post; y.postln;
-            i = i + 1;
-            x[i] = y;
-        };
-        ^x;
+		if (args.isNil) {
+			^[val];
+		};
+
+		{
+			var x = Array.newClear(args.size + 1);
+			var i = 0;
+
+			"args: ".post; args.postln;
+
+			x[0] = val;
+			args.flatten(m).do {
+				| y |
+				"y: ".post; y.postln;
+				i = i + 1;
+				x[i] = y;
+			};
+			^x;
+		}
+        
     }
 }
 

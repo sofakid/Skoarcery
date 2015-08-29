@@ -475,33 +475,9 @@ Skoarmantics {
                 };
 
 				if (has_messages == true) {
-				 
 					noad.children = noads.asArray;
-					noads = noad.children;
-
-					// evaluate a chain of messages, returning the result
-					noad.on_enter = {
-						| m, nav |
-						var result = noads[0].next_skoarpuscle;
-						"msgable::noads: ".post; noads.postln;
-						"msgable::result: ".post; result.postln;
-						if (result.notNil) {
-							noads.do {
-								| y |
-								var x = y.skoarpuscle;
-								"msgable::x: ".post; x.postln;
-								case {x.isKindOf(SkoarpuscleMsg)} {
-									result = result.skoar_msg(x, m);
-									"msgable::msg_result: ".post; result.postln;
-								};
-							};
-
-							"msgable:impressing ".post; result.postln;
-							m.fairy.impress(result);
-						};
-
-					};
 				};
+
             },
 
             assignment: {
