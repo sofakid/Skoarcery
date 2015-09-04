@@ -98,16 +98,18 @@ nil:                            :        Toke_SkoarpionEnd
         // 2 - suffix
         suffix = kids[2];
 
-        sig.children.do {
+        sig.collect_skoarpuscles.do {
             | x |
-            case {x.skoarpuscle.isKindOf(SkoarpuscleSymbolName)} {
-                name = x.skoarpuscle.val;
-            } {x.skoarpuscle.isKindOf(SkoarpuscleArgSpec)} {
-                arg_spec = x.skoarpuscle;
+			"=============  sig.collect_skoarpuscles.do: ".postln;
+			case {x.isKindOf(SkoarpuscleSymbolName)} {
+                name = x.val;
+            } {x.isKindOf(SkoarpuscleArgSpec)} {
+                "============= ARGSPEC FOUND".postln;
+				arg_spec = x;
             };
         };
 
-        //"SIG: ".post; name.post; arg_spec.postln;
+        "SIG: ".post; name.post; arg_spec.postln;
 
         suffix.children.do {
             | x |

@@ -288,28 +288,3 @@ x = "
 )
 
 x.play;
-(
-"
-{! melody_b !!
-
-      .alice | _a# ) _f )             o/.  _a# ]]  ]]   c ]]  d ]] d# ]] |
-      .bob   | _d  )    ]] ]] _c ]  _d ].      ]]  ]] _d# ]] _f ]] _g ]] |
-
-      .alice |  f  ))                             o/ ]   f ]  f# ]] g# ]] |
-      .bob   | _g# ]. _a# ]] ]] c ]] d ]] d# ]] f )    _g# ] _a# ]] c  ]] |
-
-      .alice | a# )). ~o c# ) | c  ) o~ a )) f  ) |  f# )).  a# ) | a )  f )) ) |
-      .bob   | c# )).    e  ) | d# )    c )) _a ) | _b  )).  c# ) | c ) _a )) ) |
-
-      .alice |  f# )). a# ) | a )  f )) d ) |  d# )).  f# ) |  f  )  c# )) _a# ) |
-      .bob   | _b  )). c# ) | c ) _a ))   ) | _f# )). _b  ) | _a# ) _f  )) _c# ) |
-
-      .alice |  c ] ]]  d ]]  e ))                        g  )     |
-      .bob   | _e ] ]] _d ]] _e ] ]] _f ]] _g ] ]] _a ]] _a# ] c ] |
-
-      .alice |  f ]    _f ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
-      .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
-
-    !}.block
-".skoar.play;
-)
