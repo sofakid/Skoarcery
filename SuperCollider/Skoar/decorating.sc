@@ -277,6 +277,8 @@ We also shrink the tree, drop some punctuation noads.
 We went depth first and run the code on the way back,
    so children are processed first.
 
+   i.e. from the noad's perspective, its children are processed already 
+
 */
 Skoarmantics {
 
@@ -310,13 +312,11 @@ Skoarmantics {
 				noad.on_enter = {
 					| m, nav |
 					m.fairy.push_boolean;
-					"----------- PUSHED".postln;
 				};
 
 				end_noad.on_enter = {
                     | m, nav |
 					m.fairy.pop_boolean;
-					"----------- POPPED".postln;
                 };
 
                 noad.add_noad(end_noad);

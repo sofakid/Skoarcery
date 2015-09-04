@@ -11,15 +11,15 @@ src = """
 <e>:            unused
 EOF:            unused
 Whitespace:     [ \\t]*
-Newline:        [\\n\\r\\f][\\n\\r\\f \\t]*
+Newline:        [\\n\\r][\\n\\r \\t]*
 
-True:           yes
-False:          no
+True:           yes|true
+False:          no|false
 Crap:           crap
 
 Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
-Comment:        <[?](.|[\\n\\r\\f])*?[?]>
+Comment:        <[?](.|[\\n\\r])*?[?]>
 
 # careful not to match ottavas ending in (ma,mb,va,vb), or steal from floats
 Int*:           (-)?(0|[1-9][0-9]*)(?![0-9]*Hz|[mv][ab]|\\.[0-9]|/)
@@ -72,7 +72,7 @@ MsgOp:            \\.(?![)\\]])
 MathOp:           [+x\\-](?!>|or)
 
 NamedNoat*:       (?:_?)(?:[a-g](?![ac-zA-Z_]))(#|b)?
-Choard*:          [ABCDEFG](?![ce-ln-rt-zA-LN-Z])(#|b)?([Mm0-9]|sus|dim|aug|dom|add)*
+Choard*:          [ABCDEFG](?![.ce-ln-rt-zA-LN-Z]|al?)(#|b)?([Mm0-9]|sus|dim|aug|dom|add)*
 
 BooleanOp*:       ==|!=|<=|>=|and|or|xor
 CondS:            [{][?][\\n]*
