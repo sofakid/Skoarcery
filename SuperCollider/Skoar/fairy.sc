@@ -10,6 +10,9 @@ SkoarFairy {
 	var i_stack;
 	var i;
 	var compare_stack;
+	var boolean_stack;
+	var <boolean_impression;
+
 	var <l_value;
 
 	var times_seen_stack;
@@ -33,6 +36,8 @@ SkoarFairy {
 		i_stack = [];
 		i = 0;
 		compare_stack = [];
+		boolean_stack = [];
+		boolean_impression = false;
 		l_value = nil;
 
 		times_seen_stack = [];
@@ -135,6 +140,15 @@ SkoarFairy {
 		
 		"l_value from impression: ".post; l_value.postln;
 	}
+
+	push_boolean {
+        boolean_stack = boolean_stack.add(this.impression);
+    }
+
+    pop_boolean {
+		boolean_impression = this.impression;
+        this.impress(boolean_stack.pop);
+    }
 
 	impress_i {
 		^this.impress(i);

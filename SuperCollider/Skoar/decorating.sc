@@ -301,6 +301,28 @@ Skoarmantics {
                 noad.skoarpuscle = SkoarpuscleConditional(skoar, noad);
             },
 
+			boolean_expr: {
+                | skoar, noad |
+                // we insert a node at the end of the boolean expression
+                // so we can restore the impression
+                var end_noad = SkoarNoad(\boolean_expr_end, noad);
+				
+				noad.on_enter = {
+					| m, nav |
+					m.fairy.push_boolean;
+					"----------- PUSHED".postln;
+				};
+
+				end_noad.on_enter = {
+                    | m, nav |
+					m.fairy.pop_boolean;
+					"----------- POPPED".postln;
+                };
+
+                noad.add_noad(end_noad);
+            },
+
+
             boolean: {
                 | skoar, noad |
 				// we insert a node at the end of the expression
@@ -315,7 +337,7 @@ Skoarmantics {
                     var y;
 					var imp = m.fairy.impression;
 					
-					("derp " ++ l_value.asString ++ " imp: " ++ imp.asString).postln;
+					//("derp " ++ l_value.asString ++ " imp: " ++ imp.asString).postln;
 					y = x.evaluate(m, nav, l_value, imp);
 
 					m.fairy.impress(y);
@@ -401,7 +423,6 @@ Skoarmantics {
                     };
 
                     noad.add_noad(end_noad);
-                    
 				};
             },
 

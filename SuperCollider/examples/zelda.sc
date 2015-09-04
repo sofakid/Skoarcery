@@ -42,13 +42,8 @@ mf
 
 
 
+)
 
-)
-(
-b.play;
-)
-SynthDef.synthDefDir.postln
-SynthDef.browse
 
 (
 SynthDef(\blips, {arg out = 0, freq = 25, numharm = 10, att = 0.01, rel = 1, amp = 0.1, pan = 0.5;
@@ -276,9 +271,9 @@ x = "
     !}
 
     {! drums !!
-      .hats  {: ] ] ] ] ] ] ] ]] ]] :: $.i <= 11 :}
-      .kick  {: ) } ) } :: $.i <= 11 :}
-      .snare {: } ) } ) :: $.i <= 10 :} | ] ]] ]]  ] ]] ]]  ] ]] ]]  ]  ] |
+      .hats  {: ] ] ] ] ] ] ] ]] ]] :: 12 times :}
+      .kick  {: ) } ) } :: 12 times :}
+      .snare {: } ) } ) :: 11 times :} | ] ]] ]]  ] ]] ]]  ] ]] ]]  ]  ] |
     !}
 
     !intro !melody_a

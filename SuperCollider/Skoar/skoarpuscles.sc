@@ -650,7 +650,7 @@ SkoarpuscleLoop : Skoarpuscle {
 						var x;
 
 						m.koar.do_skoarpion(condition, m, nav, [\inline]);
-                        x = m.fairy.impression;
+                        x = m.fairy.boolean_impression;
 						if (x.isKindOf(SkoarpuscleFalse) or: x.isKindOf(SkoarpuscleCrap)) {
 							break.();
 						};
