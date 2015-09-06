@@ -20,7 +20,7 @@ SkoarFairy {
 
     *new {
         | nom, m |
-        "new SkoarFairy: ".post; nom.postln;
+        //"new SkoarFairy: ".post; nom.postln;
         ^super.new.init(nom, m);
     }
 
@@ -64,7 +64,7 @@ SkoarFairy {
         magic_stack = magic_stack.add(magic);
         magic = nil;
         listy_stack = listy_stack.add([]);
-        "$.push;".postln;
+        //"$.push;".postln;
 
     }											  
 
@@ -126,7 +126,7 @@ SkoarFairy {
 
     pop_compare {
         l_value = compare_stack.pop;
-		"popped l_value:".post; l_value.postln;
+		//"popped l_value:".post; l_value.postln;
     }
 
 	compare_impress {
@@ -138,7 +138,7 @@ SkoarFairy {
 			l_value = m.fairy.impression;
 		};
 		
-		"l_value from impression: ".post; l_value.postln;
+		//"l_value from impression: ".post; l_value.postln;
 	}
 
 	push_boolean {
@@ -156,7 +156,7 @@ SkoarFairy {
 
     impress {
         | x |
-        ("$:" ++ name ++ ".impression: " ++ x.asString).postln;
+        //("$:" ++ name ++ ".impression: " ++ x.asString).postln;
 
 		if (x.isKindOf(SkoarpuscleFairy)) {
             ^impression;
@@ -226,7 +226,7 @@ SkoarpuscleFairy : Skoarpuscle {
         if (x.isKindOf(Skoarpuscle)) {
             x = x.flatten(m);
         };
-		"Flattening the fairy: ".post; x.postln;
+		//"Flattening the fairy: ".post; x.postln;
         ^x;
     }
 
@@ -234,7 +234,7 @@ SkoarpuscleFairy : Skoarpuscle {
         | msg, minstrel |
         msg_arr = msg.get_msg_arr(minstrel);
 
-        "Fairy got msg: ".post; msg_arr.dump;
+        //"Fairy got msg: ".post; msg_arr.dump;
 
 		if (msg_arr[0] == \i) {
 			^minstrel.fairy.impress_i;

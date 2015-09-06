@@ -75,6 +75,8 @@ SkoarKoar {
 
         stack.do {
             | skrb |
+			var mus_key;
+
             // native function constructs the event quickly
             e = skrb.transformEvent(e);
 
@@ -86,6 +88,10 @@ SkoarKoar {
                     // we don't need to pass skoarpions to SC
                     nil
 
+                } {value.isKindOf(SkoarpuscleKey)} {
+                    // we don't modify this one yet, we deal with key next.
+                    value
+
                 } {value.isKindOf(Skoarpuscle)} {
                     // we want values, not skoarpuscles
                     value.flatten(minstrel)
@@ -95,6 +101,14 @@ SkoarKoar {
                     value
                 }
             };
+
+			mus_key = e[\key];
+				
+			if (mus_key.isKindOf(SkoarpuscleKey)) {
+				mus_key.apply(e);
+				e[\key] = nil;
+			}; 
+			
         }
 
         ^e
@@ -105,8 +119,8 @@ SkoarKoar {
         var i = 0;
         var vars = stack[stack.size - 1];
 
-		"ARG_SPEC: ".post; arg_spec.dump;
-		"ARGS    : ".post; args.dump;
+		//"ARG_SPEC: ".post; arg_spec.dump;
+		//"ARGS    : ".post; args.dump;
 
         if (arg_spec.isKindOf(SkoarpuscleArgSpec)) {
             var passed_args, n;
@@ -120,7 +134,7 @@ SkoarKoar {
 				if (k.isKindOf(SkoarpuscleSymbolName)) {
 					k = k.val;
 				};
-                ("k: " ++ k).postln;
+                //("k: " ++ k).postln;
                 vars[k] = if (i < n) {
                     passed_args[i]
                 } {

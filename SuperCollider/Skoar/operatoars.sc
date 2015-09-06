@@ -31,7 +31,13 @@ SkoarOps {
                 // v
                 Any: {
                     | minstrel, v, symbol |
-                    minstrel.koar[symbol.val] = v;
+					var s = symbol.val;
+
+					if (s == \key) {
+						v = SkoarpuscleKey(v);
+					};
+
+                    minstrel.koar[s] = v;
                     v
                 }
 
@@ -563,7 +569,7 @@ SkoarOps {
     assign {
         | minstrel, v, settable |
         var f = this.lookup(assignment, settable, v);
-        "assign ".post; v.val.post; v.dump;
+        //"assign ".post; v.val.post; v.dump;
         ^minstrel.fairy.impress(f.(minstrel, v, settable));
     }
 

@@ -100,16 +100,14 @@ nil:                            :        Toke_SkoarpionEnd
 
         sig.collect_skoarpuscles.do {
             | x |
-			"=============  sig.collect_skoarpuscles.do: ".postln;
 			case {x.isKindOf(SkoarpuscleSymbolName)} {
                 name = x.val;
             } {x.isKindOf(SkoarpuscleArgSpec)} {
-                "============= ARGSPEC FOUND".postln;
 				arg_spec = x;
             };
         };
 
-        "SIG: ".post; name.post; arg_spec.postln;
+        //"SIG: ".post; name.post; arg_spec.postln;
 
         suffix.children.do {
             | x |

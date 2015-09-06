@@ -1,6 +1,75 @@
 // -------------------
 // Pitchy Skoarpuscles
 // -------------------
+SkoarpuscleKey : Skoarpuscle {
+	
+	var <scale_name;
+	var <scale;
+	var <root;
+
+	init {
+		| choard |
+		root = 0;
+		scale_name = nil;
+
+		if (choard.isKindOf(SkoarpuscleList)) {
+			var a = choard.val;
+
+			if (a.size > 0) {
+				var x = a[0];
+			
+				if (x.isKindOf(SkoarpuscleChoard)) {
+					choard = x;
+				}; 
+				
+				if (a.size > 1) {
+					var y = a[1];
+					if (y.isKindOf(SkoarpuscleSymbol)) {
+						scale_name = y.val;
+					};
+				};
+				
+			};
+			
+
+		};
+
+		if (choard.isKindOf(SkoarpuscleChoard)) {
+			var minor;
+
+			root = switch (choard.letter)
+				{"C"} {0}
+				{"D"} {2}
+				{"E"} {4}
+				{"F"} {5}
+				{"G"} {7}
+				{"A"} {-3}
+				{"B"} {-1} + choard.sharps;
+
+			minor = choard.lexeme.findRegexp("m")[0];
+				
+			if (minor.notNil and: scale_name.isNil) {
+				scale_name = \minor;
+			};
+
+		};
+
+		if (scale_name.isNil) {
+			scale_name = \major;
+		};
+		scale = Scale.all[scale_name];
+	}
+
+	apply {
+		| event |
+	
+		event[\scale] = scale;
+		event[\root] = root;
+
+		^event;	
+	}
+}
+
 SkoarpuscleNoat : Skoarpuscle {
 
     var <lexeme;
@@ -95,6 +164,7 @@ SkoarpuscleChoard : Skoarpuscle {
      
 	 var <sharps;
 	 var <lexeme;
+	 var <letter;
 
 	 init {
         | lex |
@@ -105,7 +175,6 @@ SkoarpuscleChoard : Skoarpuscle {
         var s = lex;
         var r = s.findRegexp(noat_regex);
         var x = -1;
-        var letter;
 
 		lexeme = lex;
         letter = r[1][1];

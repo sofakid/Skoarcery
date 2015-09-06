@@ -10,7 +10,7 @@ SkoarMinstrel {
 
     *new {
         | nom, k, skr |
-        "new SkoarMinstrel: ".post; nom.postln;
+        //"new SkoarMinstrel: ".post; nom.postln;
         ^super.new.init(nom, k, skr);
     }
 
@@ -50,7 +50,7 @@ SkoarMinstrel {
                     {\nav_fine} { running = false; }
 
                     {\nav_da_capo} {
-                        "Da Capo time.".postln;
+                        //"Da Capo time.".postln;
                         // do nothing, will enter skoarpion again
                     }
 
@@ -64,7 +64,7 @@ SkoarMinstrel {
 
             };
 
-            ("Minstrel " ++ koar.name ++ " done.").postln;
+            //("Minstrel " ++ koar.name ++ " done.").postln;
         });
 
     }
