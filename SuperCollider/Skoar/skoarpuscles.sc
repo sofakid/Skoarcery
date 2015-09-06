@@ -584,7 +584,7 @@ SkoarpuscleTimes : Skoarpuscle {
 
 	on_enter {
         | m, nav |
-		var desired_times = m.fairy.impression;
+		var desired_times = m.fairy.cast_arcane_magic;
 		
 		if (desired_times.isCounty) {
 			var times_seen = m.fairy.how_many_times_have_you_seen(this);
