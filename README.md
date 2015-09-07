@@ -176,7 +176,23 @@ nor are these __noats__ the nearly named __noads__, which are also totally thing
     <? you get two octaves to work with, prepend _ for the lower octave. ?>
 
     <_c, _d, _e, _f, _g, _a, _b, c, d, e, f, g, a, b>.choose ]]
+    
+# key
+    
+    {! foo !! <0,1,2,3,4,5,6,7>.{: ]] :} !}
+    
+    Am => @key !foo
+    Fb => @key !foo
+    
+    <E, @dorian> => @key !foo
+    <F, @minorPentatonic> => @key !foo
 
+# transpose
+
+Just set @tranpose.
+
+    -3 => @transpose
+    
 # choards
 
     A Am A#m Asus2 Adim etc..
@@ -330,7 +346,10 @@ Skoarpions normally have scope, but they can be inlined with `.inline`, which ca
     0 + 2 == 2
     <0> + 2 == <0, 2>
     <_a, c> + e == <_a, c, e>
-   
+    
+    0 x 2 == 0
+    2 x 2 == 4
+    
 increments and decrements:
 
     2 => @x    <? x is now 2 ?>
@@ -350,6 +369,7 @@ Cthulhu can also make assertions:
     ^^(;!octave == 5;)^^
     
 If the octave isn't 5, Cthulhu will be so upset that he'll wake up and crash your skoar.
+
 
 
 Install
