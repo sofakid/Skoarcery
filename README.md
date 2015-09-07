@@ -164,6 +164,7 @@ with a flexible programming notation.
     )__  - quarter with a tie (ties to the next beat)
     )__. - dotted quarter with a tie
 
+
 # noats
 
 We call them __noats__, not __notes__, you see, __notes__ are already things;
@@ -192,7 +193,14 @@ nor are these __noats__ the nearly named __noads__, which are also totally thing
 Just set @tranpose.
 
     -3 => @transpose
-    
+
+# tempo
+
+Sort of like a metronome marker, set the bpm to a beat length:
+
+    80 => ) <? 80 quarter notes per minute ?>
+    80 => ] <? 80 eighth notes per minute ?>
+       
 # choards
 
     A Am A#m Asus2 Adim etc..
@@ -288,6 +296,13 @@ An if with else example:
 
     {? !x == !y ?? ]]] ?? ooo/ ?}
     
+    
+Acceptable boolean operators:
+
+    == != >= <= and or xor
+    
+At the moment, don't use `<` or `>` 
+    
 # Skoarpions
 
 The __Skoarpion__ is like a function, more like a subroutine.
@@ -341,6 +356,8 @@ Skoarpions normally have scope, but they can be inlined with `.inline`, which ca
     <? choose a random note ?>
     <c,d,e,f,g,a,b>.choose
     
+These are messages passed down to supercollider. You say `.rand` because in SC, `Integer` has a `.rand` method, `Array` has `.choose`)
+
 # Math
 
     0 + 2 == 2
