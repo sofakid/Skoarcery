@@ -10,18 +10,21 @@ __Skoarcery__ is a set of tools to define, test, and build the Skoar language.
 Example
 =======
 
-[listen on soundcloud](https://soundcloud.com/lucas-cornelisse/zelda-skoared)
+[listen on soundcloud](https://soundcloud.com/lucas-cornelisse/zelda)
 
     <? Zelda Theme - inspired by piano arrangement by Shinobu Amayake ?>
 
     130 => )
 
-    .alice     <0,3,5> => @detune     [##      ] => @amp
-    .bob       <0,3,5> => @detune     [##      ] => @amp
+    .alice    @default => @instrument [#####   ] => @amp
+    .bob      @default => @instrument [#####   ] => @amp
     .bass    @sawpulse => @instrument [###     ] => @amp  o~~~~
     .hats        @hats => @instrument [##      ] => @amp
     .snare      @snare => @instrument [##      ] => @amp
     .kick        @kick => @instrument [###     ] => @amp
+
+    {! bass_end<x>    !! !x ) ) ) ] ]     !}
+    {! bass_climb     !! | _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } | !}
 
     {! bassline_a !!
       <a#, g#, f#, c#, b, a#, c>.{: .) ]] ]] ] ) ) :}
@@ -30,14 +33,10 @@ Example
 
     {! bassline_b !!
       <a#, g#, f#, f>.{: ) ]] ]] ] ) ) :}
-
-      |: _e ]] _a# ]] c# ]  e ]] a# ]] ~o c# ] e ) } | f ) o~ _f ]] ]] ] ) } :|
-
-      <b, a#, c>.{: ) ]] ]] ] ) ) :}
-      !bass_end<f>
+      !bass_climb !bass_climb
+      <b, a#, c     >.{: ) ]] ]] ] ) ) :} !bass_end<f>
     !}
 
-    {! bass_end<x>    !! !x ) ) ) ] ]     !}
 
     {! intro !!
 
@@ -122,7 +121,7 @@ Example
       .bob   | _a ] o~ _a ]] ]]  ] ]] ]]   ] ]] ]]   ]  ] ~o |
       .snare |    ]       ]] ]]  ] ]] ]]   ] ]] ]]   ]  ]    |
       .hats  |    ]       ]      ] ]       ] ]       ]  ]    |
-      .kick  |    )              }         )         }       |
+      .kick  |    )              }         )         )       |
       .bass !bass_end<f>
     !}
 
@@ -131,7 +130,7 @@ Example
     !fill
     !melody_b
     !fill
-
+[listen on soundcloud](https://soundcloud.com/lucas-cornelisse/zelda)
 
 More examples: [examples.md]
 
@@ -180,13 +179,11 @@ nor are these __noats__ the nearly named __noads__, which are also totally thing
 
 # choards
 
-Choards don't work yet, this is the intention:
-
     A Am A#m Asus2 Adim etc..
 
-But we can use lists of noats:
+Or we can use lists of noats:
 
-    <_a,c,e> )  <_a,c#,e> )
+    <_a,c,e> )  <_a,c#,e> ) <0,2,4> ))
 
 # changing the octave
 
@@ -202,17 +199,29 @@ But we can use lists of noats:
 
 # dynamics
 
-Have to use the full word `forte`, `f` is a noat.
+We have to use the full word `forte`, `f` is a noat.
 
-    fff ffforte ppp pppiano piano mp mf ff pp p sfp
+    fff ffforte ppp pppiano piano mp mf ff pp p 
+    
+or, use a hash level:
 
+    .strings  [###  ] => @amp
+    .piano    [#### ] => @amp
+    .bass     [#### ] => @amp
+  
+Hash levels can be any length: 
+
+    [ ] is 0
+    [#] is 1
+    [## ] is 0.66ish
+    
 # repeats
 
 Colons:
 
     |: _a ]]] c ]]] e ]]] :| g ]]] ooo/ ]]] :|
 
-Segnos and Codas:
+Segnos and Codas: (Codas currently not implemented)
 
     | _a ) c ) e ) | ,segno` ) ]] ]] e ]] | f D.S. al fine ) ) ) fine
 
@@ -225,10 +234,6 @@ Infinite repeats:
 
     <? from the segno ?>
     | _a] c] e] o/ | ,segno` _f] f] _f] o/ Dal Segno |
-
-Voltas:
-
-    |: c )) ) | [1.] _a] c] a]] e]] :| [2.]  ]] ]] _c) ||
 
 # variables
 
@@ -247,8 +252,8 @@ will be copied into the resulting event every beat; which we can use to configur
 
 Very much like a do-while:
 
-    {: ]] oo/ ]] ]] :: !x <= !y :} 
-
+    {: ]] oo/ ]] ]] :: 8 times :} 
+    
 You can send a loop to an array as a message to implement a foreach loop:
 
     <_a, _c, c, _e, e, _a>.{: ] ]] ]] :}
@@ -256,15 +261,6 @@ You can send a loop to an array as a message to implement a foreach loop:
 If you also put a boolean condition, it will keep foreaching while the condition is true.
     
     <_a, _c, c, _e, e, _a>.{: ] ]] ]] :: !groovy == 5 :}
-
-You get a monotonic `!i` that starts at `0` and is incremented _just before_ the test.
- 
-    <? executes 8 times ?>
-    {: <_a, _c, _e, a>.choose ]] ]] ] :: !i <= 8:}
-
-But, that's far too engineery. You can just write:
-
-    {: <_a, _c, _e, a>.choose ]] ]] ] :: 8 times :}
     
 # conditionals
 
@@ -278,7 +274,7 @@ An if with else example:
     
 # Skoarpions
 
-The __Skoarpion__ is a flexible device; we can use it as a function or a sequence.
+The __Skoarpion__ is like a function, more like a subroutine.
 
     {! name<args> !!
       body
@@ -287,24 +283,16 @@ The __Skoarpion__ is a flexible device; we can use it as a function or a sequenc
 
 Let's make a function:
 
-    {! zorp<x> !!
-     | )         }             |
-     | )         ]] oo/ ]      |
-     | ]    ]    ]] ]]  ]      |
-     | ]    ]    ]] ]]  oo/ ]] |
+    {! drumsBasic<x> !! 4/4
+        .h  {: ] ] ] ] ] ] ] ] :: !x times :}
+        .s  {: }   )   }   )   :: !x times :}
+        .k  {: ))      ))      :: !x times :}
     !}
 
-    <? - this calls !zorp.choose, setting @x to <_a, c#, e>
-       - the !zorp.choose will choose one line at random ?>
-    !zorp<<_a, c#, e>>.choose
+If `drumsBasic` is called by the `.h` voice, then `{: ] ] ] ] ] ] ] ] :: !x times :}` is executed; 
+`.s` voice: `{: }   )   }   )   :: !x times :}`, `.k` etc..
 
-You can cycle the lines in order with `.next` or backwards with `.last`
-
-    <_a, c#, e> => @A
-
-    !zorp<!A.choose>.next   <? plays | ) }        | with a random noat ?>
-    !zorp<!A.choose>.next   <? plays | ) ]] oo/ ] | with a random noat ?>
-    !zorp<!A.choose>.last   <? plays | ) }        | with a random noat ?>
+If any lines are not voiced (like that `4/4`, they will be run by every voice.  
 
 Skoarpions normally have scope, but they can be inlined with `.inline`, which can be convenient:
 
@@ -319,6 +307,7 @@ Skoarpions normally have scope, but they can be inlined with `.inline`, which ca
          !x => @favorites
     !}
 
+    <? here's an anonymous skoarpion ?>
     {! <x> !! <0, 4, !x> => @detune !} => @charlie
 
     .a !alice.inline
@@ -326,59 +315,59 @@ Skoarpions normally have scope, but they can be inlined with `.inline`, which ca
     .c !charlie<<5,7,9>.choose>.inline
     ...
 
-# other sequences
+# Randomness
 
-Arrays and arraylike things can be iterated like skoarpions.
-
-    <c, e, g> => @food
-
-    !food.next )   <? plays: c ?>
-    !food.next )   <? plays: e ?>
-    !food.last )   <? plays: c ?>
-    !food.choose ) <? at random ?>
-
-# messages
-
-With messages you can work with the underlying objects (i.e. the SuperCollider objects)
+`.rand` for numbers, `.choose` for lists.
 
     <? save into @food, a random number between zero and five ?>
     5.rand => @food
 
-    <? print foo to the post screen ?>
-    'foo'.postln
+    <? choose a random note ?>
+    <c,d,e,f,g,a,b>.choose
+    
+# Math
 
-    <? choose a random note and post it to the screen ?>
-    <c,d,e,f,g,a,b>.choose.postln
+    0 + 2 == 2
+    <0> + 2 == <0, 2>
+    <_a, c> + e == <_a, c, e>
+   
+increments and decrements:
 
-Static methods can be called on underlying classes, dereference with `!` and send the message:
-
-    !Array.fib<20,27,3> => @food
-
-    !MyRediculousClass.new<'srsly', 2.1828> => @zagwaggler
-
-    !zagwaggler.bringTheWub<'wub'>.wub.wub.wub.wub
+    2 => @x    <? x is now 2 ?>
+    2 +> @x    <? x is now 4 ?>
+    1 -> @x    <? x is now 3 ?>
+    2 x> @x    <? x is now 6 ?>
 
 # Cthulhu
 
-You can wake Cthulhu, crashing the skoar.
+You can wake Cthulhu, crashing the skoar:
 
     ^^(;,;)^^
 
 
-Cthulhu can also make assertions.
+Cthulhu can also make assertions:
 
     ^^(;!octave == 5;)^^
+    
+If the octave isn't 5, Cthulhu will be so upset that he'll wake up and crash your skoar.
 
 
 Install
 =======
 
-You need the very latest [SuperCollider 3.7](http://supercollider.github.io/download.html)
+First, clone this git repo to, for example `~/GitHub/Skoarcery`
 
-You just need to point SuperCollider at the Skoar folder (that you git cloned) and you're set.
+Get the very latest [SuperCollider 3.7](http://supercollider.github.io/download.html)
 
-In SuperCollider's interpreter options, __include__ the folder `~/.../Skoar/SuperCollider/Skoar` and
-restart the interpreter
+Point SuperCollider at the Skoarcery folder: In SuperCollider's interpreter options, __include__ the folder `~/GitHub/Skoarcery` and
+restart the interpreter.
+
+Try the examples in [examples]. Dungeontimes is the simplest. 
+
+Skoarcery
+=========
+
+Skoarcery is the set of tools and tests that builds skoar compilers.
 
 The lexical and syntactic analysers, `lex.sc` and `rdpp.sc` (ditto `.py`) are built with Skoarcery.
 They are built and written to `.../SuperCollider/Skoar`.
@@ -387,17 +376,13 @@ Currently the built code is checked in, you don't need to get Skoarcery working 
 work on the language.
 
 
-
-Skoarcery
-=========
-
 ### [terminals.py]
 - Tokens by convention are UpperCamelCase.
 
 - Tokens are defined with regexes that have to work with both SuperCollider and Python.
 All we do is recognise, no capture groups.
 
-- \* after a terminal means there are values we need to pick out of the lexeme: [decorating.sc]
+- Tokens are typically converted to Skoarpuscles in the top section of [decorating.sc]
 
 ### [nonterminals.py]
 - Defines an LL(1) grammar suitable for building recursive decent predictive parsers for skoar.
@@ -408,7 +393,7 @@ All we do is recognise, no capture groups.
 constructed parse tree, it will not create a new skoarnode, instead appending its noads to
 its parent's children list.
 
-- \* after a nonterminal means there is corresponding semantic code for this: [decorating.sc]
+- Semantics defined in the second half of [decorating.sc]
 
 
 ### Misc Skoarcery
@@ -456,7 +441,7 @@ build files, run more tests, etc.. it builds Skoar. This one builds Skoar.
 - [skoarpuscles.sc] - Skoarpuscles, the thingy things are all skoarpuscles.
 
 
-
+[examples]:    https://github.com/sofakid/Skoarcery/tree/master/SuperCollider/examples
 
 [terminals.py]:    https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/terminals.py
 [nonterminals.py]: https://github.com/sofakid/Skoarcery/blob/master/Skoarcery/nonterminals.py

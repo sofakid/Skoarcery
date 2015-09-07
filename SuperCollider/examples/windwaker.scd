@@ -7,8 +7,8 @@ b = "
 <? Zelda Wind Waker Theme - inspired by piano arrangement by Shinobu Amayake ?>
 
 <? Let's play the skoar on a midi device ?>
-<?!MIDIOut.new<0> => @midiout
-@midi => @type?>
+@MIDIOut.new<0> => @midiout
+@midi => @type
 
 
 <? key is Db, so i flat everything and sharp c & f ?>
@@ -17,9 +17,6 @@ b = "
 9/8 120 => ).
 
 mf
-
-.bass ,segno`
-.bass | <_a,_c#,d> )))__ o/ | d )))__ o/ | <_a,_c#,d> )))__ o/ | _a )))__ o/ | D.S.
 
 .mel  | ottava alta }}} o/  | }}} o/     | }}} o/              |    }}} o/   |
 
@@ -34,7 +31,7 @@ mf
 .mel  |: g] f#] e] f#)  d] c#] d] e] | a] d] ] g] d] ] f#)    ] | g] a] b] b] g] e] a)  a]   | g] f#] d] e] f#] e]] f#]] e)  ] |
 .mel  |  d] c#] d] e)   e] a] g] c#] | g] d] ] f#)  ] e] c#] e] | d] b] d] g] a] b] f# d] g] | e).    ] f#] e] a)           ] :|
 
-.mel  | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | <_a,_f#> )). _a ) ] | ^^(;,;)^^
+.mel  | <_a,_c#,d> )). }. | d )). }. | <_a,_c#,d> )). }. | <_a,_f#> )). _a ) ] | 
 
 ".skoar;
 

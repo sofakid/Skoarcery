@@ -57,13 +57,13 @@ Skoar {
 
         parse_time = (Process.elapsedTime - start_time).round(0.01);
 
-        "---< Undecorated Skoar Tree >---".postln; tree.draw_tree.postln;
+        //"---< Undecorated Skoar Tree >---".postln; tree.draw_tree.postln;
 
-        "<<< tree created, now decorating...".postln;
+        //"<<< tree created, now decorating...".postln;
         this.decorate;
         decorate_time = (Process.elapsedTime - start_time - parse_time).round(0.01);
 
-        this.draw_skoarpions;
+        //this.draw_skoarpions;
 
         debug("Skoar parsed in " ++ parse_time ++ " seconds, decorated in  "
             ++ decorate_time ++ ". Total: " ++ (parse_time + decorate_time) ++ " sec.");

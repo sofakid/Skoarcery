@@ -2,8 +2,10 @@
 
 80 => )
 
-.high pp
-.low o~~ fff
+@plucking => @instrument
+
+.high mf
+.low o~~ ff
 
 ,segno`
 4/4

@@ -12,7 +12,7 @@ pp
   .c !notes.choose {: )        :: !x times :}
 !}
 
-{: !foo<<1,2,3>.choose> :: 0 <= 1 :}
+{: !foo<<1,2,3>.choose> :: true :}
 
 ".skoar.play;
 )
