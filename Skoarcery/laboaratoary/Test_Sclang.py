@@ -8,7 +8,8 @@ class Test_Sclang(unittest.TestCase):
 
     #home = "/p/supercollider/build/Install/SuperCollider/SuperCollider.app/Contents/Resources/"
     #home = "C:\\supercollider\\SuperCollider\\"
-    home = "C:\\Users\\lucas\\Documents\\GitHub\\supercollider\\build\\x64\\Release\\SuperCollider\\"
+    #home = "C:\\Users\\lucas\\Documents\\GitHub\\supercollider\\build\\x64\\Release\\SuperCollider\\"
+    home = "C:\\Users\\lucas\\Documents\\GitHub\\bagong.supercollider\\build_pa\\Install\\SuperCollider\\"
 
     #sclang = home + "sclang"
     sclang = home + "sclang.exe"

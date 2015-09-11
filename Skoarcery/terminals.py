@@ -80,6 +80,9 @@ CondIf:           [?][?](?![}])
 CondE:            [?][}]
 Semicolon:        ;
 
+CutsS:            [{]=[\\n]*
+CutsE:            =[}]
+
 LoopS:            [{]:[\\n]*
 LoopE:            :[}]
 LoopSep:          ::[\\n]*(?![|])

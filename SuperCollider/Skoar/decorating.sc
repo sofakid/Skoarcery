@@ -528,9 +528,8 @@ Skoarmantics {
                         var x = m.fairy.cast_arcane_magic;
                         Skoar.ops.assign(m, x, settable);
                         
-                        //if (settable.isKindOf(SkoarpuscleBeat) == false) { 
-						   m.fairy.impress(x);
-                        //};
+                        m.fairy.impress(x);
+                        
                     }}
 					
 					{"x>"} {{

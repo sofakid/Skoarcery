@@ -287,8 +287,8 @@ SkoarKoar {
 
                 {\nav_colon} {
                     dst = this.state_at(\colon_seen);
-
-                    if ((dst !? (_.skoap)) != subtree.skoap) {
+                    
+					if ((dst !? (_.skoap)) != subtree.skoap) {
                         this.bubble_up_nav(minstrel, up_nav, \nav_colon, inlined);
                     };
                 };

@@ -119,6 +119,20 @@ SkoarFairy {
 		^times;	
 	}
 
+	forget_that_you_have_seen {
+		| skoarpuscleKind | 
+		
+		times_seen.keysValuesChange {
+            | key, value |
+
+            if (key.isKindOf(skoarpuscleKind)) {
+				0   
+            } {
+				value
+			}
+		};
+	}
+
 	push_compare {
         compare_stack = compare_stack.add(l_value);
 		l_value = nil;

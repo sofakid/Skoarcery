@@ -890,19 +890,28 @@ SkoarpuscleBars : Skoarpuscle {
         post_repeat = val.endsWith(":");
     }
 
+	asString {
+		var s = ("SkoarpuscleBars: " ++ val ++ "noad:"++ noad.asString ++ 
+		    " pre_repeat:" ++ pre_repeat ++ " post_repeat:" ++ post_repeat);
+		^s;
+	}
+
     on_enter {
         | m, nav |
 
-        // :|
+		//"on_enter: ".post; this.asString.postln;
+        
+		// :|
         if (pre_repeat == true) {
 
 			var burned = m.koar.state_at(\colons_burned);
 
-			//if (m.fairy.how_many_times_have_you_seen(this) < 1) {
-			//	nav.(\nav_colon);
-			//};	
+			// asking counts as observing
+			if (m.fairy.how_many_times_have_you_seen(this) < 2) {
+				nav.(\nav_colon);
+			};	
 
-            if (burned.falseAt(noad)) {
+			if (burned.falseAt(noad)) {
                 burned[noad] = true;
             };
 

@@ -78,6 +78,7 @@ SkoarMinstrel {
     }
 
     reset_colons {
+		fairy.forget_that_you_have_seen(SkoarpuscleBars);
         koar.state_put(\colons_burned, Dictionary.new;);
     }
 
