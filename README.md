@@ -398,7 +398,7 @@ First, clone this git repo to, for example `~/GitHub/Skoarcery`
 
 Get the very latest [SuperCollider 3.7](http://supercollider.github.io/download.html)
 
-Point SuperCollider at the Skoarcery folder: In SuperCollider's interpreter options, __include__ the folder `~/GitHub/Skoarcery` and
+Point SuperCollider at the Skoarcery folder: In SuperCollider's interpreter options (edit->preferences->interpreter), __include__ the folder `~/GitHub/Skoarcery` and
 restart the interpreter.
 
 Try the examples in [examples]. Dungeontimes is the simplest. 

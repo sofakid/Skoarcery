@@ -1,3 +1,7 @@
+// first boot the server (Ctrl-B)
+// then load the synthdefs from synthdefs.scd (run the entire file) (if you don't want to do that remove the @instrument line)
+// then run this.
+
 ("
 
 80 => )
