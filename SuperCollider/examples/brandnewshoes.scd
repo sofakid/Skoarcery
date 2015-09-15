@@ -1,7 +1,8 @@
-("
+(x = "
 80 => )
 
-<E, @minorPentatonic> => @key
+<G, @minorPentatonic> => @key
+5 => @transpose
 
 .melody @bass => @instrument pp o~
 .bass @bass => @instrument o~~ mp

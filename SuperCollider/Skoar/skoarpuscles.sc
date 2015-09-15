@@ -691,6 +691,37 @@ SkoarpuscleLoop : Skoarpuscle {
 SkoarpuscleLoopMsg : Skoarpuscle {
 }
 
+SkoarpuscleCuts : Skoarpuscle {
+
+    var skoarpion;
+
+    *new {
+        | skoar, noad |
+        ^super.new.init_two(skoar, noad);
+    }
+
+    init_two {
+        | skoar, noad |
+
+        skoarpion = Skoarpion.new_from_subtree(skoar, noad);
+    }
+
+    on_enter {
+        | m, nav |
+        
+		m.fairy.push_i;
+
+		m.koar.do_skoarpion(skoarpion, m, nav, [\cuts], m.fairy.impression);
+
+		m.fairy.pop_i;
+    }
+
+}
+
+
+SkoarpuscleCutsMsg : Skoarpuscle {
+}
+
 SkoarpuscleExprEnd : Skoarpuscle {
 
     on_enter {

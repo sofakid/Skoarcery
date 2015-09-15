@@ -81,7 +81,7 @@ loop             : LoopS loop_body loop_condition LoopE
 loop_body        : phrases
 loop_condition   : LoopSep boolean_expr | <e>
 
-cuts             : CutsS branches CutsE
+cuts             : CutsS phrases CutsE
 
 """
 

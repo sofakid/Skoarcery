@@ -109,7 +109,15 @@ SkoarpuscleRest : SkoarpuscleBeat {
 
     on_enter_ {
         | m, nav |
-        var e = (\dur: val, \isRest: true);
+		var noat = m.fairy.noat.asNoat;
+        var e;
+
+        noat.execute(m);
+        // create an event with everything we've collected up until now
+        e = m.koar.event(m);
+
+        e[\dur] = val;
+		e[\isRest] = true;
 
         //e.asCompileString.postln;
         e.yield;

@@ -145,6 +145,27 @@ Skoar {
         ^SkoarMinstrel.new(this.tree, voices[voice_name], this).pfunk;
     }
 
+	json {
+		var pf = Skoarchestra.new(this).pfunk;
+
+		"[".postln;
+		pf.do({
+			| event | 
+			"  { ".post;
+			//event.play;
+
+			event.keysValuesDo({
+				| key, value | 
+				("'" ++ key ++ "':'").post;
+				value.printOn(Post,2000);
+				"', ".post;
+			});
+			"}, ".postln;
+		});
+		"]".postln;
+		
+	}
+
     draw_skoarpions {
         skoarpions.do {
             | x |

@@ -20,7 +20,7 @@ SkoarKoar {
 
         stack = List[];
         state_stack = List[];
-        skoarboard = ();
+        skoarboard = (\voice: name);
         stack.add(skoarboard);
 
     }

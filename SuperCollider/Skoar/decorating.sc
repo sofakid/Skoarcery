@@ -367,6 +367,13 @@ Skoarmantics {
                 noad.children = #[];
             },
 
+			cuts: {
+                | skoar, noad |
+				var x = SkoarpuscleCuts(skoar, noad);
+                noad.skoarpuscle = x; 
+                noad.children = #[];
+            },
+
             musical_keyword_misc: {
                 | skoar, noad |
                 noad.skoarpuscle = noad.next_skoarpuscle;
