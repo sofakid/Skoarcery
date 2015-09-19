@@ -231,7 +231,7 @@ We have to use the full word `forte`, `f` is a noat.
 
     fff ffforte ppp pppiano piano mp mf ff pp p 
     
-or, use a hash level:
+or, use a hash level, and set `@amp`:
 
     .strings  [###  ] => @amp
     .piano    [#### ] => @amp
@@ -278,7 +278,7 @@ will be copied into the resulting event every beat; which we can use to configur
 
 # loops
 
-Very much like a do-while:
+This is a simple loop:
 
     {: ]] oo/ ]] ]] :: 8 times :} 
     
@@ -309,14 +309,14 @@ At the moment, don't use `<` or `>`
     
 # Skoarpions
 
-The __Skoarpion__ is like a function, more like a subroutine.
+The __Skoarpion__ is like a function, but more like a subroutine, plus a magical fairy with a very short term memory.
 
     {! name<args> !!
       body
       ...
     !}
 
-Let's make a function:
+Let's make a skoarpion:
 
     {! drumsBasic<x> !! 4/4
         .h  {: ] ] ] ] ] ] ] ] :: !x times :}
@@ -350,6 +350,33 @@ Skoarpions normally have scope, but they can be inlined with `.inline`, which ca
     .c !charlie<<5,7,9>.choose>.inline
     ...
 
+Skoarpions don't return values. But, every value leaves an impression on the magical fairy, and so it can be said that 
+in a way, skoarpions "return" things. But, that's not what really going on.
+
+    {! foo<x,y> !! !x + !y !}
+    
+    !foo<2,3> => @x   <? x is now 5 ?>
+
+Wait, magical fairy?    
+
+# The Magical Fairy
+
+There is a magical fairy, who is following along the skoar when it is performed. 
+
+Whenever the fairy encounters any kind of value, it leaves a short term impression on her. 
+
+The fairy is can be directly referenced with `$`. Whenever you do `5 => @x`, the fairy's last impression (here, `5`) is saved to @x.
+
+If you need to save the impression, whatever it is at the moment, you can do `$ => @x`
+
+Complex expressions are handled by the fairy via arcane magic. 
+ 
+Values and operators will be operated on in the order they appear. SuperCollider users are familiar with this concept.
+
+    5 + 2 x 3 => @x       <? x is now 21, certainly not 10 ?>
+    
+    <0, $+1, $+2> => @x   <? x is now <0,1,3> ?>
+    
 # Randomness
 
 `.rand` for numbers, `.choose` for lists.
@@ -360,7 +387,8 @@ Skoarpions normally have scope, but they can be inlined with `.inline`, which ca
     <? choose a random note ?>
     <c,d,e,f,g,a,b>.choose
     
-These are messages passed down to supercollider. You say `.rand` because in SC, `Integer` has a `.rand` method, `Array` has `.choose`)
+These are messages passed down to supercollider. 
+You say `.rand` because in SC, `Integer` has a `.rand` method, `Array` has `.choose`
 
 # Math
 
@@ -392,6 +420,36 @@ Cthulhu can also make assertions:
 If the octave isn't 5, Cthulhu will be so upset that he'll wake up and crash your skoar.
 
 
+# Recap of various skoar blocks
+
+    <? comment ?>
+
+    {: loop_part :: condition :}
+        
+    {? condition ?? if_part ?? else_part ?}
+    
+    {? condition ?? 
+        .voice_1    if_part ?? else_part 
+        .voice_2    if_part ?? else_part 
+        ...
+        .voice_n    if_part ?? else_part 
+    ?}
+    
+    {! skoarpion_name<args> !! skoarpion_body !}
+    {! skoarpion_name !! skoarpion_body !}
+    {! <args> !! skoarpion_body !}
+
+    {! skoarpion_name<args> !! 
+        .voice_1    skoarpion_body 
+        .voice_2    skoarpion_body 
+        ...
+        .voice_n    skoarpion_body 
+    !}
+    
+    ^^(; cthulhu_condition ;)^^
+    
+    < list_item_1, list_item_2, ... >
+    
 
 Install
 =======
