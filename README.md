@@ -327,7 +327,7 @@ Let's make a skoarpion:
 If `drumsBasic` is called by the `.h` voice, then `{: ] ] ] ] ] ] ] ] :: !x times :}` is executed; 
 `.s` voice: `{: }   )   }   )   :: !x times :}`, `.k` etc..
 
-If any lines are not voiced (like that `4/4`, they will be run by every voice.  
+If any lines are not voiced (like that `4/4`), they will be run by every voice.  
 
 Skoarpions normally have scope, but they can be inlined with `.inline`, which can be convenient:
 
