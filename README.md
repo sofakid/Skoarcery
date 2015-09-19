@@ -361,11 +361,15 @@ Wait, magical fairy?
 
 # The Magical Fairy
 
+*"Any sufficently defined magic, is indistinguishable from technolgy."*
+
 There is a magical fairy, who is following along the skoar when it is performed. 
 
 Whenever the fairy encounters any kind of value, it leaves a short term impression on her. 
 
-The fairy is can be directly referenced with `$`. Whenever you do `5 => @x`, the fairy's last impression (here, `5`) is saved to @x.
+Whenever you do `5 => @x`, the fairy's last impression (here, `5`) is saved to @x.
+
+The fairy can be directly referenced with `$`. 
 
 If you need to save the impression, whatever it is at the moment, you can do `$ => @x`
 
