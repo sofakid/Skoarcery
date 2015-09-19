@@ -361,7 +361,7 @@ Wait, magical fairy?
 
 # The Magical Fairy
 
-*"Any sufficently defined magic, is indistinguishable from technolgy."*
+*"Any sufficiently defined magic, is indistinguishable from technology."*
 
 There is a magical fairy, who is following along the skoar when it is performed. 
 
