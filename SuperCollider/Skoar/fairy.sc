@@ -170,7 +170,7 @@ SkoarFairy {
 
     impress {
         | x |
-        //("$:" ++ name ++ ".impression: " ++ x.asString).postln;
+        ("$:" ++ name ++ ".impression: " ++ x.asString).postln;
 
 		if (x.isKindOf(SkoarpuscleFairy)) {
             ^impression;

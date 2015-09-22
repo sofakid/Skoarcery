@@ -380,19 +380,6 @@ Values and operators will be operated on in the order they appear. SuperCollider
     5 + 2 x 3 => @x       <? x is now 21, certainly not 10 ?>
     
     <0, $+1, $+2> => @x   <? x is now <0,1,3> ?>
-    
-# Randomness
-
-`.rand` for numbers, `.choose` for lists.
-
-    <? save into @food, a random number between zero and five ?>
-    5.rand => @food
-
-    <? choose a random note ?>
-    <c,d,e,f,g,a,b>.choose
-    
-These are messages passed down to supercollider. 
-You say `.rand` because in SC, `Integer` has a `.rand` method, `Array` has `.choose`
 
 # Math
 
@@ -409,6 +396,49 @@ increments and decrements:
     2 +> @x    <? x is now 4 ?>
     1 -> @x    <? x is now 3 ?>
     2 x> @x    <? x is now 6 ?>
+	    
+# Randomness
+
+`.rand` for numbers, `.choose` for lists.
+
+    <? save into @food, a random number between zero and five ?>
+    5.rand => @food
+
+    <? choose a random note ?>
+    <c,d,e,f,g,a,b>.choose
+    
+These are messages passed down to supercollider. 
+You say `.rand` because in SC, `Integer` has a `.rand` method, `Array` has `.choose`
+
+# Cats
+
+We don't have `nil` in Skoar. We do, however, have cats. 
+
+    =^.^=               <? a cat ?>
+
+Cats eat variables. If you need to unset a variable, use a cat.
+
+	'foo' => @x     <? x is now 'foo' ?>
+	             )  <? beat happens, event contains (x: 'foo') ?>
+
+	=^.^= => @x     <? x is gone ?>
+
+If you make a list of cats, they will stay.
+
+	< =^.^=, =^.^= >    <? a list of cats. In supercollider, this will be [nil, nil] ?>
+
+If you declare a skoarpion to take arguments, but don't supply them, cats will be supplied.
+
+	{! foo<x> !! !x + 2 } !foo => @y   <? y is now a cat (because a cat + 2 is a cat) ?>
+
+If you try to use a variable that doesn't exist, you will find a cat.
+
+	<? if x doesn't exist, set it to 3 ?>
+
+	{? !x == =^.^= ?? 3 => @x ?}
+
+If you call a SuperCollider function, and it returns `nil`, you will have a cat. 
+    
 
 # Cthulhu
 
@@ -423,6 +453,9 @@ Cthulhu can also make assertions:
     
 If the octave isn't 5, Cthulhu will be so upset that he'll wake up and crash your skoar.
 
+Cats definitely wake Cthulhu.
+
+	^^(;=^.^=;)^^
 
 # Recap of various skoar blocks
 

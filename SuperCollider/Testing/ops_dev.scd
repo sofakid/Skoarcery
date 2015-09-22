@@ -16,8 +16,8 @@ SkoarTestRunner((
 
 
 
-	op_add_Symbol_Crap: [
-		"@abc + crap => @x )", 
+	op_add_Symbol_Cat: [
+		"@abc + =^.^= => @x )", 
 		[(x: inf)]
 	],
 
@@ -33,8 +33,8 @@ SkoarTestRunner((
 
 	
 
-	op_add_Int_Crap: [
-		"7 + crap => @x )", 
+	op_add_Int_Cat: [
+		"7 + =^.^= => @x )", 
 		[(x: inf)]
 	],
 
@@ -53,8 +53,8 @@ SkoarTestRunner((
 
 	
 
-	op_add_List_Crap: [
-		"<0,1> + crap => @x )", 
+	op_add_List_Cat: [
+		"<0,1> + =^.^= => @x )", 
 		[(x: inf)]
 	],
 
@@ -86,8 +86,8 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	op_add_Noat_Crap: [
-		"c# + crap => @x )", 
+	op_add_Noat_Cat: [
+		"c# + =^.^= => @x )", 
 		[(x: inf)]
 	],
 
@@ -126,8 +126,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	//op_add_Choard_Crap: [
-	//	"A# + crap => @x )", 
+	//op_add_Choard_Cat: [
+	//	"A# + =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -142,15 +142,15 @@ SkoarTestRunner((
 
 	
 
-	//op_add_String_Crap: [
-	//	"'ABC' + crap => @x )", 
+	//op_add_String_Cat: [
+	//	"'ABC' + =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 
 	
 
-	//op_add_Crap_Any: [
-	//	"crap + Any => @x )", 
+	//op_add_Cat_Any: [
+	//	"=^.^= + Any => @x )", 
 	//	[(x:nil)]
 	//],
 
@@ -171,8 +171,8 @@ SkoarTestRunner((
 
 	
 
-	//op_add_Freq_Crap: [
-	//	"2600Hz + crap => @x )", 
+	//op_add_Freq_Cat: [
+	//	"2600Hz + =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -202,8 +202,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	//op_add_Float_Crap: [
-	//	"2.18 + crap => @x )", 
+	//op_add_Float_Cat: [
+	//	"2.18 + =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -252,8 +252,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	//op_sub_List_Crap: [
-	//	"<0,1> - crap => @x )", 
+	//op_sub_List_Cat: [
+	//	"<0,1> - =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -308,8 +308,8 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	//op_sub_Noat_Crap: [
-	//	"c# - crap => @x )", 
+	//op_sub_Noat_Cat: [
+	//	"c# - =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -348,8 +348,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	//op_sub_Choard_Crap: [
-	//	"A# - crap => @x )", 
+	//op_sub_Choard_Cat: [
+	//	"A# - =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -425,8 +425,8 @@ SkoarTestRunner((
 		[(x: 0)]
 	],
 
-	//op_sub_Freq_Crap: [
-	//	"2600Hz - crap => @x )", 
+	//op_sub_Freq_Cat: [
+	//	"2600Hz - =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -466,8 +466,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	op_sub_Float_Crap: [
-		"2.18 - crap => @x )", 
+	op_sub_Float_Cat: [
+		"2.18 - =^.^= => @x )", 
 		[(x: inf)]
 	],
 
@@ -566,8 +566,8 @@ SkoarTestRunner((
 		[(x: [0,2600])]
 	],
 
-	op_mul_List_Crap: [
-		"<0,1> x crap => @x )", 
+	op_mul_List_Cat: [
+		"<0,1> x =^.^= => @x )", 
 		[(x: inf)]
 	],
 
@@ -617,8 +617,8 @@ SkoarTestRunner((
 		[(x: inf )]
 	],
 
-	op_mul_Noat_Crap: [
-		"c# x crap => @x )", 
+	op_mul_Noat_Cat: [
+		"c# x =^.^= => @x )", 
 		[(x: inf)]
 	],
 
@@ -659,8 +659,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	op_mul_Choard_Crap: [
-		"A# x crap => @x )", 
+	op_mul_Choard_Cat: [
+		"A# x =^.^= => @x )", 
 		[(x: inf)]
 	],
 
@@ -736,8 +736,8 @@ SkoarTestRunner((
 		[(freq:6760000)]
 	],
 
-	//op_mul_Freq_Crap: [
-	//	"2600Hz x crap => @x )", 
+	//op_mul_Freq_Cat: [
+	//	"2600Hz x =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 
@@ -779,8 +779,8 @@ SkoarTestRunner((
 		[(x: inf)]
 	],
 
-	//op_mul_Float_Crap: [
-	//	"2.18 x crap => @x )", 
+	//op_mul_Float_Cat: [
+	//	"2.18 x =^.^= => @x )", 
 	//	[(x: inf)]
 	//],
 

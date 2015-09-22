@@ -93,6 +93,9 @@ class Test_Sclang(unittest.TestCase):
     def test_SC_sanity(self):
         self.exec("SuperCollider/testing/sanity.scd")
 
+    def test_SC_cats(self):
+        self.exec("SuperCollider/testing/cats.scd")
+
     def test_SC_dev(self):
         self.exec("SuperCollider/testing/dev.scd")
 

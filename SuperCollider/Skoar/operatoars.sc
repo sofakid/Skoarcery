@@ -37,6 +37,8 @@ SkoarOps {
 						v = SkoarpuscleKey(v);
 					};
 
+					"settable: ".post; v.dump;
+
                     minstrel.koar[s] = v;
                     v
                 }
@@ -73,7 +75,7 @@ SkoarOps {
 		// x + y
         addition = (
 
-			SkoarpuscleCrap: ( Any: { | x, y | SkoarpuscleCrap.new } ),
+			SkoarpuscleCat:   ( Any: { | x, y | SkoarpuscleCat.new } ),
 
             // x +
             SkoarpuscleInt: (
@@ -87,7 +89,7 @@ SkoarOps {
 				SkoarpuscleChoard:  { | x, y | SkoarpuscleList([x, y]) },
 
 				SkoarpuscleFalse:    { | x, y | y },
-				SkoarpuscleTrue:    { | x, y | x },
+				SkoarpuscleTrue:     { | x, y | x },
 
 				SkoarpuscleSymbol:  { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ y.val) },
 				SkoarpuscleString:  { | x, y | SkoarpuscleString(x.val.asString ++ y.val) },
@@ -109,7 +111,7 @@ SkoarOps {
 
 				SkoarpuscleFalse:     { | x, y | y },
 				SkoarpuscleTrue:      { | x, y | x },
-				SkoarpuscleCrap:      { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleCat:       { | x, y | SkoarpuscleCat.new },
 
 				SkoarpuscleSymbol:    { | x, y | SkoarpuscleSymbol(x.val.asSymbol ++ y.val) },
 				SkoarpuscleString:    { | x, y | SkoarpuscleString(x.val.asString ++ y.val) },
@@ -148,7 +150,7 @@ SkoarOps {
 
 				SkoarpuscleFalse:     { | x, y | y },
 				SkoarpuscleTrue:      { | x, y | x },
-				SkoarpuscleCrap:      { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleCat:       { | x, y | SkoarpuscleCat.new },
 
 				SkoarpuscleSymbol:    { | x, y | SkoarpuscleList(x.val ++ [y]) },
 				SkoarpuscleString:    { | x, y | SkoarpuscleList(x.val ++ [y]) },
@@ -231,7 +233,7 @@ SkoarOps {
 
 				SkoarpuscleFalse:     { | x, y | y },
 				SkoarpuscleTrue:      { | x, y | x },
-				SkoarpuscleCrap:      { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleCat:       { | x, y | SkoarpuscleCat.new },
 
 				SkoarpuscleSymbol:    { | x, y | SkoarpuscleSymbol(x.val ++ y.val) },
 				SkoarpuscleString:    { | x, y | SkoarpuscleSymbol(x.val ++ y.val.asSymbol) },
@@ -289,7 +291,7 @@ SkoarOps {
 		// x - y
         subtraction = (
 
-			SkoarpuscleCrap: ( Any: { | x, y | SkoarpuscleCrap.new } ),
+			SkoarpuscleCat:  ( Any: { | x, y | SkoarpuscleCat.new } ),
 
             // x -
             SkoarpuscleInt: (
@@ -400,7 +402,7 @@ SkoarOps {
 		// x by y
         multiplication = (
 
-			SkoarpuscleCrap: ( Any: { | x, y | SkoarpuscleCrap.new } ),
+			SkoarpuscleCat:  ( Any: { | x, y | SkoarpuscleCat.new } ),
 
 			// x
             SkoarpuscleInt: (
@@ -410,14 +412,14 @@ SkoarOps {
                 SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleFreq:    { | x, y | SkoarpuscleFreq(x.val * y.val) },
 
-				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
-				SkoarpuscleChoard:  { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleNoat:    { | x, y | SkoarpuscleCat.new },
+				SkoarpuscleChoard:  { | x, y | SkoarpuscleCat.new },
 			
 				SkoarpuscleFalse:   { | x, y | y },
 				SkoarpuscleTrue:    { | x, y | x },
-				SkoarpuscleCrap:    { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleCat:     { | x, y | SkoarpuscleCat.new },
 				
-				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
+				SkoarpuscleList:    { | x, y | SkoarpuscleCat.new }
 				    
             ),
 
@@ -427,15 +429,15 @@ SkoarOps {
                 SkoarpuscleInt:     { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
-                SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
+                SkoarpuscleFreq:    { | x, y | SkoarpuscleCat.new },
 
-				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
-				SkoarpuscleChoard:  { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleNoat:    { | x, y | SkoarpuscleCat.new },
+				SkoarpuscleChoard:  { | x, y | SkoarpuscleCat.new },
 				
 				SkoarpuscleFalse:    { | x, y | y },
 				SkoarpuscleTrue:     { | x, y | x },
 				
-				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
+				SkoarpuscleList:    { | x, y | SkoarpuscleCat.new }
             ),
 
 			// x
@@ -444,50 +446,50 @@ SkoarOps {
                 SkoarpuscleInt:     { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleFloat:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
                 SkoarpuscleHashLevel:   { | x, y | SkoarpuscleFloat(x.val * y.val) },
-                SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
+                SkoarpuscleFreq:    { | x, y | SkoarpuscleCat.new },
 
 				SkoarpuscleFalse:   { | x, y | y },
 				SkoarpuscleTrue:    { | x, y | x },
 				
-				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
+				SkoarpuscleList:    { | x, y | SkoarpuscleCat.new }
             ),
 
 			SkoarpuscleList: (
 				// y
-                SkoarpuscleInt:     { | x, y | SkoarpuscleCrap.new },
-                SkoarpuscleFloat:   { | x, y | SkoarpuscleCrap.new },
-                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleCrap.new },
-                SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
+                SkoarpuscleInt:     { | x, y | SkoarpuscleCat.new },
+                SkoarpuscleFloat:   { | x, y | SkoarpuscleCat.new },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleCat.new },
+                SkoarpuscleFreq:    { | x, y | SkoarpuscleCat.new },
 
-				SkoarpuscleNoat:    { | x, y | SkoarpuscleCrap.new },
-				SkoarpuscleChoard:  { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleNoat:    { | x, y | SkoarpuscleCat.new },
+				SkoarpuscleChoard:  { | x, y | SkoarpuscleCat.new },
 				
 				SkoarpuscleFalse:    { | x, y | y },
 				SkoarpuscleTrue:     { | x, y | x },
 				
-				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
+				SkoarpuscleList:    { | x, y | SkoarpuscleCat.new }
 			),
 
 			SkoarpuscleNoat: (
-				SkoarpuscleInt:     { | x, y | SkoarpuscleCrap.new },
-                SkoarpuscleFloat:   { | x, y | SkoarpuscleCrap.new },
-                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleCrap.new },
-                SkoarpuscleFreq:    { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleInt:     { | x, y | SkoarpuscleCat.new },
+                SkoarpuscleFloat:   { | x, y | SkoarpuscleCat.new },
+                SkoarpuscleHashLevel:   { | x, y | SkoarpuscleCat.new },
+                SkoarpuscleFreq:    { | x, y | SkoarpuscleCat.new },
 
 				SkoarpuscleFalse:    { | x, y | y },
 				SkoarpuscleTrue:    { | x, y | x },
 				
-				SkoarpuscleList:    { | x, y | SkoarpuscleCrap.new }
+				SkoarpuscleList:    { | x, y | SkoarpuscleCat.new }
 			),
 
 			SkoarpuscleChoard: (
-				SkoarpuscleInt:       { | x, y | SkoarpuscleCrap.new },
-                SkoarpuscleFloat:     { | x, y | SkoarpuscleCrap.new },
-                SkoarpuscleHashLevel: { | x, y | SkoarpuscleCrap.new },
-				SkoarpuscleFreq:      { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleInt:       { | x, y | SkoarpuscleCat.new },
+                SkoarpuscleFloat:     { | x, y | SkoarpuscleCat.new },
+                SkoarpuscleHashLevel: { | x, y | SkoarpuscleCat.new },
+				SkoarpuscleFreq:      { | x, y | SkoarpuscleCat.new },
 				SkoarpuscleFalse:     { | x, y | y },
 				SkoarpuscleTrue:      { | x, y | x },
-				SkoarpuscleList:      { | x, y | SkoarpuscleCrap.new }
+				SkoarpuscleList:      { | x, y | SkoarpuscleCat.new }
 			),
 
 			SkoarpuscleFalse: (
@@ -526,17 +528,17 @@ SkoarOps {
                 SkoarpuscleHashLevel: { | x, y | SkoarpuscleFreq(x.val * y.val) },
                 SkoarpuscleFreq:      { | x, y | SkoarpuscleFreq(x.val * y.val) },
 
-				SkoarpuscleNoat:      { | x, y | SkoarpuscleCrap.new },
-				SkoarpuscleChoard:    { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleNoat:      { | x, y | SkoarpuscleCat.new },
+				SkoarpuscleChoard:    { | x, y | SkoarpuscleCat.new },
 				
-				SkoarpuscleSymbol:    { | x, y | SkoarpuscleCrap.new },
-				SkoarpuscleString:    { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleSymbol:    { | x, y | SkoarpuscleCat.new },
+				SkoarpuscleString:    { | x, y | SkoarpuscleCat.new },
 				
 				SkoarpuscleFalse:     { | x, y | y },
 				SkoarpuscleTrue:      { | x, y | x },
-				SkoarpuscleCrap:      { | x, y | SkoarpuscleCrap.new },
+				SkoarpuscleCat:       { | x, y | SkoarpuscleCat.new },
 				
-				SkoarpuscleList:      { | x, y | SkoarpuscleCrap.new }
+				SkoarpuscleList:      { | x, y | SkoarpuscleCat.new }
 			  
 			)
 		);
@@ -548,7 +550,7 @@ SkoarOps {
         var table = op[x.class.asSymbol];
         
 		if (table.isNil) {
-			^{ | x, y | SkoarpuscleCrap.new };
+			^{ | x, y | SkoarpuscleCat.new };
 		};
 		
 		f = table[y.class.asSymbol];
@@ -561,7 +563,7 @@ SkoarOps {
             ^f
         };
 
-		^{ | x, y | SkoarpuscleCrap.new };
+		^{ | x, y | SkoarpuscleCat.new };
         //SkoarError("Lookup fail.").throw;
     }
 

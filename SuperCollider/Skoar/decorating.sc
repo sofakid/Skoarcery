@@ -16,6 +16,12 @@ SkoarTokeInspector {
                 noad.toke = nil;
             },
 
+			Toke_Cat: {
+                | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleCat.new;
+                noad.toke = nil;
+            },
+
             Toke_Freq: {
                 | skoar, noad, toke |
                 noad.skoarpuscle = SkoarpuscleFreq(toke.lexeme);

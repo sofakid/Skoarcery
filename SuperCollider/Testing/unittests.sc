@@ -187,30 +187,34 @@ Expectoar {
         exp_event.keysValuesDo {
             | ekey, eval |
 
-			if (eval == inf) {
-				testoar.assert(false, "Unimplemented test: " ++ tag);
-			} {
-				testoar.assert(seen_event.isKindOf(Event), tag ++ "should be an event.");
+			("expecting<" ++ ekey ++ "," ++ eval ++">").postln;
 
-				if (seen_event.notNil) {
-					var seen_val = this.flatten(seen_event[ekey]);
-					var x;
+			testoar.assert(seen_event.isKindOf(Event), tag ++ "should be an event.");
 
-					if (eval.isKindOf(Float)) {
-						x = eval - seen_val;
-						if (x < 0) {
-							x = -1 * x;
-						};
-						x = x < 0.0001;
-					} {
-						x = seen_val == eval;
-					};
+			if (seen_event.notNil) {
+				var seen_val = this.flatten(seen_event[ekey]);
+				var x;
 
-					testoar.assert(x, tag ++  "seen_event[" ++ ekey ++ "] = " ++ seen_val ++ " == " ++ eval ++ " expected :: <" 
-										  ++ seen_val.class.asString ++ ", " ++ eval.class.asString ++ ">";
-					);
+				// we send inf if we want to test that the value doesn't exist (because we can't send nil)
+				if (eval == inf) {
+					eval = nil;
 				};
+
+				if (eval.isKindOf(Float)) {
+					x = eval - seen_val;
+					if (x < 0) {
+						x = -1 * x;
+					};
+					x = x < 0.0001;
+				} {
+					x = seen_val == eval;
+				};
+
+				testoar.assert(x, tag ++  "seen_event[" ++ ekey ++ "] = " ++ seen_val ++ " == " ++ eval ++ " expected :: <" 
+										++ seen_val.class.asString ++ ", " ++ eval.class.asString ++ ">";
+				);
 			};
+		
         };
     }
 

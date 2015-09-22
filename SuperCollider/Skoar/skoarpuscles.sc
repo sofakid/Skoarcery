@@ -44,8 +44,8 @@ Skoarpuscle {
     *wrap {
         | x |
         case {x.isNil} {
-            //"wrapping: crap".postln;
-            ^SkoarpuscleCrap();
+            //"wrapping: =^.^=".postln;
+            ^SkoarpuscleCat();
 
 		} {x == false} {
             //"wrapping: False".postln;
@@ -64,7 +64,7 @@ Skoarpuscle {
             ^SkoarpuscleSkoarpion(x);
 
         } {x.isKindOf(Integer)} {
-            //("wrapping: int: " ++ x.asString).postln;
+            ("wrapping: int: " ++ x.asString).postln;
             ^SkoarpuscleInt(x);
 
         } {x.isKindOf(Number)} {
@@ -102,23 +102,22 @@ SkoarpuscleUnknown : Skoarpuscle {
 
 }
 
-// we don't have null, null is crap.
-// Is the value any good? no, it's crap.
-// What did we get back? oh, crap.
-SkoarpuscleCrap : Skoarpuscle {
+// Cats show up in unexpected places.
+SkoarpuscleCat : Skoarpuscle {
 
 	init {
-		val = "crap";
+		val = "=^.^=";
+		impressionable = true;
 	}
 
-    asString {^"crap"}
+    asString {^"=^.^="}
 
-    // these aren't doing nothing, they are returning this crap
     skoar_msg {}
     flatten {^nil}
 
 	on_enter {
         | m, nav |
+		//"=^.^=".postln;
         m.fairy.impress(this);
     }
 }
@@ -538,7 +537,7 @@ SkoarpuscleConditional : Skoarpuscle {
 
 			impression = m.fairy.boolean_impression;
             m.koar.do_skoarpion(
-                if (impression.isKindOf(SkoarpuscleFalse) or: impression.isKindOf(SkoarpuscleCrap)) {
+                if (impression.isKindOf(SkoarpuscleFalse) or: impression.isKindOf(SkoarpuscleCat)) {
 						else_body
 					} {
 						if_body
@@ -651,7 +650,7 @@ SkoarpuscleLoop : Skoarpuscle {
 
 						m.koar.do_skoarpion(condition, m, nav, [\inline]);
                         x = m.fairy.boolean_impression;
-						if (x.isKindOf(SkoarpuscleFalse) or: x.isKindOf(SkoarpuscleCrap)) {
+						if (x.isKindOf(SkoarpuscleFalse) or: x.isKindOf(SkoarpuscleCat)) {
 							break.();
 						};
                     };

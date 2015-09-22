@@ -15,7 +15,7 @@ Newline:        [\\n\\r][\\n\\r \\t]*
 
 True:           yes|true
 False:          no|false
-Crap:           crap
+Cat:            =\\^\\.\\^=
 
 Voice*:         \\.(([a-zA-Z_][a-zA-Z0-9_]*)?|\\.+)
 
@@ -31,7 +31,7 @@ Meter*:         [1-9][0-9]*/[1-9][0-9]*
 
 ArgSpec:        <[a-zA-Z]+(,[a-zA-Z]+)*>
 
-ListS:          <(?![=?])
+ListS:          <(?![=?])|<(?=[=]\\^\\.)
 ListE:          >(?![=])
 ListSep:        ,
 
