@@ -419,7 +419,6 @@ We don't have `nil` in Skoar. We do, however, have cats.
 Cats eat variables. If you need to unset a variable, use a cat.
 
 	'foo' => @x     <? x is now 'foo' ?>
-	             )  <? beat happens, event contains (x: 'foo') ?>
 
 	=^.^= => @x     <? x is gone ?>
 
