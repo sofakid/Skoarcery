@@ -15,5 +15,29 @@ SkoarTestRunner((
         [(\foo:[nil,nil])]
     ],
 
+	cats_are_cats: [
+        "{? =^.^= == =^.^= ?? 3 ?? 2 ?} => @foo )",
+        [(\foo:3)]
+    ],
+
+	cats_are_false: [
+        "{? =^.^= ?? 3 ?? 2 ?} => @foo )",
+        [(\foo:2)]
+    ],
+
+	cats_nonexistant_variable: [
+        "{? !x == =^.^= ?? 3 ?? 2 ?} => @foo )",
+        [(\foo:3)]
+    ],
+
+	cats_nonexistant_variable_two: [
+        "{? !x ?? 3 ?? 2 ?} => @foo )",
+        [(\foo:2)]
+    ],
+
+	cats_missing_args: [
+        "{! bar<x> !! {? !x ?? 3 ?? 2 ?} !} !bar => @foo )",
+        [(\foo:2)]
+    ],
 
 ));

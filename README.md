@@ -414,7 +414,7 @@ You say `.rand` because in SC, `Integer` has a `.rand` method, `Array` has `.cho
 
 We don't have `nil` in Skoar. We do, however, have cats. 
 
-    =^.^=               <? a cat ?>
+    =^.^=   <? a cat ?>
 
 Cats eat variables. If you need to unset a variable, use a cat.
 

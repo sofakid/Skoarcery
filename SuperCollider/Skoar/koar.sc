@@ -138,8 +138,7 @@ SkoarKoar {
                 vars[k] = if (i < n) {
                     passed_args[i]
                 } {
-                    // this defaults to passing 0 when not enough args are sent.
-                    SkoarpuscleInt(0)
+                    SkoarpuscleCat.new;
                 };
                 i = i + 1;
             };

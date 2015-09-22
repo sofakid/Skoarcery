@@ -450,11 +450,13 @@ SkoarpuscleBooleanOp : Skoarpuscle {
             b = b.flatten(m);
         };
 
-       // debug("{? " ++ a.asString ++ " " ++ val ++ " " ++ b.asString ++ " ?}");
+        ("===========   {? " ++ a.asString ++ " " ++ val ++ " " ++ b.asString ++ " ?}").postln;
 
-		a !? b !? {^f.(a, b)};
+		//a !? b !? {
+		^f.(a, b)
+		//};
 		
-        ^false
+        //^false
     }
 
 	on_enter {
