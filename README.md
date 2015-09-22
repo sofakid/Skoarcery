@@ -428,7 +428,7 @@ If you make a list of cats, they will stay.
 
 If you declare a skoarpion to take arguments, but don't supply them, cats will be supplied.
 
-	{! foo<x> !! !x + 2 } !foo => @y   <? y is now a cat (because a cat + 2 is a cat) ?>
+	{! foo<x> !! !x + 2 } !foo => @y   <? a cat eats y (because a cat + 2 is a cat) ?>
 
 If you try to use a variable that doesn't exist, you will find a cat.
 
