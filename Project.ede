@@ -1,0 +1,6 @@
+;; Object Skoarcery
+;; EDE Project Files are auto generated: Do Not Edit
+(ede-proj-project "Skoarcery"
+  :file "Project.ede"
+  :name "Skoarcery"
+  :targets nil)

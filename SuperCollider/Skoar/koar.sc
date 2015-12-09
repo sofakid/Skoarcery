@@ -102,13 +102,17 @@ SkoarKoar {
                 }
             };
 
-			mus_key = e[\key];
-				
-			if (mus_key.isKindOf(SkoarpuscleKey)) {
-				mus_key.apply(e);
-				e[\key] = nil;
-			}; 
-			
+			if (e[\choard].notNil) {
+				e[\note] = e[\choard];
+				e[\choard] = nil;
+			} {
+				mus_key = e[\key];
+
+				if (mus_key.isKindOf(SkoarpuscleKey)) {
+					mus_key.apply(e);
+					e[\key] = nil;
+				}; 
+			};
         }
 
         ^e

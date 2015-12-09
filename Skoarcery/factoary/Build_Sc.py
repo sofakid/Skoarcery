@@ -6,12 +6,12 @@ from Skoarcery.laboaratoary.TestDragonSpells import DragonTests
 from Skoarcery.laboaratoary.TestParseTable import Verify_LL_1
 from Skoarcery.laboaratoary.TestNonterminals import TestNonterminals
 from Skoarcery.laboaratoary.TestTerminals import TestTokens
-from Skoarcery.laboaratoary.Test_Sclang import Test_Sclang
+from Skoarcery.laboaratoary.Test_Sclang import Test_Sclang, Test_Sclang_Sanity, Test_Sclang_Dev
 
 
 class Build_Sc(Buildoar):
 
-    def tes_Build_Skoar_Supercollider(self):
+    def build(self):
 
         #
         # Grammar
@@ -33,12 +33,19 @@ class Build_Sc(Buildoar):
 
         #
         # SuperCollider should compile class lib
-        self.step("Compile Parser", Test_Sclang)
 
-        #
-        # Apparatus
-        #self.step("Sanity", [Test_Apparatus, ExamineParseTree, Test_Performer])
+    def sanity(self):
+        self.step("Sanity Tests", Test_Sclang_Sanity)
 
+    #
+    # Apparatus
+    #self.step("Sanity", [Test_Apparatus, ExamineParseTree, Test_Performer])
 
-if __name__ == '__main__':
-    unittest.main()
+    def dev(self):
+        self.step("Dev Tests", Test_Sclang_Dev)
+        
+
+#if __name__ == '__main__':
+#    b = Build_Sc()
+#    b.build()
+    

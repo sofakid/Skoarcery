@@ -43,8 +43,8 @@ SkoarpuscleKey : Skoarpuscle {
 				{"E"} {4}
 				{"F"} {5}
 				{"G"} {7}
-				{"A"} {-3}
-				{"B"} {-1} + choard.sharps;
+				{"A"} {-1}
+				{"B"} {-3} + choard.sharps;
 
 			minor = choard.lexeme.findRegexp("m")[0];
 				
@@ -80,7 +80,7 @@ SkoarpuscleNoat : Skoarpuscle {
         | lex |
 
         var noat_regex = "^(_?)([a-g])";
-        var sharps_regex = "[a-g](#*|b*)$";
+        var sharps_regex = "[a-g](#*|b*)$"; //emacs is unhappy if i don't put =>"
         var s = lex;
         var r = s.findRegexp(noat_regex);
         var x = -1;
@@ -102,31 +102,22 @@ SkoarpuscleNoat : Skoarpuscle {
 
         x = switch (letter)
             {"c"} {0}
-            {"d"} {1}
-            {"e"} {2}
-            {"f"} {3}
-            {"g"} {4}
-            {"a"} {5}
-            {"b"} {6};
+            {"d"} {2}
+            {"e"} {4}
+            {"f"} {5}
+            {"g"} {7}
+            {"a"} {9}
+            {"b"} {11};
 
         case {sharps > 0} {
-            x = x + 0.1;
+            x = x + 1;
         } {sharps < 0} {
-			x = -0.9 + x;
-		};
-
-		if (x == -0.9) {
-			x = -0.1;
+			x = x - 1;
 		};
 		
         if (low == false) {
-            x = x + 7;
+            x = x + 12;
         };
-
-		// wow
-		if (x == 6.9) {
-			x = 6.1;
-		};
 
         val = x;
     }
@@ -136,7 +127,7 @@ SkoarpuscleNoat : Skoarpuscle {
     isNoatworthy { ^true; }
 
     asNoat {
-        ^SkoarNoat_Degree(val);
+        ^SkoarNoat_Note(val);
     }
 
 	asString {
@@ -176,6 +167,7 @@ SkoarpuscleChoard : Skoarpuscle {
         var r = s.findRegexp(noat_regex);
         var x = -1;
 
+		var first, third, fifth;
 		lexeme = lex;
         letter = r[1][1];
 
@@ -190,20 +182,58 @@ SkoarpuscleChoard : Skoarpuscle {
 
         x = switch (letter)
             {"C"} {0}
-            {"D"} {1}
-            {"E"} {2}
-            {"F"} {3}
-            {"G"} {4}
-            {"A"} {5}
-            {"B"} {6};
+            {"D"} {2}
+            {"E"} {4}
+            {"F"} {5}
+            {"G"} {7}
+            {"A"} {9}
+            {"B"} {11};
 
         case {sharps > 0} {
-            x = sharps * 0.1 + x;
+            x = sharps + x;
         } {sharps < 0} {
-            x = sharps * -0.1 + x - 1;
+            x = x - sharps;
         };
 
-        val = x;
+		 first = x;
+		 third = x + 4;
+		 fifth = x + 7;
+
+		 if (lex.findRegexp("[^i]m").size != 0) {
+			 third = third - 1;
+		 };
+
+		 if (lex.findRegexp("sus2").size != 0) {
+			 third = third - 2;
+		 };
+
+		 if (lex.findRegexp("sus4").size != 0) {
+			 third = third + 1;
+		 };
+
+		 if (lex.findRegexp("dim").size != 0) {
+			 third = third - 1;
+			 fifth = fifth - 1;
+		 };
+
+		 if (lex.findRegexp("aug").size != 0) {
+			 fifth = fifth + 1
+		 };
+
+		 val = [first, third, fifth];
+		 
+		 if (lex.findRegexp("M7").size != 0) {
+			 val = val.add(first + 11);
+		 } {
+			 if (lex.findRegexp("7").size != 0) {
+				 val = val.add(first + 10);
+			 }
+		 };
+
+		 if (lex.findRegexp("aug6").size != 0) {
+			 val = val.add(fifth + 1); // fifth has already been incremented
+		 };
+
     }
 
     asString {
@@ -226,6 +256,17 @@ SkoarpuscleChoard : Skoarpuscle {
         m.fairy.impress(this);
     }
 
+    isNoatworthy { ^true; }
+
+    asNoat {
+        ^this;
+    }
+
+	execute {
+		| minstrel |
+        //"SkoarNoat.execute: ".post; key.post; val.postln;
+        minstrel.koar[\choard] = val;
+	}
 }
 
 SkoarNoat {
@@ -276,8 +317,11 @@ SkoarNoat_DegreeList : SkoarNoat {
                 val = val.add(y.val);
 
             } {y.isKindOf(SkoarNoat_Freq)} {
-                val = val.add(y.val.cpsmidi);
 
+				// this is wrong
+                //val = val.add(y.val.cpsmidi);
+				val = val.add(0);
+				
             } {y.isKindOf(SkoarNoat_DegreeList)} {
                 y.val.do {
                     | z |
@@ -287,7 +331,53 @@ SkoarNoat_DegreeList : SkoarNoat {
             } {y.isKindOf(SkoarNoat_FreqList)} {
                 y.val.do {
                     | z |
-                    val = val.add(z.cpsmidi);
+					val = val.add(0);
+                    //val = val.add(z.cpsmidi);
+                };
+            };
+        };
+    }
+}
+
+SkoarNoat_Note : SkoarNoat {
+
+    init {
+        | x |
+        key = \note;
+        val = x;
+    }
+}
+
+SkoarNoat_NoteList : SkoarNoat {
+
+    init {
+        | x |
+        key = \note;
+        val = List.new(x.size());
+
+        x.do {
+            | y |
+
+            case {y.isKindOf(SkoarNoat_Note)} {
+                val = val.add(y.val);
+
+            } {y.isKindOf(SkoarNoat_Freq)} {
+
+				// this is wrong
+                //val = val.add(y.val.cpsmidi);
+				val = val.add(0);
+				
+            } {y.isKindOf(SkoarNoat_NoteList)} {
+                y.val.do {
+                    | z |
+                    val = val.add(z);
+                };
+
+            } {y.isKindOf(SkoarNoat_FreqList)} {
+                y.val.do {
+                    | z |
+					val = val.add(0);
+                    //val = val.add(z.cpsmidi);
                 };
             };
         };
@@ -305,7 +395,7 @@ SkoarNoat_FreqList : SkoarNoat {
             | y |
 
             case {y.isKindOf(SkoarNoat_Degree)} {
-                val = val.add(y.val.midicps);
+                //val = val.add(y.val.midicps);
 
             } {y.isKindOf(SkoarNoat_Freq)} {
                 val = val.add(y.val);
@@ -313,7 +403,7 @@ SkoarNoat_FreqList : SkoarNoat {
             } {y.isKindOf(SkoarNoat_DegreeList)} {
                 y.val.do {
                     | z |
-                    val = val.add(z.midicps);
+                    //val = val.add(z.midicps);
                 };
 
             } {y.isKindOf(SkoarNoat_FreqList)} {

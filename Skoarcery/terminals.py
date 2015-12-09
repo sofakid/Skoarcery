@@ -72,7 +72,7 @@ MsgOp:            \\.(?![)\\]])
 MathOp:           [+x\\-](?!>|or)
 
 NamedNoat*:       (?:_?)(?:[a-g](?![ac-zA-Z_]))(#|b)?
-Choard*:          [ABCDEFG](?![.ce-ln-rt-zA-LN-Z]|al?)(#|b)?([Mm0-9]|sus|dim|aug|dom|add)*
+Choard*:          ~*[ABCDEFG](?![.ce-ln-rt-zA-LN-Z]|a[l ])(#|b)?([Mm0-9]|sus|dim|aug|dom)*(/[A-G][#b]?)?~*
 
 BooleanOp*:       ==|!=|<=|>=|and|or|xor
 CondS:            [{][?][\\n]*

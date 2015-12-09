@@ -2,6 +2,7 @@
 import unittest
 from subprocess import Popen, PIPE
 import subprocess
+import json
 
 
 class Test_Sclang(unittest.TestCase):
@@ -28,8 +29,7 @@ class Test_Sclang(unittest.TestCase):
         if scd_code_file:
             a_cmd.append(scd_code_file)
 
-        print(str(a_cmd))
-
+        
         proc = Popen(a_cmd, stdout=PIPE, stderr=subprocess.STDOUT)
         while proc.poll() is None:
             b = proc.stdout.readline()
@@ -59,6 +59,7 @@ class Test_Sclang(unittest.TestCase):
         self.assertTrue(class_lib_compiled, "Class library didn't compile.")
         self.assertTrue(class_lib_inited, "Class libarary did initialize.")
 
+        failures = []
         tests_passed = False
         while proc.poll() is None:
             b = proc.stdout.readline()
@@ -75,8 +76,13 @@ class Test_Sclang(unittest.TestCase):
             # nay
             if line.startswith("SKOAR FAIL"):
                 tests_passed = False
+                failures.append(line)
                 break
 
+            if line.startswith("FAIL"):
+                #tests_passed = False
+                failures.append(line)
+                break
             #
             # nay
             if line.startswith("^^ The preceding error dump"):
@@ -88,28 +94,39 @@ class Test_Sclang(unittest.TestCase):
         finally:
             proc.stdout.close()
 
+        if not tests_passed:
+            print("JSON: " + json.dumps({"test": scd_code_file, "failures": failures}, separators=(',', ': ')))
+            #print(str(a_cmd))
+            #for line in failures:
+            #    self.print(line)
+                
         self.assertTrue(tests_passed, "scland unit tests failed.")
+        
 
+class Test_Sclang_Sanity(Test_Sclang):
+    
     def test_SC_sanity(self):
         self.exec("SuperCollider/testing/sanity.scd")
 
     def test_SC_cats(self):
         self.exec("SuperCollider/testing/cats.scd")
 
-    def test_SC_dev(self):
-        self.exec("SuperCollider/testing/dev.scd")
-
     def test_SC_ops(self):
         self.exec("SuperCollider/testing/ops.scd")
-
-    def test_SC_ops_dev(self):
-        self.exec("SuperCollider/testing/ops_dev.scd")
 
     def test_SC_noaty(self):
         self.exec("SuperCollider/testing/noaty.scd")
 
     def test_SC_levels(self):
         self.exec("SuperCollider/testing/levels.scd")
+
+        
+class Test_Sclang_Dev(Test_Sclang):
+    def test_SC_ops_dev(self):
+        self.exec("SuperCollider/testing/ops_dev.scd")
+
+    def test_SC_dev(self):
+        self.exec("SuperCollider/testing/dev.scd")
 
     def test_SC_increments(self):
         self.exec("SuperCollider/testing/increments.scd")

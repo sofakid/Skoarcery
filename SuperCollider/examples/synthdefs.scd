@@ -330,3 +330,9 @@ SynthDef("organdonor",{
 	Out.ar(out, Pan2.ar(filter * env, pan));
 }).add;
 
+SynthDef(\mario, { |out, amp=0.3, freq=440, att=0.001, sustain=0.3, rel=0.03, dur=1|
+	var snd;
+	snd = LFPulse.ar(freq)!2;
+	snd = snd * EnvGen.ar(Env.linen(att, sustain * 0.5, rel), doneAction:2);
+	OffsetOut.ar(out, snd*amp*0.5);
+}).add;
