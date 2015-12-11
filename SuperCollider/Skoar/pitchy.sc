@@ -161,8 +161,8 @@ SkoarpuscleChoard : Skoarpuscle {
         | lex |
 
 		// lexeme was matched by: (D(?![a.])|[ABCEFG])(#|b)?([Mm0-9]|sus|dim)*
-        var noat_regex = "^([A-G])";
-        var sharps_regex = "[A-G](#|b)?";
+        var noat_regex = "^~*([A-G])";
+        var sharps_regex = "^~*[A-G](#|b)?";
         var s = lex;
         var r = s.findRegexp(noat_regex);
         var x = -1;
