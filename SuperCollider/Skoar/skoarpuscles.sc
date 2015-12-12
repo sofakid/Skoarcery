@@ -79,6 +79,9 @@ Skoarpuscle {
             //"wrapping: symbol".postln;
             ^SkoarpuscleSymbol(x);
 
+		} {x.isKindOf(UGen)} {
+			^SkoarpuscleUGen(x);
+			
         } {x.isKindOf(Array)} {
             var a = Array.newClear(x.size);
             var i = -1;
@@ -800,7 +803,7 @@ SkoarpuscleList : Skoarpuscle {
             noats[i] = x.asNoat;
         };
 
-        ^SkoarNoat_DegreeList(noats);
+        ^SkoarNoat_NoteList(noats);
     }
 
 
@@ -1190,3 +1193,127 @@ SkoarpuscleHashLevel : SkoarpuscleFloat {
 
 }
 
+SkoarpuscleUGen : Skoarpuscle {
+
+	var klass;
+	var <ugen;
+	var <args;
+	var <synthdef;
+	var <name;
+	var <>bound;
+	var <func;
+	var <rate;
+
+	*new {
+		| k, a, b, f |
+		^super.new.init_copy(k, a, b, f );
+	}
+
+	*new_from_toke {
+		| t |
+		^super.new.init_toke( t );
+	}
+	
+	
+	init {
+		| k |
+		val = k;
+		bound = IdentityDictionary.new;
+		args = IdentityDictionary.new;
+	}
+
+	init_toke {
+		| t |
+		val = t.lexeme[1..].asSymbol;
+		klass = val.asClass;
+		bound = IdentityDictionary.new;
+		args = IdentityDictionary.new;
+		func = {
+			klass.performMsg([\ar])
+		};
+		
+	}
+
+	init_copy {
+		| k, a, b, f |
+		klass = k;
+		val = k.asSymbol;
+		bound = b;
+		args = a;
+		func = f;
+	}
+
+	add {
+		| x |
+		var f;
+
+		if (x.isKindOf(SkoarpuscleUGen)) {
+			f = {
+				func.value + x.func.value
+			};
+		} {
+			f = {
+				func.value + x.val
+			};
+		};
+		"Add f: ".postln;
+		f.postString;
+
+			
+		^SkoarpuscleUGen.new(klass, args, bound, f);
+	}
+
+	sub {
+		| x |
+		var f = if (x.isKindOf(SkoarpuscleUGen)) {
+			{
+				func.value - x.func.value
+			}
+		} {
+			{
+				func.value - x.val
+			}
+		};
+
+		^SkoarpuscleUGen.new(klass, args, bound, f);
+	}
+
+	mul {
+		| x |
+		var f = if (x.isKindOf(SkoarpuscleUGen)) {
+			{
+				func.value * x.func.value
+			}
+		} {
+			{
+				func.value * x.val
+			}
+		};
+		"Mult f: ".postln;
+		f.dump;
+		
+		^SkoarpuscleUGen.new(klass, args, bound, f);
+	}
+	
+	flatten {
+		| m |
+		^val;
+	}
+
+	on_enter {
+        | m, nav |
+		"here".postln;
+		m.fairy.impress(this);
+	}
+	
+	as_synthdef {
+		| m, nav |
+		synthdef = {func.value * EnvGen.ar(Env.linen(0.01, 1, 0.3), doneAction:2); }.asSynthDef;
+		synthdef.add;
+		name = synthdef.asDefName;
+		(name ++ " defined").postln;
+		synthdef.dump;
+	}
+
+	
+}

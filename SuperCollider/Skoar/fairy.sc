@@ -3,6 +3,7 @@ SkoarFairy {
     var <name;
     var <minstrel;
     var <noat;
+	var <ugen;
     var <impression;
     var magic;
     var listy_stack;
@@ -192,6 +193,13 @@ SkoarFairy {
         if (impression.isNoatworthy == true) {
             noat = impression;
         };
+
+		if (impression.isKindOf(SkoarpuscleUGen)) {
+			impression.dump;
+			ugen = impression;
+			ugen.as_synthdef;
+			
+		};
 
         ^impression;
     }

@@ -93,8 +93,8 @@ Fairy:            [$]
 MsgName*:         [a-zA-Z_][a-zA-Z0-9_]*(?!<)
 MsgNameWithArgs*: [a-zA-Z_][a-zA-Z0-9_]*<
 
-Symbol*:          [\\\\@][a-zA-Z_][a-zA-Z0-9_]*
-SymbolName*:      [a-zA-Z_][a-zA-Z0-9_]*
+Symbol*:          [\\\\@][a-zA-Z0-9_][a-zA-Z0-9_]*
+SymbolName*:      [a-zA-Z0-9_][a-zA-Z0-9_]*
 SkoarpionStart:   [{]!
 SkoarpionEnd:     ![}]
 SkoarpionSep:     !!
@@ -112,6 +112,7 @@ AlCoda:           al(la)? coda
 AlSegno:          al segno
 AlFine:           al fine
 
+UGen:             u[A-Z][A-Za-z0-9_]*
 OctaveShift*:     ~+o|o~+
 
 OttavaA:          8va|ottava (alta|sopra)|all' ottava

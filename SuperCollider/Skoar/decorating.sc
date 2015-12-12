@@ -261,7 +261,10 @@ SkoarTokeInspector {
                 noad.toke = nil;
             },
 
-
+			Toke_UGen: {  | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleUGen.new_from_toke(toke);
+                noad.toke = nil;
+            },
 
         );
     }

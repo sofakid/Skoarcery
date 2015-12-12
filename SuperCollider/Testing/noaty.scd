@@ -53,7 +53,7 @@ SkoarTestRunner((
 			(note: [0, 3, 6]),
 
 			(note: [0, 2, 7]),
-			(note: [0, 5, 7, 11]),
+			(note: [0, 5, 7, 11]), // c f g b
 
 			(note: [0, 4, 8]),
 			(note: [0, 4, 8, 9]),
