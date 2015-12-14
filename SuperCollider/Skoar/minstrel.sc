@@ -26,7 +26,7 @@ SkoarMinstrel {
         koar[\tempo] = 1;
         koar[\amp] = 0.5;
 
-        fairy = SkoarFairy("$"++nom, this);
+        fairy = SkoarFairy("$" ++ nom, this); // emacs needs ->"
 
         all_voice = skr.all_voice;
 

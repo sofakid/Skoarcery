@@ -377,7 +377,7 @@ Complex expressions are handled by the fairy via arcane magic.
  
 Values and operators will be operated on in the order they appear. SuperCollider users are familiar with this concept.
 
-    5 + 2 x 3 => @x       <? x is now 21, certainly not 10 ?>
+    5 + 2 * 3 => @x       <? x is now 21, certainly not 10 ?>
     
     <0, $+1, $+2> => @x   <? x is now <0,1,3> ?>
 
@@ -387,15 +387,15 @@ Values and operators will be operated on in the order they appear. SuperCollider
     <0> + 2 == <0, 2>
     <_a, c> + e == <_a, c, e>
     
-    0 x 2 == 0
-    2 x 2 == 4
+    0 * 2 == 0
+    2 * 2 == 4
     
 increments and decrements:
 
     2 => @x    <? x is now 2 ?>
     2 +> @x    <? x is now 4 ?>
     1 -> @x    <? x is now 3 ?>
-    2 x> @x    <? x is now 6 ?>
+    2 *> @x    <? x is now 6 ?>
 	    
 # Randomness
 

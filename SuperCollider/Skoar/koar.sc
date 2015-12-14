@@ -83,7 +83,7 @@ SkoarKoar {
             // but we need to change stuff
             e.keysValuesChange {
                 | key, value |
-
+	
                 case {value.isKindOf(SkoarpuscleSkoarpion)} {
                     // we don't need to pass skoarpions to SC
                     nil

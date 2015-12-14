@@ -70,6 +70,12 @@ SkoarTokeInspector {
                 noad.toke = nil;
             },
 
+			Toke_SymbolColon: {
+                | skoar, noad, toke |
+                noad.skoarpuscle = SkoarpuscleSymbolColon(toke.lexeme);
+                noad.toke = nil;
+            },
+
             // rests
             // } }} }}}
             Toke_Crotchets: {
@@ -209,7 +215,7 @@ SkoarTokeInspector {
             Toke_MsgNameWithArgs: {
                 | skoar, noad, toke |
                 var s = toke.lexeme;
-                noad.skoarpuscle = SkoarpuscleMsgName(s[0..s.size-2].asSymbol);
+                noad.skoarpuscle = SkoarpuscleMsgNameWithArgs(s[0..s.size-2].asSymbol);
                 noad.toke = nil;
             },
 
@@ -462,7 +468,7 @@ Skoarmantics {
 
                 case {msg.isKindOf(SkoarpuscleList)} {
                     // i'm not sure what i want this to mean
-
+					noad.children = [];	
                 } {msg.isKindOf(SkoarpuscleLoop)} {
 					noad.skoarpuscle = SkoarpuscleLoopMsg(msg);
 					
@@ -475,12 +481,24 @@ Skoarmantics {
 						msg.on_enter(m, nav);
 					};
 
-                } {msg.isKindOf(SkoarpuscleMsgName)} {
+					noad.children = [];
+					
+                } {msg.isKindOf(SkoarpuscleMsgNameWithArgs)} {
+					var end_noad = SkoarNoad(\msg_end, noad);
 					args = SkoarpuscleArgs.new;
-                    noad.skoarpuscle = SkoarpuscleMsg(msg.val, args);
-                };
+					
+					end_noad.skoarpuscle = SkoarpuscleMsg(msg.val, args);
+                    noad.add_noad(end_noad);
+					
+                } {msg.isKindOf(SkoarpuscleMsgName)} {
+					// we need the tree to have the same
+					// structure as above. I don't want to
+					// treat these too differently (with args or without)
+					var end_noad = SkoarNoad(\msg_end, noad);
+					end_noad.skoarpuscle = SkoarpuscleMsg(msg.val, nil);
+                    noad.add_noad(end_noad);
+				};
 
-                noad.children = [];
             },
 
             expr: {
@@ -488,23 +506,65 @@ Skoarmantics {
                 // we insert a node at the end of the expression
                 // so we can impress the result
                 var end_noad = SkoarNoad(\expr_end, noad);
-                end_noad.on_enter = {
-                    | m, nav |
-                    m.fairy.cast_arcane_magic;
-                };
+				var child = noad.children[0].skoarpuscle;
+				
+				if (child.isKindOf(SkoarpuscleSymbolColon)) {
+					var settable = child; 
+					end_noad.on_enter = {
+						| m, nav |
+						var x = m.fairy.cast_arcane_magic;
+						var p;
+
+						//Skoar.ops.assign(m, x, settable);
+
+						p = SkoarpusclePair(settable, x);
+                        m.fairy.impress(p);
+					}
+				} {
+					end_noad.on_enter = {
+						| m, nav |
+						m.fairy.cast_arcane_magic;
+					}
+				};
 
                 noad.add_noad(end_noad);
+
+				
             },
 
             msgable: {
                 | skoar, noad |
                 var noads = List[];
 				var has_messages = false;
+				var skoarpuscle = noad.next_skoarpuscle;
+				var last = skoarpuscle;
 				
+				if (skoarpuscle.isKindOf(SkoarpuscleUGen)) {
+					var end_noad = SkoarNoad(\msgable_end, noad);
+
+					end_noad.on_enter = {
+                        | m, nav |
+						//skoarpuscle.compile_synthdef;
+						m.fairy.impress(skoarpuscle);
+						//skoarpuscle.dump;
+                    };
+
+                    noad.add_noad(end_noad);
+				};
+
+				last = skoarpuscle;
                 // strip out the msg operators
                 noad.children.do {
                     | x |
                     if (x.toke.isKindOf(Toke_MsgOp) == false) {
+						x.children.do {
+							| y |
+							if (y.skoarpuscle.isKindOf(SkoarpuscleMsg)) {
+								y.skoarpuscle.dest = last;
+								last = y;
+							};
+						};
+						
                         noads.add(x);
                     } {
 						has_messages = true;
@@ -548,7 +608,7 @@ Skoarmantics {
                         
                     }}
 					
-					{"x>"} {{
+					{"*>"} {{
                         | m, nav |
                         var x = m.fairy.impression;
                         Skoar.ops.multr(m, x, settable);

@@ -40,9 +40,8 @@ al_x               : AlCoda | AlSegno | AlFine | <e>
 
 beat               : Crotchets | Quavers | Quarters | Eighths | Slash
 
-musical_keyword      : dynamic | ottavas | pedally | musical_keyword_misc
+musical_keyword      : dynamic | ottavas | musical_keyword_misc
 musical_keyword_misc : Rep | Portamento | Carrot
-pedally              : PedalDown | PedalUp
 ottavas              : OctaveShift | OttavaA | OttavaB | QuindicesimaA | QuindicesimaB | Loco
 dynamic              : DynPiano | DynForte | DynSFZ | DynFP
 
@@ -52,7 +51,7 @@ nouny            : cthulhu | cuts | conditional | loop | nouny_literal | musical
 deref            : Deref deref_prime
 +deref_prime     : MsgNameWithArgs listy_suffix | MsgName
 
-expr             : msgable expr_prime
+expr             : SymbolColon expr | msgable expr_prime
 expr_prime       : assignment expr_prime | math expr_prime | boolean | times | <e> 
 
 times            : Times

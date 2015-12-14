@@ -62,17 +62,20 @@ SkoarFairy {
     }
 
     push {
-        magic_stack = magic_stack.add(magic);
+		magic_stack = magic_stack.add(magic);
         magic = nil;
         listy_stack = listy_stack.add([]);
+		minstrel.koar.push_state;
         //"$.push;".postln;
 
     }											  
 
     pop {
         magic = magic_stack.pop;
-        this.impress(listy_stack.pop);
+        minstrel.koar.pop_state;
+		this.impress(listy_stack.pop);
         //"popped listy: ".post; impression.postln;
+		
     }
 
     next_listy {
@@ -171,7 +174,7 @@ SkoarFairy {
 
     impress {
         | x |
-        ("$:" ++ name ++ ".impression: " ++ x.asString).postln;
+        //("$:" ++ name ++ ".impression: " ++ x.asString).postln;
 
 		if (x.isKindOf(SkoarpuscleFairy)) {
             ^impression;
@@ -191,13 +194,15 @@ SkoarFairy {
         };
 
         if (impression.isNoatworthy == true) {
+			//"NOATWORTHY".postln;
+			//impression.dump;
             noat = impression;
         };
 
 		if (impression.isKindOf(SkoarpuscleUGen)) {
-			impression.dump;
+			//impression.dump;
 			ugen = impression;
-			ugen.as_synthdef;
+			ugen.compile_synthdef;
 			
 		};
 

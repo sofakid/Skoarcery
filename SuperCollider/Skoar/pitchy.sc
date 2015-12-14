@@ -357,7 +357,7 @@ SkoarNoat_NoteList : SkoarNoat {
 
         x.do {
             | y |
-
+			//("NoteList: " ++ y ).postln;
             case {y.isKindOf(SkoarNoat_Note)} {
                 val = val.add(y.val);
 

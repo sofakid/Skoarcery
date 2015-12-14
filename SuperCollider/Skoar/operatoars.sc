@@ -37,7 +37,27 @@ SkoarOps {
 						v = SkoarpuscleKey(v);
 					};
 
-					"settable: ".post; v.dump;
+					//"settable: ".post; v.dump;
+
+                    minstrel.koar[s] = v;
+                    v
+                }
+
+            ),
+
+			// settable
+            SkoarpuscleSymbolColon: (
+
+                // v
+                Any: {
+                    | minstrel, v, symbol |
+					var s = symbol.val;
+
+					if (s == \key) {
+						v = SkoarpuscleKey(v);
+					};
+
+					//"settable: ".post; v.dump;
 
                     minstrel.koar[s] = v;
                     v
@@ -465,7 +485,7 @@ SkoarOps {
 	// ---------------------
 	init_multiplication {
 
-		// x by y
+		// x * y
         multiplication = (
 
 			SkoarpuscleCat:  ( Any: { | x, y | SkoarpuscleCat.new } ),
@@ -716,7 +736,7 @@ SkoarOps {
 		^minstrel.fairy.impress(f.(x, y));
 	}
 	 
-	// x x> y
+	// x *> y
 	multr {
         | minstrel, x, y |
         var f = this.lookup(multiplication, y, x);

@@ -64,7 +64,7 @@ Skoarpuscle {
             ^SkoarpuscleSkoarpion(x);
 
         } {x.isKindOf(Integer)} {
-            ("wrapping: int: " ++ x.asString).postln;
+            //("wrapping: int: " ++ x.asString).postln;
             ^SkoarpuscleInt(x);
 
         } {x.isKindOf(Number)} {
@@ -131,7 +131,7 @@ SkoarpuscleFalse : Skoarpuscle {
 		val = false;
 	}
 
-	asString {^"no"}
+	asString {^"false"}
 
     skoar_msg {}
     flatten {^false}
@@ -148,7 +148,7 @@ SkoarpuscleTrue : Skoarpuscle {
 		val = true;
 	}
 
-	asString {^"yes"}
+	asString {^"true"}
 
     skoar_msg {}
     flatten {^true}
@@ -265,6 +265,17 @@ SkoarpuscleSymbol : Skoarpuscle {
     }
 }
 
+SkoarpuscleSymbolColon : Skoarpuscle {
+
+	init {
+		| lex |
+		// lexeme was matched by: [a-zA-Z0-9_][a-zA-Z0-9_]*[ \t]*:(?![:|}])
+        var regex = "[a-zA-Z0-9_][a-zA-Z0-9_]*";
+        val = lex.findRegexpAt(regex, 0)[0].asSymbol;
+	}
+
+}
+
 
 SkoarpuscleDeref : Skoarpuscle {
 
@@ -364,7 +375,7 @@ SkoarpuscleMathOp : Skoarpuscle {
                 Skoar.ops.add(minstrel, a, b);
             }}
 
-            {"x"}  {{
+            {"*"}  {{
                 | minstrel, a, b |
                 Skoar.ops.multiply(minstrel, a, b);
             }}
@@ -453,7 +464,7 @@ SkoarpuscleBooleanOp : Skoarpuscle {
             b = b.flatten(m);
         };
 
-        ("===========   {? " ++ a.asString ++ " " ++ val ++ " " ++ b.asString ++ " ?}").postln;
+        //("===========   {? " ++ a.asString ++ " " ++ val ++ " " ++ b.asString ++ " ?}").postln;
 
 		//a !? b !? {
 		^f.(a, b)
@@ -746,8 +757,10 @@ SkoarpuscleListEnd : Skoarpuscle {
 
     on_enter {
         | m, nav |
+		//"sna".postln;
         m.fairy.next_listy;
         m.fairy.pop;
+		//"snarps".postln;
     }
 
 	
@@ -765,11 +778,20 @@ SkoarpuscleList : Skoarpuscle {
 		//"new list: ".post; val.postln;
     }
 
+	size {
+		^val.size;
+	}
+	
 	flatten { | m | 
 		var arr = [];
 		val.do {
 			| x |
-			arr = arr.add(x.flatten(m));
+			var y = x.flatten(m);
+			if (y.isKindOf(SkoarpusclePair)) {
+				y = y.flatten(m);
+			};
+			//("Adding " ++ y).postln;
+			arr = arr.add(y);
 		};
 		^arr; 
 	}
@@ -796,15 +818,38 @@ SkoarpuscleList : Skoarpuscle {
         var n = val.size;
         var noats = Array.newClear(n);
         var i = -1;
-
+		var theseAreNoats = true;
+		var theseAreFreq = false;
+		
         val.do {
             | x |
             i = i + 1;
-            noats[i] = x.asNoat;
+
+			if (x.isKindOf(SkoarpuscleFreq)) {
+				theseAreNoats = false;
+				theseAreFreq = true;
+			};
+
+			if (x.isKindOf(SkoarpuscleInt)) {
+				theseAreNoats = false;
+			};
+
+			if (x.isKindOf(SkoarpuscleFloat)) {
+				theseAreNoats = false;
+			};
+			noats[i] = x.asNoat;
         };
 
-        ^SkoarNoat_NoteList(noats);
-    }
+		if (theseAreNoats == true) {
+			^SkoarNoat_NoteList(noats);
+		};
+
+		if (theseAreFreq == true) {
+			^SkoarNoat_FreqList(noats);
+		};
+
+		^SkoarNoat_DegreeList(noats);
+	}
 
 
 	skoar_msg {
@@ -856,6 +901,7 @@ SkoarpuscleArgSpec : Skoarpuscle {
 SkoarpuscleMsg : Skoarpuscle {
 
     var <>args;
+	var <>dest;
 
     *new {
         | v, a |
@@ -868,12 +914,29 @@ SkoarpuscleMsg : Skoarpuscle {
         args = a;
     }
 
+	asString {
+		^(super.asString ++ " -> " ++ dest.asString);
+	}
+
     on_enter {
         | m, nav |
-		var result = m.fairy.impression;
-		//"msg::impression: ".post; result.postln;
-		result = result.skoar_msg(this, m);
-		//"msg::impressing ".post; result.postln;
+		var result;
+
+		if (args.notNil) {
+			args = m.fairy.impression;
+			//"msg::impression (args): ".post; args.postln;
+		};
+		//args = args.flatten(m);
+		//"msg::flattened args   : ".post; args.postln;
+		
+		if (dest.isKindOf(SkoarpuscleList)) {
+			result = m.fairy.impression;
+			result = result.skoar_msg(this, m);
+			//"msg::impressing (result): ".post; result.postln;
+		} {
+			result = dest.skoar_msg(this, m);
+			//"msg::impressing (from dest): ".post; result.postln;
+		};
 		m.fairy.impress(result);
     }
 
@@ -886,6 +949,7 @@ SkoarpuscleMsg : Skoarpuscle {
 			^[val];
 		};
 
+		//("Args exist, x will be " ++ (args.size + 1).asString).postln; 
 		x = Array.newClear(args.size + 1);
 		i = 0;
 
@@ -904,8 +968,15 @@ SkoarpuscleMsg : Skoarpuscle {
 }
 
 SkoarpuscleMsgName : Skoarpuscle {
+	
 }
 
+SkoarpuscleMsgNameWithArgs : Skoarpuscle {
+	on_enter {
+		| m, nav |
+		m.fairy.push;
+	}
+}
 
 // -----------------------------
 // musical keywords skoarpuscles
@@ -1204,14 +1275,15 @@ SkoarpuscleUGen : Skoarpuscle {
 	var <func;
 	var <rate;
 
+	
 	*new {
 		| k, a, b, f |
-		^super.new.init_copy(k, a, b, f );
+		^super.new.init_copy(k, a, b, f);
 	}
 
 	*new_from_toke {
 		| t |
-		^super.new.init_toke( t );
+		^super.new.init_toke(t);
 	}
 	
 	
@@ -1229,7 +1301,12 @@ SkoarpuscleUGen : Skoarpuscle {
 		bound = IdentityDictionary.new;
 		args = IdentityDictionary.new;
 		func = {
-			klass.performMsg([\ar])
+			| e |
+			if (klass.respondsTo(\ar)) {
+				klass.performWithEnvir(\ar, e)
+			} {
+				klass.performWithEnvir(\kr, e)
+			}
 		};
 		
 	}
@@ -1245,20 +1322,11 @@ SkoarpuscleUGen : Skoarpuscle {
 
 	add {
 		| x |
-		var f;
-
-		if (x.isKindOf(SkoarpuscleUGen)) {
-			f = {
-				func.value + x.func.value
-			};
+		var f = if (x.isKindOf(SkoarpuscleUGen)) {
+			{ | e | func.value(e) + x.func.value(e) }
 		} {
-			f = {
-				func.value + x.val
-			};
+			{ | e | func.value(e) + x.val(e) }
 		};
-		"Add f: ".postln;
-		f.postString;
-
 			
 		^SkoarpuscleUGen.new(klass, args, bound, f);
 	}
@@ -1266,13 +1334,9 @@ SkoarpuscleUGen : Skoarpuscle {
 	sub {
 		| x |
 		var f = if (x.isKindOf(SkoarpuscleUGen)) {
-			{
-				func.value - x.func.value
-			}
+			{ | e | func.value(e) - x.func.value(e) }
 		} {
-			{
-				func.value - x.val
-			}
+			{ | e | func.value(e) - x.val(e) }
 		};
 
 		^SkoarpuscleUGen.new(klass, args, bound, f);
@@ -1281,39 +1345,103 @@ SkoarpuscleUGen : Skoarpuscle {
 	mul {
 		| x |
 		var f = if (x.isKindOf(SkoarpuscleUGen)) {
-			{
-				func.value * x.func.value
-			}
+			{ | e | func.value(e) * x.func.value(e) }
 		} {
-			{
-				func.value * x.val
-			}
+			{ | e | func.value(e) * x.val(e) }
 		};
-		"Mult f: ".postln;
-		f.dump;
-		
 		^SkoarpuscleUGen.new(klass, args, bound, f);
 	}
 	
 	flatten {
 		| m |
-		^val;
+		^func;
 	}
 
 	on_enter {
         | m, nav |
-		"here".postln;
+		//"ON_ENTER".postln;
 		m.fairy.impress(this);
 	}
 	
-	as_synthdef {
+	
+	skoar_msg {
+		| msg, minstrel |
+        var ret;
+        
+		var msg_selector = msg.val;
+        args = msg.get_msg_arr(minstrel);
+		//"AAAAA".postln;
+		//args.postln;
+		if (args.size == 1) {
+			func = {
+				| e |
+				klass.performWithEnvir(msg_selector, e)
+			};
+		} {
+			func = {
+				| e |
+				klass.performMsg(args)
+			};
+		};
+		minstrel.fairy.impress(this);
+	}
+	
+	compile_synthdef {
 		| m, nav |
-		synthdef = {func.value * EnvGen.ar(Env.linen(0.01, 1, 0.3), doneAction:2); }.asSynthDef;
+		synthdef = {
+			| pan=0, freq=440, amp=0.2, att=0.01, rel=1, sustain=1, dec=0.1, gate=1 | 
+			var e = (pan: pan, freq: freq, amp: amp, att: att, rel: rel, sustain: sustain, dec: dec, gate: gate);
+			
+			//func.value(e) * EnvGen.kr(Env.perc, doneAction:2);
+			func.value(e) * EnvGen.kr(Env.linen(att, sustain*0.5, sustain*0.5), doneAction:2)!2;
+		}.asSynthDef;
+
 		synthdef.add;
 		name = synthdef.asDefName;
-		(name ++ " defined").postln;
-		synthdef.dump;
+		//(name ++ " defined").postln;
+		//synthdef.dump;
 	}
 
+	
+}
+
+/*
+out = 0, to be used in Out.ar(out, ...)
+pan = 0, to be used in Out.ar(out, Pan2.ar(snd, pan))
+freq = 440, always the main freq for pitched synths
+amp = 0.2, always the main amplitude of the final sound
+att = 0.01, attack time of the main amplitude envelope
+rel = 1, release time of amplitude envelope
+sus = 1, sustain amount (as in a typical ADSR)
+dec = 0.1, decay time (as in typical ADSR)
+gate = 1, if using envelopes like ADSR (not needed if using self terminating envs such as Env.perc)
+*/
+
+//(out: 0, pan: 0, freq: 440, amp: 0.2, att: 0.01, rel: 1, sustain: 1, dec: 0.1, gate: 1)
+
+SkoarpusclePair : Skoarpuscle {
+
+	var <key;
+	
+	*new {
+        | k, v |
+        ^super.new.init_two(k, v);
+    }
+
+    init_two {
+		| k, v |
+		key = k;
+		val = v;
+	}
+
+	flatten {
+		| m, nav |
+		^val.flatten(m, nav);
+	}
+
+	assign {
+		| m |
+		Skoar.ops.assign(m, val, key);
+	}
 	
 }

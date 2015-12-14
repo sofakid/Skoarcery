@@ -33,7 +33,12 @@ SkoarNoad {
     }
 
     asString {
-        ^name.asString;
+        var ns = name.asString;
+
+		if (skoarpuscle.notNil) {
+			ns = ns ++ ": " ++ skoarpuscle.asString
+		};
+		^ns;
     }
 
     // here we return a copy, as whomever uses it is likely going to start

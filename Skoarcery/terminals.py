@@ -67,9 +67,9 @@ DynForte*:        m(ezzo)?f(orte)?|f+orte|ff+
 DynSFZ:           sfz
 DynFP:            fp
 
-AssOp:            =>|[+]>|->
+AssOp:            =>|[+]>|->|[*]>
 MsgOp:            \\.(?![)\\]])
-MathOp:           [+x\\-](?!>|or)
+MathOp:           [+*\\-](?!>)
 
 NamedNoat*:       (?:_?)(?:[a-g](?![ac-zA-Z_]))(#|b)?
 Choard*:          ~*[ABCDEFG](?![.ce-ln-rt-zA-LN-Z]|a[l ])(#|b)?([Mm0-9]|sus|dim|aug|dom)*(/[A-G][#b]?)?~*
@@ -95,6 +95,9 @@ MsgNameWithArgs*: [a-zA-Z_][a-zA-Z0-9_]*<
 
 Symbol*:          [\\\\@][a-zA-Z0-9_][a-zA-Z0-9_]*
 SymbolName*:      [a-zA-Z0-9_][a-zA-Z0-9_]*
+SymbolColon*:     [a-zA-Z0-9_][a-zA-Z0-9_]*[ \\t]*:(?![:|}])
+
+
 SkoarpionStart:   [{]!
 SkoarpionEnd:     ![}]
 SkoarpionSep:     !!
@@ -129,9 +132,6 @@ Volta*:           \\[\\d+\\.\\]
 String*:          \'[^']*\'
 
 Bars*:            :?\\|+:?
-
-PedalDown:        Ped\\.?
-PedalUp:          [*](?!>)
 
 Times:            [Tt]imes
 """
